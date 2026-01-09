@@ -1,17 +1,8 @@
 import os
 import yaml
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-import seaborn as sns
-from PIL import Image
-from torchvision.transforms.functional import pil_to_tensor
 import torch
-from typing import List
-from tqdm import tqdm
-from torch.utils.data import DataLoader
-from torchvision.transforms.functional import resize
 import random
+from typing import List
 
 def read_yaml(yaml_file):
     with open(yaml_file, 'r') as f:
@@ -73,6 +64,11 @@ def dict_to_device(x_dict, device, keys: List = None, **kwargs):
     return x_dict
 
 def plot_ds(*ds_names, log_gsd=True):
+    import numpy as np
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
     if isinstance(ds_names[0], list):
         ds_names = ds_names[0]
 
@@ -95,6 +91,8 @@ def plot_ds(*ds_names, log_gsd=True):
 
 
 def getimgsatl(id, dir, sensor, root_dir=None):
+    from PIL import Image
+    from torchvision.transforms.functional import pil_to_tensor
 
     if sensor == 's2':
         bands = ['tci', 'b05', 'b06', 'b07', 'b08', 'b11', 'b12']
@@ -114,6 +112,8 @@ def getimgsatl(id, dir, sensor, root_dir=None):
     return sat_img
 
 def plot_rgb(img):
+    import matplotlib.pyplot as plt
+
     img = (img - img.min()) / (img.max() - img.min())
     plt.imshow(img.permute(1,2,0))
     plt.show()
@@ -121,6 +121,10 @@ def plot_rgb(img):
 
     
 def compute_dataset_stats(dataset, bsz=256, num_workers=2, subset=-1) -> None:
+    from tqdm import tqdm
+    from torch.utils.data import DataLoader
+    from torchvision.transforms.functional import resize
+
     """ 
     adjusted from https://github.com/stanfordmlgroup/USat/blob/main/usat/utils/helper.py
     Computes mean std for our datasets. Groups results by number of input channels.

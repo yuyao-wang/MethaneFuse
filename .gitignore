@@ -16,3 +16,4 @@ dist/
 sinfo.csv
 squeue.csv
 */tmp.ipynb
+wandb/

@@ -23,6 +23,7 @@ from dinov2.data.datasets.mmearth import MMEarthWrapper
 from dinov2.data.datasets.satlas import SatlasDataset, SatlasWds
 from dinov2.data.datasets.eurosat_sar import EurosatSAR
 from dinov2.data.datasets.resisc45 import RESISC45
+from dinov2.data.datasets.s2_csv import S2CsvDataset
 from dinov2.data.augmentations import make_augmentation
 from torch.utils.data import Subset
 from dinov2.data.datasets.fmow_original import FmowDatasetOriginal
@@ -153,6 +154,10 @@ def make_dataset(cfg, pretrain_augm_cfg=None, seed=42, resampled=True):
 
     elif id == 'fmow':
         ds = FmowDatasetOriginal(**cfg, transform=transform)
+
+    elif id == 'S2CsvDataset':
+        ds = S2CsvDataset(**cfg, transform=transform)
+        ds_modalities_out = 1
 
     else:
         raise ValueError(f'Unsupported dataset "{id}"')
