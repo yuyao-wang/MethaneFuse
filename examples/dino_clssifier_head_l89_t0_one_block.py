@@ -84,6 +84,26 @@ def recursive_to_device(x, device):
         return type(x)(t)
     return x
 
+
+def maybe_wrap_dataparallel(module: nn.Module, device: torch.device, num_gpus: int, module_name: str) -> nn.Module:
+    """Wrap ``module`` with DataParallel when multiple GPUs are requested."""
+
+    if device.type != "cuda" or num_gpus <= 1:
+        return module
+
+    available = torch.cuda.device_count()
+    if available < num_gpus:
+        raise RuntimeError(
+            f"Requested num_gpus={num_gpus}, but only {available} CUDA device(s) are visible."
+        )
+
+    device_ids = list(range(num_gpus))
+    print(
+        f"Wrapping {module_name} with DataParallel across GPU ids {device_ids}. Batch size will be split automatically.",
+        flush=True,
+    )
+    return nn.DataParallel(module, device_ids=device_ids)
+
 def resize_imgs_to_224(x_dict):
     """Upsample batch of images in x_dict["imgs"] to 224x224 before the backbone."""
 
@@ -179,6 +199,8 @@ def main(args):
 
     backbone = load_backbone(args.weights, device=device, debug=args.debug).to(device)
     head = CLSHead(embed_dim=args.embed_dim, num_classes=2).to(device)
+
+    backbone = maybe_wrap_dataparallel(backbone, device, args.num_gpus, "backbone")
 
     will_train_backbone = args.train_backbone
     param_groups = [{"params": head.parameters(), "lr": args.head_lr}]
@@ -410,6 +432,12 @@ if __name__ == "__main__":
         type=int,
         default=768,
         help="Backbone output dimension (Panopticon teacher is 768).",
+    )
+    parser.add_argument(
+        "--num_gpus",
+        type=int,
+        default=1,
+        help="Number of GPUs to use via torch.nn.DataParallel when --device is CUDA.",
     )
     args = parser.parse_args()
     main(args)
