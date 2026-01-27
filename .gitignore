@@ -16,7 +16,8 @@ dist/
 sinfo.csv
 squeue.csv
 */tmp.ipynb
-wandb/weights/
+wandb/
+weights/
 *.pth
 *.pt
 *.ckpt

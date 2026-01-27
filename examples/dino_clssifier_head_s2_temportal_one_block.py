@@ -141,6 +141,60 @@ def init_wandb(args):
     return run
 
 
+def default_run_name(args) -> str:
+    """Build a repeatable identifier from datasets and whether backbone trains."""
+    train_stem = Path(args.train_csv).stem or "train"
+    test_stem = Path(args.test_csv).stem or "test"
+    mode = "ft" if args.train_backbone else "head"
+    return f"{train_stem}__{test_stem}__{mode}"
+
+
+def save_checkpoint(
+    path: Path,
+    epoch: int,
+    global_step: int,
+    backbone: nn.Module,
+    head: nn.Module,
+    optimizer: torch.optim.Optimizer,
+    scheduler,
+    best_train_acc: float,
+    best_test_acc: float,
+    args,
+):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    torch.save(
+        {
+            "epoch": epoch,
+            "global_step": global_step,
+            "backbone": backbone.state_dict(),
+            "head": head.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": None if scheduler is None else scheduler.state_dict(),
+            "best_train_acc": best_train_acc,
+            "best_test_acc": best_test_acc,
+            "args": vars(args),
+        },
+        path,
+    )
+
+
+def try_resume(path: Path, backbone: nn.Module, head: nn.Module, optimizer, scheduler, device):
+    if not path.is_file():
+        return 1, 0, 0.0, 0.0
+    ckpt = torch.load(path, map_location=device)
+    backbone.load_state_dict(ckpt["backbone"])
+    head.load_state_dict(ckpt["head"])
+    optimizer.load_state_dict(ckpt["optimizer"])
+    if scheduler is not None and ckpt.get("scheduler") is not None:
+        scheduler.load_state_dict(ckpt["scheduler"])
+    start_epoch = ckpt.get("epoch", 0) + 1
+    global_step = ckpt.get("global_step", 0)
+    best_train_acc = ckpt.get("best_train_acc", 0.0)
+    best_test_acc = ckpt.get("best_test_acc", 0.0)
+    print(f"Resumed from {path} at epoch {start_epoch-1}", flush=True)
+    return start_epoch, global_step, best_train_acc, best_test_acc
+
+
 def build_scheduler(args, optimizer):
     if args.lr_scheduler == "none":
         return None
@@ -212,10 +266,26 @@ def main(args):
     )
     scheduler = build_scheduler(args, optimizer)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
+
+    # --- checkpoint bookkeeping ---
+    run_name = args.run_name or default_run_name(args)
+    ckpt_dir = Path(args.checkpoint_dir) / run_name
+    latest_path = ckpt_dir / "ckpt_latest.pth"
+    best_train_path = ckpt_dir / "ckpt_best_train.pth"
+    best_test_path = ckpt_dir / "ckpt_best_test.pth"
+
+    start_epoch = 1
+    global_step = 0
+    best_train_acc = 0.0
+    best_test_acc = 0.0
+    if args.resume:
+        start_epoch, global_step, best_train_acc, best_test_acc = try_resume(
+            latest_path, backbone, head, optimizer, scheduler, device
+        )
+
     wandb_run = init_wandb(args)
 
-    global_step = 0
-    for epoch in range(1, args.epochs + 1):
+    for epoch in range(start_epoch, args.epochs + 1):
         freeze_backbone = (not will_train_backbone) or (args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs)
         if freeze_backbone:
             set_trainable(backbone, False)
@@ -328,6 +398,54 @@ def main(args):
             f"recall={recall:.4f} fpr={fpr:.4f} auroc={test_auroc:.4f}",
             flush=True,
         )
+
+        # --- save checkpoints ---
+        prev_best_train = best_train_acc
+        prev_best_test = best_test_acc
+        best_train_acc = max(best_train_acc, train_acc)
+        best_test_acc = max(best_test_acc, test_acc)
+
+        save_checkpoint(
+            latest_path,
+            epoch,
+            global_step,
+            backbone,
+            head,
+            optimizer,
+            scheduler,
+            best_train_acc,
+            best_test_acc,
+            args,
+        )
+
+        if train_acc > prev_best_train:
+            save_checkpoint(
+                best_train_path,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                best_train_acc,
+                best_test_acc,
+                args,
+            )
+
+        if test_acc > prev_best_test:
+            save_checkpoint(
+                best_test_path,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                best_train_acc,
+                best_test_acc,
+                args,
+            )
+
         if wandb_run is not None:
             wandb_run.log(
                 {
@@ -408,6 +526,21 @@ if __name__ == "__main__":
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
     parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")
+    parser.add_argument(
+        "--checkpoint_dir",
+        default="checkpoints",
+        help="Base directory to store checkpoints (latest/best).",
+    )
+    parser.add_argument(
+        "--run_name",
+        default=None,
+        help="Run name for checkpoint subfolder. Defaults to <train_csv_stem>__<test_csv_stem>__ft|head.",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="If set, resume from the latest checkpoint for this run name.",
+    )
     parser.add_argument(
         "--train_backbone",
         action="store_true",
