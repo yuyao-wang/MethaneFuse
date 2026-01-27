@@ -63,6 +63,7 @@ class S2CsvDataset(Dataset):
         self.compute_stats_subset = compute_stats_subset
         self.pad_to_multiple = pad_to_multiple
         self.pad_value = pad_value
+        self._warned_single_channel = False
 
         if isinstance(csv_path, str):
             csv_path = [csv_path]
@@ -105,6 +106,7 @@ class S2CsvDataset(Dataset):
 
         return x_dict, label
 
+
     def _load_image(self, path: str) -> torch.Tensor:
         img = self._read_image_raw(path)
         if self._mean is not None and self._std is not None:
@@ -113,6 +115,7 @@ class S2CsvDataset(Dataset):
             img = self._pad_to_multiple(img, self.pad_to_multiple)
         return img
 
+
     def _read_image_raw(self, path: str) -> torch.Tensor:
         img_np = tiff.imread(path)
 
@@ -120,10 +123,42 @@ class S2CsvDataset(Dataset):
         if img_np.dtype == np.uint16:
             img_np = img_np.astype(np.float32)
 
+        exp_c = self.chn_ids.shape[0]
         if img_np.ndim == 2:
             img_np = np.expand_dims(img_np, 0)
-        elif img_np.ndim == 3 and img_np.shape[0] != self.chn_ids.shape[0]:
-            img_np = np.transpose(img_np, (2, 0, 1))
+        elif img_np.ndim == 3:
+            c_first, c_last = img_np.shape[0], img_np.shape[-1]
+            if c_first == exp_c:
+                pass  # already CHW with expected channels
+            elif c_first > exp_c:
+                img_np = img_np[:exp_c, ...]  # truncate extra leading channels
+            elif c_last == exp_c:
+                img_np = np.transpose(img_np, (2, 0, 1))  # convert HWC -> CHW
+            elif c_last > exp_c:
+                img_np = np.transpose(img_np, (2, 0, 1))[:exp_c, ...]  # truncate extra trailing channels
+            elif c_first == 1 and exp_c > 1:
+                # Single-channel CHW input: tile to expected number of bands.
+                if not self._warned_single_channel:
+                    warnings.warn(
+                        f"{path} has 1 channel but {exp_c} expected; repeating the band to match model input."
+                    )
+                    self._warned_single_channel = True
+                img_np = np.repeat(img_np, exp_c, axis=0)
+            elif c_last == 1 and exp_c > 1:
+                if not self._warned_single_channel:
+                    warnings.warn(
+                        f"{path} has 1 channel but {exp_c} expected; repeating the band to match model input."
+                    )
+                    self._warned_single_channel = True
+                img_np = np.repeat(img_np, exp_c, axis=2)
+                img_np = np.transpose(img_np, (2, 0, 1))
+            else:
+                raise RuntimeError(
+                    f"Unexpected image shape {img_np.shape} for {path}; expected channel dim {exp_c} "
+                    "either first (C,H,W) or last (H,W,C)."
+                )
+        else:
+            raise RuntimeError(f"Unsupported image dimensions {img_np.shape} for {path}")
 
         img = torch.from_numpy(img_np).to(dtype=torch.float32)
 
@@ -132,21 +167,6 @@ class S2CsvDataset(Dataset):
 
         return img
 
-    def _pad_to_multiple(self, img: torch.Tensor, multiple: int) -> torch.Tensor:
-        _, h, w = img.shape
-        target_h = int(np.ceil(h / multiple) * multiple)
-        target_w = int(np.ceil(w / multiple) * multiple)
-        pad_h = target_h - h
-        pad_w = target_w - w
-        if pad_h == 0 and pad_w == 0:
-            return img
-
-        pad_top = pad_h // 2
-        pad_bottom = pad_h - pad_top
-        pad_left = pad_w // 2
-        pad_right = pad_w - pad_left
-        padding = (pad_left, pad_right, pad_top, pad_bottom)
-        return F.pad(img, padding, value=self.pad_value)
 
     def _compute_dataset_stats(self, subset: Optional[Union[int, float]] = None) -> Tuple[torch.Tensor, torch.Tensor]:
         """Compute per-channel mean/std after optional scaling (no padding)."""
@@ -173,8 +193,96 @@ class S2CsvDataset(Dataset):
         std = torch.sqrt((sumsq_c / count) - (mean.double() ** 2)).float()
         return mean, std
 
+
+    def _pad_to_multiple(self, img: torch.Tensor, multiple: int) -> torch.Tensor:
+        _, h, w = img.shape
+        target_h = int(np.ceil(h / multiple) * multiple)
+        target_w = int(np.ceil(w / multiple) * multiple)
+        pad_h = target_h - h
+        pad_w = target_w - w
+        if pad_h == 0 and pad_w == 0:
+            return img
+
+        pad_top = pad_h // 2
+        pad_bottom = pad_h - pad_top
+        pad_left = pad_w // 2
+        pad_right = pad_w - pad_left
+        padding = (pad_left, pad_right, pad_top, pad_bottom)
+        return F.pad(img, padding, value=self.pad_value)
+
+
     def get_normalize_stats(self) -> Optional[Tuple[torch.Tensor, torch.Tensor]]:
         """Return (mean, std) tensors if available."""
         if self._mean is None or self._std is None:
             return None
         return self._mean.squeeze().cpu(), self._std.squeeze().cpu()
+
+
+class S2TemporalCsvDataset(S2CsvDataset):
+    """
+    Temporal extension that returns a list of three timepoint inputs while sharing the same
+    Panopticon preprocessing (normalization, padding, channel embeddings).
+
+    Expected CSV columns by default:
+        - image_path: t0 (leak day)
+        - s2_pre_path: t-90
+        - s2_pre_pre_path: t-360
+    """
+
+    def __init__(
+        self,
+        csv_path: Union[str, Iterable[str]],
+        *,
+        ds_cfg_name: str = "s2_12band",
+        full_spectra: bool = False,
+        id_column: str = "id",
+        path_columns: Sequence[str] = ("image_path", "s2_pre_path", "s2_pre_pre_path"),
+        label_column: str = "label",
+        normalize_stats: Optional[Tuple[Sequence[float], Sequence[float]]] = None,
+        scale_to_unit: bool = True,
+        compute_stats: bool = False,
+        compute_stats_subset: Optional[Union[int, float]] = None,
+        pad_to_multiple: Optional[int] = 14,
+        pad_value: float = 0.0,
+        transform=None,
+    ):
+        """
+        Args:
+            path_columns: Ordered sequence of CSV columns for each timepoint.
+        """
+        if len(path_columns) != 3:
+            raise ValueError(f"Expected exactly 3 time columns, got {len(path_columns)}: {path_columns}")
+
+        # Initialize base dataset with the first path column to reuse shared setup.
+        super().__init__(
+            csv_path=csv_path,
+            ds_cfg_name=ds_cfg_name,
+            full_spectra=full_spectra,
+            id_column=id_column,
+            path_column=path_columns[0],
+            label_column=label_column,
+            normalize_stats=normalize_stats,
+            scale_to_unit=scale_to_unit,
+            compute_stats=compute_stats,
+            compute_stats_subset=compute_stats_subset,
+            pad_to_multiple=pad_to_multiple,
+            pad_value=pad_value,
+            transform=None,  # apply transform manually per timepoint
+        )
+        self.path_columns = tuple(path_columns)
+        self.transform_each = transform
+
+    def __getitem__(self, idx):
+        row = self.df.iloc[idx]
+        label = int(row[self.label_column])
+
+        x_list = []
+        for col in self.path_columns:
+            path = row[col]
+            img = self._load_image(path)
+            x_dict = dict(imgs=img, chn_ids=self.chn_ids)
+            if self.transform_each is not None:
+                x_dict = self.transform_each(x_dict)
+            x_list.append(x_dict)
+
+        return x_list, label

@@ -3,12 +3,11 @@ import os
 from pathlib import Path
 import sys
 from typing import Tuple
-from collections import defaultdict
 
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
 import torch.nn.functional as F
+from torch.utils.data import DataLoader
 
 # Make the repository root importable when running the script directly.
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -18,9 +17,12 @@ if str(REPO_ROOT) not in sys.path:
 # Disable xFormers kernels to avoid long CUDA discovery/initialization hangs.
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
+SR_BANDS = ["SR_B1", "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B6", "SR_B7"]
+QA_BANDS = ["QA_PIXEL", "QA_RADSAT", "SR_QA_AEROSOL"]
+# Paste your Landsat 8/9 mean/std here as ([mean...], [std...]) to skip recomputing.
 PRECOMPUTED_STATS = (
-    [786.128173828125, 1025.8876953125, 1593.730712890625, 2315.26123046875, 2710.462890625, 3115.90087890625, 3289.0830078125, 3465.536376953125, 3495.579833984375, 3517.7958984375, 4180.28564453125, 3567.866943359375],
-    [435.72607421875, 597.6113891601562, 688.5059814453125, 840.1614990234375, 801.7208251953125, 706.9466552734375, 689.823974609375, 727.5567626953125, 668.30224609375, 551.3565063476562, 629.679931640625, 641.590087890625],
+    [10928.7470703125, 11603.849609375, 13416.6435546875, 15134.5927734375, 18313.583984375, 20491.015625, 18536.9921875],
+    [1211.1807861328125, 1373.5697021484375, 1758.531005859375, 2193.44873046875, 2238.14990234375, 2352.88671875, 2125.662353515625],
 )
 
 
@@ -87,9 +89,44 @@ def init_wandb(args):
             "num_workers": args.num_workers,
             "pad_to_multiple": args.pad_to_multiple,
             "device": args.device,
+            "ds_cfg_name": args.ds_cfg_name,
         },
     )
     return run
+
+
+def build_datasets(args):
+    from dinov2.data.datasets.landsat_csv import Landsat89CsvDataset
+
+    norm_stats = PRECOMPUTED_STATS
+    if norm_stats is not None:
+        print("Using PRECOMPUTED_STATS baked into script.", flush=True)
+
+    train_ds = Landsat89CsvDataset(
+        csv_path=args.train_csv,
+        ds_cfg_name=args.ds_cfg_name,
+        normalize_stats=norm_stats,
+        scale_to_unit=False,
+        pad_to_multiple=args.pad_to_multiple,
+        compute_stats=False,
+        drop_extra_bands=args.drop_extra_bands,
+    )
+    stats_for_eval = norm_stats
+    if stats_for_eval is not None:
+        mean_str = ", ".join(f"{float(m):.4f}" for m in stats_for_eval[0])
+        std_str = ", ".join(f"{float(s):.4f}" for s in stats_for_eval[1])
+        print(f"Loaded normalization stats\n  mean: [{mean_str}]\n  std:  [{std_str}]", flush=True)
+
+    test_ds = Landsat89CsvDataset(
+        csv_path=args.test_csv,
+        ds_cfg_name=args.ds_cfg_name,
+        normalize_stats=stats_for_eval,
+        scale_to_unit=False,
+        pad_to_multiple=args.pad_to_multiple,
+        compute_stats=False,
+        drop_extra_bands=args.drop_extra_bands,
+    )
+    return train_ds, test_ds
 
 
 def main(args):
@@ -100,26 +137,7 @@ def main(args):
     if device.type == "cuda":
         torch.cuda.set_device(device)
 
-    from dinov2.data.datasets.s2_csv import S2CsvDataset
-
-    norm_stats = PRECOMPUTED_STATS
-
-    train_ds = S2CsvDataset(
-        csv_path=args.train_csv,
-        ds_cfg_name="s2_12band",
-        normalize_stats=norm_stats,
-        scale_to_unit=False,
-        pad_to_multiple=args.pad_to_multiple,
-        compute_stats=False,
-    )
-
-    test_ds = S2CsvDataset(
-        csv_path=args.test_csv,
-        ds_cfg_name="s2_12band",
-        normalize_stats=norm_stats,
-        scale_to_unit=False,
-        pad_to_multiple=args.pad_to_multiple,
-    )
+    train_ds, test_ds = build_datasets(args)
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
@@ -129,7 +147,11 @@ def main(args):
         test_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=pin_memory
     )
 
-    print(f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}", flush=True)
+    print(
+        f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
+        f"bands={SR_BANDS} (dropping {QA_BANDS} if present)",
+        flush=True,
+    )
 
     backbone = load_backbone(args.weights, device=device, debug=args.debug).to(device)
     if args.debug and device.type == "cuda":
@@ -259,9 +281,9 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Finetune Panopticon backbone plus 3-layer MLP head.")
-    parser.add_argument("--train_csv", default="data_csv/96_3_train.csv")
-    parser.add_argument("--test_csv", default="data_csv/96_3_test.csv")
+    parser = argparse.ArgumentParser(description="Finetune Panopticon backbone plus 3-layer MLP head on Landsat 8/9 SR bands.")
+    parser.add_argument("--train_csv", default="data_csv/l89_train.csv")
+    parser.add_argument("--test_csv", default="data_csv/l89_test.csv")
     parser.add_argument("--weights", default="weights/panopticon_vitb14_teacher.pth")
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--epochs", type=int, default=50)
@@ -277,11 +299,23 @@ if __name__ == "__main__":
     parser.add_argument("--pad_to_multiple", type=int, default=14)
     parser.add_argument("--device", default="cpu", help='PyTorch device string, e.g. "cpu" or "cuda".')
     parser.add_argument(
-        "--stats_subset",
-        type=float,
-        default=None,
-        help="If set, limit samples for mean/std (float fraction or int if whole number).",
+        "--ds_cfg_name",
+        default="landsat89_7band",
+        help="Dataset config name under dinov2/configs/data for Landsat 8/9 SRF wavelengths.",
     )
+    parser.add_argument(
+        "--drop_extra_bands",
+        dest="drop_extra_bands",
+        action="store_true",
+        help="Drop trailing QA bands when present in the TIFF (default).",
+    )
+    parser.add_argument(
+        "--no_drop_extra_bands",
+        dest="drop_extra_bands",
+        action="store_false",
+        help="Strict channel count check; raise an error if QA bands are present.",
+    )
+    parser.set_defaults(drop_extra_bands=True)
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
     parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")

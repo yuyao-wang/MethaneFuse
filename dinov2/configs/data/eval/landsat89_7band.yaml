@@ -1,0 +1,13 @@
+task_id: binaryclass
+num_classes: 2
+gsd: 30.
+img_size: 98
+bands:
+- id: landsat9/B01
+- id: landsat9/B02
+- id: landsat9/B03
+- id: landsat9/B04
+- id: landsat9/B05
+- id: landsat9/B06
+- id: landsat9/B07
+modality: optical
