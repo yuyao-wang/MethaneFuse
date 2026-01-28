@@ -12,6 +12,12 @@ from torch.utils.data import Dataset
 from dinov2.utils.data import extract_wavemus, load_ds_cfg
 
 
+class _SkipSample(Exception):
+    """Internal sentinel exception used to signal that a sample should be skipped."""
+
+
+
+
 class S2CsvDataset(Dataset):
     """
     Minimal CSV-based Sentinel-2 dataset for Panopticon finetuning.
@@ -35,6 +41,7 @@ class S2CsvDataset(Dataset):
         pad_to_multiple: Optional[int] = 14,
         pad_value: float = 0.0,
         transform=None,
+        max_retries: int = 5,
     ):
         """
         Args:
@@ -64,6 +71,7 @@ class S2CsvDataset(Dataset):
         self.pad_to_multiple = pad_to_multiple
         self.pad_value = pad_value
         self._warned_single_channel = False
+        self.max_retries = max(1, int(max_retries))
 
         if isinstance(csv_path, str):
             csv_path = [csv_path]
@@ -95,16 +103,26 @@ class S2CsvDataset(Dataset):
         return len(self.df)
 
     def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        label = int(row[self.label_column])
-        img_path = row[self.path_column]
-        img = self._load_image(img_path)
+        attempts = 0
+        while attempts < self.max_retries:
+            try:
+                row = self.df.iloc[idx]
+                label = int(row[self.label_column])
+                img_path = row[self.path_column]
+                img = self._load_image(img_path)
 
-        x_dict = dict(imgs=img, chn_ids=self.chn_ids)
-        if self.transform is not None:
-            x_dict = self.transform(x_dict)
+                x_dict = dict(imgs=img, chn_ids=self.chn_ids)
+                if self.transform is not None:
+                    x_dict = self.transform(x_dict)
 
-        return x_dict, label
+                return x_dict, label
+            except _SkipSample as exc:
+                attempts += 1
+                if attempts == 1:
+                    warnings.warn(f"Skipping corrupt sample at {img_path}: {exc}. Retrying with a different index.")
+                if attempts >= self.max_retries:
+                    raise RuntimeError(f"Exceeded {self.max_retries} retries for index {idx}") from exc
+                idx = np.random.randint(0, len(self.df))
 
 
     def _load_image(self, path: str) -> torch.Tensor:
@@ -117,7 +135,12 @@ class S2CsvDataset(Dataset):
 
 
     def _read_image_raw(self, path: str) -> torch.Tensor:
-        img_np = tiff.imread(path)
+        if not os.path.isfile(path):
+            raise _SkipSample(f"Missing file: {path}")
+        try:
+            img_np = tiff.imread(path)
+        except (tiff.TiffFileError, ValueError, OSError) as exc:
+            raise _SkipSample(f"TIFF read failed for {path}: {exc}") from exc
 
         # torch.from_numpy does not support uint16; cast to float32 up front.
         if img_np.dtype == np.uint16:
@@ -245,6 +268,7 @@ class S2TemporalCsvDataset(S2CsvDataset):
         pad_to_multiple: Optional[int] = 14,
         pad_value: float = 0.0,
         transform=None,
+        max_retries: int = 5,
     ):
         """
         Args:
@@ -268,21 +292,32 @@ class S2TemporalCsvDataset(S2CsvDataset):
             pad_to_multiple=pad_to_multiple,
             pad_value=pad_value,
             transform=None,  # apply transform manually per timepoint
+            max_retries=max_retries,
         )
         self.path_columns = tuple(path_columns)
         self.transform_each = transform
 
     def __getitem__(self, idx):
-        row = self.df.iloc[idx]
-        label = int(row[self.label_column])
+        attempts = 0
+        while attempts < self.max_retries:
+            try:
+                row = self.df.iloc[idx]
+                label = int(row[self.label_column])
 
-        x_list = []
-        for col in self.path_columns:
-            path = row[col]
-            img = self._load_image(path)
-            x_dict = dict(imgs=img, chn_ids=self.chn_ids)
-            if self.transform_each is not None:
-                x_dict = self.transform_each(x_dict)
-            x_list.append(x_dict)
+                x_list = []
+                for col in self.path_columns:
+                    path = row[col]
+                    img = self._load_image(path)
+                    x_dict = dict(imgs=img, chn_ids=self.chn_ids)
+                    if self.transform_each is not None:
+                        x_dict = self.transform_each(x_dict)
+                    x_list.append(x_dict)
 
-        return x_list, label
+                return x_list, label
+            except _SkipSample as exc:
+                attempts += 1
+                if attempts == 1:
+                    warnings.warn(f"Skipping corrupt temporal sample at row {idx}: {exc}. Retrying with a different index.")
+                if attempts >= self.max_retries:
+                    raise RuntimeError(f"Exceeded {self.max_retries} retries for temporal index {idx}") from exc
+                idx = np.random.randint(0, len(self.df))

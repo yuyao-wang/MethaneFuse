@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
+from torch.cuda.amp import autocast, GradScaler
 
 # Make the repository root importable when running the script directly.
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -19,8 +20,8 @@ os.environ.setdefault("XFORMERS_DISABLED", "1")
 
 # Landsat 8/9 SR bands (B1-B7) mean/std computed on training split.
 PRECOMPUTED_STATS = (
-    [10928.7470703125, 11603.849609375, 13416.6435546875, 15134.5927734375, 18313.583984375, 20491.015625, 18536.9921875],
-    [1211.1807861328125, 1373.5697021484375, 1758.531005859375, 2193.44873046875, 2238.14990234375, 2352.88671875, 2125.662353515625],
+    [10729.92784546, 11384.64407242, 13172.77519667, 14892.25620267, 18149.92169893, 20249.17615773, 18375.0669698],
+    [1029.18232283, 1188.52313418, 1552.27685613, 1959.74400972, 1954.80410093, 2098.98682671, 1895.56781996],
 )
 
 
@@ -152,6 +153,67 @@ def build_scheduler(args, optimizer):
     raise ValueError(f"Unknown lr_scheduler: {args.lr_scheduler}")
 
 
+def default_run_name(args) -> str:
+    """Build a repeatable identifier from datasets and whether backbone trains."""
+
+    train_stem = Path(args.train_csv).stem or "train"
+    test_stem = Path(args.test_csv).stem or "test"
+    mode = "ft" if args.train_backbone else "head"
+    return f"{train_stem}__{test_stem}__{mode}"
+
+
+def save_checkpoint(
+    path: Path,
+    epoch: int,
+    global_step: int,
+    backbone: nn.Module,
+    head: nn.Module,
+    optimizer: torch.optim.Optimizer,
+    scheduler,
+    scaler,
+    best_train_acc: float,
+    best_test_acc: float,
+    args,
+):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    torch.save(
+        {
+            "epoch": epoch,
+            "global_step": global_step,
+            "backbone": backbone.state_dict(),
+            "head": head.state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": None if scheduler is None else scheduler.state_dict(),
+            "scaler": None if scaler is None else scaler.state_dict(),
+            "best_train_acc": best_train_acc,
+            "best_test_acc": best_test_acc,
+            "args": vars(args),
+        },
+        path,
+    )
+
+
+def try_resume(path: Path, backbone: nn.Module, head: nn.Module, optimizer, scheduler, scaler, device):
+    if not path.is_file():
+        return 1, 0, 0.0, 0.0
+
+    ckpt = torch.load(path, map_location=device)
+    backbone.load_state_dict(ckpt["backbone"])
+    head.load_state_dict(ckpt["head"])
+    optimizer.load_state_dict(ckpt["optimizer"])
+    if scheduler is not None and ckpt.get("scheduler") is not None:
+        scheduler.load_state_dict(ckpt["scheduler"])
+    if scaler is not None and ckpt.get("scaler") is not None:
+        scaler.load_state_dict(ckpt["scaler"])
+
+    start_epoch = ckpt.get("epoch", 0) + 1
+    global_step = ckpt.get("global_step", 0)
+    best_train_acc = ckpt.get("best_train_acc", 0.0)
+    best_test_acc = ckpt.get("best_test_acc", 0.0)
+    print(f"Resumed from {path} at epoch {start_epoch-1}", flush=True)
+    return start_epoch, global_step, best_train_acc, best_test_acc
+
+
 def main(args):
     from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
 
@@ -160,6 +222,7 @@ def main(args):
         device = torch.device("cuda:0")
     if device.type == "cuda":
         torch.cuda.set_device(device)
+    use_amp = device.type == "cuda"
 
     norm_stats = PRECOMPUTED_STATS
     base_train_ds = S2TemporalCsvDataset(
@@ -200,6 +263,7 @@ def main(args):
 
     backbone = load_backbone(args.weights, device=device, debug=args.debug).to(device)
     head = CLSHead(embed_dim=args.embed_dim, num_classes=2).to(device)
+    scaler = GradScaler(enabled=use_amp)
 
     will_train_backbone = args.train_backbone
     param_groups = [{"params": head.parameters(), "lr": args.head_lr}]
@@ -213,10 +277,25 @@ def main(args):
     )
     scheduler = build_scheduler(args, optimizer)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
+    # --- checkpoint bookkeeping ---
+    run_name = args.run_name or default_run_name(args)
+    ckpt_dir = Path(args.checkpoint_dir) / run_name
+    latest_path = ckpt_dir / "ckpt_latest.pth"
+    best_train_path = ckpt_dir / "ckpt_best_train.pth"
+    best_test_path = ckpt_dir / "ckpt_best_test.pth"
+
+    start_epoch = 1
+    global_step = 0
+    best_train_acc = 0.0
+    best_test_acc = 0.0
+    if args.resume:
+        start_epoch, global_step, best_train_acc, best_test_acc = try_resume(
+            latest_path, backbone, head, optimizer, scheduler, scaler, device
+        )
+
     wandb_run = init_wandb(args)
 
-    global_step = 0
-    for epoch in range(1, args.epochs + 1):
+    for epoch in range(start_epoch, args.epochs + 1):
         freeze_backbone = (not will_train_backbone) or (args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs)
         if freeze_backbone:
             set_trainable(backbone, False)
@@ -233,19 +312,21 @@ def main(args):
             labels = labels.to(device)
             x_dict = recursive_to_device(x_dict, device)
             # x_dict = resize_imgs_to_224(x_dict)
-            
 
-            feats = backbone(x_dict, is_training=True)
-            cls_token = feats["x_norm_clstoken"]
-            logits = head(cls_token)
-            loss = criterion(logits, labels)
+            with autocast(enabled=use_amp):
+                feats = backbone(x_dict, is_training=True)
+                cls_token = feats["x_norm_clstoken"]
+                logits = head(cls_token)
+                loss = criterion(logits, labels)
 
             optimizer.zero_grad()
-            loss.backward()
+            scaler.scale(loss).backward()
             if args.max_grad_norm is not None and args.max_grad_norm > 0:
                 trainable_params = [p for group in optimizer.param_groups for p in group["params"] if p.requires_grad]
+                scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_(trainable_params, args.max_grad_norm)
-            optimizer.step()
+            scaler.step(optimizer)
+            scaler.update()
             if scheduler is not None:
                 scheduler.step()
             global_step += 1
@@ -287,10 +368,11 @@ def main(args):
                 labels = labels.to(device)
                 x_dict = recursive_to_device(x_dict, device)
                 # x_dict = resize_imgs_to_224(x_dict)
-                feats = backbone(x_dict, is_training=True)
-                cls_token = feats["x_norm_clstoken"]
-                logits = head(cls_token)
-                loss = criterion(logits, labels)
+                with autocast(enabled=use_amp):
+                    feats = backbone(x_dict, is_training=True)
+                    cls_token = feats["x_norm_clstoken"]
+                    logits = head(cls_token)
+                    loss = criterion(logits, labels)
 
                 test_loss_total += loss.item() * labels.size(0)
                 preds = logits.argmax(dim=1)
@@ -329,6 +411,57 @@ def main(args):
             f"recall={recall:.4f} fpr={fpr:.4f} auroc={test_auroc:.4f}",
             flush=True,
         )
+
+        # --- save checkpoints ---
+        prev_best_train = best_train_acc
+        prev_best_test = best_test_acc
+        best_train_acc = max(best_train_acc, train_acc)
+        best_test_acc = max(best_test_acc, test_acc)
+
+        save_checkpoint(
+            latest_path,
+            epoch,
+            global_step,
+            backbone,
+            head,
+            optimizer,
+            scheduler,
+            scaler,
+            best_train_acc,
+            best_test_acc,
+            args,
+        )
+
+        if train_acc > prev_best_train:
+            save_checkpoint(
+                best_train_path,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                scaler,
+                best_train_acc,
+                best_test_acc,
+                args,
+            )
+
+        if test_acc > prev_best_test:
+            save_checkpoint(
+                best_test_path,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                scaler,
+                best_train_acc,
+                best_test_acc,
+                args,
+            )
+
         if wandb_run is not None:
             wandb_run.log(
                 {
@@ -409,6 +542,21 @@ if __name__ == "__main__":
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
     parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")
+    parser.add_argument(
+        "--checkpoint_dir",
+        default="checkpoints",
+        help="Base directory to store checkpoints (latest/best).",
+    )
+    parser.add_argument(
+        "--run_name",
+        default=None,
+        help="Run name for checkpoint subfolder. Defaults to <train_csv_stem>__<test_csv_stem>__ft|head.",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="If set, resume from the latest checkpoint for this run name.",
+    )
     parser.add_argument(
         "--train_backbone",
         action="store_true",
