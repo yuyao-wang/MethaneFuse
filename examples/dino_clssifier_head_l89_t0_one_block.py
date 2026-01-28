@@ -172,6 +172,7 @@ def main(args):
         pad_to_multiple=args.pad_to_multiple,
         compute_stats=False,
         path_column=args.t0_col,
+        skip_invalid_samples=args.skip_invalid_samples,
     )
     test_ds = S2CsvDataset(
         csv_path=args.test_csv,
@@ -181,6 +182,7 @@ def main(args):
         pad_to_multiple=args.pad_to_multiple,
         compute_stats=False,
         path_column=args.t0_col,
+        skip_invalid_samples=args.skip_invalid_samples,
     )
 
     pin_memory = device.type == "cuda"
@@ -396,6 +398,11 @@ if __name__ == "__main__":
         "--t0_col",
         default="image_path",
         help="CSV column for t0 image path.",
+    )
+    parser.add_argument(
+        "--skip_invalid_samples",
+        action="store_true",
+        help="Drop CSV rows whose TIFFs are missing or unreadable instead of failing mid-epoch.",
     )
     parser.add_argument(
         "--t90_col",
