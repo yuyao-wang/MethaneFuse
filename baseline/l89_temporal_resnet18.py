@@ -8,17 +8,17 @@ from contextlib import suppress
 from pathlib import Path
 from typing import Optional, Sequence, Tuple
 
+# Make the repository root importable when running the script directly.
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from torchvision import models
 
 from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
-
-# Make the repository root importable when running the script directly.
-REPO_ROOT = Path(__file__).resolve().parents[1]
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
 
 # Disable xFormers kernels to avoid long CUDA discovery/initialization hangs.
 os.environ.setdefault("XFORMERS_DISABLED", "1")
@@ -34,11 +34,13 @@ class LocalFileCache:
     """
     Simple filesystem cache that mirrors remote TIFFs into a local directory.
     Copies are content-addressed by SHA1 of the absolute source path to avoid collisions.
+    Supports an optional soft size cap with LRU eviction.
     """
 
-    def __init__(self, cache_dir: str):
+    def __init__(self, cache_dir: str, max_bytes: Optional[int] = None):
         self.cache_dir = Path(cache_dir).expanduser().resolve()
         self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.max_bytes = max_bytes
 
     def _hashed_path(self, original: str) -> Path:
         norm_path = os.path.abspath(original)
@@ -57,11 +59,37 @@ class LocalFileCache:
         try:
             shutil.copy2(original, tmp)
             os.replace(tmp, dst)
+            self._trim_to_size()
         except Exception:
             with suppress(FileNotFoundError):
                 tmp.unlink()
             raise
         return str(dst)
+
+    def _trim_to_size(self):
+        if self.max_bytes is None:
+            return
+
+        total = 0
+        files = []
+        for sub in self.cache_dir.glob("*/*"):
+            if sub.is_file():
+                st = sub.stat()
+                total += st.st_size
+                files.append((st.st_atime, st.st_size, sub))
+
+        if total <= self.max_bytes:
+            return
+
+        files.sort(key=lambda x: x[0])  # oldest access first
+        for _, size, path in files:
+            try:
+                path.unlink()
+            except FileNotFoundError:
+                pass
+            total -= size
+            if total <= self.max_bytes:
+                break
 
     def warm_up(self, paths: Sequence[str], max_workers: int = 4) -> None:
         unique_paths = sorted({os.path.abspath(p) for p in paths if isinstance(p, str)})
@@ -156,7 +184,7 @@ class ConcatTemporalDataset(Dataset):
         self,
         csv_path: str,
         *,
-        path_columns: Tuple[str, str, str] = ("image_path", "s2_pre_path", "s2_pre_pre_path"),
+        path_columns: Tuple[str, str, str] = ("path_t0", "path_t90", "path_t360"),
         ds_cfg_name: str = "landsat89_7band",
         normalize_stats: Tuple[Sequence[float], Sequence[float]] = PRECOMPUTED_STATS,
         pad_to_multiple: int = 14,
@@ -164,13 +192,15 @@ class ConcatTemporalDataset(Dataset):
         local_cache_dir: Optional[str] = None,
         cache_warmup: bool = False,
         cache_workers: int = 4,
+        cache_max_gb: Optional[float] = None,
     ):
         dataset_cls = S2TemporalCsvDataset
         cache_obj = None
         extra_kwargs = {}
         if local_cache_dir:
             dataset_cls = CachedS2TemporalCsvDataset
-            cache_obj = LocalFileCache(local_cache_dir)
+            max_bytes = None if cache_max_gb is None else int(cache_max_gb * (1024**3))
+            cache_obj = LocalFileCache(local_cache_dir, max_bytes=max_bytes)
             extra_kwargs["local_file_cache"] = cache_obj
 
         self._base = dataset_cls(
@@ -306,6 +336,7 @@ def main(args):
         local_cache_dir=args.local_cache_dir,
         cache_warmup=args.local_cache_warmup,
         cache_workers=args.local_cache_workers,
+        cache_max_gb=args.local_cache_max_gb,
     )
     test_ds = ConcatTemporalDataset(
         csv_path=args.test_csv,
@@ -317,6 +348,7 @@ def main(args):
         local_cache_dir=args.local_cache_dir,
         cache_warmup=False,
         cache_workers=args.local_cache_workers,
+        cache_max_gb=args.local_cache_max_gb,
     )
 
     pin_memory = device.type == "cuda"
@@ -399,6 +431,12 @@ if __name__ == "__main__":
         "--local_cache_dir",
         default=None,
         help="Directory for caching remote TIFFs locally. Disabled when not set.",
+    )
+    parser.add_argument(
+        "--local_cache_max_gb",
+        type=float,
+        default=None,
+        help="Optional soft cap for cache size in GB; least-recently-used files are evicted when exceeded.",
     )
     parser.add_argument(
         "--local_cache_warmup",
