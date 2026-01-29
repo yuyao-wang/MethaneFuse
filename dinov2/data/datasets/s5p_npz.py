@@ -160,19 +160,27 @@ class S5pNpzDataset(Dataset):
         return torch.full((num_channels,), fill_value=self.default_chn_id_value, dtype=torch.int16)
 
     def _read_image_raw(self, path: str) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
-        with np.load(path, allow_pickle=self.allow_pickle) as npz:
-            if self.data_key is not None:
-                if self.data_key not in npz:
-                    raise KeyError(f"Key '{self.data_key}' not found in NPZ file {path}")
-                img_np = np.array(npz[self.data_key])
-            else:
-                if len(npz.files) == 0:
-                    raise ValueError(f"No arrays found in NPZ file {path}")
-                img_np = np.array(npz[npz.files[0]])
+        np_obj = np.load(path, allow_pickle=self.allow_pickle)
+        file_chn_ids = None
+        try:
+            if isinstance(np_obj, np.lib.npyio.NpzFile):
+                if self.data_key is not None:
+                    if self.data_key not in np_obj:
+                        raise KeyError(f"Key '{self.data_key}' not found in NPZ file {path}")
+                    img_np = np.array(np_obj[self.data_key])
+                else:
+                    if len(np_obj.files) == 0:
+                        raise ValueError(f"No arrays found in NPZ file {path}")
+                    img_np = np.array(np_obj[np_obj.files[0]])
 
-            file_chn_ids = None
-            if self.chn_ids_key is not None and self.chn_ids_key in npz:
-                file_chn_ids = torch.as_tensor(npz[self.chn_ids_key])
+                if self.chn_ids_key is not None and self.chn_ids_key in np_obj:
+                    file_chn_ids = torch.as_tensor(np_obj[self.chn_ids_key])
+            else:
+                # Allow loading simple .npy tensors (already a numpy array).
+                img_np = np.array(np_obj)
+        finally:
+            if isinstance(np_obj, np.lib.npyio.NpzFile):
+                np_obj.close()
 
         if img_np.ndim == 2:
             img_np = np.expand_dims(img_np, 0)

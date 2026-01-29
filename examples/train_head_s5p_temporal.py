@@ -553,7 +553,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--no_compute_stats", dest="compute_stats", action="store_false", help="Skip computing stats.")
     parser.set_defaults(compute_stats=True)
-    parser.add_argument("--device", default="cpu", help='PyTorch device string, e.g. "cpu" or "cuda".')
+    parser.add_argument("--device", default="cuda", help='PyTorch device string, e.g. "cpu" or "cuda".')
     parser.add_argument("--debug", action="store_true", help="Print stage timings and device info.")
     parser.add_argument("--log_interval", type=int, default=100, help="Print training progress every N steps.")
     parser.add_argument(

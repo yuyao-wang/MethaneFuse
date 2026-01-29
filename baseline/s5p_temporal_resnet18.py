@@ -318,10 +318,11 @@ def main(args):
     )
 
     num_channels = infer_num_channels(train_ds)
+    time_mode = "stacked-single-path" if args.stacked_time_npz else "multi-path"
     print(
         f"S5P ResNet-18 baseline with {num_channels} input channels (1 band x 3 timepoints if data is single-channel) | "
         f"train_samples={len(train_ds)} test_samples={len(test_ds)} pad_to_multiple={args.pad_to_multiple} "
-        f"resize={args.resize_size} norm_stats={stats_status}",
+        f"resize={args.resize_size} norm_stats={stats_status} time_mode={time_mode}",
         flush=True,
     )
 
@@ -388,15 +389,34 @@ if __name__ == "__main__":
     parser.add_argument("--warmup_steps", type=int, default=4000, help="Noam scheduler warmup steps.")
     parser.add_argument("--seed", type=int, default=None, help="Optional RNG seed for reproducibility.")
     parser.add_argument("--resize_size", type=int, default=224, help="Spatial resize before feeding ResNet-18.")
-    parser.add_argument("--t0_col", default="image_path", help="CSV column for t0 image path (or stacked NPZ path).")
-    parser.add_argument("--t90_col", default="s5p_pre_path", help="CSV column for t-90 image path (ignored if stacked_time_npz).")
-    parser.add_argument("--t360_col", default="s5p_pre_pre_path", help="CSV column for t-360 image path (ignored if stacked_time_npz).")
+    parser.add_argument("--t0_col", default="image_path_224", help="CSV column for the single NPZ path (3-band stack).")
+    parser.add_argument(
+        "--t90_col",
+        default="s5p_pre_path",
+        help="CSV column for t-90 image path (only used when --separate_time_paths is set).",
+    )
+    parser.add_argument(
+        "--t360_col",
+        default="s5p_pre_pre_path",
+        help="CSV column for t-360 image path (only used when --separate_time_paths is set).",
+    )
     parser.add_argument("--ds_cfg_name", default=None, help="Optional dataset config name for channel IDs.")
     parser.add_argument("--chn_ids", default=None, help="Comma-separated channel IDs to override ds_cfg_name/NPZ.")
     parser.add_argument("--data_key", default=None, help="Optional NPZ key storing the image array (defaults to first entry).")
     parser.add_argument("--chn_ids_key", default="chn_ids", help="NPZ key containing per-sample channel IDs if available.")
     parser.add_argument("--channel_last", action="store_true", help="Set if NPZ arrays are stored as HWC instead of CHW.")
-    parser.add_argument("--stacked_time_npz", action="store_true", help="CSV points to a single NPZ with stacked time slices.")
+    parser.add_argument(
+        "--stacked_time_npz",
+        dest="stacked_time_npz",
+        action="store_true",
+        help="CSV points to a single NPZ with stacked time slices (default behavior).",
+    )
+    parser.add_argument(
+        "--separate_time_paths",
+        dest="stacked_time_npz",
+        action="store_false",
+        help="CSV has three columns for t0/t-90/t-360 NPZ files instead of one stacked NPZ.",
+    )
     parser.add_argument("--allow_pickle", action="store_true", help="Allow loading NPZ files containing pickled data.")
     parser.add_argument("--nan_to_num", type=float, default=None, help="Replace NaN/Inf in NPZ arrays with this constant.")
     parser.add_argument("--scale_to_unit", action="store_true", help="Divide NPZ values by scale_value when no stats are provided.")
@@ -426,7 +446,7 @@ if __name__ == "__main__":
         help="Compute per-channel mean/std from the training set when stats are not provided.",
     )
     parser.add_argument("--no_compute_stats", dest="compute_stats", action="store_false", help="Skip computing stats.")
-    parser.set_defaults(compute_stats=True)
+    parser.set_defaults(compute_stats=True, stacked_time_npz=True)
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
     parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")

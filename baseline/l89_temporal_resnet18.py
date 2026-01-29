@@ -1,13 +1,19 @@
 import argparse
+import hashlib
 import os
-from pathlib import Path
+import shutil
 import sys
-from typing import Sequence, Tuple
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import suppress
+from pathlib import Path
+from typing import Optional, Sequence, Tuple
 
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from torchvision import models
+
+from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
 
 # Make the repository root importable when running the script directly.
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +28,96 @@ PRECOMPUTED_STATS: Tuple[Sequence[float], Sequence[float]] = (
     [10729.92784546, 11384.64407242, 13172.77519667, 14892.25620267, 18149.92169893, 20249.17615773, 18375.0669698],
     [1029.18232283, 1188.52313418, 1552.27685613, 1959.74400972, 1954.80410093, 2098.98682671, 1895.56781996],
 )
+
+
+class LocalFileCache:
+    """
+    Simple filesystem cache that mirrors remote TIFFs into a local directory.
+    Copies are content-addressed by SHA1 of the absolute source path to avoid collisions.
+    """
+
+    def __init__(self, cache_dir: str):
+        self.cache_dir = Path(cache_dir).expanduser().resolve()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+
+    def _hashed_path(self, original: str) -> Path:
+        norm_path = os.path.abspath(original)
+        digest = hashlib.sha1(norm_path.encode("utf-8")).hexdigest()
+        subdir = digest[:2]
+        suffix = Path(original).suffix
+        return self.cache_dir / subdir / f"{digest}{suffix}"
+
+    def ensure_local(self, original: str) -> str:
+        dst = self._hashed_path(original)
+        if dst.exists():
+            return str(dst)
+
+        tmp = dst.with_suffix(dst.suffix + ".tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            shutil.copy2(original, tmp)
+            os.replace(tmp, dst)
+        except Exception:
+            with suppress(FileNotFoundError):
+                tmp.unlink()
+            raise
+        return str(dst)
+
+    def warm_up(self, paths: Sequence[str], max_workers: int = 4) -> None:
+        unique_paths = sorted({os.path.abspath(p) for p in paths if isinstance(p, str)})
+        if not unique_paths:
+            return
+
+        print(
+            f"[cache] Pre-warming {len(unique_paths)} files into {self.cache_dir} using {max_workers} workers",
+            flush=True,
+        )
+
+        def _copy_one(path: str):
+            try:
+                self.ensure_local(path)
+                return None
+            except Exception as exc:  # pragma: no cover - debug helper
+                return path, exc
+
+        errors = []
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            futures = [pool.submit(_copy_one, p) for p in unique_paths]
+            for fut in as_completed(futures):
+                res = fut.result()
+                if res is not None:
+                    errors.append(res)
+
+        if errors:
+            print(f"[cache] Warning: {len(errors)} files failed to cache (showing up to 5)", flush=True)
+            for path, exc in errors[:5]:
+                print(f"[cache]   {path}: {exc}", flush=True)
+
+
+class CachedS2TemporalCsvDataset(S2TemporalCsvDataset):
+    """
+    S2TemporalCsvDataset variant that first copies TIFFs into a local cache directory.
+    """
+
+    def __init__(self, *args, local_file_cache: Optional[LocalFileCache] = None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._local_file_cache = local_file_cache
+
+    def _load_image(self, path: str, *, column_name=None, sample_id=None):
+        if self._local_file_cache is not None and isinstance(path, str):
+            try:
+                path = self._local_file_cache.ensure_local(path)
+            except FileNotFoundError as exc:
+                raise _SkipSample(f"Missing file during cache copy: {path}") from exc
+        return super()._load_image(path, column_name=column_name, sample_id=sample_id)
+
+    def warm_up_cache(self, max_workers: int = 4) -> None:
+        if self._local_file_cache is None:
+            return
+        all_paths = []
+        for col in self.path_columns:
+            all_paths.extend(self.df[col].tolist())
+        self._local_file_cache.warm_up(all_paths, max_workers=max_workers)
 
 
 def init_wandb(args):
@@ -53,6 +149,7 @@ def init_wandb(args):
 class ConcatTemporalDataset(Dataset):
     """
     Wrap the temporal Landsat 8/9 CSV dataset and concatenate three 7-band timepoints into one 21-band tensor.
+    Optionally caches remote TIFFs into a local directory to avoid repeated network reads.
     """
 
     def __init__(
@@ -64,10 +161,19 @@ class ConcatTemporalDataset(Dataset):
         normalize_stats: Tuple[Sequence[float], Sequence[float]] = PRECOMPUTED_STATS,
         pad_to_multiple: int = 14,
         skip_invalid_samples: bool = False,
+        local_cache_dir: Optional[str] = None,
+        cache_warmup: bool = False,
+        cache_workers: int = 4,
     ):
-        from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
+        dataset_cls = S2TemporalCsvDataset
+        cache_obj = None
+        extra_kwargs = {}
+        if local_cache_dir:
+            dataset_cls = CachedS2TemporalCsvDataset
+            cache_obj = LocalFileCache(local_cache_dir)
+            extra_kwargs["local_file_cache"] = cache_obj
 
-        self._base = S2TemporalCsvDataset(
+        self._base = dataset_cls(
             csv_path=csv_path,
             ds_cfg_name=ds_cfg_name,
             normalize_stats=normalize_stats,
@@ -76,7 +182,10 @@ class ConcatTemporalDataset(Dataset):
             compute_stats=False,
             path_columns=path_columns,
             skip_invalid_samples=skip_invalid_samples,
+            **extra_kwargs,
         )
+        if cache_warmup and cache_obj is not None:
+            self._base.warm_up_cache(max_workers=cache_workers)
 
     def __len__(self):
         return len(self._base)
@@ -194,6 +303,9 @@ def main(args):
         normalize_stats=PRECOMPUTED_STATS,
         pad_to_multiple=args.pad_to_multiple,
         skip_invalid_samples=args.skip_invalid_samples,
+        local_cache_dir=args.local_cache_dir,
+        cache_warmup=args.local_cache_warmup,
+        cache_workers=args.local_cache_workers,
     )
     test_ds = ConcatTemporalDataset(
         csv_path=args.test_csv,
@@ -202,6 +314,9 @@ def main(args):
         normalize_stats=PRECOMPUTED_STATS,
         pad_to_multiple=args.pad_to_multiple,
         skip_invalid_samples=args.skip_invalid_samples,
+        local_cache_dir=args.local_cache_dir,
+        cache_warmup=False,
+        cache_workers=args.local_cache_workers,
     )
 
     pin_memory = device.type == "cuda"
@@ -280,6 +395,22 @@ if __name__ == "__main__":
     parser.add_argument("--t0_col", default="path_t0", help="CSV column for t0 image path.")
     parser.add_argument("--t90_col", default="path_t90", help="CSV column for t-90 image path.")
     parser.add_argument("--t360_col", default="path_t360", help="CSV column for t-360 image path.")
+    parser.add_argument(
+        "--local_cache_dir",
+        default=None,
+        help="Directory for caching remote TIFFs locally. Disabled when not set.",
+    )
+    parser.add_argument(
+        "--local_cache_warmup",
+        action="store_true",
+        help="When set, pre-copy all referenced TIFFs into the local cache before training starts.",
+    )
+    parser.add_argument(
+        "--local_cache_workers",
+        type=int,
+        default=4,
+        help="Number of worker threads to use while warming the cache.",
+    )
     parser.add_argument(
         "--skip_invalid_samples",
         action="store_true",

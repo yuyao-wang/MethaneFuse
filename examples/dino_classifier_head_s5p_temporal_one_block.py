@@ -556,7 +556,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--t0_col",
-        default="image_path",
+        default="image_path_224",
         help="CSV column for t0 image path (or stacked NPZ path when stacked_time_npz is enabled).",
     )
     parser.add_argument(
