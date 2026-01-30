@@ -366,6 +366,8 @@ def main(args):
     )
 
     model = build_resnet18(num_channels=21, num_classes=2).to(device)
+    if device.type == "cuda":
+        model = nn.DataParallel(model)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     warmup_steps = max(args.warmup_steps, 1)
