@@ -21,7 +21,7 @@ class Landsat89CsvDataset(S2CsvDataset):
         *,
         ds_cfg_name: str = "landsat89_7band",
         id_column: str = "id",
-        path_column: str = "image_path",
+        path_column: str = "path_t0",
         label_column: str = "label",
         normalize_stats: Optional[Tuple[Sequence[float], Sequence[float]]] = None,
         scale_to_unit: bool = True,

@@ -89,24 +89,24 @@ def init_wandb(args):
             "pad_to_multiple": args.pad_to_multiple,
             "device": args.device,
             "t0_col": args.t0_col,
-            "t90_col": args.t90_col,
-            "t360_col": args.t360_col,
+            # "t90_col": args.t90_col,
+            # "t360_col": args.t360_col,
             "resize_size": args.resize_size,
             "warmup_steps": args.warmup_steps,
             "ds_cfg_name": args.ds_cfg_name,
             "data_key": args.data_key,
             "chn_ids_key": args.chn_ids_key,
             "channel_last": args.channel_last,
-            "stacked_time_npz": args.stacked_time_npz,
+            # "stacked_time_npz": args.stacked_time_npz,
         },
     )
     return run
 
 
-class S5pTemporalStackedDataset(Dataset):
-    """Wraps S5pTemporalNpzDataset to concatenate 3 timepoints into a CNN-friendly tensor."""
+class S5pSimpleNpzDataset(Dataset):
+    """Wraps S5pNpzDataset to return a single tensor for CNNs."""
 
-    def __init__(self, base_ds, resize_size: Optional[int] = 224):
+    def __init__(self, base_ds, resize_size: Optional[int] = None):
         self.base_ds = base_ds
         self.resize_size = resize_size
 
@@ -114,12 +114,11 @@ class S5pTemporalStackedDataset(Dataset):
         return len(self.base_ds)
 
     def __getitem__(self, idx):
-        x_list, label = self.base_ds[idx]
-        imgs = torch.cat([x["imgs"] for x in x_list], dim=0)  # (C_total, H, W)
+        x_dict, label = self.base_ds[idx]
+        imgs = x_dict["imgs"]  # (C, H, W)
         if self.resize_size is not None:
             imgs = _resize_tensor(imgs, self.resize_size)
         return imgs, label
-
 
 def _resize_tensor(imgs: torch.Tensor, size: int) -> torch.Tensor:
     if imgs.ndim == 3:
@@ -233,7 +232,7 @@ def infer_num_channels(dataset: Dataset) -> int:
 
 
 def main(args):
-    from dinov2.data.datasets.s5p_npz import S5pTemporalNpzDataset
+    from dinov2.data.datasets.s5p_npz import S5pNpzDataset
 
     device = torch.device(args.device)
     if device.type == "cuda" and device.index is None:
@@ -249,9 +248,8 @@ def main(args):
     norm_stats = load_normalization_stats(args)
     chn_ids = parse_comma_separated_floats(args.chn_ids)
     stats_subset = parse_subset_value(args.compute_stats_subset)
-    path_columns = (args.t0_col,) if args.stacked_time_npz else (args.t0_col, args.t90_col, args.t360_col)
 
-    base_train_ds = S5pTemporalNpzDataset(
+    base_train_ds = S5pNpzDataset(
         csv_path=args.train_csv,
         ds_cfg_name=args.ds_cfg_name,
         chn_ids=chn_ids,
@@ -262,12 +260,11 @@ def main(args):
         compute_stats_subset=stats_subset,
         pad_to_multiple=args.pad_to_multiple,
         pad_value=args.pad_value,
-        path_columns=path_columns,
+        path_column=args.t0_col,
         data_key=args.data_key,
         chn_ids_key=args.chn_ids_key,
         channels_first=not args.channel_last,
         default_chn_id_value=args.default_chn_id_value,
-        stacked_time=args.stacked_time_npz,
         allow_pickle=args.allow_pickle,
         nan_to_num=args.nan_to_num,
     )
@@ -282,7 +279,7 @@ def main(args):
             flush=True,
         )
 
-    base_test_ds = S5pTemporalNpzDataset(
+    base_test_ds = S5pNpzDataset(
         csv_path=args.test_csv,
         ds_cfg_name=args.ds_cfg_name,
         chn_ids=chn_ids,
@@ -292,18 +289,17 @@ def main(args):
         compute_stats=False,
         pad_to_multiple=args.pad_to_multiple,
         pad_value=args.pad_value,
-        path_columns=path_columns,
+        path_column=args.t0_col,
         data_key=args.data_key,
         chn_ids_key=args.chn_ids_key,
         channels_first=not args.channel_last,
         default_chn_id_value=args.default_chn_id_value,
-        stacked_time=args.stacked_time_npz,
         allow_pickle=args.allow_pickle,
         nan_to_num=args.nan_to_num,
     )
 
-    train_ds = S5pTemporalStackedDataset(base_train_ds, resize_size=args.resize_size)
-    test_ds = S5pTemporalStackedDataset(base_test_ds, resize_size=args.resize_size)
+    train_ds = S5pSimpleNpzDataset(base_train_ds, resize_size=args.resize_size)
+    test_ds = S5pSimpleNpzDataset(base_test_ds, resize_size=args.resize_size)
 
     stats_status = base_train_ds.get_stats_source()
     if stats_status is None:
@@ -318,11 +314,10 @@ def main(args):
     )
 
     num_channels = infer_num_channels(train_ds)
-    time_mode = "stacked-single-path" if args.stacked_time_npz else "multi-path"
     print(
-        f"S5P ResNet-18 baseline with {num_channels} input channels (1 band x 3 timepoints if data is single-channel) | "
+        f"S5P ResNet-18 baseline with {num_channels} input channels | "
         f"train_samples={len(train_ds)} test_samples={len(test_ds)} pad_to_multiple={args.pad_to_multiple} "
-        f"resize={args.resize_size} norm_stats={stats_status} time_mode={time_mode}",
+        f"resize={args.resize_size} norm_stats={stats_status}",
         flush=True,
     )
 
@@ -389,34 +384,22 @@ if __name__ == "__main__":
     parser.add_argument("--warmup_steps", type=int, default=4000, help="Noam scheduler warmup steps.")
     parser.add_argument("--seed", type=int, default=None, help="Optional RNG seed for reproducibility.")
     parser.add_argument("--resize_size", type=int, default=224, help="Spatial resize before feeding ResNet-18.")
-    parser.add_argument("--t0_col", default="image_path_224", help="CSV column for the single NPZ path (3-band stack).")
-    parser.add_argument(
-        "--t90_col",
-        default="s5p_pre_path",
-        help="CSV column for t-90 image path (only used when --separate_time_paths is set).",
-    )
-    parser.add_argument(
-        "--t360_col",
-        default="s5p_pre_pre_path",
-        help="CSV column for t-360 image path (only used when --separate_time_paths is set).",
-    )
+    parser.add_argument("--t0_col", default="image_path", help="CSV column for the NPZ path.")
+    # parser.add_argument(
+    #     "--t90_col",
+    #     default="s5p_pre_path",
+    #     help="CSV column for t-90 image path (only used when --separate_time_paths is set).",
+    # )
+    # parser.add_argument(
+    #     "--t360_col",
+    #     default="s5p_pre_pre_path",
+    #     help="CSV column for t-360 image path (only used when --separate_time_paths is set).",
+    # )
     parser.add_argument("--ds_cfg_name", default=None, help="Optional dataset config name for channel IDs.")
     parser.add_argument("--chn_ids", default=None, help="Comma-separated channel IDs to override ds_cfg_name/NPZ.")
     parser.add_argument("--data_key", default=None, help="Optional NPZ key storing the image array (defaults to first entry).")
     parser.add_argument("--chn_ids_key", default="chn_ids", help="NPZ key containing per-sample channel IDs if available.")
     parser.add_argument("--channel_last", action="store_true", help="Set if NPZ arrays are stored as HWC instead of CHW.")
-    parser.add_argument(
-        "--stacked_time_npz",
-        dest="stacked_time_npz",
-        action="store_true",
-        help="CSV points to a single NPZ with stacked time slices (default behavior).",
-    )
-    parser.add_argument(
-        "--separate_time_paths",
-        dest="stacked_time_npz",
-        action="store_false",
-        help="CSV has three columns for t0/t-90/t-360 NPZ files instead of one stacked NPZ.",
-    )
     parser.add_argument("--allow_pickle", action="store_true", help="Allow loading NPZ files containing pickled data.")
     parser.add_argument("--nan_to_num", type=float, default=None, help="Replace NaN/Inf in NPZ arrays with this constant.")
     parser.add_argument("--scale_to_unit", action="store_true", help="Divide NPZ values by scale_value when no stats are provided.")
@@ -446,7 +429,7 @@ if __name__ == "__main__":
         help="Compute per-channel mean/std from the training set when stats are not provided.",
     )
     parser.add_argument("--no_compute_stats", dest="compute_stats", action="store_false", help="Skip computing stats.")
-    parser.set_defaults(compute_stats=True, stacked_time_npz=True)
+    parser.set_defaults(compute_stats=True)
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
     parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")

@@ -83,10 +83,10 @@ class CLSHead(nn.Module):
         return self.fc(self.norm(cls))
 
 
-class ConcatTemporalDataset(Dataset):
-    """Wraps S5pTemporalNpzDataset to concatenate all timepoints along the channel dimension."""
+class S5pSimpleNpzDataset(Dataset):
+    """Wraps S5pNpzDataset to return a single x_dict for the model."""
 
-    def __init__(self, base_ds, resize_to: Optional[int] = 224):
+    def __init__(self, base_ds, resize_to: Optional[int] = None):
         self.base_ds = base_ds
         self.resize_to = resize_to
 
@@ -94,10 +94,8 @@ class ConcatTemporalDataset(Dataset):
         return len(self.base_ds)
 
     def __getitem__(self, idx):
-        x_list, label = self.base_ds[idx]
-        imgs = torch.cat([x["imgs"] for x in x_list], dim=0)
-        chn_ids = torch.cat([x["chn_ids"] for x in x_list], dim=0)
-        x_dict = dict(imgs=imgs, chn_ids=chn_ids)
+        x_dict, label = self.base_ds[idx]
+        # The base dataset already returns the x_dict we need.
         if self.resize_to is not None:
             x_dict = resize_imgs(x_dict, self.resize_to)
         return x_dict, label
@@ -215,7 +213,7 @@ def build_scheduler(args, optimizer):
 
 
 def main(args):
-    from dinov2.data.datasets.s5p_npz import S5pTemporalNpzDataset
+    from dinov2.data.datasets.s5p_npz import S5pNpzDataset
 
     device = torch.device(args.device)
     if device.type == "cuda" and device.index is None:
@@ -226,9 +224,8 @@ def main(args):
     norm_stats = load_normalization_stats(args)
     chn_ids = parse_comma_separated_floats(args.chn_ids)
     stats_subset = parse_subset_value(args.compute_stats_subset)
-    path_columns = (args.t0_col,) if args.stacked_time_npz else (args.t0_col, args.t90_col, args.t360_col)
 
-    base_train_ds = S5pTemporalNpzDataset(
+    base_train_ds = S5pNpzDataset(
         csv_path=args.train_csv,
         ds_cfg_name=args.ds_cfg_name,
         chn_ids=chn_ids,
@@ -239,12 +236,11 @@ def main(args):
         compute_stats_subset=stats_subset,
         pad_to_multiple=args.pad_to_multiple,
         pad_value=args.pad_value,
-        path_columns=path_columns,
+        path_column=args.t0_col,
         data_key=args.data_key,
         chn_ids_key=args.chn_ids_key,
         channels_first=not args.channel_last,
         default_chn_id_value=args.default_chn_id_value,
-        stacked_time=args.stacked_time_npz,
         allow_pickle=args.allow_pickle,
         nan_to_num=args.nan_to_num,
     )
@@ -259,7 +255,7 @@ def main(args):
             flush=True,
         )
 
-    base_test_ds = S5pTemporalNpzDataset(
+    base_test_ds = S5pNpzDataset(
         csv_path=args.test_csv,
         ds_cfg_name=args.ds_cfg_name,
         chn_ids=chn_ids,
@@ -269,18 +265,17 @@ def main(args):
         compute_stats=False,
         pad_to_multiple=args.pad_to_multiple,
         pad_value=args.pad_value,
-        path_columns=path_columns,
+        path_column=args.t0_col,
         data_key=args.data_key,
         chn_ids_key=args.chn_ids_key,
         channels_first=not args.channel_last,
         default_chn_id_value=args.default_chn_id_value,
-        stacked_time=args.stacked_time_npz,
         allow_pickle=args.allow_pickle,
         nan_to_num=args.nan_to_num,
     )
 
-    train_ds = ConcatTemporalDataset(base_train_ds, resize_to=args.resize_size)
-    test_ds = ConcatTemporalDataset(base_test_ds, resize_to=args.resize_size)
+    train_ds = S5pSimpleNpzDataset(base_train_ds, resize_to=args.resize_size)
+    test_ds = S5pSimpleNpzDataset(base_test_ds, resize_to=args.resize_size)
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
@@ -503,11 +498,6 @@ if __name__ == "__main__":
         help="Constant channel id used when none are provided (keeps model happy for single-channel grids).",
     )
     parser.add_argument(
-        "--stacked_time_npz",
-        action="store_true",
-        help="CSV has a single NPZ path containing stacked time slices along the first/channel dimension (e.g., shape (3,H,W)).",
-    )
-    parser.add_argument(
         "--allow_pickle",
         action="store_true",
         help="Allow loading NPZ files that contain pickled data (enable only if you trust the source).",
@@ -556,18 +546,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--t0_col",
-        default="image_path_224",
-        help="CSV column for t0 image path (or stacked NPZ path when stacked_time_npz is enabled).",
-    )
-    parser.add_argument(
-        "--t90_col",
-        default="s5p_pre_path",
-        help="CSV column for t-90 image path (ignored if stacked_time_npz).",
-    )
-    parser.add_argument(
-        "--t360_col",
-        default="s5p_pre_pre_path",
-        help="CSV column for t-360 image path (ignored if stacked_time_npz).",
+        default="image_path",
+        help="CSV column for the image NPZ path.",
     )
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")

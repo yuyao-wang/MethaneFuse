@@ -23,16 +23,25 @@ if str(REPO_ROOT) not in sys.path:
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
 try:
-    from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
+    from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample, load_ds_cfg
+    from dinov2.utils.data import extract_wavemus
 except ImportError:
     class _SkipSample(Exception): pass
     S2TemporalCsvDataset = object
+    def extract_wavemus(*args, **kwargs):
+        raise ImportError("dinov2 is required for extract_wavemus")
 
 
 # Landsat 8/9 SR bands (B1-B7) mean/std computed on training split.
-PRECOMPUTED_STATS = (
-    [10471.85655064, 11181.63497924, 12958.15200945, 14354.86902588, 18043.7841474, 19161.81404727, 17007.44930096],
-    [3144.84919882, 3265.1527109,  3508.73270524, 4311.82184569, 3928.08814122, 4738.30251542, 4564.07811053],
+L89_PRECOMPUTED_STATS = (
+    [10729.92784546, 11384.64407242, 13172.77519667, 14892.25620267, 18149.92169893, 20249.17615773, 18375.0669698],
+    [1029.18232283, 1188.52313418, 1552.27685613, 1959.74400972, 1954.80410093, 2098.98682671, 1895.56781996],
+)
+
+# Sentinel-2 12 bands mean/std
+S2_PRECOMPUTED_STATS = (
+    [786.128173828125, 1025.8876953125, 1593.730712890625, 2315.26123046875, 2710.462890625, 3115.90087890625, 3289.0830078125, 3465.536376953125, 3495.579833984375, 3517.7958984375, 4180.28564453125, 3567.866943359375],
+    [435.72607421875, 597.6113891601562, 688.5059814453125, 840.1614990234375, 801.7208251953125, 706.9466552734375, 689.823974609375, 727.5567626953125, 668.30224609375, 551.3565063476562, 629.679931640625, 641.590087890625],
 )
 
 
@@ -88,6 +97,162 @@ class CachedS2TemporalCsvDataset(S2TemporalCsvDataset):
             path = self._local_file_cache.ensure_local(path)
         return super()._load_image(path, column_name=column_name, sample_id=sample_id)
 
+class MixedSensorTemporalCsvDataset(S2TemporalCsvDataset):
+    """
+    A temporal dataset that can handle mixed sensor types (L8/9 and S2)
+    by reading a 'sensor' column from the CSV.
+    """
+    def __init__(self, *args, local_file_cache: Optional[StaticAnchoredCache] = None, **kwargs):
+        # Pop sensor-specific configs that are now handled per-sample
+        kwargs.pop("ds_cfg_name", None)
+        kwargs.pop("normalize_stats", None)
+        self.ds_cfg = None
+        self.normalize_stats = None
+        self._local_file_cache = local_file_cache
+
+        super().__init__(*args, **kwargs)
+
+        # if "sensor" not in self.df.columns:
+            # raise ValueError("CSV must contain a 'sensor' column with values like 'l89' or 's2'.")
+
+        self.sensor_configs = {
+            "l89": {
+                "ds_cfg": load_ds_cfg("landsat89_7band"),
+                "normalize_stats": L89_PRECOMPUTED_STATS,
+            },
+            "s2": {
+                "ds_cfg": load_ds_cfg("s2_12band"),
+                "normalize_stats": S2_PRECOMPUTED_STATS,
+            },
+        }
+        # Ensure chn_ids are 2D, i.e. (C, 1)
+        for sensor_cfg in self.sensor_configs.values():
+            ds_cfg_obj = sensor_cfg["ds_cfg"]
+            # Create the chn_ids tensor from the raw config
+            chn_ids_tensor = extract_wavemus(ds_cfg_obj, return_sigmas=False)
+            chn_ids_tensor = chn_ids_tensor.unsqueeze(-1)  # enforce 2D (C, 1)
+            ds_cfg_obj["chn_ids"] = chn_ids_tensor
+            sensor_cfg["chn_ids"] = chn_ids_tensor
+        # Align channel-id ordering to Sentinel-2 (12 bands); L89 will be padded to match S2 order.
+        self._s2_chn_ids = self.sensor_configs["s2"]["chn_ids"]
+        self.sensor_configs["l89"]["chn_ids"] = self._s2_chn_ids
+        # If inputs are scaled to [0,1], scale the precomputed mean/std once here to avoid double scaling.
+        if getattr(self, "scale_to_unit", False):
+            for sensor_cfg in self.sensor_configs.values():
+                stats = sensor_cfg.get("normalize_stats")
+                if stats is None:
+                    continue
+                mean, std = stats
+                sensor_cfg["normalize_stats"] = ([m / 65535.0 for m in mean], [s / 65535.0 for s in std])
+
+    def _load_image(self, path: str, *, column_name: str, sample_id: int):
+        """Override to apply sensor-specific normalization and channel IDs."""
+        row = self.df.iloc[sample_id]
+        sensor = row.get("sensor")
+        # sensor = 's2'
+        if sensor not in self.sensor_configs:
+            raise ValueError(f"Sample {sample_id} has unknown sensor '{sensor}'")
+
+        config = self.sensor_configs[sensor]
+        ds_cfg = config["ds_cfg"]
+        normalize_stats = config["normalize_stats"]
+
+        # Temporarily set instance-level properties for the base _load_image method
+        # This is a bit of a hack, but avoids re-implementing the whole loading logic.
+        original_ds_cfg = self.ds_cfg
+        original_normalize_stats = self.normalize_stats
+        original_local_file_cache = getattr(self, "_local_file_cache", None)
+
+        self.ds_cfg = ds_cfg
+        self.normalize_stats = normalize_stats
+
+        try:
+            local_cache = getattr(self, "_local_file_cache", None)
+            if local_cache is not None and isinstance(path, str):
+                path = local_cache.ensure_local(path)
+            # The base class's _load_image uses self.ds_cfg and self.normalize_stats
+            x_dict = super(MixedSensorTemporalCsvDataset, self)._load_image(
+                path, column_name=column_name, sample_id=sample_id
+            )
+        finally:
+            # Restore original properties
+            self.ds_cfg = original_ds_cfg
+            self.normalize_stats = original_normalize_stats
+            if original_local_file_cache is not None:
+                self._local_file_cache = original_local_file_cache
+
+        return x_dict
+
+    def __getitem__(self, idx):
+        attempts = 0
+        last_exc: Optional[Exception] = None
+
+        while attempts < self.max_retries:
+            try:
+                row = self.df.iloc[idx]
+                label = int(row[self.label_column])
+                sensor = row.get("sensor")
+                # sensor='s2'
+                if sensor not in self.sensor_configs:
+                    raise ValueError(f"Sample {idx} has unknown sensor '{sensor}'")
+
+                chn_ids = self.sensor_configs[sensor]["chn_ids"]
+                sample_id = idx  # use dataframe index for deterministic lookup in _load_image
+
+                x_list = []
+                for col in self.path_columns:
+                    path = row[col]
+                    img = self._load_image(path, column_name=col, sample_id=sample_id)
+                    if sensor == "l89":
+                        img = self._pad_l89_to_s2(img)
+                    # Replace NaN/Inf that can corrupt training
+                    img = torch.nan_to_num(img, nan=0.0, posinf=0.0, neginf=0.0)
+
+                    x_dict = dict(imgs=img, chn_ids=chn_ids)
+                    if self.transform_each is not None:
+                        x_dict = self.transform_each(x_dict)
+                    x_list.append(x_dict)
+
+                return x_list, label, sensor
+
+            except _SkipSample as exc:
+                last_exc = exc
+                attempts += 1
+                if attempts == 1:
+                    warnings.warn(
+                        f"Skipping corrupt temporal sample at row {idx}: {exc}. Retrying with a different index."
+                    )
+                if attempts >= self.max_retries:
+                    raise RuntimeError(f"Exceeded {self.max_retries} retries for temporal index {idx}") from exc
+                idx = np.random.randint(0, len(self.df))
+
+        raise RuntimeError("Unreachable: retry loop exited unexpectedly") from last_exc
+
+    @staticmethod
+    def _pad_l89_to_s2(img: torch.Tensor) -> torch.Tensor:
+        """
+        Map 7-channel Landsat 8/9 tensor to Sentinel-2's 12-channel ordering.
+        Missing bands are zero-filled; L89 Band 5 goes into S2 Band 8 slot.
+        S2 order: B01,B02,B03,B04,B05,B06,B07,B08,B8A,B09,B11,B12
+        L89 order: B01,B02,B03,B04,B05,B06,B07
+        """
+        if img.shape[0] != 7:
+            return img
+        device, dtype, h, w = img.device, img.dtype, img.shape[1], img.shape[2]
+        out = torch.zeros((12, h, w), device=device, dtype=dtype)
+        mapping = {
+            0: 0,   # coastal
+            1: 1,   # blue
+            2: 2,   # green
+            3: 3,   # red
+            4: 7,   # nir -> S2 B08
+            5: 10,  # swir1 -> S2 B11
+            6: 11,  # swir2 -> S2 B12
+        }
+        for l89_idx, s2_idx in mapping.items():
+            out[s2_idx] = img[l89_idx]
+        return out
+
 class CLSHead(nn.Module):
     """Minimal DINO-style classifier head: CLS -> LayerNorm -> Linear."""
 
@@ -102,7 +267,7 @@ class CLSHead(nn.Module):
 
 class ConcatTemporalDataset(Dataset):
     """
-    Wraps the temporal dataset to concatenate three 7-band timepoints into one 21-band tensor.
+    Wraps the temporal dataset to concatenate three timepoints into one tensor.
     """
 
     def __init__(self, base_ds):
@@ -112,12 +277,54 @@ class ConcatTemporalDataset(Dataset):
         return len(self.base_ds)
 
     def __getitem__(self, idx):
-        x_list, label = self.base_ds[idx]  # list of 3 dicts
-        imgs = torch.cat([x["imgs"] for x in x_list], dim=0)  # (21, H, W)
-        chn_ids = torch.cat([x["chn_ids"] for x in x_list], dim=0)  # (21,)
+        x_list, label, sensor = self.base_ds[idx]  # list of 3 dicts, label, and sensor string
+        imgs = torch.cat([x["imgs"] for x in x_list], dim=0)
+        chn_ids = torch.cat([x["chn_ids"] for x in x_list], dim=0)
         x_dict = dict(imgs=imgs, chn_ids=chn_ids)
-        return x_dict, label
+        return x_dict, label, sensor
 
+def custom_collate_fn(batch):
+    """
+    Custom collate function to handle variable channel sizes in a batch.
+    It pads the 'imgs' spatial dims and channel dims so tensors can be stacked.
+    """
+    x_dicts, labels, sensors = zip(*batch)
+
+    # Find maxima
+    max_channels = max(x['imgs'].shape[0] for x in x_dicts)
+    max_h = max(x['imgs'].shape[1] for x in x_dicts)
+    max_w = max(x['imgs'].shape[2] for x in x_dicts)
+
+    padded_imgs = []
+    padded_chn_ids = []
+
+    for x_dict in x_dicts:
+        img = x_dict['imgs']
+        chn_ids = x_dict['chn_ids']
+        c, h, w = img.shape
+
+        # Pad spatial dims to max_h x max_w
+        pad_h = max_h - h
+        pad_w = max_w - w
+        if pad_h < 0 or pad_w < 0:
+            raise RuntimeError("Negative padding encountered; check image sizes.")
+        img = F.pad(img, (0, pad_w, 0, pad_h))  # (left, right, top, bottom)
+
+        # Pad channels to max_channels
+        pad_c = max_channels - c
+        if pad_c < 0:
+            raise RuntimeError("Negative channel padding encountered.")
+        if pad_c:
+            img = torch.cat([img, torch.zeros((pad_c, *img.shape[1:]), device=img.device, dtype=img.dtype)], dim=0)
+            chn_ids = torch.cat([chn_ids, torch.zeros((pad_c, *chn_ids.shape[1:]), device=chn_ids.device, dtype=chn_ids.dtype)], dim=0)
+        padded_imgs.append(img)
+
+        if chn_ids.ndim != 2:
+            raise RuntimeError(f"Unexpected chn_ids dimension: {chn_ids.ndim}. Expected 2D tensor.")
+        padded_chn_ids.append(chn_ids)
+
+    batched_x_dict = {'imgs': torch.stack(padded_imgs), 'chn_ids': torch.stack(padded_chn_ids)}
+    return batched_x_dict, torch.tensor(labels), list(sensors)
 
 def load_backbone(weights_path: str, device: torch.device, debug: bool = False):
     """
@@ -151,6 +358,9 @@ def load_backbone(weights_path: str, device: torch.device, debug: bool = False):
     if debug:
         print("Loading state dict to CPU...", flush=True)
     state = torch.load(weights_path, map_location="cpu")
+    # Accept both pure state_dict and full training checkpoints
+    if isinstance(state, dict) and "backbone" in state:
+        state = state["backbone"]
     if debug:
         print("Applying state dict...", flush=True)
     model.load_state_dict(state, strict=True)
@@ -166,27 +376,6 @@ def recursive_to_device(x, device):
         t = [recursive_to_device(v, device) for v in x]
         return type(x)(t)
     return x
-
-def resize_imgs_to_224(x_dict):
-    """Upsample batch of images in x_dict["imgs"] to 224x224 before the backbone."""
-
-    imgs = x_dict.get("imgs")
-    if imgs is None:
-        return x_dict
-
-    # Support both (C, H, W) and (B, C, H, W) shapes.
-    squeeze_back = False
-    if imgs.ndim == 3:
-        imgs = imgs.unsqueeze(0)
-        squeeze_back = True
-
-    if imgs.ndim == 4:
-        imgs = F.interpolate(imgs, size=(224, 224), mode="bilinear", align_corners=False)
-        if squeeze_back:
-            imgs = imgs.squeeze(0)
-        x_dict["imgs"] = imgs
-
-    return x_dict
 
 def set_trainable(module: nn.Module, requires_grad: bool):
     for p in module.parameters():
@@ -222,7 +411,7 @@ def default_run_name(args) -> str:
     train_stem = Path(args.train_csv).stem or "train"
     test_stem = Path(args.test_csv).stem or "test"
     mode = "ft" if args.train_backbone else "head"
-    return f"{train_stem}__{test_stem}__{mode}"
+    return f"mixed_{train_stem}__{test_stem}__{mode}"
 
 
 def save_checkpoint(
@@ -285,22 +474,20 @@ def main(args):
         torch.cuda.set_device(device)
     use_amp = device.type == "cuda"
     
-    norm_stats = PRECOMPUTED_STATS
-    
     ds_kwargs = {
-        "ds_cfg_name": "landsat89_7band",
-        "normalize_stats": norm_stats,
-        "scale_to_unit": False,
+        # Keep inputs safely within fp16 range (avoid NaNs) by scaling uint16 data to [0,1].
+        "scale_to_unit": True,
         "pad_to_multiple": args.pad_to_multiple,
         "compute_stats": False,
         "path_columns": (args.t0_col, args.t90_col, args.t360_col),
         "skip_invalid_samples": args.skip_invalid_samples,
     }
 
-    dataset_cls = S2TemporalCsvDataset
+    dataset_cls = MixedSensorTemporalCsvDataset
     cache_obj = None
     if args.local_cache_dir:
-        dataset_cls = CachedS2TemporalCsvDataset
+        # We can't easily subclass both, so we'll just use the mixed one for now.
+        # Caching logic is simple, so it could be merged into MixedSensorTemporalCsvDataset if needed.
         cache_obj = StaticAnchoredCache(args.local_cache_dir)
         ds_kwargs["local_file_cache"] = cache_obj
 
@@ -325,14 +512,14 @@ def main(args):
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
-        train_ds, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, pin_memory=pin_memory
+        train_ds, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, pin_memory=pin_memory, collate_fn=custom_collate_fn
     )
     test_loader = DataLoader(
-        test_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=pin_memory
+        test_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=pin_memory, collate_fn=custom_collate_fn
     )
 
     print(
-        f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
+        f"Using device={device}, mixed-sensor training, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
         f"train_backbone={args.train_backbone}",
         flush=True,
     )
@@ -358,16 +545,20 @@ def main(args):
     ckpt_dir = Path(args.checkpoint_dir) / run_name
     latest_path = ckpt_dir / "ckpt_latest.pth"
     best_train_path = ckpt_dir / "ckpt_best_train.pth"
-    best_test_path = ckpt_dir / "ckpt_best_test.pth"
+    best_test_path1 = ckpt_dir / "ckpt_best_test1.pth"
+    best_test_path2 = ckpt_dir / "ckpt_best_test2.pth"
 
     start_epoch = 1
     global_step = 0
     best_train_acc = 0.0
-    best_test_acc = 0.0
+    best_test_acc1 = float("-inf")
+    best_test_acc2 = float("-inf")
     if args.resume:
         start_epoch, global_step, best_train_acc, best_test_acc = try_resume(
             latest_path, backbone, head, optimizer, scheduler, scaler, device
         )
+        # Note: best_test_acc1/2 are not restored on resume; they will be recomputed in the new run.
+        best_test_acc1 = best_test_acc
 
     wandb_run = init_wandb(args)
 
@@ -384,10 +575,9 @@ def main(args):
         total_loss = 0.0
         correct = 0
         total = 0
-        for step, (x_dict, labels) in enumerate(train_loader, 1):
+        for step, (x_dict, labels, _) in enumerate(train_loader, 1): # Ignore sensor during training
             labels = labels.to(device)
             x_dict = recursive_to_device(x_dict, device)
-            # x_dict = resize_imgs_to_224(x_dict)
 
             with autocast(enabled=use_amp):
                 feats = backbone(x_dict, is_training=True)
@@ -433,17 +623,16 @@ def main(args):
 
         head.eval()
         backbone.eval()
-        correct = 0
-        total = 0
+        sensor_correct = {"l89": 0, "s2": 0}
+        sensor_total = {"l89": 0, "s2": 0}
         test_loss_total = 0.0
         tp = fp = fn = tn = 0
         all_probs = []
         all_targets = []
         with torch.no_grad():
-            for step, (x_dict, labels) in enumerate(test_loader, 1):
+            for step, (x_dict, labels, sensors) in enumerate(test_loader, 1):
                 labels = labels.to(device)
                 x_dict = recursive_to_device(x_dict, device)
-                # x_dict = resize_imgs_to_224(x_dict)
                 with autocast(enabled=use_amp):
                     feats = backbone(x_dict, is_training=True)
                     cls_token = feats["x_norm_clstoken"]
@@ -452,8 +641,12 @@ def main(args):
 
                 test_loss_total += loss.item() * labels.size(0)
                 preds = logits.argmax(dim=1)
-                correct += (preds == labels).sum().item()
-                total += labels.size(0)
+                
+                for i in range(len(sensors)):
+                    sensor_type = sensors[i]
+                    sensor_total[sensor_type] += 1
+                    if preds[i] == labels[i]:
+                        sensor_correct[sensor_type] += 1
                 probs = F.softmax(logits, dim=1)[:, 1]
                 all_probs.append(probs.detach().cpu())
                 all_targets.append(labels.detach().cpu())
@@ -465,7 +658,12 @@ def main(args):
                 if args.max_eval_steps is not None and step >= args.max_eval_steps:
                     break
 
+        total = sum(sensor_total.values())
+        correct = sum(sensor_correct.values())
         test_acc = correct / total
+        test_acc_l89 = sensor_correct["l89"] / sensor_total["l89"] if sensor_total["l89"] > 0 else float("nan")
+        test_acc_s2 = sensor_correct["s2"] / sensor_total["s2"] if sensor_total["s2"] > 0 else float("nan")
+
         test_loss = test_loss_total / total if total > 0 else float("nan")
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
         fpr = fp / (fp + tn) if (fp + tn) > 0 else 0.0
@@ -484,15 +682,61 @@ def main(args):
         print(
             f"Epoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
             f"test_loss={test_loss:.4f} test_acc={test_acc:.4f} "
-            f"recall={recall:.4f} fpr={fpr:.4f} auroc={test_auroc:.4f}",
+            f"test_acc_l89={test_acc_l89:.4f} test_acc_s2={test_acc_s2:.4f} "
+            f"recall={recall:.4f} fpr={fpr:.4f} auroc={test_auroc:.4f} ",
             flush=True,
         )
 
         # --- save checkpoints ---
         prev_best_train = best_train_acc
-        prev_best_test = best_test_acc
+        prev_best_test1 = best_test_acc1
+        prev_best_test2 = best_test_acc2
         best_train_acc = max(best_train_acc, train_acc)
-        best_test_acc = max(best_test_acc, test_acc)
+        if test_acc > best_test_acc1:
+            best_test_acc2 = best_test_acc1
+            best_test_acc1 = test_acc
+            # rotate checkpoints: new best_test_acc1 -> best_test_path1; old best1 -> best2
+            save_checkpoint(
+                best_test_path2,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                scaler,
+                best_train_acc,
+                best_test_acc2,
+                args,
+            )
+            save_checkpoint(
+                best_test_path1,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                scaler,
+                best_train_acc,
+                best_test_acc1,
+                args,
+            )
+        elif test_acc > best_test_acc2:
+            best_test_acc2 = test_acc
+            save_checkpoint(
+                best_test_path2,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                scaler,
+                best_train_acc,
+                best_test_acc2,
+                args,
+            )
 
         save_checkpoint(
             latest_path,
@@ -519,22 +763,7 @@ def main(args):
                 scheduler,
                 scaler,
                 best_train_acc,
-                best_test_acc,
-                args,
-            )
-
-        if test_acc > prev_best_test:
-            save_checkpoint(
-                best_test_path,
-                epoch,
-                global_step,
-                backbone,
-                head,
-                optimizer,
-                scheduler,
-                scaler,
-                best_train_acc,
-                best_test_acc,
+                best_test_acc1,
                 args,
             )
 
@@ -546,6 +775,8 @@ def main(args):
                     "train_acc": train_acc,
                     "test_loss": test_loss,
                     "test_acc": test_acc,
+                    "test_acc_l89": test_acc_l89,
+                    "test_acc_s2": test_acc_s2,
                     "test_recall": recall,
                     "test_fpr": fpr,
                     "test_auroc": test_auroc,
@@ -557,9 +788,9 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Panopticon ViT + CLS head with concatenated temporal Landsat 8/9 SR inputs.")
+    parser = argparse.ArgumentParser(description="Panopticon ViT + CLS head with concatenated temporal inputs from L8/9 or S2.")
     parser.add_argument("--train_csv", default="")
-    parser.add_argument("--test_csv", default="")
+    parser.add_argument("--test_csv", default="", help="CSV for testing. Must also contain a 'sensor' column.")
     parser.add_argument(
         "--weights",
         default="weights/panopticon_vitb14_teacher.pth",
@@ -610,7 +841,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
-    parser.add_argument("--wandb_run_name", default="dino_clssifier_head_l89_temportal_one_block", help="Optional WandB run name.")
+    parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")
     parser.add_argument(
         "--checkpoint_dir",
         default="checkpoints",
@@ -619,7 +850,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--run_name",
         default=None,
-        help="Run name for checkpoint subfolder. Defaults to <train_csv_stem>__<test_csv_stem>__ft|head.",
+        help="Run name for checkpoint subfolder. Defaults to mixed_<train_csv_stem>__<test_csv_stem>__ft|head.",
     )
     parser.add_argument(
         "--resume",
