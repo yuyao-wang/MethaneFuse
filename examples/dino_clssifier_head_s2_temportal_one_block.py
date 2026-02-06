@@ -72,12 +72,12 @@ def load_backbone(weights_path: str, device: torch.device, debug: bool = False):
         return _panopticon_vitb14()
 
     weights_path = Path(weights_path)
-    if not weights_path.is_file():
-        alt_path = Path(str(weights_path) + "?download=true")
-        if alt_path.is_file():
-            weights_path = alt_path
-        else:
-            raise FileNotFoundError(f"Checkpoint not found: {weights_path}")
+    # if not weights_path.is_file():
+    #     alt_path = Path(str(weights_path) + "?download=true")
+    #     if alt_path.is_file():
+    #         weights_path = alt_path
+    #     else:
+    #         raise FileNotFoundError(f"Checkpoint not found: {weights_path}")
 
     print(f"Loading checkpoint from {weights_path}", flush=True)
     if debug:

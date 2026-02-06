@@ -113,7 +113,7 @@ class ConcatTemporalDataset(Dataset):
         local_cache_dir = kwargs.pop("local_cache_dir", None)
         cache_warmup = kwargs.pop("cache_warmup", False)
         cache_workers = kwargs.pop("cache_workers", 8)
-        cache_min_free_gb = kwargs.pop("cache_min_free_gb",20.0)
+        cache_min_free_gb = kwargs.pop("cache_min_free_gb", 10.0)
 
         # Disable internal normalization; we handle it after computing stats.
         kwargs["normalize_stats"] = None
@@ -435,7 +435,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--cache_min_free_gb",
         type=float,
-        default=20.0,
+        default=10.0,
         help="Minimum free space to keep on disk when caching (GB). Cache falls back to source files if below.",
     )
     parser.add_argument("--stats_samples", type=int, default=1000, help="Number of samples for computing mean/std.")
