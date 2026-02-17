@@ -122,6 +122,26 @@ class CLSHead(nn.Module):
         return self.fc.out_features
 
 
+class Adapter(nn.Module):
+    """
+    一个经典瓶颈结构的Adapter模块。
+    它包含一个下采样层、一个激活函数和一个上采样层。
+    """
+    def __init__(self, embed_dim: int, reduction_factor: int = 16, dropout: float = 0.1):
+        super().__init__()
+        hidden_dim = embed_dim // reduction_factor
+        self.net = nn.Sequential(
+            nn.Linear(embed_dim, hidden_dim),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden_dim, embed_dim),
+            nn.Dropout(dropout),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return x + self.net(x) # 残差连接
+
+
 HeadFactory = Callable[[int, int], nn.Module]
 
 
@@ -136,6 +156,8 @@ class MultiSensorPanopticonClassifier(nn.Module):
         num_classes: Mapping[str, int] | int = 2,
         patch_embed_overrides: Optional[Mapping[str, PanopticonPE]] = None,
         head_factory: Optional[Union[HeadFactory, nn.Module]] = None,
+        use_adapters: bool = False,
+        adapter_reduction_factor: int = 16,
     ):
         super().__init__()
         if backbone is None:
@@ -149,6 +171,7 @@ class MultiSensorPanopticonClassifier(nn.Module):
             raise ValueError("At least one sensor must be specified")
         self.sensor_to_idx = {sensor: idx for idx, sensor in enumerate(self.sensor_order)}
 
+        # 1. 设置传感器特定的Patch Embeddings
         base_patch_embed = backbone.patch_embed
         sensor_modules = nn.ModuleDict()
         for sensor in self.sensor_order:
@@ -161,6 +184,7 @@ class MultiSensorPanopticonClassifier(nn.Module):
         self.sensor_patch_embeds = sensor_modules
         self.backbone.patch_embed = self.sensor_patch_embeds[self.sensor_order[0]]
 
+        # 2. 设置传感器特定的分类头
         embed_dim = getattr(self.backbone, "embed_dim", 768)
         if isinstance(num_classes, int):
             class_map = {sensor: num_classes for sensor in self.sensor_order}
@@ -181,6 +205,24 @@ class MultiSensorPanopticonClassifier(nn.Module):
         for sensor in self.sensor_order:
             classes = class_map[sensor]
             self.heads[sensor] = make_head(classes)
+
+        # 3. (新增) 设置传感器特定的Adapters
+        self.use_adapters = use_adapters
+        self.adapters_active = use_adapters
+        if self.use_adapters:
+            self.adapters = nn.ModuleDict()
+            num_blocks = len(self.backbone.blocks)
+            for sensor in self.sensor_order:
+                self.adapters[sensor] = nn.ModuleList(
+                    [
+                        Adapter(embed_dim, reduction_factor=adapter_reduction_factor)
+                        for _ in range(num_blocks)
+                    ]
+                )
+            print(f"Initialized sensor-specific adapters for {len(self.sensor_order)} sensors and {num_blocks} blocks.")
+
+    def set_adapters_active(self, active: bool) -> None:
+        self.adapters_active = bool(self.use_adapters and active)
 
     @contextmanager
     def _use_sensor(self, sensor: str):
@@ -216,6 +258,24 @@ class MultiSensorPanopticonClassifier(nn.Module):
             batches[sensor_name] = SensorBatch(idx_tensor, _slice_x_dict(x_dict, idx_tensor))
         return batches
 
+    def forward_backbone_with_adapters(self, x_dict: Dict[str, torch.Tensor], sensor_name: str) -> Dict[str, torch.Tensor]:
+        """使用特定传感器的Adapter来执行骨干网络的前向传播。"""
+        x = self.backbone.prepare_tokens_with_masks(x_dict)
+
+        # 依次通过每个Transformer Block
+        for i, blk in enumerate(self.backbone.blocks):
+            x = blk(x)
+            # 在每个Block后应用对应的Adapter
+            if self.use_adapters:
+                x = self.adapters[sensor_name][i](x)
+
+        # 准备最终输出
+        x_norm = self.backbone.norm(x)
+        return {
+            "x_norm_clstoken": x_norm[:, 0],
+            "x_norm_patchtokens": x_norm[:, 1:],
+        }
+
     def forward(
         self,
         x_dict: MutableMapping[str, torch.Tensor],
@@ -237,7 +297,10 @@ class MultiSensorPanopticonClassifier(nn.Module):
 
         for sensor_name, sensor_batch in sensor_batches.items():
             with self._use_sensor(sensor_name):
-                feats = self.backbone(sensor_batch.x_dict, is_training=True)
+                if self.use_adapters and self.adapters_active:
+                    feats = self.forward_backbone_with_adapters(sensor_batch.x_dict, sensor_name)
+                else:
+                    feats = self.backbone(sensor_batch.x_dict, is_training=True)
             cls_token = feats["x_norm_clstoken"]
             logits = self.heads[sensor_name](cls_token)
             if allow_merge:
@@ -403,7 +466,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
         s5p_data_key: Optional[str] = None,
         s5p_chn_ids_key: Optional[str] = "chn_ids",
         s5p_channels_last: bool = False,
-        align_l89_to_s2: bool = False,
+        random_retry_on_skip: bool = True,
         **kwargs,
     ):
         kwargs.pop("ds_cfg_name", None)
@@ -414,7 +477,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
         self._s5p_data_key = s5p_data_key
         self._s5p_chn_ids_key = s5p_chn_ids_key
         self._s5p_channels_last = s5p_channels_last
-        self._align_l89_to_s2 = bool(align_l89_to_s2)
+        self._random_retry_on_skip = random_retry_on_skip
         super().__init__(*args, **kwargs)
 
         if "sensor" not in self.df.columns:
@@ -436,8 +499,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
             ds_cfg_obj["chn_ids"] = chn_ids_tensor
             sensor_cfg["chn_ids"] = chn_ids_tensor
         self._s2_chn_ids = self.sensor_configs["s2"]["chn_ids"]
-        if self._align_l89_to_s2:
-            self.sensor_configs["l89"]["chn_ids"] = self._s2_chn_ids
+        self.sensor_configs["l89"]["chn_ids"] = self._s2_chn_ids
 
         if getattr(self, "scale_to_unit", False):
             for sensor_cfg in self.sensor_configs.values():
@@ -446,16 +508,6 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
                     continue
                 mean, std = stats
                 sensor_cfg["normalize_stats"] = ([m / 65535.0 for m in mean], [s / 65535.0 for s in std])
-        for sensor_cfg in self.sensor_configs.values():
-            stats = sensor_cfg.get("normalize_stats")
-            if stats is None:
-                sensor_cfg["mean_tensor"] = None
-                sensor_cfg["std_tensor"] = None
-                continue
-            mean, std = stats
-            sensor_cfg["mean_tensor"] = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
-            std_tensor = torch.clamp(torch.tensor(std, dtype=torch.float32), min=1e-6)
-            sensor_cfg["std_tensor"] = std_tensor.view(-1, 1, 1)
 
         mean, std = S5P_PRECOMPUTED_STATS
         self._s5p_mean = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
@@ -470,15 +522,9 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
         config = self.sensor_configs[sensor]
         original_ds_cfg = self.ds_cfg
         original_normalize_stats = self.normalize_stats
-        original_chn_ids = self.chn_ids
-        original_mean = self._mean
-        original_std = self._std
 
         self.ds_cfg = config["ds_cfg"]
         self.normalize_stats = config["normalize_stats"]
-        self.chn_ids = config["chn_ids"]
-        self._mean = config.get("mean_tensor")
-        self._std = config.get("std_tensor")
         try:
             path_to_use = self._maybe_cache_path(path)
             return super(TriSensorTemporalCsvDataset, self)._load_image(
@@ -487,9 +533,6 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
         finally:
             self.ds_cfg = original_ds_cfg
             self.normalize_stats = original_normalize_stats
-            self.chn_ids = original_chn_ids
-            self._mean = original_mean
-            self._std = original_std
 
     def __getitem__(self, idx):
         attempts = 0
@@ -509,7 +552,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
                 for col in self.path_columns:
                     path = row[col]
                     img = self._load_image(path, column_name=col, sample_id=idx)
-                    if sensor == "l89" and self._align_l89_to_s2:
+                    if sensor == "l89":
                         img = self._pad_l89_to_s2(img)
                     img = torch.nan_to_num(img, nan=0.0, posinf=0.0, neginf=0.0)
                     x_dict = dict(imgs=img, chn_ids=chn_ids)
@@ -520,6 +563,10 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
             except _SkipSample as exc:
                 last_exc = exc
                 attempts += 1
+                if not self._random_retry_on_skip:
+                    raise RuntimeError(
+                        f"Skipped sample at temporal index {idx} with random_retry_on_skip=False"
+                    ) from exc
                 if attempts >= self.max_retries:
                     raise RuntimeError(f"Exceeded {self.max_retries} retries for temporal index {idx}") from exc
                 idx = np.random.randint(0, len(self.df))
@@ -687,6 +734,33 @@ def build_sensor_dataloaders(
     return loaders, steps_per_sensor
 
 
+def report_train_test_overlap(
+    train_ds: TriSensorTemporalCsvDataset,
+    test_ds: TriSensorTemporalCsvDataset,
+    path_columns: Sequence[str],
+    sensors: Sequence[str] = ("s2", "l89", "s5p"),
+) -> Dict[str, Tuple[int, int, int]]:
+    def _sample_key_set(df, sensor_name: str):
+        mask = df["sensor"] == sensor_name
+        keys = set()
+        for row in df.loc[mask, list(path_columns)].itertuples(index=False, name=None):
+            keys.add(tuple(str(v) for v in row))
+        return keys
+
+    print("[DataCheck] Train/Test overlap by sensor:", flush=True)
+    summary: Dict[str, Tuple[int, int, int]] = {}
+    for sensor in sensors:
+        train_keys = _sample_key_set(train_ds.df, sensor)
+        test_keys = _sample_key_set(test_ds.df, sensor)
+        overlap = train_keys & test_keys
+        summary[sensor] = (len(train_keys), len(test_keys), len(overlap))
+        print(
+            f"[DataCheck] sensor={sensor} train={len(train_keys)} test={len(test_keys)} overlap={len(overlap)}",
+            flush=True,
+        )
+    return summary
+
+
 # --------------------------------------------------------------------------------------
 #  Training utilities
 # --------------------------------------------------------------------------------------
@@ -812,6 +886,18 @@ def gather_head_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[n
     return head_params
 
 
+def gather_adapter_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
+    if not model.use_adapters:
+        return []
+    return list(model.adapters.parameters())
+
+
+def phase_tag_for_epoch(epoch: int, *, adapter_enabled: bool, adapter_warmup_epochs: int) -> str:
+    if adapter_enabled and epoch > max(adapter_warmup_epochs, 0):
+        return "adapter"
+    return "warmup"
+
+
 # --------------------------------------------------------------------------------------
 #  CLI / training loop
 # --------------------------------------------------------------------------------------
@@ -828,11 +914,6 @@ def parse_args():
     parser.add_argument("--s5p_data_key", default=None)
     parser.add_argument("--s5p_chn_ids_key", default="chn_ids")
     parser.add_argument("--s5p_channels_last", action="store_true")
-    parser.add_argument(
-        "--align_l89_to_s2",
-        action="store_true",
-        help="Pad L89 to 12 channels and reuse S2 channel ids (legacy behavior).",
-    )
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--head_lr", type=float, default=1e-3)
@@ -862,7 +943,16 @@ def parse_args():
     parser.add_argument("--oversample_minority", action="store_true", dest="oversample_minority")
     parser.add_argument("--disable_oversample_minority", action="store_false", dest="oversample_minority")
     parser.set_defaults(oversample_minority=True)
+    # Adapter参数
+    parser.add_argument("--use_adapters", action="store_true", help="在Transformer Block中为每个传感器插入Adapter。")
+    parser.add_argument("--adapter_reduction_factor", type=int, default=16, help="Adapter瓶颈层的降维因子。")
+    parser.add_argument("--adapter_warmup_epochs", type=int, default=0, help="在使用Adapter时，前N个epoch不启用Adapter，仅训练backbone+head；之后启用Adapter并冻结backbone。")
     parser.add_argument("--sensor_switch_interval", type=int, default=100)
+    parser.add_argument(
+        "--allow_train_test_overlap",
+        action="store_true",
+        help="Allow overlapping samples between train/test CSVs (not recommended).",
+    )
     return parser.parse_args()
 
 
@@ -885,7 +975,7 @@ def main(args):
         s5p_data_key=args.s5p_data_key,
         s5p_chn_ids_key=args.s5p_chn_ids_key,
         s5p_channels_last=args.s5p_channels_last,
-        align_l89_to_s2=args.align_l89_to_s2,
+        random_retry_on_skip=True,
         pad_to_multiple=14,
     )
     base_test_ds = TriSensorTemporalCsvDataset(
@@ -895,9 +985,21 @@ def main(args):
         s5p_data_key=args.s5p_data_key,
         s5p_chn_ids_key=args.s5p_chn_ids_key,
         s5p_channels_last=args.s5p_channels_last,
-        align_l89_to_s2=args.align_l89_to_s2,
+        random_retry_on_skip=False,
         pad_to_multiple=14,
     )
+    overlap_summary = report_train_test_overlap(base_train_ds, base_test_ds, path_columns)
+    if not args.allow_train_test_overlap:
+        leaking_sensors = [s for s, (_, _, overlap) in overlap_summary.items() if overlap > 0]
+        if leaking_sensors:
+            details = ", ".join(
+                f"{s}: overlap={overlap_summary[s][2]}/{overlap_summary[s][1]}" for s in leaking_sensors
+            )
+            raise ValueError(
+                "Train/Test overlap detected. Fix your CSV split before training/eval. "
+                f"Leaking sensors -> {details}. "
+                "Use --allow_train_test_overlap to bypass this check."
+            )
 
     if args.local_cache_warmup and cache_obj:
         all_paths = []
@@ -909,20 +1011,28 @@ def main(args):
     train_ds = ConcatTemporalDataset(base_train_ds)
     test_ds = ConcatTemporalDataset(base_test_ds)
 
-    core_model = MultiSensorPanopticonClassifier(backbone=_load_backbone(args.weights)).to(device)
+    core_model = MultiSensorPanopticonClassifier(
+        backbone=_load_backbone(args.weights),
+        use_adapters=args.use_adapters,
+        adapter_reduction_factor=args.adapter_reduction_factor,
+    ).to(device)
     model: nn.Module = core_model
-    use_data_parallel = args.data_parallel and device.type == "cuda" and torch.cuda.device_count() > 1
+    cuda_device_count = torch.cuda.device_count() if device.type == "cuda" else 0
+    auto_data_parallel = device.type == "cuda" and cuda_device_count > 1
+    use_data_parallel = (args.data_parallel or auto_data_parallel) and cuda_device_count > 1
     if use_data_parallel:
-        print(f"Enabling DataParallel across {torch.cuda.device_count()} GPUs", flush=True)
+        print(f"Enabling DataParallel across {cuda_device_count} GPUs", flush=True)
         model = nn.DataParallel(core_model)
-    elif args.data_parallel:
+    elif args.data_parallel and device.type == "cuda":
         print("DataParallel requested but insufficient CUDA devices; running single-device.", flush=True)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
-    head_params = gather_head_parameters(core_model)
+    head_params = list(gather_head_parameters(core_model))
+    if args.use_adapters:
+        head_params.extend(gather_adapter_parameters(core_model))
     param_groups = [
         {"params": head_params, "lr": args.head_lr},
     ]
-    if args.train_backbone:
+    if args.train_backbone or (args.use_adapters and args.adapter_warmup_epochs > 0):
         param_groups.insert(0, {"params": core_model.backbone.parameters(), "lr": args.backbone_lr})
 
     optimizer = torch.optim.Adam(param_groups, weight_decay=args.weight_decay, betas=(args.momentum, 0.999))
@@ -977,20 +1087,43 @@ def main(args):
         f"sensors={sorted(train_loaders.keys())}, train_backbone={args.train_backbone}",
         flush=True,
     )
+
     for epoch in range(start_epoch, args.epochs + 1):
-        freeze_backbone = (not args.train_backbone) or (
-            args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
+        phase_tag = phase_tag_for_epoch(
+            epoch,
+            adapter_enabled=args.use_adapters,
+            adapter_warmup_epochs=args.adapter_warmup_epochs,
         )
-        if freeze_backbone:
-            set_trainable(core_model.backbone, False)
-            core_model.backbone.eval()
+        adapter_phase = args.use_adapters and phase_tag == "adapter"
+        if args.use_adapters:
+            core_model.set_adapters_active(adapter_phase)
+            set_trainable(core_model.adapters, adapter_phase)
+            set_trainable(core_model.backbone, not adapter_phase)
+            set_trainable(core_model.sensor_patch_embeds, not adapter_phase)
         else:
-            set_trainable(core_model.backbone, True)
-            core_model.backbone.train()
+            freeze_backbone = (not args.train_backbone) or (
+                args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
+            )
+            set_trainable(core_model.backbone, not freeze_backbone)
+
         model.train()
         core_model.heads.train()
-        for sensor in core_model.sensor_patch_embeds.values():
-            sensor.train()
+        if args.use_adapters:
+            if adapter_phase:
+                core_model.backbone.eval()
+                for sensor in core_model.sensor_patch_embeds.values():
+                    sensor.eval()
+            else:
+                core_model.backbone.train()
+                for sensor in core_model.sensor_patch_embeds.values():
+                    sensor.train()
+        else:
+            if freeze_backbone:
+                core_model.backbone.eval()
+            else:
+                core_model.backbone.train()
+            for sensor in core_model.sensor_patch_embeds.values():
+                sensor.train()
 
         total_loss = 0.0
         total = 0
@@ -1054,7 +1187,9 @@ def main(args):
             scaler.scale(loss).backward()
             if args.max_grad_norm and args.max_grad_norm > 0:
                 scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(param_groups[0]["params"], args.max_grad_norm)
+                grad_params = [p for p in core_model.parameters() if p.requires_grad]
+                if grad_params:
+                    torch.nn.utils.clip_grad_norm_(grad_params, args.max_grad_norm)
             scaler.step(optimizer)
             scaler.update()
             if scheduler is not None:
@@ -1090,7 +1225,8 @@ def main(args):
                     if name in per_sensor_losses
                 )
                 print(
-                    f"Epoch {epoch} sensor={active_sensor} step {steps_done[active_sensor]}/{target_steps} "
+                    f"Epoch {epoch} phase={phase_tag} sensor={active_sensor} "
+                    f"step {steps_done[active_sensor]}/{target_steps} "
                     f"train_loss={total_loss/total:.4f} train_acc={correct/total:.4f} {sensor_loss_details}",
                     flush=True,
                 )
@@ -1162,24 +1298,13 @@ def main(args):
         train_acc_str = " ".join(f"train_acc_{s}={train_per_sensor_acc[s]:.4f}" for s in sensors_list)
         test_acc_str = " ".join(f"test_acc_{s}={per_sensor_acc[s]:.4f}" for s in sensors_list)
         print(
-            f"Epoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
+            f"Epoch {epoch} phase={phase_tag}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
             f"test_loss={test_loss:.4f} test_acc={test_acc:.4f} "
             f"{train_acc_str} {test_acc_str}",
             flush=True,
         )
 
-        save_checkpoint(
-            latest_path,
-            epoch,
-            global_step,
-            core_model,
-            optimizer,
-            scheduler,
-            scaler if use_amp else None,
-            train_acc,
-            test_acc,
-            args,
-        )
+        best_train_acc = max(best_train_acc, train_acc)
         if test_acc > best_test_acc:
             best_test_acc = test_acc
             save_checkpoint(
@@ -1190,12 +1315,23 @@ def main(args):
                 optimizer,
                 scheduler,
                 scaler if use_amp else None,
-                train_acc,
-                test_acc,
+                best_train_acc,
+                best_test_acc,
                 args,
             )
 
-        best_train_acc = max(best_train_acc, train_acc)
+        save_checkpoint(
+            latest_path,
+            epoch,
+            global_step,
+            core_model,
+            optimizer,
+            scheduler,
+            scaler if use_amp else None,
+            best_train_acc,
+            best_test_acc,
+            args,
+        )
         if wandb_run is not None:
             log_payload = {
                 "epoch": epoch,

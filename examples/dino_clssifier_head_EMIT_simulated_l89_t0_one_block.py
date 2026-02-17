@@ -1,7 +1,12 @@
 import argparse
+import hashlib
 import sys
 import os
+import shutil
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import suppress
 from pathlib import Path
+from typing import Optional, Sequence
 
 import torch
 import torch.nn as nn
@@ -15,6 +20,56 @@ if str(REPO_ROOT) not in sys.path:
 
 # Disable xFormers kernels to avoid long CUDA discovery/initialization hangs.
 os.environ.setdefault("XFORMERS_DISABLED", "1")
+
+
+class StaticAnchoredCache:
+    def __init__(self, cache_dir: str, min_free_gb: float = 10.0):
+        self.cache_dir = Path(cache_dir).expanduser().resolve()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.min_free_bytes = min_free_gb * (1024**3)
+
+    def _get_free_space(self) -> int:
+        return shutil.disk_usage(self.cache_dir).free
+
+    def _hashed_path(self, original: str) -> Path:
+        norm_path = os.path.abspath(original)
+        digest = hashlib.sha1(norm_path.encode("utf-8")).hexdigest()
+        subdir = digest[:2]
+        suffix = Path(original).suffix
+        return self.cache_dir / subdir / f"{digest}{suffix}"
+
+    def ensure_local(self, original: str) -> str:
+        dst = self._hashed_path(original)
+        if dst.exists():
+            return str(dst)
+        if self._get_free_space() < self.min_free_bytes:
+            return original
+        tmp = dst.with_suffix(dst.suffix + ".tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            shutil.copy2(original, tmp)
+            os.replace(tmp, dst)
+        except Exception:
+            with suppress(FileNotFoundError):
+                tmp.unlink()
+            return original
+        return str(dst)
+
+    def warm_up(self, paths: Sequence[str], max_workers: int = 8) -> None:
+        unique_paths = sorted({os.path.abspath(p) for p in paths if isinstance(p, str)})
+        if not unique_paths:
+            return
+        print(f"[Cache] Warming up (target: {len(unique_paths)})...", flush=True)
+
+        def _copy_one(path: str):
+            res = self.ensure_local(path)
+            return res == path
+
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            futures = [pool.submit(_copy_one, p) for p in unique_paths]
+            fallback_count = sum(1 for fut in as_completed(futures) if fut.result())
+            print(f"[Cache] Warmup complete. Cached: {len(unique_paths) - fallback_count}, Remote: {fallback_count}")
+
 
 class CLSHead(nn.Module):
     """Minimal DINO-style classifier head: CLS -> LayerNorm -> Linear."""
@@ -147,6 +202,16 @@ def build_scheduler(args, optimizer):
 
 def main(args):
     from dinov2.data.datasets.s2_csv import S2CsvDataset
+    
+    class CachedS2CsvDataset(S2CsvDataset):
+        def __init__(self, *args, local_file_cache: Optional[StaticAnchoredCache] = None, **kwargs):
+            super().__init__(*args, **kwargs)
+            self._local_file_cache = local_file_cache
+
+        def _load_image(self, path: str, *, column_name=None, sample_id=None):
+            if self._local_file_cache is not None and isinstance(path, str):
+                path = self._local_file_cache.ensure_local(path)
+            return super()._load_image(path, column_name=column_name, sample_id=sample_id)
 
     device = torch.device(args.device)
     if device.type == "cuda" and device.index is None:
@@ -154,8 +219,12 @@ def main(args):
     if device.type == "cuda":
         torch.cuda.set_device(device)
 
+    cache_obj = None
+    if args.local_cache_dir:
+        cache_obj = StaticAnchoredCache(args.local_cache_dir)
+
     # Only use the t0 image (7 bands) as input.
-    train_ds = S2CsvDataset(
+    train_ds = CachedS2CsvDataset(
         csv_path=args.train_csv,
         ds_cfg_name="landsat89_7band",
         normalize_stats=None,  # inputs are already normalized upstream
@@ -164,8 +233,9 @@ def main(args):
         compute_stats=False,
         path_column=args.t0_col,
         skip_invalid_samples=args.skip_invalid_samples,
+        local_file_cache=cache_obj,
     )
-    test_ds = S2CsvDataset(
+    test_ds = CachedS2CsvDataset(
         csv_path=args.test_csv,
         ds_cfg_name="landsat89_7band",
         normalize_stats=None,
@@ -174,7 +244,13 @@ def main(args):
         compute_stats=False,
         path_column=args.t0_col,
         skip_invalid_samples=args.skip_invalid_samples,
+        local_file_cache=cache_obj,
     )
+    if args.local_cache_warmup and cache_obj:
+        all_paths = []
+        if args.t0_col in train_ds.df.columns:
+            all_paths.extend(train_ds.df[args.t0_col].dropna().astype(str).tolist())
+        cache_obj.warm_up(all_paths, max_workers=args.local_cache_workers)
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
@@ -395,6 +471,9 @@ if __name__ == "__main__":
         action="store_true",
         help="Drop CSV rows whose TIFFs are missing or unreadable instead of failing mid-epoch.",
     )
+    parser.add_argument("--local_cache_dir", default=None)
+    parser.add_argument("--local_cache_warmup", action="store_true")
+    parser.add_argument("--local_cache_workers", type=int, default=8)
     # parser.add_argument(
     #     "--t90_col",
     #     default="s2_pre_path",

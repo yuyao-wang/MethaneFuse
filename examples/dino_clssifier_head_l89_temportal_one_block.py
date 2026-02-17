@@ -167,6 +167,42 @@ def recursive_to_device(x, device):
         return type(x)(t)
     return x
 
+def maybe_wrap_dataparallel(module: nn.Module, device: torch.device, num_gpus: int, module_name: str) -> nn.Module:
+    """Wrap ``module`` with DataParallel when multiple GPUs are requested."""
+
+    if device.type != "cuda" or num_gpus <= 1:
+        return module
+
+    available = torch.cuda.device_count()
+    if available < num_gpus:
+        raise RuntimeError(
+            f"Requested num_gpus={num_gpus}, but only {available} CUDA device(s) are visible."
+        )
+
+    device_ids = list(range(num_gpus))
+    print(
+        f"Wrapping {module_name} with DataParallel across GPU ids {device_ids}. Batch size will be split automatically.",
+        flush=True,
+    )
+    return nn.DataParallel(module, device_ids=device_ids)
+
+
+def unwrap_module(module: nn.Module) -> nn.Module:
+    return module.module if isinstance(module, nn.DataParallel) else module
+
+
+def load_state_dict_flexible(module: nn.Module, state_dict):
+    base_module = unwrap_module(module)
+    try:
+        base_module.load_state_dict(state_dict)
+    except RuntimeError:
+        if isinstance(state_dict, dict) and any(k.startswith("module.") for k in state_dict.keys()):
+            stripped = {k[len("module."):]: v for k, v in state_dict.items()}
+            base_module.load_state_dict(stripped)
+        else:
+            raise
+
+
 def resize_imgs_to_224(x_dict):
     """Upsample batch of images in x_dict["imgs"] to 224x224 before the backbone."""
 
@@ -243,8 +279,8 @@ def save_checkpoint(
         {
             "epoch": epoch,
             "global_step": global_step,
-            "backbone": backbone.state_dict(),
-            "head": head.state_dict(),
+            "backbone": unwrap_module(backbone).state_dict(),
+            "head": unwrap_module(head).state_dict(),
             "optimizer": optimizer.state_dict(),
             "scheduler": None if scheduler is None else scheduler.state_dict(),
             "scaler": None if scaler is None else scaler.state_dict(),
@@ -261,8 +297,8 @@ def try_resume(path: Path, backbone: nn.Module, head: nn.Module, optimizer, sche
         return 1, 0, 0.0, 0.0
 
     ckpt = torch.load(path, map_location=device)
-    backbone.load_state_dict(ckpt["backbone"])
-    head.load_state_dict(ckpt["head"])
+    load_state_dict_flexible(backbone, ckpt["backbone"])
+    load_state_dict_flexible(head, ckpt["head"])
     optimizer.load_state_dict(ckpt["optimizer"])
     if scheduler is not None and ckpt.get("scheduler") is not None:
         scheduler.load_state_dict(ckpt["scheduler"])
@@ -339,6 +375,7 @@ def main(args):
 
     backbone = load_backbone(args.weights, device=device, debug=args.debug).to(device)
     head = CLSHead(embed_dim=args.embed_dim, num_classes=2).to(device)
+    backbone = maybe_wrap_dataparallel(backbone, device, args.num_gpus, "backbone")
     scaler = GradScaler(enabled=use_amp)
 
     will_train_backbone = args.train_backbone
@@ -648,6 +685,12 @@ if __name__ == "__main__":
         type=int,
         default=768,
         help="Backbone output dimension (Panopticon teacher is 768).",
+    )
+    parser.add_argument(
+        "--num_gpus",
+        type=int,
+        default=1,
+        help="Number of GPUs to use via torch.nn.DataParallel when --device is CUDA.",
     )
     parser.add_argument("--local_cache_dir", default=None, help="Directory for caching remote files.")
     parser.add_argument("--local_cache_warmup", action="store_true", help="Pre-copy all files to the cache before training.")

@@ -21,7 +21,7 @@ import warnings
 from contextlib import contextmanager, suppress
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Dict, Mapping, MutableMapping, Optional, Sequence, Tuple, Union, Iterator
+from typing import Callable, Dict, Iterator, List, Mapping, MutableMapping, Optional, Sequence, Tuple, Union
 
 import numpy as np
 import torch
@@ -185,11 +185,14 @@ class MultiSensorPanopticonClassifier(nn.Module):
     @contextmanager
     def _use_sensor(self, sensor: str):
         original = self.backbone.patch_embed
+        original_lora_sensor = get_active_lora_sensor(self.backbone)
         self.backbone.patch_embed = self.sensor_patch_embeds[sensor]
+        set_lora_active_sensor(self.backbone, sensor)
         try:
             yield
         finally:
             self.backbone.patch_embed = original
+            set_lora_active_sensor(self.backbone, original_lora_sensor)
 
     def encode_sensors(self, sensors: Sequence[str], device: Optional[torch.device] = None) -> torch.Tensor:
         idxs = [self.sensor_to_idx[s] for s in sensors]
@@ -334,6 +337,54 @@ class MultiSensorPanopticonClassifier(nn.Module):
 class SensorBatch:
     indices: torch.Tensor
     x_dict: Dict[str, torch.Tensor]
+
+
+class LoRALinear(nn.Module):
+    """Linear layer with sensor-specific LoRA branches."""
+
+    def __init__(
+        self,
+        base: nn.Linear,
+        sensors: Sequence[str],
+        rank: int,
+        alpha: float = 16.0,
+        dropout: float = 0.0,
+    ):
+        super().__init__()
+        if rank <= 0:
+            raise ValueError("LoRA rank must be > 0")
+        self.sensor_order = list(sensors)
+        if not self.sensor_order:
+            raise ValueError("At least one sensor must be specified for LoRA")
+        self.base = base
+        self.rank = rank
+        self.alpha = float(alpha)
+        self.scaling = self.alpha / float(rank)
+        self.lora_down = nn.ModuleDict(
+            {sensor: nn.Linear(base.in_features, rank, bias=False) for sensor in self.sensor_order}
+        )
+        self.lora_up = nn.ModuleDict(
+            {sensor: nn.Linear(rank, base.out_features, bias=False) for sensor in self.sensor_order}
+        )
+        self.lora_dropout = nn.Dropout(dropout)
+        self.active_sensor: Optional[str] = None
+
+        for sensor in self.sensor_order:
+            nn.init.kaiming_uniform_(self.lora_down[sensor].weight, a=math.sqrt(5))
+            nn.init.zeros_(self.lora_up[sensor].weight)
+
+    def set_active_sensor(self, sensor: Optional[str]) -> None:
+        if sensor is not None and sensor not in self.lora_down:
+            raise ValueError(f"Unknown sensor '{sensor}' for LoRA layer")
+        self.active_sensor = sensor
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        base_out = self.base(x)
+        if self.active_sensor is None:
+            return base_out
+        sensor = self.active_sensor
+        lora_out = self.lora_up[sensor](self.lora_dropout(self.lora_down[sensor](x))) * self.scaling
+        return base_out + lora_out
 
 
 # --------------------------------------------------------------------------------------
@@ -729,6 +780,105 @@ def set_trainable(module: nn.Module, requires_grad: bool):
         p.requires_grad = requires_grad
 
 
+def _get_named_module_parent(root: nn.Module, module_name: str) -> Tuple[nn.Module, str]:
+    parts = module_name.split(".")
+    parent: nn.Module = root
+    for part in parts[:-1]:
+        if part.isdigit():
+            parent = parent[int(part)]  # type: ignore[index]
+        else:
+            parent = getattr(parent, part)
+    return parent, parts[-1]
+
+
+def _split_csv_targets(value: str) -> List[str]:
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def inject_lora_into_backbone(
+    backbone: DinoVisionTransformer,
+    *,
+    sensors: Sequence[str],
+    rank: int,
+    alpha: float,
+    dropout: float,
+    target_suffixes: Sequence[str],
+) -> int:
+    if rank <= 0:
+        return 0
+    matched = 0
+    to_replace: List[str] = []
+    for name, module in backbone.named_modules():
+        if not isinstance(module, nn.Linear):
+            continue
+        if any(name.endswith(suffix) for suffix in target_suffixes):
+            to_replace.append(name)
+    for name in to_replace:
+        parent, attr = _get_named_module_parent(backbone, name)
+        base = getattr(parent, attr)
+        if not isinstance(base, nn.Linear):
+            continue
+        setattr(parent, attr, LoRALinear(base, sensors=sensors, rank=rank, alpha=alpha, dropout=dropout))
+        matched += 1
+    return matched
+
+
+def get_active_lora_sensor(backbone: DinoVisionTransformer) -> Optional[str]:
+    for module in backbone.modules():
+        if isinstance(module, LoRALinear):
+            return module.active_sensor
+    return None
+
+
+def set_lora_active_sensor(backbone: DinoVisionTransformer, sensor: Optional[str]) -> None:
+    for module in backbone.modules():
+        if isinstance(module, LoRALinear):
+            module.set_active_sensor(sensor)
+
+
+def set_lora_branch_trainability(backbone: DinoVisionTransformer, requires_grad: bool) -> None:
+    for module in backbone.modules():
+        if isinstance(module, LoRALinear):
+            for branch in module.lora_down.values():
+                set_trainable(branch, requires_grad)
+            for branch in module.lora_up.values():
+                set_trainable(branch, requires_grad)
+
+
+def set_backbone_trainability(
+    backbone: DinoVisionTransformer,
+    *,
+    lora_phase: bool,
+):
+    if not lora_phase:
+        set_trainable(backbone, True)
+        set_lora_branch_trainability(backbone, False)
+        set_lora_active_sensor(backbone, None)
+        return
+    set_trainable(backbone, False)
+    set_lora_branch_trainability(backbone, True)
+
+
+def gather_lora_parameters(module: nn.Module) -> List[nn.Parameter]:
+    params: List[nn.Parameter] = []
+    for submodule in module.modules():
+        if isinstance(submodule, LoRALinear):
+            for branch in submodule.lora_down.values():
+                params.extend(list(branch.parameters()))
+            for branch in submodule.lora_up.values():
+                params.extend(list(branch.parameters()))
+    return params
+
+
+def gather_backbone_non_lora_parameters(module: nn.Module) -> List[nn.Parameter]:
+    params: List[nn.Parameter] = []
+    for name, param in module.named_parameters():
+        if ".lora_down." in name or ".lora_up." in name:
+            continue
+        params.append(param)
+    return params
+
+
 def init_wandb(args):
     if not args.use_wandb:
         return None
@@ -744,6 +894,38 @@ def default_run_name(args) -> str:
     return f"{train_stem}__{test_stem}__{mode}"
 
 
+def phase_tag_for_epoch(epoch: int, *, lora_enabled: bool, lora_warmup_epochs: int) -> str:
+    if lora_enabled and epoch > max(lora_warmup_epochs, 0):
+        return "lora"
+    return "warmup"
+
+
+def resolve_resume_checkpoint(ckpt_dir: Path, device: torch.device) -> Optional[Path]:
+    candidates = list(ckpt_dir.glob("ckpt_latest__*.pth"))
+    legacy_path = ckpt_dir / "ckpt_latest.pth"
+    if legacy_path.is_file():
+        candidates.append(legacy_path)
+    if not candidates:
+        return None
+
+    best_path: Optional[Path] = None
+    best_epoch = -1
+    best_mtime = float("-inf")
+    for path in candidates:
+        try:
+            ckpt = torch.load(path, map_location=device)
+            epoch = int(ckpt.get("epoch", -1))
+        except Exception as exc:
+            warnings.warn(f"Skipping unreadable checkpoint {path}: {exc}", RuntimeWarning)
+            continue
+        mtime = path.stat().st_mtime
+        if epoch > best_epoch or (epoch == best_epoch and mtime > best_mtime):
+            best_epoch = epoch
+            best_mtime = mtime
+            best_path = path
+    return best_path
+
+
 def save_checkpoint(
     path: Path,
     epoch: int,
@@ -754,31 +936,60 @@ def save_checkpoint(
     scaler,
     best_train_acc: float,
     best_test_acc: float,
+    phase: str,
     args,
+    include_optimizer_state: bool = True,
+    include_scheduler_state: bool = True,
+    include_scaler_state: bool = True,
 ):
     path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save(
-        {
-            "epoch": epoch,
-            "global_step": global_step,
-            "model": model.state_dict(),
-            "optimizer": optimizer.state_dict(),
-            "scheduler": None if scheduler is None else scheduler.state_dict(),
-            "scaler": None if scaler is None else scaler.state_dict(),
-            "best_train_acc": best_train_acc,
-            "best_test_acc": best_test_acc,
-            "args": vars(args),
-        },
-        path,
-    )
+    payload = {
+        "epoch": epoch,
+        "global_step": global_step,
+        "model": model.state_dict(),
+        "optimizer": optimizer.state_dict() if include_optimizer_state else None,
+        "scheduler": (
+            None
+            if (scheduler is None or not include_scheduler_state)
+            else scheduler.state_dict()
+        ),
+        "scaler": (
+            None
+            if (scaler is None or not include_scaler_state)
+            else scaler.state_dict()
+        ),
+        "best_train_acc": best_train_acc,
+        "best_test_acc": best_test_acc,
+        "phase": phase,
+        "args": vars(args),
+    }
+    try:
+        torch.save(payload, path)
+    except (RuntimeError, OSError) as exc:
+        # Avoid leaving a truncated checkpoint that later fails resume.
+        if path.exists():
+            try:
+                path.unlink()
+            except OSError:
+                pass
+        usage = shutil.disk_usage(path.parent)
+        free_gb = usage.free / (1024**3)
+        warnings.warn(
+            f"Failed to save checkpoint at {path}: {exc}. "
+            f"Free disk space under {path.parent}: {free_gb:.2f} GiB.",
+            RuntimeWarning,
+        )
+        return False
+    return True
 
 
 def try_resume(path: Path, model: nn.Module, optimizer, scheduler, scaler, device):
     if not path.is_file():
-        return 1, 0, 0.0, 0.0
+        return 1, 0, 0.0, 0.0, None
     ckpt = torch.load(path, map_location=device)
     model.load_state_dict(ckpt["model"])
-    optimizer.load_state_dict(ckpt["optimizer"])
+    if ckpt.get("optimizer") is not None:
+        optimizer.load_state_dict(ckpt["optimizer"])
     if scheduler is not None and ckpt.get("scheduler") is not None:
         scheduler.load_state_dict(ckpt["scheduler"])
     if scaler is not None and ckpt.get("scaler") is not None:
@@ -787,8 +998,9 @@ def try_resume(path: Path, model: nn.Module, optimizer, scheduler, scaler, devic
     global_step = ckpt.get("global_step", 0)
     best_train_acc = ckpt.get("best_train_acc", 0.0)
     best_test_acc = ckpt.get("best_test_acc", 0.0)
-    print(f"Resumed from {path} at epoch {start_epoch-1}", flush=True)
-    return start_epoch, global_step, best_train_acc, best_test_acc
+    phase = ckpt.get("phase")
+    print(f"Resumed from {path} at epoch {start_epoch-1}, phase={phase}", flush=True)
+    return start_epoch, global_step, best_train_acc, best_test_acc, phase
 
 
 def build_scheduler(args, optimizer):
@@ -863,6 +1075,11 @@ def parse_args():
     parser.add_argument("--disable_oversample_minority", action="store_false", dest="oversample_minority")
     parser.set_defaults(oversample_minority=True)
     parser.add_argument("--sensor_switch_interval", type=int, default=100)
+    parser.add_argument("--lora_rank", type=int, default=0)
+    parser.add_argument("--lora_alpha", type=float, default=16.0)
+    parser.add_argument("--lora_dropout", type=float, default=0.0)
+    parser.add_argument("--lora_targets", default="attn.qkv,attn.proj")
+    parser.add_argument("--lora_warmup_epochs", type=int, default=0)
     return parser.parse_args()
 
 
@@ -909,7 +1126,26 @@ def main(args):
     train_ds = ConcatTemporalDataset(base_train_ds)
     test_ds = ConcatTemporalDataset(base_test_ds)
 
-    core_model = MultiSensorPanopticonClassifier(backbone=_load_backbone(args.weights)).to(device)
+    core_model = MultiSensorPanopticonClassifier(backbone=_load_backbone(args.weights))
+    lora_target_suffixes = _split_csv_targets(args.lora_targets)
+    lora_enabled = args.lora_rank > 0
+    if lora_enabled:
+        matched = inject_lora_into_backbone(
+            core_model.backbone,
+            sensors=core_model.sensor_order,
+            rank=args.lora_rank,
+            alpha=args.lora_alpha,
+            dropout=args.lora_dropout,
+            target_suffixes=lora_target_suffixes,
+        )
+        if matched == 0:
+            raise ValueError(f"No backbone modules matched LoRA targets: {lora_target_suffixes}")
+        print(
+            f"LoRA enabled: rank={args.lora_rank}, alpha={args.lora_alpha}, "
+            f"dropout={args.lora_dropout}, targets={lora_target_suffixes}, matched={matched}",
+            flush=True,
+        )
+    core_model = core_model.to(device)
     model: nn.Module = core_model
     use_data_parallel = args.data_parallel and device.type == "cuda" and torch.cuda.device_count() > 1
     if use_data_parallel:
@@ -917,13 +1153,15 @@ def main(args):
         model = nn.DataParallel(core_model)
     elif args.data_parallel:
         print("DataParallel requested but insufficient CUDA devices; running single-device.", flush=True)
-    criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
-    head_params = gather_head_parameters(core_model)
-    param_groups = [
-        {"params": head_params, "lr": args.head_lr},
-    ]
-    if args.train_backbone:
-        param_groups.insert(0, {"params": core_model.backbone.parameters(), "lr": args.backbone_lr})
+    criteria = {sensor: nn.CrossEntropyLoss(label_smoothing=0.05) for sensor in core_model.sensor_order}
+    head_params = list(gather_head_parameters(core_model))
+    lora_params = gather_lora_parameters(core_model.backbone) if lora_enabled else []
+    backbone_params = gather_backbone_non_lora_parameters(core_model.backbone)
+    param_groups = [{"params": head_params, "lr": args.head_lr}]
+    if lora_params:
+        param_groups.append({"params": lora_params, "lr": args.head_lr})
+    if backbone_params:
+        param_groups.insert(0, {"params": backbone_params, "lr": args.backbone_lr})
 
     optimizer = torch.optim.Adam(param_groups, weight_decay=args.weight_decay, betas=(args.momentum, 0.999))
     scheduler = build_scheduler(args, optimizer)
@@ -932,18 +1170,33 @@ def main(args):
 
     run_name = args.wandb_run_name or default_run_name(args)
     ckpt_dir = Path(args.checkpoint_dir) / run_name
-    latest_path = ckpt_dir / "ckpt_latest.pth"
-    best_path = ckpt_dir / "ckpt_best_test.pth"
 
     start_epoch = 1
     global_step = 0
     best_train_acc = 0.0
-    best_test_acc = float("-inf")
+    best_test_acc_by_phase: Dict[str, float] = {"warmup": float("-inf"), "lora": float("-inf")}
 
     if args.resume:
-        start_epoch, global_step, best_train_acc, best_test_acc = try_resume(
-            latest_path, core_model, optimizer, scheduler, scaler, device
-        )
+        resume_path = resolve_resume_checkpoint(ckpt_dir, device)
+        if resume_path is not None:
+            start_epoch, global_step, best_train_acc, resumed_best_test_acc, resumed_phase = try_resume(
+                resume_path, core_model, optimizer, scheduler, scaler, device
+            )
+            if resumed_phase in best_test_acc_by_phase:
+                best_test_acc_by_phase[resumed_phase] = resumed_best_test_acc
+            expected_phase = phase_tag_for_epoch(
+                start_epoch,
+                lora_enabled=lora_enabled,
+                lora_warmup_epochs=args.lora_warmup_epochs,
+            )
+            if resumed_phase is not None and resumed_phase != expected_phase:
+                warnings.warn(
+                    f"Resume phase mismatch: checkpoint phase={resumed_phase}, "
+                    f"but epoch {start_epoch} maps to phase={expected_phase}.",
+                    RuntimeWarning,
+                )
+        else:
+            print(f"No checkpoint found under {ckpt_dir}; starting from scratch.", flush=True)
 
     wandb_run = init_wandb(args)
 
@@ -974,19 +1227,30 @@ def main(args):
 
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sorted(train_loaders.keys())}, train_backbone={args.train_backbone}",
+        f"sensors={sorted(train_loaders.keys())}, train_backbone={args.train_backbone}, "
+        f"lora_warmup_epochs={args.lora_warmup_epochs}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
-        freeze_backbone = (not args.train_backbone) or (
-            args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
+        phase_tag = phase_tag_for_epoch(
+            epoch,
+            lora_enabled=lora_enabled,
+            lora_warmup_epochs=args.lora_warmup_epochs,
         )
-        if freeze_backbone:
-            set_trainable(core_model.backbone, False)
-            core_model.backbone.eval()
-        else:
-            set_trainable(core_model.backbone, True)
+        lora_phase = False
+        if lora_enabled:
+            lora_phase = epoch > max(args.lora_warmup_epochs, 0)
+            set_backbone_trainability(core_model.backbone, lora_phase=lora_phase)
             core_model.backbone.train()
+        else:
+            freeze_backbone = (not args.train_backbone) or (
+                args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
+            )
+            set_trainable(core_model.backbone, not freeze_backbone)
+            if freeze_backbone:
+                core_model.backbone.eval()
+            else:
+                core_model.backbone.train()
         model.train()
         core_model.heads.train()
         for sensor in core_model.sensor_patch_embeds.values():
@@ -1042,6 +1306,8 @@ def main(args):
 
             labels = labels.to(device)
             x_dict = recursive_to_device(x_dict, device)
+            if lora_enabled:
+                set_lora_active_sensor(core_model.backbone, active_sensor if lora_phase else None)
             sensor_arg: Union[Sequence[str], torch.Tensor]
             if use_data_parallel:
                 sensor_arg = core_model.encode_sensors(sensors, device=device)
@@ -1049,12 +1315,19 @@ def main(args):
                 sensor_arg = sensors
             with autocast(enabled=use_amp):
                 outputs = model(x_dict, sensors=sensor_arg)
-                loss, per_sensor_losses = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
+                loss, per_sensor_losses = core_model.loss_from_outputs(
+                    outputs,
+                    labels,
+                    sensors,
+                    criteria[active_sensor],
+                )
             optimizer.zero_grad()
             scaler.scale(loss).backward()
             if args.max_grad_norm and args.max_grad_norm > 0:
                 scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(param_groups[0]["params"], args.max_grad_norm)
+                grad_params = [p for p in core_model.parameters() if p.requires_grad]
+                if grad_params:
+                    torch.nn.utils.clip_grad_norm_(grad_params, args.max_grad_norm)
             scaler.step(optimizer)
             scaler.update()
             if scheduler is not None:
@@ -1090,7 +1363,8 @@ def main(args):
                     if name in per_sensor_losses
                 )
                 print(
-                    f"Epoch {epoch} sensor={active_sensor} step {steps_done[active_sensor]}/{target_steps} "
+                    f"Epoch {epoch} phase={phase_tag} "
+                    f"sensor={active_sensor} step {steps_done[active_sensor]}/{target_steps} "
                     f"train_loss={total_loss/total:.4f} train_acc={correct/total:.4f} {sensor_loss_details}",
                     flush=True,
                 )
@@ -1123,13 +1397,15 @@ def main(args):
                 for step, (x_dict, labels, sensors) in enumerate(sensor_loader, 1):
                     labels = labels.to(device)
                     x_dict = recursive_to_device(x_dict, device)
+                    if lora_enabled:
+                        set_lora_active_sensor(core_model.backbone, active_sensor if lora_phase else None)
                     if use_data_parallel:
                         sensor_arg = core_model.encode_sensors(sensors, device=device)
                     else:
                         sensor_arg = sensors
                     with autocast(enabled=use_amp):
                         outputs = model(x_dict, sensors=sensor_arg)
-                        loss, _ = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
+                        loss, _ = core_model.loss_from_outputs(outputs, labels, sensors, criteria[active_sensor])
                     batch = labels.size(0)
                     test_loss_total += loss.item() * batch
                     total_eval += batch
@@ -1162,13 +1438,15 @@ def main(args):
         train_acc_str = " ".join(f"train_acc_{s}={train_per_sensor_acc[s]:.4f}" for s in sensors_list)
         test_acc_str = " ".join(f"test_acc_{s}={per_sensor_acc[s]:.4f}" for s in sensors_list)
         print(
-            f"Epoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
+            f"Epoch {epoch} phase={phase_tag}: "
+            f"train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
             f"test_loss={test_loss:.4f} test_acc={test_acc:.4f} "
             f"{train_acc_str} {test_acc_str}",
             flush=True,
         )
 
-        save_checkpoint(
+        latest_path = ckpt_dir / f"ckpt_latest__{phase_tag}.pth"
+        latest_saved = save_checkpoint(
             latest_path,
             epoch,
             global_step,
@@ -1178,10 +1456,12 @@ def main(args):
             scaler if use_amp else None,
             train_acc,
             test_acc,
+            phase_tag,
             args,
         )
-        if test_acc > best_test_acc:
-            best_test_acc = test_acc
+        if test_acc > best_test_acc_by_phase[phase_tag]:
+            best_test_acc_by_phase[phase_tag] = test_acc
+            best_path = ckpt_dir / f"ckpt_best_test__{phase_tag}.pth"
             save_checkpoint(
                 best_path,
                 epoch,
@@ -1192,7 +1472,17 @@ def main(args):
                 scaler if use_amp else None,
                 train_acc,
                 test_acc,
+                phase_tag,
                 args,
+                include_optimizer_state=False,
+                include_scheduler_state=False,
+                include_scaler_state=False,
+            )
+        if not latest_saved:
+            print(
+                "Warning: latest checkpoint was not saved. "
+                "Training will continue without updating resume state.",
+                flush=True,
             )
 
         best_train_acc = max(best_train_acc, train_acc)

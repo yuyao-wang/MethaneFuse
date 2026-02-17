@@ -1,8 +1,12 @@
 import argparse
+import hashlib
 import os
+import shutil
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import suppress
 from pathlib import Path
 import sys
-from typing import Sequence, Tuple
+from typing import Optional, Sequence, Tuple
 
 import torch
 import torch.nn as nn
@@ -19,9 +23,60 @@ os.environ.setdefault("XFORMERS_DISABLED", "1")
 
 # Landsat 8/9 SR bands (B1-B7) mean/std computed on training split.
 PRECOMPUTED_STATS = (
-    [10928.7470703125, 11603.849609375, 13416.6435546875, 15134.5927734375, 18313.583984375, 20491.015625, 18536.9921875],
-    [1211.1807861328125, 1373.5697021484375, 1758.531005859375, 2193.44873046875, 2238.14990234375, 2352.88671875, 2125.662353515625],
+    # [10928.7470703125, 11603.849609375, 13416.6435546875, 15134.5927734375, 18313.583984375, 20491.015625, 18536.9921875],
+    # [1211.1807861328125, 1373.5697021484375, 1758.531005859375, 2193.44873046875, 2238.14990234375, 2352.88671875, 2125.662353515625],
+     [9875.52025344, 10963.02992231, 13188.07060702, 16937.63643455, 20815.5096977,  26345.89042937, 24617.77051738],
+     [978.37199615, 1079.69650541, 1257.43605227, 1472.53646339, 1984.83855722, 2007.31199257, 1889.56112982],
 )
+
+
+class StaticAnchoredCache:
+    def __init__(self, cache_dir: str, min_free_gb: float = 10.0):
+        self.cache_dir = Path(cache_dir).expanduser().resolve()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.min_free_bytes = min_free_gb * (1024**3)
+
+    def _get_free_space(self) -> int:
+        return shutil.disk_usage(self.cache_dir).free
+
+    def _hashed_path(self, original: str) -> Path:
+        norm_path = os.path.abspath(original)
+        digest = hashlib.sha1(norm_path.encode("utf-8")).hexdigest()
+        subdir = digest[:2]
+        suffix = Path(original).suffix
+        return self.cache_dir / subdir / f"{digest}{suffix}"
+
+    def ensure_local(self, original: str) -> str:
+        dst = self._hashed_path(original)
+        if dst.exists():
+            return str(dst)
+        if self._get_free_space() < self.min_free_bytes:
+            return original
+        tmp = dst.with_suffix(dst.suffix + ".tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            shutil.copy2(original, tmp)
+            os.replace(tmp, dst)
+        except Exception:
+            with suppress(FileNotFoundError):
+                tmp.unlink()
+            return original
+        return str(dst)
+
+    def warm_up(self, paths: Sequence[str], max_workers: int = 8) -> None:
+        unique_paths = sorted({os.path.abspath(p) for p in paths if isinstance(p, str)})
+        if not unique_paths:
+            return
+        print(f"[Cache] Warming up (target: {len(unique_paths)})...", flush=True)
+
+        def _copy_one(path: str):
+            res = self.ensure_local(path)
+            return res == path
+
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            futures = [pool.submit(_copy_one, p) for p in unique_paths]
+            fallback_count = sum(1 for fut in as_completed(futures) if fut.result())
+            print(f"[Cache] Warmup complete. Cached: {len(unique_paths) - fallback_count}, Remote: {fallback_count}")
 
 
 class CLSHead(nn.Module):
@@ -155,6 +210,16 @@ def build_scheduler(args, optimizer):
 
 def main(args):
     from dinov2.data.datasets.s2_csv import S2CsvDataset
+    
+    class CachedS2CsvDataset(S2CsvDataset):
+        def __init__(self, *args, local_file_cache: Optional[StaticAnchoredCache] = None, **kwargs):
+            super().__init__(*args, **kwargs)
+            self._local_file_cache = local_file_cache
+
+        def _load_image(self, path: str, *, column_name=None, sample_id=None):
+            if self._local_file_cache is not None and isinstance(path, str):
+                path = self._local_file_cache.ensure_local(path)
+            return super()._load_image(path, column_name=column_name, sample_id=sample_id)
 
     device = torch.device(args.device)
     if device.type == "cuda" and device.index is None:
@@ -163,8 +228,12 @@ def main(args):
         torch.cuda.set_device(device)
 
     norm_stats = PRECOMPUTED_STATS
+    cache_obj = None
+    if args.local_cache_dir:
+        cache_obj = StaticAnchoredCache(args.local_cache_dir)
+
     # Only use the t0 image (7 bands) as input.
-    train_ds = S2CsvDataset(
+    train_ds = CachedS2CsvDataset(
         csv_path=args.train_csv,
         ds_cfg_name="landsat89_7band",
         normalize_stats=norm_stats,
@@ -173,8 +242,9 @@ def main(args):
         compute_stats=False,
         path_column=args.t0_col,
         skip_invalid_samples=args.skip_invalid_samples,
+        local_file_cache=cache_obj,
     )
-    test_ds = S2CsvDataset(
+    test_ds = CachedS2CsvDataset(
         csv_path=args.test_csv,
         ds_cfg_name="landsat89_7band",
         normalize_stats=norm_stats,
@@ -183,7 +253,13 @@ def main(args):
         compute_stats=False,
         path_column=args.t0_col,
         skip_invalid_samples=args.skip_invalid_samples,
+        local_file_cache=cache_obj,
     )
+    if args.local_cache_warmup and cache_obj:
+        all_paths = []
+        if args.t0_col in train_ds.df.columns:
+            all_paths.extend(train_ds.df[args.t0_col].dropna().astype(str).tolist())
+        cache_obj.warm_up(all_paths, max_workers=args.local_cache_workers)
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
@@ -238,7 +314,7 @@ def main(args):
             # x_dict = resize_imgs_to_224(x_dict)
             
 
-            feats = backbone(x_dict, is_training=True)
+            feats = backbone(x=x_dict, is_training=True)
             cls_token = feats["x_norm_clstoken"]
             logits = head(cls_token)
             loss = criterion(logits, labels)
@@ -290,7 +366,7 @@ def main(args):
                 labels = labels.to(device)
                 x_dict = recursive_to_device(x_dict, device)
                 # x_dict = resize_imgs_to_224(x_dict)
-                feats = backbone(x_dict, is_training=True)
+                feats = backbone(x=x_dict, is_training=True)
                 cls_token = feats["x_norm_clstoken"]
                 logits = head(cls_token)
                 loss = criterion(logits, labels)
@@ -446,5 +522,8 @@ if __name__ == "__main__":
         default=1,
         help="Number of GPUs to use via torch.nn.DataParallel when --device is CUDA.",
     )
+    parser.add_argument("--local_cache_dir", default=None)
+    parser.add_argument("--local_cache_warmup", action="store_true")
+    parser.add_argument("--local_cache_workers", type=int, default=8)
     args = parser.parse_args()
     main(args)

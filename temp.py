@@ -3,7 +3,7 @@ from torchinfo import summary
 import inspect
 
 from examples.dino_clssifier_head_s2_temportal_one_block import load_backbone
-from universal_models.multi_sensor_panopticon import (
+from universal_models.multi_sensor_panopticon_adapter import (
     MultiSensorPanopticonClassifier,
     custom_collate_fn,
 )
