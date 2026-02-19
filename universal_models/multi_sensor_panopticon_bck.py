@@ -28,7 +28,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.cuda.amp import GradScaler, autocast
-from torch.utils.data import DataLoader, Dataset, RandomSampler, Subset, SubsetRandomSampler
+from torch.utils.data import DataLoader, Dataset, RandomSampler, Subset
 
 # Make the repository root importable so examples work when executed directly.
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -393,15 +393,6 @@ class StaticAnchoredCache:
         print(f"[Cache] Warmup complete. Cached: {len(unique_paths) - fallback_count}, Remote: {fallback_count}")
 
 
-def _compute_mean_std(stats: Optional[Tuple[Sequence[float], Sequence[float]]]):
-    if stats is None:
-        return None, None
-    mean, std = stats
-    mean_tensor = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
-    std_tensor = torch.clamp(torch.tensor(std, dtype=torch.float32), min=1e-6).view(-1, 1, 1)
-    return mean_tensor, std_tensor
-
-
 class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
     """Temporal dataset that mixes Sentinel-2, Landsat 8/9, and Sentinel-5P samples."""
 
@@ -428,7 +419,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
 
         self._validate_sensor_column()
         self.sensor_configs = self._build_sensor_configs()
-        self._s5p_mean, self._s5p_std = _compute_mean_std(S5P_PRECOMPUTED_STATS)
+        self._s5p_mean, self._s5p_std = self._compute_mean_std(S5P_PRECOMPUTED_STATS)
 
     def _validate_sensor_column(self) -> None:
         if "sensor" not in self.df.columns:
@@ -458,7 +449,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
             configs["l89"]["chn_ids"] = configs["s2"]["chn_ids"]
 
         for cfg in configs.values():
-            mean_tensor, std_tensor = _compute_mean_std(cfg.get("normalize_stats"))
+            mean_tensor, std_tensor = self._compute_mean_std(cfg.get("normalize_stats"))
             cfg["mean_tensor"] = mean_tensor
             cfg["std_tensor"] = std_tensor
 
@@ -469,6 +460,15 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
             return stats
         mean, std = stats
         return ([m / 65535.0 for m in mean], [s / 65535.0 for s in std])
+
+    @staticmethod
+    def _compute_mean_std(stats: Optional[Tuple[Sequence[float], Sequence[float]]]):
+        if stats is None:
+            return None, None
+        mean, std = stats
+        mean_tensor = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
+        std_tensor = torch.clamp(torch.tensor(std, dtype=torch.float32), min=1e-6).view(-1, 1, 1)
+        return mean_tensor, std_tensor
 
     @contextmanager
     def _use_sensor_cfg(self, sensor: str):
@@ -496,32 +496,21 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
             )
 
     def __getitem__(self, idx):
-        attempts = 0
-        last_exc: Optional[Exception] = None
-        while attempts < self.max_retries:
-            try:
-                row = self.df.iloc[idx]
-                sensor = row.get("sensor")
-                if sensor is None:
-                    raise ValueError(f"Row {idx} is missing 'sensor' value")
-                label = int(row[self.label_column])
+        row = self.df.iloc[idx]
+        sensor = row.get("sensor")
+        if sensor is None:
+            raise ValueError(f"Row {idx} is missing 'sensor' value")
+        label = int(row[self.label_column])
 
-                if sensor == "s5p":
-                    x_dict = self._load_s5p_sample(row, self.path_columns[0])
-                    return [x_dict], label, sensor
+        if sensor == "s5p":
+            x_dict = self._load_s5p_sample(row, self.path_columns[0])
+            return [x_dict], label, sensor
 
-                if sensor not in self.sensor_configs:
-                    raise ValueError(f"Sample {idx} has unknown sensor '{sensor}'")
+        if sensor not in self.sensor_configs:
+            raise ValueError(f"Sample {idx} has unknown sensor '{sensor}'")
 
-                x_list = [self._load_temporal_frame(row, col, sensor, idx) for col in self.path_columns]
-                return x_list, label, sensor
-            except _SkipSample as exc:
-                last_exc = exc
-                attempts += 1
-                if attempts >= self.max_retries:
-                    raise RuntimeError(f"Exceeded {self.max_retries} retries for temporal index {idx}") from exc
-                idx = np.random.randint(0, len(self.df))
-        raise RuntimeError("Unreachable") from last_exc
+        x_list = [self._load_temporal_frame(row, col, sensor, idx) for col in self.path_columns]
+        return x_list, label, sensor
 
     def _load_temporal_frame(self, row, column_name: str, sensor: str, sample_id: int) -> Dict[str, torch.Tensor]:
         path = row[column_name]
@@ -699,53 +688,6 @@ def build_sensor_dataloaders(
         )
         steps_per_sensor[sensor_name] = target_steps
     return loaders, steps_per_sensor
-
-
-def build_balanced_mixed_dataloader(
-    dataset: Dataset,
-    sensors: Sequence[str],
-    *,
-    batch_size: int,
-    num_workers: int,
-    pin_memory: bool,
-    shuffle: bool,
-    oversample_to_max: bool = True,
-) -> Tuple[DataLoader, int]:
-    """Create a single DataLoader that mixes sensors and oversamples minority ones.
-
-    - If ``oversample_to_max`` is True (default), each sensor is repeated until it
-      reaches the size of the largest sensor, balancing class counts.
-    - Otherwise, uses the natural counts.
-    Returns (loader, total_steps_per_epoch).
-    """
-
-    idx_map = _gather_sensor_indices(dataset, sensors)
-    counts = {s: len(v) for s, v in idx_map.items() if v}
-    if not counts:
-        raise ValueError("No samples found for the configured sensors.")
-
-    target = max(counts.values()) if oversample_to_max else None
-    balanced_indices: list[int] = []
-    for sensor, indices in idx_map.items():
-        if not indices:
-            continue
-        desired = target if target is not None else len(indices)
-        repeat = math.ceil(desired / len(indices))
-        expanded = (indices * repeat)[:desired]
-        balanced_indices.extend(expanded)
-
-    sampler = SubsetRandomSampler(balanced_indices) if shuffle else balanced_indices
-    steps = math.ceil(len(balanced_indices) / batch_size)
-    loader = DataLoader(
-        dataset,
-        batch_size=batch_size,
-        shuffle=False if isinstance(sampler, SubsetRandomSampler) else shuffle,
-        sampler=sampler if isinstance(sampler, SubsetRandomSampler) else None,
-        num_workers=num_workers,
-        pin_memory=pin_memory,
-        collate_fn=custom_collate_fn,
-    )
-    return loader, steps
 
 
 # --------------------------------------------------------------------------------------
@@ -1010,30 +952,32 @@ def main(args):
 
     sensors_list = core_model.sensor_order
     pin_memory = device.type == "cuda"
-    # Single mixed loader with optional oversampling so that minority sensors are repeated
-    # and batches contain mixed sensors.
-    train_loader, train_steps = build_balanced_mixed_dataloader(
+    train_loaders, train_steps_per_sensor = build_sensor_dataloaders(
         train_ds,
         sensors_list,
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         pin_memory=pin_memory,
         shuffle=True,
-        oversample_to_max=args.oversample_minority,
+        oversample_to_max_steps=args.oversample_minority,
     )
-    test_loader, test_steps = build_balanced_mixed_dataloader(
+    test_loaders, test_steps_per_sensor = build_sensor_dataloaders(
         test_ds,
         sensors_list,
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         pin_memory=pin_memory,
         shuffle=False,
-        oversample_to_max=False,
+        oversample_to_max_steps=False,
     )
+    if not train_loaders:
+        raise ValueError("No training samples were found for the configured sensors.")
+    if not test_loaders:
+        warnings.warn("No test samples were found for the configured sensors.", RuntimeWarning)
 
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sensors_list}, train_backbone={args.train_backbone}",
+        f"sensors={sorted(train_loaders.keys())}, train_backbone={args.train_backbone}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
@@ -1059,9 +1003,46 @@ def main(args):
         train_sensor_correct = {sensor: 0 for sensor in sensors_list}
         train_sensor_total = {sensor: 0 for sensor in sensors_list}
 
-        step_idx = 0
-        for x_dict, labels, sensors in train_loader:
-            step_idx += 1
+        stop_training = False
+        epoch_sensor_order = sensors_list[:]
+        random.shuffle(epoch_sensor_order)
+        available_sensors = [s for s in epoch_sensor_order if s in train_loaders]
+        if not available_sensors:
+            raise RuntimeError("No sensors with training data are available.")
+        sensor_iters: Dict[str, Optional[Iterator]] = {s: None for s in available_sensors}
+        steps_done = {s: 0 for s in available_sensors}
+        switch_interval = max(1, args.sensor_switch_interval)
+        sensor_idx = 0
+        steps_in_block = 0
+
+        def all_steps_consumed():
+            return all(steps_done[s] >= train_steps_per_sensor.get(s, 0) for s in available_sensors)
+
+        while not stop_training and not all_steps_consumed():
+            active_sensor = available_sensors[sensor_idx]
+            target_steps = train_steps_per_sensor.get(active_sensor, 0)
+            if target_steps <= 0:
+                sensor_idx = (sensor_idx + 1) % len(available_sensors)
+                steps_in_block = 0
+                continue
+            if steps_done[active_sensor] >= target_steps:
+                sensor_idx = (sensor_idx + 1) % len(available_sensors)
+                steps_in_block = 0
+                continue
+
+            loader = train_loaders[active_sensor]
+            iterator = sensor_iters[active_sensor]
+            if iterator is None:
+                iterator = iter(loader)
+            try:
+                x_dict, labels, sensors = next(iterator)
+            except StopIteration:
+                iterator = iter(loader)
+                x_dict, labels, sensors = next(iterator)
+            sensor_iters[active_sensor] = iterator
+            steps_done[active_sensor] += 1
+            steps_in_block += 1
+
             labels = labels.to(device)
             x_dict = recursive_to_device(x_dict, device)
             sensor_arg: Union[Sequence[str], torch.Tensor]
@@ -1104,18 +1085,24 @@ def main(args):
                 per_sensor_count[sensor_name] += 1
 
             if args.max_train_steps is not None and global_step >= args.max_train_steps:
-                break
-            if args.log_interval and step_idx % args.log_interval == 0:
+                stop_training = True
+            if args.log_interval and steps_done[active_sensor] % args.log_interval == 0:
                 sensor_loss_details = " ".join(
                     f"{name}_loss={per_sensor_losses[name].item():.4f}"
                     for name in sensors_list
                     if name in per_sensor_losses
                 )
                 print(
-                    f"Epoch {epoch} step {step_idx}/{train_steps} train_loss={total_loss/total:.4f} "
-                    f"train_acc={correct/total:.4f} {sensor_loss_details}",
+                    f"Epoch {epoch} sensor={active_sensor} step {steps_done[active_sensor]}/{target_steps} "
+                    f"train_loss={total_loss/total:.4f} train_acc={correct/total:.4f} {sensor_loss_details}",
                     flush=True,
                 )
+
+            if stop_training:
+                break
+            if steps_in_block >= switch_interval:
+                sensor_idx = (sensor_idx + 1) % len(available_sensors)
+                steps_in_block = 0
 
         train_loss = total_loss / max(1, total)
         train_acc = correct / max(1, total)
@@ -1132,33 +1119,39 @@ def main(args):
         correct_eval = 0
         eval_steps = 0
         with torch.no_grad():
-            for step, (x_dict, labels, sensors) in enumerate(test_loader, 1):
-                labels = labels.to(device)
-                x_dict = recursive_to_device(x_dict, device)
-                if use_data_parallel:
-                    sensor_arg = core_model.encode_sensors(sensors, device=device)
-                else:
-                    sensor_arg = sensors
-                with autocast(enabled=use_amp):
-                    outputs = model(x_dict, sensors=sensor_arg)
-                    loss, _ = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
-                batch = labels.size(0)
-                test_loss_total += loss.item() * batch
-                total_eval += batch
-                logits = outputs.get("merged_logits")
-                if logits is None:
-                    logits = torch.zeros((batch, core_model.heads[sensors_list[0]].out_features), device=device)
-                    for sensor_name, sensor_out in outputs.items():
-                        if sensor_name == "merged_logits":
-                            continue
-                        logits.index_copy_(0, sensor_out["indices"], sensor_out["logits"])
-                preds = logits.argmax(dim=1)
-                correct_eval += (preds == labels).sum().item()
-                for i, sensor_type in enumerate(sensors):
-                    sensor_total[sensor_type] += 1
-                    if preds[i] == labels[i]:
-                        sensor_correct[sensor_type] += 1
-                eval_steps += 1
+            for active_sensor in sensors_list:
+                sensor_loader = test_loaders.get(active_sensor)
+                if sensor_loader is None:
+                    continue
+                for step, (x_dict, labels, sensors) in enumerate(sensor_loader, 1):
+                    labels = labels.to(device)
+                    x_dict = recursive_to_device(x_dict, device)
+                    if use_data_parallel:
+                        sensor_arg = core_model.encode_sensors(sensors, device=device)
+                    else:
+                        sensor_arg = sensors
+                    with autocast(enabled=use_amp):
+                        outputs = model(x_dict, sensors=sensor_arg)
+                        loss, _ = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
+                    batch = labels.size(0)
+                    test_loss_total += loss.item() * batch
+                    total_eval += batch
+                    logits = outputs.get("merged_logits")
+                    if logits is None:
+                        logits = torch.zeros((batch, core_model.heads[sensors_list[0]].out_features), device=device)
+                        for sensor_name, sensor_out in outputs.items():
+                            if sensor_name == "merged_logits":
+                                continue
+                            logits.index_copy_(0, sensor_out["indices"], sensor_out["logits"])
+                    preds = logits.argmax(dim=1)
+                    correct_eval += (preds == labels).sum().item()
+                    for i, sensor_type in enumerate(sensors):
+                        sensor_total[sensor_type] += 1
+                        if preds[i] == labels[i]:
+                            sensor_correct[sensor_type] += 1
+                    eval_steps += 1
+                    if args.max_eval_steps is not None and eval_steps >= args.max_eval_steps:
+                        break
                 if args.max_eval_steps is not None and eval_steps >= args.max_eval_steps:
                     break
 

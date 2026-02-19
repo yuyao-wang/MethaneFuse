@@ -22,6 +22,7 @@ from contextlib import contextmanager, suppress
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Dict, Mapping, MutableMapping, Optional, Sequence, Tuple, Union, Iterator
+from types import MethodType
 
 import numpy as np
 import torch
@@ -125,6 +126,62 @@ class CLSHead(nn.Module):
 HeadFactory = Callable[[int, int], nn.Module]
 
 
+class DomainSpecificLayerNorm(nn.Module):
+    """LayerNorm with per-domain affine parameters and shared statistics.
+
+    Forward signature matches nn.LayerNorm (only ``x``) so it can drop into the
+    existing ViT blocks without changing their call sites. The active domain is
+    set externally via ``set_domain_id`` prior to forward.
+    """
+
+    def __init__(self, normalized_shape, num_domains: int, eps: float = 1e-6):
+        super().__init__()
+        if isinstance(normalized_shape, int):
+            normalized_shape = (normalized_shape,)
+        self.normalized_shape = tuple(normalized_shape)
+        if len(self.normalized_shape) != 1:
+            raise ValueError("DomainSpecificLayerNorm currently supports 1D normalized_shape.")
+        if num_domains < 1:
+            raise ValueError("num_domains must be >= 1")
+        self.num_domains = num_domains
+        self.eps = eps
+        self.weight = nn.Parameter(torch.ones(num_domains, *self.normalized_shape))
+        self.bias = nn.Parameter(torch.zeros(num_domains, *self.normalized_shape))
+        self._current_domain: Optional[torch.Tensor] = None
+
+    def set_domain_id(self, domain_id: Union[int, torch.Tensor]) -> None:
+        if not torch.is_tensor(domain_id):
+            domain_id = torch.tensor(domain_id, device=self.weight.device, dtype=torch.long)
+        self._current_domain = domain_id
+
+    def _resolve_domain(self, x: torch.Tensor) -> torch.Tensor:
+        if self._current_domain is None:
+            return torch.zeros((), device=x.device, dtype=torch.long)
+        dom = self._current_domain
+        if dom.device != x.device:
+            dom = dom.to(x.device)
+        return dom
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        domain = self._resolve_domain(x)
+        if domain.ndim == 0:
+            w = self.weight[domain]
+            b = self.bias[domain]
+            return F.layer_norm(x, self.normalized_shape, w, b, self.eps)
+
+        if domain.shape[0] != x.shape[0]:
+            raise ValueError(f"domain_id batch mismatch: expected {x.shape[0]}, got {domain.shape[0]}")
+        w = self.weight[domain].unsqueeze(1)  # B x 1 x D
+        b = self.bias[domain].unsqueeze(1)
+        mean = x.mean(dim=-1, keepdim=True)
+        var = x.var(dim=-1, unbiased=False, keepdim=True)
+        x_hat = (x - mean) / torch.sqrt(var + self.eps)
+        return x_hat * w + b
+
+    def extra_repr(self) -> str:
+        return f"num_domains={self.num_domains}, normalized_shape={self.normalized_shape}, eps={self.eps}"
+
+
 class MultiSensorPanopticonClassifier(nn.Module):
     """Shared DinoViT backbone with sensor-specific Panopticon PEs and heads."""
 
@@ -138,16 +195,19 @@ class MultiSensorPanopticonClassifier(nn.Module):
         head_factory: Optional[Union[HeadFactory, nn.Module]] = None,
     ):
         super().__init__()
-        if backbone is None:
-            backbone = _load_backbone()
-        if not isinstance(backbone, DinoVisionTransformer):
-            raise TypeError("backbone must be a DinoVisionTransformer instance")
-
-        self.backbone = backbone
         self.sensor_order = list(sensors)
         if not self.sensor_order:
             raise ValueError("At least one sensor must be specified")
         self.sensor_to_idx = {sensor: idx for idx, sensor in enumerate(self.sensor_order)}
+        num_domains = len(self.sensor_order)
+
+        if backbone is None:
+            backbone = _load_backbone(domain_specific_ln=True, num_domains=num_domains)
+        if not isinstance(backbone, DinoVisionTransformer):
+            raise TypeError("backbone must be a DinoVisionTransformer instance")
+        # If a pre-built backbone is passed without domain-specific LNs, patch it.
+        if not hasattr(backbone, "_domain_specific_lns"):
+            _convert_backbone_layernorms(backbone, num_domains=num_domains)
 
         base_patch_embed = backbone.patch_embed
         sensor_modules = nn.ModuleDict()
@@ -159,6 +219,8 @@ class MultiSensorPanopticonClassifier(nn.Module):
             else:
                 sensor_modules[sensor] = copy.deepcopy(base_patch_embed)
         self.sensor_patch_embeds = sensor_modules
+
+        self.backbone = backbone
         self.backbone.patch_embed = self.sensor_patch_embeds[self.sensor_order[0]]
 
         embed_dim = getattr(self.backbone, "embed_dim", 768)
@@ -219,11 +281,16 @@ class MultiSensorPanopticonClassifier(nn.Module):
     def forward(
         self,
         x_dict: MutableMapping[str, torch.Tensor],
-        sensors: Sequence[str],
+        sensors: Union[Sequence[str], torch.Tensor],
         *,
+        sensor_ids: Optional[Union[Sequence[int], torch.Tensor]] = None,
         return_features: bool = False,
     ) -> Dict[str, Dict[str, torch.Tensor]]:
-        sensor_labels = self._normalize_sensors(sensors)
+        if sensor_ids is not None:
+            ids = sensor_ids.detach().to("cpu").tolist() if torch.is_tensor(sensor_ids) else list(sensor_ids)
+            sensor_labels = [self.sensor_order[i] for i in ids]
+        else:
+            sensor_labels = self._normalize_sensors(sensors)
         sensor_batches = self._build_sensor_batches(x_dict, sensor_labels)
         if not sensor_batches:
             raise ValueError("No samples matched the configured sensors")
@@ -237,6 +304,14 @@ class MultiSensorPanopticonClassifier(nn.Module):
 
         for sensor_name, sensor_batch in sensor_batches.items():
             with self._use_sensor(sensor_name):
+                if hasattr(self.backbone, "_set_domain_id"):
+                    domain_ids = torch.full(
+                        (sensor_batch.indices.shape[0],),
+                        self.sensor_to_idx[sensor_name],
+                        device=sensor_batch.indices.device,
+                        dtype=torch.long,
+                    )
+                    self.backbone._set_domain_id(domain_ids)  # type: ignore[attr-defined]
                 feats = self.backbone(sensor_batch.x_dict, is_training=True)
             cls_token = feats["x_norm_clstoken"]
             logits = self.heads[sensor_name](cls_token)
@@ -400,6 +475,67 @@ def _compute_mean_std(stats: Optional[Tuple[Sequence[float], Sequence[float]]]):
     mean_tensor = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
     std_tensor = torch.clamp(torch.tensor(std, dtype=torch.float32), min=1e-6).view(-1, 1, 1)
     return mean_tensor, std_tensor
+
+
+# --------------------------------------------------------------------------------------
+#  Backbone patching helpers (Domain-specific LayerNorm)
+# --------------------------------------------------------------------------------------
+
+def _convert_backbone_layernorms(backbone: DinoVisionTransformer, num_domains: int):
+    """Replace all nn.LayerNorm instances in the backbone with DomainSpecificLayerNorm.
+
+    Only touches modules inside this file; no upstream code changes are required.
+    """
+    domain_lns: list[DomainSpecificLayerNorm] = []
+
+    def _maybe_replace(module: nn.Module, name: str):
+        child = getattr(module, name, None)
+        if not isinstance(child, nn.LayerNorm):
+            return
+        dsl = DomainSpecificLayerNorm(child.normalized_shape, num_domains=num_domains, eps=child.eps)
+        with torch.no_grad():
+            dsl.weight.copy_(child.weight.unsqueeze(0).expand(num_domains, -1))
+            dsl.bias.copy_(child.bias.unsqueeze(0).expand(num_domains, -1))
+        setattr(module, name, dsl)
+        domain_lns.append(dsl)
+
+    def _recurse(module: nn.Module):
+        # replace common LayerNorm field names seen in ViT blocks
+        for field in ("norm", "norm1", "norm2"):
+            if hasattr(module, field):
+                _maybe_replace(module, field)
+        for _name, child in module.named_children():
+            _recurse(child)
+
+    if num_domains > 1:
+        _recurse(backbone)
+    backbone._domain_specific_lns = domain_lns  # type: ignore[attr-defined]
+
+    def _set_domain_id(self, domain_id):
+        if not domain_lns:
+            return
+        if not torch.is_tensor(domain_id):
+            domain_id_tensor = torch.tensor(domain_id, device=self.pos_embed.device, dtype=torch.long)
+        else:
+            domain_id_tensor = domain_id.to(self.pos_embed.device)
+        for ln in domain_lns:
+            ln.set_domain_id(domain_id_tensor)
+
+    backbone._set_domain_id = MethodType(_set_domain_id, backbone)  # type: ignore[attr-defined]
+    return backbone
+
+
+def _expand_state_dict_for_domain_lns(state: MutableMapping[str, torch.Tensor], num_domains: int):
+    """Expand LayerNorm weight/bias from [D] to [K,D] so checkpoints load after patching."""
+    if num_domains <= 1:
+        return
+    for key, tensor in list(state.items()):
+        if tensor.ndim != 1:
+            continue
+        if ".norm" not in key:
+            continue
+        expanded = tensor.unsqueeze(0).expand(num_domains, -1).clone()
+        state[key] = expanded
 
 
 class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
@@ -752,16 +888,26 @@ def build_balanced_mixed_dataloader(
 #  Training utilities
 # --------------------------------------------------------------------------------------
 
-def _load_backbone(weights_path: Optional[str] = None, *, strict: bool = True) -> DinoVisionTransformer:
+def _load_backbone(
+    weights_path: Optional[str] = None,
+    *,
+    strict: bool = True,
+    domain_specific_ln: bool = False,
+    num_domains: int = 1,
+) -> DinoVisionTransformer:
     from hubconf import _panopticon_vitb14
 
     backbone = _panopticon_vitb14()
+    if domain_specific_ln:
+        _convert_backbone_layernorms(backbone, num_domains=num_domains)
     if weights_path in (None, "", "none", "scratch", "random"):
         return backbone
     ckpt_path = Path(weights_path)
     state = torch.load(ckpt_path, map_location="cpu")
     if isinstance(state, Mapping) and "backbone" in state:
         state = state["backbone"]
+    if domain_specific_ln:
+        _expand_state_dict_for_domain_lns(state, num_domains=num_domains)
     backbone.load_state_dict(state, strict=strict)
     return backbone
 
@@ -970,7 +1116,11 @@ def main(args):
     train_ds = ConcatTemporalDataset(base_train_ds)
     test_ds = ConcatTemporalDataset(base_test_ds)
 
-    core_model = MultiSensorPanopticonClassifier(backbone=_load_backbone(args.weights)).to(device)
+    default_sensors = ("s2", "l89", "s5p")
+    core_model = MultiSensorPanopticonClassifier(
+        backbone=_load_backbone(args.weights, domain_specific_ln=True, num_domains=len(default_sensors)),
+        sensors=default_sensors,
+    ).to(device)
     model: nn.Module = core_model
     use_data_parallel = args.data_parallel and device.type == "cuda" and torch.cuda.device_count() > 1
     if use_data_parallel:
@@ -1033,7 +1183,7 @@ def main(args):
 
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sensors_list}, train_backbone={args.train_backbone}",
+        f"sensors={sorted(train_loader.keys())}, train_backbone={args.train_backbone}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0,1
 
 # python universal_models/multi_sensor_panopticon_lora.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/train_2025_balanced.csv \
@@ -17,12 +17,12 @@ export CUDA_VISIBLE_DEVICES=1
 #     --local_cache_workers 18 \
 #     --sensor_switch_interval 100 \
 #     --weights none \
-#     --lora_rank 64 \
-#     --lora_alpha 64 \
+#     --lora_rank 128 \
+#     --lora_alpha 128 \
 #     --lora_dropout 0.05 \
 #     --lora_targets attn.qkv,attn.proj \
 #     --data_parallel \
-#     --lora_warmup_epochs 30
+#     --lora_warmup_epochs 2
 
     #  --weights weights/panopticon_vitb14_teacher.pth \
 
@@ -33,9 +33,21 @@ export CUDA_VISIBLE_DEVICES=1
 #     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 --sensor_switch_interval 100 \
 #     --weights weights/panopticon_vitb14_teacher.pth --lora_rank 64 --lora_alpha 64 --lora_dropout 0.05 --lora_targets attn.qkv,attn.proj --data_parallel --lora_warmup_epochs 13
 
-python universal_models/multi_sensor_panopticon_lora.py \
+# python universal_models/multi_sensor_panopticon_lora.py \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
+#     --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 --sensor_switch_interval 100 \
+#     --weights none --lora_rank 128 --lora_alpha 128 --lora_dropout 0.05 --lora_targets attn.qkv,attn.proj --data_parallel --lora_warmup_epochs 2
+
+# python baseline/s2_temporal_resnet34.py \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/train.csv \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/test.csv \
+#     --device cuda --use_wandb --wandb_project baselines --num_workers 12 
+
+python universal_models/multi_sensor_panopticon.py \
     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
     --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
-    --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 --sensor_switch_interval 100 \
-    --weights none --lora_rank 64 --lora_alpha 64 --lora_dropout 0.05 --lora_targets attn.qkv,attn.proj --data_parallel --lora_warmup_epochs 20
+    --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 \
+    --data_parallel

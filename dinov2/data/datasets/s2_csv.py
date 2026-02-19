@@ -362,7 +362,7 @@ class S2TemporalCsvDataset(S2CsvDataset):
         ds_cfg_name: str = "s2_12band",
         full_spectra: bool = False,
         id_column: str = "id",
-        path_columns: Sequence[str] = ("image_path", "s2_pre_path", "s2_pre_pre_path"),
+        path_columns: Sequence[str] = ("path_t0", "path_t90", "path_t360"),
         label_column: str = "label",
         normalize_stats: Optional[Tuple[Sequence[float], Sequence[float]]] = None,
         scale_to_unit: bool = True,
