@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=0,1
 
 # python universal_models/multi_sensor_panopticon_lora.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/train_2025_balanced.csv \
@@ -52,8 +52,25 @@ export CUDA_VISIBLE_DEVICES=0
 #     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 \
 #     --data_parallel
 
-python universal_models/multi_sensor_panopticon_seperate_ViTLN.py \
-    --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
-    --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
-    --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
-    --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 
+# python universal_models/multi_sensor_panopticon_seperate_ViTLN.py \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
+#     --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 
+
+# python universal_models/multi_sensor_panopticon_seperate_ViTLN_tinyadapter.py \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
+#     --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 
+
+python universal_models/multi_sensor_panopticon_seperate_ViTLN_tinyadapter.py \
+  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
+  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
+  --device cuda --train_backbone --backbone_lr 5e-5 --head_lr 1e-4 \
+  --freeze_backbone_epochs 2 \
+  --sensor_sampling_alpha 1.0 --sensor_loss_weighting inv_sqrt \
+  --sensor_loss_weight_max 2.5 --sensor_loss_warmup_epochs 8 \
+  --adapter_last_blocks 5 --adapter_bottleneck_dim 16 --adapter_dropout 0.1 --adapter_cls_only \
+  --use_wandb --wandb_project baselines --num_workers 18 \
+  --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18
