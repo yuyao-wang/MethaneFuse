@@ -530,9 +530,10 @@ def _expand_state_dict_for_domain_lns(state: MutableMapping[str, torch.Tensor], 
     if num_domains <= 1:
         return
     for key, tensor in list(state.items()):
-        if tensor.ndim != 1:
+        if tensor.ndim != 1 or not key.endswith(("weight", "bias")):
             continue
-        if ".norm" not in key:
+        module_key = key.rsplit(".", 1)[0]
+        if module_key.split(".")[-1] not in {"norm", "norm1", "norm2"}:
             continue
         expanded = tensor.unsqueeze(0).expand(num_domains, -1).clone()
         state[key] = expanded
@@ -1183,7 +1184,7 @@ def main(args):
 
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sorted(train_loader.keys())}, train_backbone={args.train_backbone}",
+        f"sensors={sorted(sensors_list)}, train_backbone={args.train_backbone}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
