@@ -1,0 +1,18 @@
+digraph Methane_Detection_Arch {
+	bgcolor=white rankdir=LR size=10
+	node [fontname=Arial fontsize=12 shape=rectangle style=filled]
+	Input [label="Input Data Cube
+(Multi-Satellite Tracks)" fillcolor="#E1E1E1"]
+	Conv3D [label="Conv3D Block
+(Spatial-Temporal Features)" fillcolor="#B3CDE3"]
+	ChnAttn [label="Channel Attention
+(Spectral Weighting)" fillcolor="#B3CDE3"]
+	ViT [label="Vision Transformer (ViT)
+(Global Context Encoding)" fillcolor="#DECBE4"]
+	CLS [label="CLS Head
+(Methane Detection)" fillcolor="#CCEBC5"]
+	Input -> Conv3D
+	Conv3D -> ChnAttn
+	ChnAttn -> ViT
+	ViT -> CLS
+}
