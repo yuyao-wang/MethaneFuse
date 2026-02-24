@@ -1,0 +1,26 @@
+{
+  "architecture": "prithvi_eo_v2_600",
+  "num_features": 1024,
+  "pretrained_cfg": {
+    "img_size": 224,
+    "num_frames": 4,
+    "patch_size": [1, 14, 14],
+    "in_chans": 6,
+    "embed_dim": 1280,
+    "depth": 32,
+    "num_heads": 16,
+    "decoder_embed_dim": 512,
+    "decoder_depth": 8,
+    "decoder_num_heads": 16,
+    "mlp_ratio": 4,
+    "coords_encoding": [],
+    "coords_scale_learn": false,
+    "mask_ratio": 0.75,
+    "norm_pix_loss": false,
+    "bands": ["B02", "B03", "B04", "B05", "B06", "B07"],
+    "mean": [1087.0, 1342.0, 1433.0, 2734.0, 1958.0, 1363.0],
+    "std": [2248.0, 2179.0, 2178.0, 1850.0, 1242.0, 1049.0],
+    "origin_url": "https://huggingface.co/ibm-nasa-geospatial/Prithvi-EO-2.0-600M",
+    "paper_ids": "arXiv:X.X"
+  }
+}
