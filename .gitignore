@@ -21,3 +21,5 @@ weights/
 *.pth
 *.pt
 *.ckpt
+
+./run.sh

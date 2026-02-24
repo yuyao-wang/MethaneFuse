@@ -1,8 +1,0 @@
-model,sensor,resolved_index,rank,band,raw_delta,norm_score
-panopticon,l89,0,1,landsat9/B03,15.26497936,0.17129091
-panopticon,l89,0,2,landsat9/B05,15.21119118,0.17068734
-panopticon,l89,0,3,landsat9/B07,14.17560101,0.15906681
-panopticon,l89,0,4,landsat9/B04,13.52694702,0.15178815
-panopticon,l89,0,5,landsat9/B02,12.61093998,0.14150948
-panopticon,l89,0,6,landsat9/B06,12.35610771,0.13864997
-panopticon,l89,0,7,landsat9/B01,5.97151136,0.06700734

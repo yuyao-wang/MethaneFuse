@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 
 # python universal_models/multi_sensor_panopticon_lora.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/train_2025_balanced.csv \
@@ -90,12 +90,18 @@ export CUDA_VISIBLE_DEVICES=1
 #     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 \
     # --data_parallel --local_cache_max_gb 250
 
-# python universal_models/multi_sensor_panopticon_seperate_ViTFFN_2FC.py \
-#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
-#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
-#     --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
-#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 \
-#     --data_parallel --local_cache_max_gb 250
+python universal_models/multi_sensor_panopticon_seperate_ViTFFN_2FC.py \
+    --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
+    --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
+    --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
+    --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_workers 12 
+
+# python examples/dino_clssifier_head_EMIT_simulated_wv3_t0_one_block.py \
+#      --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/EMIT_simulated_WV3_L2A_60resolution_NOnorm/train_permian.csv \
+#      --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/EMIT_simulated_WV3_L2A_60resolution_NOnorm/test_permian.csv \
+#      --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 --batch_size 32
+    # --local_cache_max_gb 300
 
 # # Prithvi only on S2
 # python examples/channel_scores_panopticon_prithvi.py \
@@ -105,11 +111,11 @@ export CUDA_VISIBLE_DEVICES=1
 #   --prithvi-repo-id ibm-nasa-geospatial/Prithvi-EO-2.0-300M
 
 # AnySat scores on S2
-python examples/channel_scores_panopticon_prithvi.py \
-  --sensor s2 \
-  --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/train.csv \
-  --models anysat \
-  --out-csv checkpoints/channel_scores_anysat_s2.csv
+# python examples/channel_scores_panopticon_prithvi.py \
+#   --sensor s2 \
+#   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/train.csv \
+#   --models anysat \
+#   --out-csv checkpoints/channel_scores_anysat_s2.csv
 
 # AnySat scores on L89
 # python examples/channel_scores_panopticon_prithvi.py \
