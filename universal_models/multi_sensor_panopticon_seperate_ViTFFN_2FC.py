@@ -1041,6 +1041,11 @@ def parse_args():
     parser.add_argument("--log_interval", type=int, default=50)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--checkpoint_dir", default="checkpoints/multi_sensor")
+    parser.add_argument(
+        "--disable_checkpoints",
+        action="store_true",
+        help="Do not save or resume checkpoints.",
+    )
     parser.add_argument("--lr_scheduler", choices=["none", "noam"], default="noam")
     parser.add_argument("--warmup_steps", type=int, default=4000)
     parser.add_argument("--use_wandb", action="store_true")
@@ -1127,16 +1132,19 @@ def main(args):
     scaler = GradScaler(enabled=use_amp)
 
     run_name = args.wandb_run_name or default_run_name(args)
-    ckpt_dir = Path(args.checkpoint_dir) / run_name
-    latest_path = ckpt_dir / "ckpt_latest.pth"
-    best_path = ckpt_dir / "ckpt_best_test.pth"
+    latest_path = None
+    best_path = None
+    if not args.disable_checkpoints:
+        ckpt_dir = Path(args.checkpoint_dir) / run_name
+        latest_path = ckpt_dir / "ckpt_latest.pth"
+        best_path = ckpt_dir / "ckpt_best_test.pth"
 
     start_epoch = 1
     global_step = 0
     best_train_acc = 0.0
     best_test_acc = float("-inf")
 
-    if args.resume:
+    if args.resume and not args.disable_checkpoints and latest_path is not None:
         start_epoch, global_step, best_train_acc, best_test_acc = try_resume(
             latest_path, core_model, optimizer, scheduler, scaler, device
         )
@@ -1313,22 +1321,9 @@ def main(args):
             flush=True,
         )
 
-        save_checkpoint(
-            latest_path,
-            epoch,
-            global_step,
-            core_model,
-            optimizer,
-            scheduler,
-            scaler if use_amp else None,
-            train_acc,
-            test_acc,
-            args,
-        )
-        if test_acc > best_test_acc:
-            best_test_acc = test_acc
+        if not args.disable_checkpoints and latest_path is not None and best_path is not None:
             save_checkpoint(
-                best_path,
+                latest_path,
                 epoch,
                 global_step,
                 core_model,
@@ -1339,6 +1334,23 @@ def main(args):
                 test_acc,
                 args,
             )
+            if test_acc > best_test_acc:
+                best_test_acc = test_acc
+                save_checkpoint(
+                    best_path,
+                    epoch,
+                    global_step,
+                    core_model,
+                    optimizer,
+                    scheduler,
+                    scaler if use_amp else None,
+                    train_acc,
+                    test_acc,
+                    args,
+                )
+        else:
+            if test_acc > best_test_acc:
+                best_test_acc = test_acc
 
         best_train_acc = max(best_train_acc, train_acc)
         if wandb_run is not None:
