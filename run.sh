@@ -49,8 +49,8 @@ export CUDA_VISIBLE_DEVICES=0
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
 #     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
 #     --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
-#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 --weights none
-#     --data_parallel
+#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18  \
+#     --data_parallel --summary_head --summary_hidden_dim 128 --summary_dropout 0.1 --summary_loss_weight 1.0
 
 # python universal_models/multi_sensor_panopticon_seperate_ViTLN.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
@@ -62,16 +62,28 @@ export CUDA_VISIBLE_DEVICES=0
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
 #     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
 #     --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
-#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 
+#     --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 \
+#     --adapter_last_blocks 5
+
+# python universal_models/multi_sensor_panopticon_seperate_ViTLN_tinyadapter.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
+#   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
+#   --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --adapter_lr 2e-4 \
+#   --train_sensor_epoch_ratio s2=1.0,l89=0.55,s5p=0.7 \
+#   --sensor_head_lr_mult s2=1.2,l89=0.6,s5p=0.9 \
+#   --adapter_last_blocks 5 --adapter_bottleneck_dim 32 \
+#   --train_backbone \
+#   --use_wandb --wandb_project baselines --num_workers 18 \
+#   --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18
+
 
 # python universal_models/multi_sensor_panopticon_seperate_ViTLN_tinyadapter.py \
 #   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train.csv \
 #   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test.csv \
 #   --device cuda --train_backbone --backbone_lr 5e-5 --head_lr 1e-4 \
-#   --freeze_backbone_epochs 2 \
 #   --sensor_sampling_alpha 0.85 --sensor_loss_weighting inv_sqrt \
 #   --sensor_loss_weight_max 2.5 --sensor_loss_warmup_epochs 8 \
-#   --adapter_last_blocks 12 --adapter_bottleneck_dim 16 --adapter_dropout 0.1 --adapter_cls_only \
+#   --adapter_last_blocks 7 --adapter_bottleneck_dim 16 --adapter_dropout 0.1 --adapter_cls_only \
 #   --use_wandb --wandb_project baselines --num_workers 18 \
 #   --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_max_gb 250 \
 #   --local_cache_warmup --local_cache_workers 18 
@@ -109,6 +121,12 @@ python universal_models/multi_sensor_panopticon_seperate_ViTFFN_2FC.py \
 #   --sensor s2 \
 #   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/train.csv \
 #   --models prithvi \
+#   --prithvi-repo-id ibm-nasa-geospatial/Prithvi-EO-2.0-600M
+
+# python examples/channel_scores_panopticon_prithvi.py \
+#   --sensor l89 \
+#   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/test_2025_balanced.csv \
+#   --models prithvi \
 #   --prithvi-repo-id ibm-nasa-geospatial/Prithvi-EO-2.0-300M
 
 # AnySat scores on S2
@@ -123,5 +141,34 @@ python universal_models/multi_sensor_panopticon_seperate_ViTFFN_2FC.py \
 #   --sensor l89 \
 #   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/test_2025_balanced.csv \
 #   --models anysat \
-#   --out-csv checkpoints/channel_scores_anysat_l89.csv
+#   --anysat-patch-size 100
+
+# # S2 + SatMAE
+# python examples/channel_scores_panopticon_prithvi.py \
+#   --sensor s2 \
+#   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/train.csv \
+#   --models satmae \
+#   --satmae-checkpoint-url https://zenodo.org/record/7338613/files/pretrain-vit-large-e199.pth \
+#   --satmae-bands B1,B2,B3,B4,B5,B6,B7,B8,B8A,B9,B11,B12 \
+#   --satmae-in-chans 12
+
+
+# L89 + same SatMAE checkpoint (missing bands zero-filled)
+# python examples/channel_scores_panopticon_prithvi.py \
+#   --sensor l89 \
+#   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/test_2025_balanced.csv \
+#   --models satmae \
+#   --satmae-checkpoint-url https://zenodo.org/record/7338613/files/finetune-vit-base-e7.pth \
+#   --satmae-bands B1,B2,B3,B4,B5,B6,B7 \
+#   --satmae-fill-missing-zero \
+#   --satmae-in-chans 7
+
+# python examples/channel_scores_panopticon_prithvi.py \
+#   --sensor s2 \
+#   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/train.csv \
+#   --models earthpt \
+#   --earthpt-bands B1,B2,B3,B4,B5,B6,B7,B8,B8A,B9,B11,B12
+
+
+
 

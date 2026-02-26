@@ -12,23 +12,24 @@ from __future__ import annotations
 import argparse
 import copy
 import hashlib
+import inspect
 import math
 import os
-import random
 import shutil
 import sys
 import warnings
 from contextlib import contextmanager, suppress
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Dict, Mapping, MutableMapping, Optional, Sequence, Tuple, Union, Iterator
+from typing import Callable, Dict, Mapping, MutableMapping, Optional, Sequence, Tuple, Union
+from types import MethodType
 
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.cuda.amp import GradScaler, autocast
-from torch.utils.data import DataLoader, Dataset, RandomSampler, Subset, SubsetRandomSampler
+from torch.utils.data import DataLoader, Dataset, RandomSampler, Subset
 
 # Make the repository root importable so examples work when executed directly.
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -143,6 +144,158 @@ class LogitSummaryHead(nn.Module):
 HeadFactory = Callable[[int, int], nn.Module]
 
 
+class DomainSpecificLayerNorm(nn.Module):
+    """LayerNorm with per-domain affine parameters and shared statistics."""
+
+    def __init__(self, normalized_shape, num_domains: int, eps: float = 1e-6):
+        super().__init__()
+        if isinstance(normalized_shape, int):
+            normalized_shape = (normalized_shape,)
+        self.normalized_shape = tuple(normalized_shape)
+        if len(self.normalized_shape) != 1:
+            raise ValueError("DomainSpecificLayerNorm currently supports 1D normalized_shape.")
+        if num_domains < 1:
+            raise ValueError("num_domains must be >= 1")
+        self.num_domains = num_domains
+        self.eps = eps
+        self.weight = nn.Parameter(torch.ones(num_domains, *self.normalized_shape))
+        self.bias = nn.Parameter(torch.zeros(num_domains, *self.normalized_shape))
+        self._current_domain: Optional[torch.Tensor] = None
+
+    def set_domain_id(self, domain_id: Union[int, torch.Tensor]) -> None:
+        if not torch.is_tensor(domain_id):
+            domain_id = torch.tensor(domain_id, device=self.weight.device, dtype=torch.long)
+        self._current_domain = domain_id
+
+    def _resolve_domain(self, x: torch.Tensor) -> torch.Tensor:
+        if self._current_domain is None:
+            return torch.zeros((), device=x.device, dtype=torch.long)
+        dom = self._current_domain
+        if dom.device != x.device:
+            dom = dom.to(x.device)
+        return dom
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        domain = self._resolve_domain(x)
+        if domain.ndim == 0:
+            w = self.weight[domain]
+            b = self.bias[domain]
+            return F.layer_norm(x, self.normalized_shape, w, b, self.eps)
+
+        if domain.shape[0] != x.shape[0]:
+            raise ValueError(f"domain_id batch mismatch: expected {x.shape[0]}, got {domain.shape[0]}")
+        w = self.weight[domain].unsqueeze(1)  # B x 1 x D
+        b = self.bias[domain].unsqueeze(1)
+        mean = x.mean(dim=-1, keepdim=True)
+        var = x.var(dim=-1, unbiased=False, keepdim=True)
+        x_hat = (x - mean) / torch.sqrt(var + self.eps)
+        return x_hat * w + b
+
+    def extra_repr(self) -> str:
+        return f"num_domains={self.num_domains}, normalized_shape={self.normalized_shape}, eps={self.eps}"
+
+
+class DomainSpecificLinear(nn.Module):
+    """Per-domain Linear layer (only fc1 is domain-specific; fc2 shared).
+
+    A domain id (int or 1D tensor) must be set via ``set_domain_id`` before forward.
+    """
+
+    def __init__(self, in_features: int, out_features: int, num_domains: int, bias: bool = True):
+        super().__init__()
+        self.in_features = in_features
+        self.out_features = out_features
+        self.num_domains = num_domains
+        self.weight = nn.Parameter(torch.empty(num_domains, out_features, in_features))
+        if bias:
+            self.bias = nn.Parameter(torch.empty(num_domains, out_features))
+        else:
+            self.register_parameter("bias", None)
+        self.reset_parameters()
+        self._current_domain: Optional[torch.Tensor] = None
+
+    def reset_parameters(self):
+        nn.init.kaiming_uniform_(self.weight, a=math.sqrt(5))
+        if self.bias is not None:
+            fan_in, _ = nn.init._calculate_fan_in_and_fan_out(self.weight[0])
+            bound = 1 / math.sqrt(fan_in) if fan_in > 0 else 0
+            nn.init.uniform_(self.bias, -bound, bound)
+
+    def set_domain_id(self, domain_id: Union[int, torch.Tensor]) -> None:
+        if not torch.is_tensor(domain_id):
+            domain_id = torch.tensor(domain_id, dtype=torch.long, device=self.weight.device)
+        self._current_domain = domain_id
+
+    def _resolve_domain(self, x: torch.Tensor) -> torch.Tensor:
+        if self._current_domain is None:
+            return torch.zeros((), dtype=torch.long, device=x.device)
+        dom = self._current_domain
+        if dom.device != x.device:
+            dom = dom.to(x.device)
+        return dom
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        dom = self._resolve_domain(x)
+        if dom.ndim == 0:
+            w = self.weight[dom]
+            b = None if self.bias is None else self.bias[dom]
+            return F.linear(x, w, b)
+
+        # dom is batch-sized tensor: shape [B]
+        if dom.shape[0] != x.shape[0]:
+            raise ValueError(f"Domain id shape {dom.shape} incompatible with input batch {x.shape}")
+        outputs = []
+        for i in range(x.shape[0]):
+            w = self.weight[dom[i]]
+            b = None if self.bias is None else self.bias[dom[i]]
+            outputs.append(F.linear(x[i], w, b))
+        return torch.stack(outputs, dim=0)
+
+    def extra_repr(self) -> str:
+        return f"in_features={self.in_features}, out_features={self.out_features}, num_domains={self.num_domains}, bias={self.bias is not None}"
+
+
+def _convert_backbone_ffn_fc1(backbone: DinoVisionTransformer, num_domains: int):
+    """Make MLP fc1 domain-specific while keeping fc2 shared."""
+    if num_domains <= 1:
+        return backbone
+    if hasattr(backbone, "_domain_specific_fc1s"):
+        return backbone
+
+    ds_linears: list[DomainSpecificLinear] = []
+
+    def _maybe_replace(mlp: nn.Module):
+        fc1 = getattr(mlp, "fc1", None)
+        if isinstance(fc1, DomainSpecificLinear):
+            return
+        if not isinstance(fc1, nn.Linear):
+            return
+        ds = DomainSpecificLinear(fc1.in_features, fc1.out_features, num_domains, bias=fc1.bias is not None)
+        with torch.no_grad():
+            ds.weight.copy_(fc1.weight.unsqueeze(0).expand(num_domains, -1, -1))
+            if fc1.bias is not None:
+                ds.bias.copy_(fc1.bias.unsqueeze(0).expand(num_domains, -1))
+        mlp.fc1 = ds
+        ds_linears.append(ds)
+
+    for module in backbone.modules():
+        mlp = getattr(module, "mlp", None)
+        if mlp is not None:
+            _maybe_replace(mlp)
+
+    prev_setter = getattr(backbone, "_set_domain_id", None)
+
+    def _set_domain_id(self, domain_id):
+        if prev_setter:
+            prev_setter(domain_id)
+        for ds in ds_linears:
+            ds.set_domain_id(domain_id)
+
+    backbone._set_domain_id = MethodType(_set_domain_id, backbone)  # type: ignore[attr-defined]
+    backbone._domain_specific_fc1s = ds_linears  # type: ignore[attr-defined]
+    return backbone
+
+
 class MultiSensorPanopticonClassifier(nn.Module):
     """Shared DinoViT backbone with sensor-specific Panopticon PEs and heads."""
 
@@ -158,18 +311,26 @@ class MultiSensorPanopticonClassifier(nn.Module):
         summary_hidden_dim: int = 128,
         summary_dropout: float = 0.1,
         summary_loss_weight: float = 1.0,
+        sensor_loss_weights: Optional[Mapping[str, float]] = None,
     ):
         super().__init__()
-        if backbone is None:
-            backbone = _load_backbone()
-        if not isinstance(backbone, DinoVisionTransformer):
-            raise TypeError("backbone must be a DinoVisionTransformer instance")
-
-        self.backbone = backbone
         self.sensor_order = list(sensors)
         if not self.sensor_order:
             raise ValueError("At least one sensor must be specified")
         self.sensor_to_idx = {sensor: idx for idx, sensor in enumerate(self.sensor_order)}
+        num_domains = len(self.sensor_order)
+
+        if backbone is None:
+            backbone = _load_backbone(domain_specific_ln=True, num_domains=num_domains)
+        if not isinstance(backbone, DinoVisionTransformer):
+            raise TypeError("backbone must be a DinoVisionTransformer instance")
+        if not hasattr(backbone, "_domain_specific_lns"):
+            _convert_backbone_layernorms(backbone, num_domains=num_domains)
+
+        # patch fc1 to be sensor-specific (domain-specific) while keeping fc2 shared
+        _convert_backbone_ffn_fc1(backbone, num_domains=num_domains)
+
+        self.backbone = backbone
 
         base_patch_embed = backbone.patch_embed
         sensor_modules = nn.ModuleDict()
@@ -205,6 +366,11 @@ class MultiSensorPanopticonClassifier(nn.Module):
             self.heads[sensor] = make_head(classes)
         self.summary_loss_weight = float(summary_loss_weight)
         self.summary_head: Optional[LogitSummaryHead] = None
+        self.sensor_loss_weights = {sensor: 1.0 for sensor in self.sensor_order}
+        if sensor_loss_weights is not None:
+            for sensor_name, weight in sensor_loss_weights.items():
+                if sensor_name in self.sensor_loss_weights:
+                    self.sensor_loss_weights[sensor_name] = float(weight)
 
         head_dims = [getattr(self.heads[sensor], "out_features", None) for sensor in self.sensor_order]
         can_build_summary = bool(head_dims) and None not in head_dims and len(set(head_dims)) == 1
@@ -278,6 +444,13 @@ class MultiSensorPanopticonClassifier(nn.Module):
 
         for sensor_name, sensor_batch in sensor_batches.items():
             with self._use_sensor(sensor_name):
+                if hasattr(self.backbone, "_set_domain_id"):
+                    domain_id = torch.tensor(
+                        self.sensor_to_idx[sensor_name],
+                        device=sensor_batch.indices.device,
+                        dtype=torch.long,
+                    )
+                    self.backbone._set_domain_id(domain_id)  # type: ignore[attr-defined]
                 feats = self.backbone(sensor_batch.x_dict, is_training=True)
             cls_token = feats["x_norm_clstoken"]
             head_logits = [self.heads[name](cls_token) for name in self.sensor_order]
@@ -346,7 +519,8 @@ class MultiSensorPanopticonClassifier(nn.Module):
             sensor_labels = labels.index_select(0, idx)
             loss = criterion(sensor_out["logits"], sensor_labels)
             per_sensor_losses[sensor_name] = loss
-            total_loss = loss if total_loss is None else total_loss + loss
+            weighted_loss = loss * self.sensor_loss_weights.get(sensor_name, 1.0)
+            total_loss = weighted_loss if total_loss is None else total_loss + weighted_loss
         summary_logits = outputs.get("summary_logits")
         if isinstance(summary_logits, torch.Tensor):
             summary_loss = criterion(summary_logits, labels)
@@ -365,7 +539,7 @@ class MultiSensorPanopticonClassifier(nn.Module):
         return_features: bool = False,
     ) -> None:
         device = next(iter(x_dict.values())).device
-        embed_dim = getattr(self.backbone, "embed_dim", 768)
+        embed_dim = getattr(self.backbone, "embed_dim", outputs[next(iter(outputs))]["cls_token"].shape[-1])
         for sensor_name in self.sensor_order:
             if sensor_name in outputs:
                 continue
@@ -395,13 +569,24 @@ class SensorBatch:
 # --------------------------------------------------------------------------------------
 
 class StaticAnchoredCache:
-    def __init__(self, cache_dir: str, min_free_gb: float = 10.0):
+    def __init__(self, cache_dir: str, min_free_gb: float = 10.0, max_gb: Optional[float] = None):
         self.cache_dir = Path(cache_dir).expanduser().resolve()
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.min_free_bytes = min_free_gb * (1024**3)
+        self.max_bytes = None if max_gb in (None, 0) else max_gb * (1024**3)
 
     def _get_free_space(self) -> int:
         return shutil.disk_usage(self.cache_dir).free
+
+    def _get_cache_size(self) -> int:
+        total = 0
+        for root, _, files in os.walk(self.cache_dir):
+            for f in files:
+                try:
+                    total += (Path(root) / f).stat().st_size
+                except FileNotFoundError:
+                    continue
+        return total
 
     def _hashed_path(self, original: str) -> Path:
         norm_path = os.path.abspath(original)
@@ -416,6 +601,13 @@ class StaticAnchoredCache:
             return str(dst)
         if self._get_free_space() < self.min_free_bytes:
             return original
+        if self.max_bytes is not None:
+            try:
+                file_size = Path(original).stat().st_size
+            except (FileNotFoundError, OSError):
+                file_size = 0
+            if self._get_cache_size() + file_size > self.max_bytes:
+                return original
         tmp = dst.with_suffix(dst.suffix + ".tmp")
         tmp.parent.mkdir(parents=True, exist_ok=True)
         try:
@@ -454,6 +646,70 @@ def _compute_mean_std(stats: Optional[Tuple[Sequence[float], Sequence[float]]]):
     mean_tensor = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
     std_tensor = torch.clamp(torch.tensor(std, dtype=torch.float32), min=1e-6).view(-1, 1, 1)
     return mean_tensor, std_tensor
+
+
+# --------------------------------------------------------------------------------------
+#  Backbone patching helpers (Domain-specific LayerNorm)
+# --------------------------------------------------------------------------------------
+
+def _convert_backbone_layernorms(backbone: DinoVisionTransformer, num_domains: int):
+    """Replace backbone nn.LayerNorm modules with domain-specific variants."""
+    if hasattr(backbone, "_domain_specific_lns"):
+        return backbone
+
+    domain_lns: list[DomainSpecificLayerNorm] = []
+
+    def _maybe_replace(module: nn.Module, name: str):
+        child = getattr(module, name, None)
+        if not isinstance(child, nn.LayerNorm):
+            return
+        dsl = DomainSpecificLayerNorm(child.normalized_shape, num_domains=num_domains, eps=child.eps)
+        with torch.no_grad():
+            dsl.weight.copy_(child.weight.unsqueeze(0).expand(num_domains, -1))
+            dsl.bias.copy_(child.bias.unsqueeze(0).expand(num_domains, -1))
+        setattr(module, name, dsl)
+        domain_lns.append(dsl)
+
+    def _recurse(module: nn.Module):
+        for field in ("norm", "norm1", "norm2"):
+            if hasattr(module, field):
+                _maybe_replace(module, field)
+        for _name, child in module.named_children():
+            _recurse(child)
+
+    if num_domains > 1:
+        _recurse(backbone)
+    backbone._domain_specific_lns = domain_lns  # type: ignore[attr-defined]
+
+    prev_setter = getattr(backbone, "_set_domain_id", None)
+
+    def _set_domain_id(self, domain_id):
+        if prev_setter:
+            prev_setter(domain_id)
+        if not domain_lns:
+            return
+        if not torch.is_tensor(domain_id):
+            domain_id_tensor = torch.tensor(domain_id, device=self.pos_embed.device, dtype=torch.long)
+        else:
+            domain_id_tensor = domain_id.to(self.pos_embed.device)
+        for ln in domain_lns:
+            ln.set_domain_id(domain_id_tensor)
+
+    backbone._set_domain_id = MethodType(_set_domain_id, backbone)  # type: ignore[attr-defined]
+    return backbone
+
+
+def _expand_state_dict_for_domain_lns(state: MutableMapping[str, torch.Tensor], num_domains: int):
+    """Expand LayerNorm params from [D] to [K,D] for domain-specific LayerNorm loads."""
+    if num_domains <= 1:
+        return
+    for key, tensor in list(state.items()):
+        if tensor.ndim != 1 or not key.endswith(("weight", "bias")):
+            continue
+        module_key = key.rsplit(".", 1)[0]
+        if module_key.split(".")[-1] not in {"norm", "norm1", "norm2"}:
+            continue
+        state[key] = tensor.unsqueeze(0).expand(num_domains, -1).clone()
 
 
 class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
@@ -672,27 +928,22 @@ class ConcatTemporalDataset(Dataset):
 
 def custom_collate_fn(batch):
     x_dicts, labels, sensors = zip(*batch)
+    batch_size = len(x_dicts)
     max_channels = max(x["imgs"].shape[0] for x in x_dicts)
     max_h = max(x["imgs"].shape[1] for x in x_dicts)
     max_w = max(x["imgs"].shape[2] for x in x_dicts)
+    chn_tail_shape = x_dicts[0]["chn_ids"].shape[1:]
 
-    padded_imgs = []
-    padded_chn_ids = []
-    for x_dict in x_dicts:
+    batched_imgs = x_dicts[0]["imgs"].new_zeros((batch_size, max_channels, max_h, max_w))
+    batched_chn_ids = x_dicts[0]["chn_ids"].new_zeros((batch_size, max_channels, *chn_tail_shape))
+    for i, x_dict in enumerate(x_dicts):
         img = x_dict["imgs"]
         chn_ids = x_dict["chn_ids"]
         c, h, w = img.shape
-        pad_h = max_h - h
-        pad_w = max_w - w
-        img = F.pad(img, (0, pad_w, 0, pad_h))
-        pad_c = max_channels - c
-        if pad_c:
-            img = torch.cat([img, torch.zeros((pad_c, max_h, max_w), dtype=img.dtype)], dim=0)
-            chn_ids = torch.cat([chn_ids, torch.zeros((pad_c, *chn_ids.shape[1:]), dtype=chn_ids.dtype)], dim=0)
-        padded_imgs.append(img)
-        padded_chn_ids.append(chn_ids)
-    batched_x_dict = {"imgs": torch.stack(padded_imgs), "chn_ids": torch.stack(padded_chn_ids)}
-    return batched_x_dict, torch.tensor(labels), list(sensors)
+        batched_imgs[i, :c, :h, :w] = img
+        batched_chn_ids[i, :c] = chn_ids
+    batched_x_dict = {"imgs": batched_imgs, "chn_ids": batched_chn_ids}
+    return batched_x_dict, torch.as_tensor(labels, dtype=torch.long), list(sensors)
 
 
 def _resolve_base_dataset(dataset: Dataset) -> Dataset:
@@ -721,6 +972,8 @@ def build_sensor_dataloaders(
     batch_size: int,
     num_workers: int,
     pin_memory: bool,
+    persistent_workers: bool,
+    prefetch_factor: int,
     shuffle: bool,
     oversample_to_max_steps: bool = False,
 ) -> Tuple[Dict[str, DataLoader], Dict[str, int]]:
@@ -742,6 +995,10 @@ def build_sensor_dataloaders(
         if oversample_to_max_steps and len(indices) > 0:
             num_samples = target_steps * batch_size
             sampler = RandomSampler(subset, replacement=True, num_samples=num_samples)
+        loader_kwargs = {}
+        if num_workers > 0:
+            loader_kwargs["persistent_workers"] = persistent_workers
+            loader_kwargs["prefetch_factor"] = prefetch_factor
         loaders[sensor_name] = DataLoader(
             subset,
             batch_size=batch_size,
@@ -750,6 +1007,7 @@ def build_sensor_dataloaders(
             num_workers=num_workers,
             pin_memory=pin_memory,
             collate_fn=custom_collate_fn,
+            **loader_kwargs,
         )
         steps_per_sensor[sensor_name] = target_steps
     return loaders, steps_per_sensor
@@ -762,13 +1020,18 @@ def build_balanced_mixed_dataloader(
     batch_size: int,
     num_workers: int,
     pin_memory: bool,
+    persistent_workers: bool,
+    prefetch_factor: int,
     shuffle: bool,
     oversample_to_max: bool = True,
+    sensor_epoch_ratio: Optional[Mapping[str, float]] = None,
 ) -> Tuple[DataLoader, int]:
     """Create a single DataLoader that mixes sensors and oversamples minority ones.
 
     - If ``oversample_to_max`` is True (default), each sensor is repeated until it
       reaches the size of the largest sensor, balancing class counts.
+    - ``sensor_epoch_ratio`` can downsample/upsample each sensor per epoch
+      (e.g. l89=0.35 means using about 35% of the L89 epoch budget).
     - Otherwise, uses the natural counts.
     Returns (loader, total_steps_per_epoch).
     """
@@ -778,26 +1041,46 @@ def build_balanced_mixed_dataloader(
     if not counts:
         raise ValueError("No samples found for the configured sensors.")
 
+    ratio_map = {sensor: 1.0 for sensor in sensors}
+    if sensor_epoch_ratio:
+        for sensor_name, value in sensor_epoch_ratio.items():
+            if sensor_name in ratio_map:
+                ratio_map[sensor_name] = max(0.0, float(value))
+
     target = max(counts.values()) if oversample_to_max else None
     balanced_indices: list[int] = []
     for sensor, indices in idx_map.items():
         if not indices:
             continue
-        desired = target if target is not None else len(indices)
+        base_target = target if target is not None else len(indices)
+        desired = int(math.ceil(base_target * ratio_map.get(sensor, 1.0)))
+        if desired <= 0:
+            continue
         repeat = math.ceil(desired / len(indices))
         expanded = (indices * repeat)[:desired]
         balanced_indices.extend(expanded)
 
-    sampler = SubsetRandomSampler(balanced_indices) if shuffle else balanced_indices
+    if not balanced_indices:
+        raise ValueError("No samples selected for the mixed dataloader. Check sensor_epoch_ratio settings.")
+
+    balanced_subset = Subset(dataset, balanced_indices)
+    sampler = None
+    if shuffle:
+        sampler = RandomSampler(balanced_subset)
     steps = math.ceil(len(balanced_indices) / batch_size)
+    loader_kwargs = {}
+    if num_workers > 0:
+        loader_kwargs["persistent_workers"] = persistent_workers
+        loader_kwargs["prefetch_factor"] = prefetch_factor
     loader = DataLoader(
-        dataset,
+        balanced_subset,
         batch_size=batch_size,
-        shuffle=False if isinstance(sampler, SubsetRandomSampler) else shuffle,
-        sampler=sampler if isinstance(sampler, SubsetRandomSampler) else None,
+        shuffle=(shuffle and sampler is None),
+        sampler=sampler,
         num_workers=num_workers,
         pin_memory=pin_memory,
         collate_fn=custom_collate_fn,
+        **loader_kwargs,
     )
     return loader, steps
 
@@ -806,16 +1089,26 @@ def build_balanced_mixed_dataloader(
 #  Training utilities
 # --------------------------------------------------------------------------------------
 
-def _load_backbone(weights_path: Optional[str] = None, *, strict: bool = True) -> DinoVisionTransformer:
+def _load_backbone(
+    weights_path: Optional[str] = None,
+    *,
+    strict: bool = True,
+    domain_specific_ln: bool = False,
+    num_domains: int = 1,
+) -> DinoVisionTransformer:
     from hubconf import _panopticon_vitb14
 
     backbone = _panopticon_vitb14()
+    if domain_specific_ln:
+        _convert_backbone_layernorms(backbone, num_domains=num_domains)
     if weights_path in (None, "", "none", "scratch", "random"):
         return backbone
     ckpt_path = Path(weights_path)
     state = torch.load(ckpt_path, map_location="cpu")
     if isinstance(state, Mapping) and "backbone" in state:
         state = state["backbone"]
+    if domain_specific_ln:
+        _expand_state_dict_for_domain_lns(state, num_domains=num_domains)
     backbone.load_state_dict(state, strict=strict)
     return backbone
 
@@ -828,13 +1121,13 @@ def _slice_x_dict(x_dict: MutableMapping[str, torch.Tensor], idx: torch.Tensor) 
     return {k: _index_batch(v, idx) for k, v in x_dict.items() if isinstance(v, torch.Tensor)}
 
 
-def recursive_to_device(x, device):
+def recursive_to_device(x, device, *, non_blocking: bool = False):
     if isinstance(x, torch.Tensor):
-        return x.to(device)
+        return x.to(device, non_blocking=non_blocking)
     if isinstance(x, dict):
-        return {k: recursive_to_device(v, device) for k, v in x.items()}
+        return {k: recursive_to_device(v, device, non_blocking=non_blocking) for k, v in x.items()}
     if isinstance(x, (list, tuple)):
-        t = [recursive_to_device(v, device) for v in x]
+        t = [recursive_to_device(v, device, non_blocking=non_blocking) for v in x]
         return type(x)(t)
     return x
 
@@ -844,12 +1137,39 @@ def set_trainable(module: nn.Module, requires_grad: bool):
         p.requires_grad = requires_grad
 
 
+def count_non_finite_params(module: nn.Module) -> int:
+    non_finite = 0
+    for p in module.parameters():
+        if p is None:
+            continue
+        non_finite += int((~torch.isfinite(p.detach())).sum().item())
+    return non_finite
+
+
 def init_wandb(args):
     if not args.use_wandb:
         return None
-    import wandb
+    try:
+        import wandb  # type: ignore
+    except Exception as exc:
+        warnings.warn(f"Failed to import wandb ({exc}); continuing without Weights & Biases logging.")
+        return None
 
-    return wandb.init(project=args.wandb_project, name=args.wandb_run_name, config=vars(args))
+    wandb_init = getattr(wandb, "init", None)
+    if not callable(wandb_init):
+        module_file = getattr(wandb, "__file__", "<unknown>")
+        warnings.warn(
+            f"Imported module 'wandb' from {module_file}, but it has no callable init(). "
+            "This usually means a local module is shadowing the W&B package. "
+            "Continuing without Weights & Biases logging."
+        )
+        return None
+
+    try:
+        return wandb_init(project=args.wandb_project, name=args.wandb_run_name, config=vars(args))
+    except Exception as exc:
+        warnings.warn(f"wandb.init failed ({exc}); continuing without Weights & Biases logging.")
+        return None
 
 
 def default_run_name(args) -> str:
@@ -906,27 +1226,14 @@ def try_resume(path: Path, model: nn.Module, optimizer, scheduler, scaler, devic
     return start_epoch, global_step, best_train_acc, best_test_acc
 
 
-def build_scheduler(args, optimizer):
-    if args.lr_scheduler == "none":
-        return None
-    if args.lr_scheduler == "noam":
-        warmup_steps = max(args.warmup_steps, 1)
-        noam_lambda = lambda step: min((step + 1) ** -0.5, (step + 1) * (warmup_steps ** -1.5))
-        return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=noam_lambda)
-    raise ValueError(f"Unknown lr_scheduler: {args.lr_scheduler}")
-
-
 def _safe_ratio(numerator: float, denominator: float) -> float:
-    if denominator <= 0:
-        return float("nan")
-    return float(numerator) / float(denominator)
+    return float("nan") if denominator == 0 else float(numerator / denominator)
 
 
 def _binary_auroc_from_scores(labels: np.ndarray, scores: np.ndarray) -> float:
-    """Compute AUROC for binary labels {0,1} using rank statistics (tie-aware)."""
-    if labels.ndim != 1 or scores.ndim != 1 or labels.shape[0] != scores.shape[0]:
-        return float("nan")
-    n = labels.shape[0]
+    labels = labels.astype(np.int64, copy=False)
+    scores = scores.astype(np.float64, copy=False)
+    n = labels.size
     if n == 0:
         return float("nan")
     pos_mask = labels == 1
@@ -965,6 +1272,50 @@ def compute_binary_metrics(labels: np.ndarray, preds: np.ndarray, pos_scores: np
         "recall": _safe_ratio(tp, tp + fn),
         "auroc": _binary_auroc_from_scores(labels, pos_scores),
     }
+
+
+def build_scheduler(args, optimizer):
+    if args.lr_scheduler == "none":
+        return None
+    if args.lr_scheduler == "noam":
+        warmup_steps = max(args.warmup_steps, 1)
+        noam_lambda = lambda step: min((step + 1) ** -0.5, (step + 1) * (warmup_steps ** -1.5))
+        return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=noam_lambda)
+    raise ValueError(f"Unknown lr_scheduler: {args.lr_scheduler}")
+
+
+def parse_sensor_float_map(
+    raw: Optional[str],
+    sensors: Sequence[str],
+    *,
+    default: float = 1.0,
+    map_name: str,
+    min_value: float = 0.0,
+) -> Dict[str, float]:
+    values = {sensor: float(default) for sensor in sensors}
+    if raw is None:
+        return values
+    text = raw.strip()
+    if not text:
+        return values
+    for piece in text.split(","):
+        token = piece.strip()
+        if not token:
+            continue
+        if "=" not in token:
+            raise ValueError(f"Invalid {map_name} entry '{token}'. Expected format sensor=value.")
+        sensor_name, value_str = token.split("=", 1)
+        sensor_name = sensor_name.strip()
+        if sensor_name not in values:
+            raise ValueError(f"Unknown sensor '{sensor_name}' in {map_name}. Valid sensors: {list(sensors)}")
+        try:
+            value = float(value_str)
+        except ValueError as exc:
+            raise ValueError(f"Invalid float value '{value_str}' for sensor '{sensor_name}' in {map_name}.") from exc
+        if value < min_value:
+            raise ValueError(f"{map_name} for sensor '{sensor_name}' must be >= {min_value}, got {value}.")
+        values[sensor_name] = value
+    return values
 
 
 def gather_head_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
@@ -1019,16 +1370,39 @@ def parse_args():
     parser.add_argument("--checkpoint_dir", default="checkpoints/multi_sensor")
     parser.add_argument("--lr_scheduler", choices=["none", "noam"], default="noam")
     parser.add_argument("--warmup_steps", type=int, default=4000)
+    parser.add_argument("--amp", action="store_true", dest="amp")
+    parser.add_argument("--disable_amp", action="store_false", dest="amp")
+    parser.set_defaults(amp=True)
     parser.add_argument("--use_wandb", action="store_true")
     parser.add_argument("--wandb_project", default="panopticon-multisensor")
     parser.add_argument("--wandb_run_name", default=None)
     parser.add_argument("--local_cache_dir", default=None)
     parser.add_argument("--local_cache_min_free_gb", type=float, default=5.0)
+    parser.add_argument("--local_cache_max_gb", type=float, default=None)
     parser.add_argument("--local_cache_warmup", action="store_true")
     parser.add_argument("--local_cache_workers", type=int, default=8)
     parser.add_argument("--oversample_minority", action="store_true", dest="oversample_minority")
     parser.add_argument("--disable_oversample_minority", action="store_false", dest="oversample_minority")
     parser.set_defaults(oversample_minority=True)
+    parser.add_argument("--prefetch_factor", type=int, default=4)
+    parser.add_argument("--persistent_workers", action="store_true", dest="persistent_workers")
+    parser.add_argument("--disable_persistent_workers", action="store_false", dest="persistent_workers")
+    parser.set_defaults(persistent_workers=True)
+    parser.add_argument("--non_blocking_transfer", action="store_true", dest="non_blocking_transfer")
+    parser.add_argument("--disable_non_blocking_transfer", action="store_false", dest="non_blocking_transfer")
+    parser.set_defaults(non_blocking_transfer=True)
+    parser.add_argument("--enable_tf32", action="store_true", dest="enable_tf32")
+    parser.add_argument("--disable_tf32", action="store_false", dest="enable_tf32")
+    parser.set_defaults(enable_tf32=True)
+    parser.add_argument("--cudnn_benchmark", action="store_true", dest="cudnn_benchmark")
+    parser.add_argument("--disable_cudnn_benchmark", action="store_false", dest="cudnn_benchmark")
+    parser.set_defaults(cudnn_benchmark=True)
+    parser.add_argument("--matmul_precision", choices=["highest", "high", "medium"], default="high")
+    parser.add_argument("--fused_optimizer", action="store_true", dest="fused_optimizer")
+    parser.add_argument("--disable_fused_optimizer", action="store_false", dest="fused_optimizer")
+    parser.set_defaults(fused_optimizer=False)
+    parser.add_argument("--torch_compile", action="store_true")
+    parser.add_argument("--compile_mode", choices=["default", "reduce-overhead", "max-autotune"], default="default")
     parser.add_argument("--sensor_switch_interval", type=int, default=100)
     parser.add_argument("--summary_head", action="store_true", dest="summary_head")
     parser.add_argument("--disable_summary_head", action="store_false", dest="summary_head")
@@ -1036,6 +1410,18 @@ def parse_args():
     parser.add_argument("--summary_hidden_dim", type=int, default=128)
     parser.add_argument("--summary_dropout", type=float, default=0.1)
     parser.add_argument("--summary_loss_weight", type=float, default=1.0)
+    parser.add_argument(
+        "--train_sensor_epoch_ratio",
+        type=str,
+        default="",
+        help="Comma-separated per-sensor ratio for training samples per epoch, e.g. s2=1.0,l89=0.35,s5p=1.0",
+    )
+    parser.add_argument(
+        "--sensor_loss_weights",
+        type=str,
+        default="",
+        help="Comma-separated per-sensor loss weights, e.g. s2=1.0,l89=0.6,s5p=1.0",
+    )
     return parser.parse_args()
 
 
@@ -1045,11 +1431,20 @@ def main(args):
         device = torch.device("cuda:0")
     if device.type == "cuda":
         torch.cuda.set_device(device)
+        torch.backends.cuda.matmul.allow_tf32 = args.enable_tf32
+        torch.backends.cudnn.allow_tf32 = args.enable_tf32
+        torch.backends.cudnn.benchmark = args.cudnn_benchmark
+    if hasattr(torch, "set_float32_matmul_precision"):
+        torch.set_float32_matmul_precision(args.matmul_precision)
 
     path_columns = (args.t0_col, args.t90_col, args.t360_col)
     cache_obj = None
     if args.local_cache_dir:
-        cache_obj = StaticAnchoredCache(args.local_cache_dir, min_free_gb=args.local_cache_min_free_gb)
+        cache_obj = StaticAnchoredCache(
+            args.local_cache_dir,
+            min_free_gb=args.local_cache_min_free_gb,
+            max_gb=args.local_cache_max_gb,
+        )
 
     base_train_ds = TriSensorTemporalCsvDataset(
         csv_path=args.train_csv,
@@ -1082,13 +1477,33 @@ def main(args):
     train_ds = ConcatTemporalDataset(base_train_ds)
     test_ds = ConcatTemporalDataset(base_test_ds)
 
+    default_sensors = ("s2", "l89", "s5p")
+    train_sensor_epoch_ratio = parse_sensor_float_map(
+        args.train_sensor_epoch_ratio,
+        default_sensors,
+        default=1.0,
+        map_name="train_sensor_epoch_ratio",
+        min_value=0.0,
+    )
+    sensor_loss_weights = parse_sensor_float_map(
+        args.sensor_loss_weights,
+        default_sensors,
+        default=1.0,
+        map_name="sensor_loss_weights",
+        min_value=0.0,
+    )
     core_model = MultiSensorPanopticonClassifier(
-        backbone=_load_backbone(args.weights),
+        backbone=_load_backbone(args.weights, domain_specific_ln=True, num_domains=len(default_sensors)),
+        sensors=default_sensors,
         enable_summary_head=args.summary_head,
         summary_hidden_dim=args.summary_hidden_dim,
         summary_dropout=args.summary_dropout,
         summary_loss_weight=args.summary_loss_weight,
+        sensor_loss_weights=sensor_loss_weights,
     ).to(device)
+    init_non_finite = count_non_finite_params(core_model)
+    if init_non_finite > 0:
+        raise RuntimeError(f"Model has {init_non_finite} non-finite parameters after initialization/load.")
     model: nn.Module = core_model
     use_data_parallel = args.data_parallel and device.type == "cuda" and torch.cuda.device_count() > 1
     if use_data_parallel:
@@ -1096,6 +1511,12 @@ def main(args):
         model = nn.DataParallel(core_model)
     elif args.data_parallel:
         print("DataParallel requested but insufficient CUDA devices; running single-device.", flush=True)
+    if args.torch_compile and not use_data_parallel and hasattr(torch, "compile"):
+        try:
+            model = torch.compile(model, mode=args.compile_mode)
+            print(f"Enabled torch.compile(mode={args.compile_mode})", flush=True)
+        except Exception as exc:
+            warnings.warn(f"Failed to enable torch.compile; continuing without it. Error: {exc}")
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
     head_params = gather_head_parameters(core_model)
     param_groups = [
@@ -1104,9 +1525,17 @@ def main(args):
     if args.train_backbone:
         param_groups.insert(0, {"params": core_model.backbone.parameters(), "lr": args.backbone_lr})
 
-    optimizer = torch.optim.Adam(param_groups, weight_decay=args.weight_decay, betas=(args.momentum, 0.999))
+    adam_kwargs = {"weight_decay": args.weight_decay, "betas": (args.momentum, 0.999)}
+    using_fused_adam = False
+    if args.fused_optimizer and device.type == "cuda":
+        adam_sig = inspect.signature(torch.optim.Adam)
+        if "fused" in adam_sig.parameters:
+            adam_kwargs["fused"] = True
+            using_fused_adam = True
+    optimizer = torch.optim.Adam(param_groups, **adam_kwargs)
+    print(f"Optimizer: Adam(fused={using_fused_adam})", flush=True)
     scheduler = build_scheduler(args, optimizer)
-    use_amp = device.type == "cuda"
+    use_amp = device.type == "cuda" and args.amp
     scaler = GradScaler(enabled=use_amp)
 
     run_name = args.wandb_run_name or default_run_name(args)
@@ -1123,11 +1552,15 @@ def main(args):
         start_epoch, global_step, best_train_acc, best_test_acc = try_resume(
             latest_path, core_model, optimizer, scheduler, scaler, device
         )
+        resumed_non_finite = count_non_finite_params(core_model)
+        if resumed_non_finite > 0:
+            raise RuntimeError(f"Model has {resumed_non_finite} non-finite parameters after resume.")
 
     wandb_run = init_wandb(args)
 
     sensors_list = core_model.sensor_order
     pin_memory = device.type == "cuda"
+    persistent_workers = args.persistent_workers and args.num_workers > 0
     # Single mixed loader with optional oversampling so that minority sensors are repeated
     # and batches contain mixed sensors.
     train_loader, train_steps = build_balanced_mixed_dataloader(
@@ -1136,8 +1569,11 @@ def main(args):
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         pin_memory=pin_memory,
+        persistent_workers=persistent_workers,
+        prefetch_factor=args.prefetch_factor,
         shuffle=True,
         oversample_to_max=args.oversample_minority,
+        sensor_epoch_ratio=train_sensor_epoch_ratio,
     )
     test_loader, test_steps = build_balanced_mixed_dataloader(
         test_ds,
@@ -1145,13 +1581,16 @@ def main(args):
         batch_size=args.batch_size,
         num_workers=args.num_workers,
         pin_memory=pin_memory,
+        persistent_workers=persistent_workers,
+        prefetch_factor=args.prefetch_factor,
         shuffle=False,
         oversample_to_max=False,
     )
 
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sensors_list}, train_backbone={args.train_backbone}",
+        f"sensors={sensors_list}, train_backbone={args.train_backbone}, "
+        f"train_sensor_epoch_ratio={train_sensor_epoch_ratio}, sensor_loss_weights={sensor_loss_weights}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
@@ -1184,8 +1623,8 @@ def main(args):
         step_idx = 0
         for x_dict, labels, sensors in train_loader:
             step_idx += 1
-            labels = labels.to(device)
-            x_dict = recursive_to_device(x_dict, device)
+            labels = labels.to(device, non_blocking=args.non_blocking_transfer)
+            x_dict = recursive_to_device(x_dict, device, non_blocking=args.non_blocking_transfer)
             sensor_arg: Union[Sequence[str], torch.Tensor]
             if use_data_parallel:
                 sensor_arg = core_model.encode_sensors(sensors, device=device)
@@ -1194,11 +1633,33 @@ def main(args):
             with autocast(enabled=use_amp):
                 outputs = model(x_dict, sensors=sensor_arg)
                 loss, per_sensor_losses = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
-            optimizer.zero_grad()
+            if not torch.isfinite(loss):
+                imgs = x_dict["imgs"]
+                msg = [
+                    f"Non-finite train loss at epoch={epoch} step={step_idx}",
+                    f"imgs_finite={bool(torch.isfinite(imgs).all().item())}",
+                    f"imgs_abs_max={float(imgs.detach().abs().max().item()):.3e}",
+                ]
+                for sensor_name in sensors_list:
+                    sensor_out = outputs.get(sensor_name)
+                    if not isinstance(sensor_out, dict):
+                        continue
+                    logits = sensor_out["logits"]
+                    msg.append(
+                        f"{sensor_name}_logits_finite={bool(torch.isfinite(logits).all().item())}"
+                    )
+                    msg.append(f"{sensor_name}_logits_abs_max={float(logits.detach().abs().max().item()):.3e}")
+                print(" ".join(msg), flush=True)
+                optimizer.zero_grad(set_to_none=True)
+                continue
+            optimizer.zero_grad(set_to_none=True)
             scaler.scale(loss).backward()
             if args.max_grad_norm and args.max_grad_norm > 0:
                 scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(param_groups[0]["params"], args.max_grad_norm)
+                torch.nn.utils.clip_grad_norm_(
+                    (p for p in core_model.parameters() if p.requires_grad),
+                    args.max_grad_norm,
+                )
             scaler.step(optimizer)
             scaler.update()
             if scheduler is not None:
@@ -1266,8 +1727,8 @@ def main(args):
         eval_pos_scores: list[float] = []
         with torch.no_grad():
             for step, (x_dict, labels, sensors) in enumerate(test_loader, 1):
-                labels = labels.to(device)
-                x_dict = recursive_to_device(x_dict, device)
+                labels = labels.to(device, non_blocking=args.non_blocking_transfer)
+                x_dict = recursive_to_device(x_dict, device, non_blocking=args.non_blocking_transfer)
                 if use_data_parallel:
                     sensor_arg = core_model.encode_sensors(sensors, device=device)
                 else:
@@ -1275,6 +1736,9 @@ def main(args):
                 with autocast(enabled=use_amp):
                     outputs = model(x_dict, sensors=sensor_arg)
                     loss, _ = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
+                if not torch.isfinite(loss):
+                    print(f"Non-finite eval loss at epoch={epoch} step={step}; skipping batch.", flush=True)
+                    continue
                 batch = labels.size(0)
                 test_loss_total += loss.item() * batch
                 total_eval += batch
@@ -1369,6 +1833,9 @@ def main(args):
                 "test_fpr": test_fpr,
                 "test_recall": test_recall,
                 "test_auroc": test_auroc,
+                "FPR": test_fpr,
+                "Recall": test_recall,
+                "AUROC": test_auroc,
             }
             for sensor in sensors_list:
                 log_payload[f"test_acc_{sensor}"] = per_sensor_acc[sensor]
@@ -1381,6 +1848,12 @@ def main(args):
             if summary_loss_count > 0:
                 log_payload["train_loss_summary"] = summary_loss_accum / summary_loss_count
             wandb_run.log(log_payload)
+            if math.isfinite(test_fpr):
+                wandb_run.summary["FPR"] = test_fpr
+            if math.isfinite(test_recall):
+                wandb_run.summary["Recall"] = test_recall
+            if math.isfinite(test_auroc):
+                wandb_run.summary["AUROC"] = test_auroc
 
     if wandb_run is not None:
         wandb_run.finish()
