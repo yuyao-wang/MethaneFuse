@@ -532,6 +532,7 @@ class MultiSensorPanopticonClassifier(nn.Module):
     ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
         total_loss: Optional[torch.Tensor] = None
         per_sensor_losses: Dict[str, torch.Tensor] = {}
+        loss_ref: Optional[torch.Tensor] = None
         for sensor_name in self.sensor_order:
             sensor_out = outputs.get(sensor_name)
             if not isinstance(sensor_out, dict):
@@ -540,19 +541,32 @@ class MultiSensorPanopticonClassifier(nn.Module):
             if idx.numel() == 0:
                 continue
             sensor_labels = labels.index_select(0, idx)
-            loss = criterion(sensor_out["logits"], sensor_labels)
+            logits = sensor_out["logits"]
+            loss_ref = logits if loss_ref is None else loss_ref
+            if not torch.isfinite(logits).all():
+                logits = torch.nan_to_num(logits, nan=0.0, posinf=0.0, neginf=0.0)
+            loss = criterion(logits, sensor_labels)
+            if not torch.isfinite(loss):
+                continue
             per_sensor_losses[sensor_name] = loss
             weight = float(sensor_loss_weights.get(sensor_name, 1.0)) if sensor_loss_weights is not None else 1.0
             weighted_loss = loss * weight
             total_loss = weighted_loss if total_loss is None else total_loss + weighted_loss
         summary_logits = outputs.get("summary_logits")
         if isinstance(summary_logits, torch.Tensor):
-            summary_loss = criterion(summary_logits, labels)
-            per_sensor_losses["summary"] = summary_loss
-            weighted_summary_loss = summary_loss * self.summary_loss_weight
-            total_loss = weighted_summary_loss if total_loss is None else total_loss + weighted_summary_loss
+            loss_ref = summary_logits if loss_ref is None else loss_ref
+            summary_logits_clean = summary_logits
+            if not torch.isfinite(summary_logits_clean).all():
+                summary_logits_clean = torch.nan_to_num(summary_logits_clean, nan=0.0, posinf=0.0, neginf=0.0)
+            summary_loss = criterion(summary_logits_clean, labels)
+            if torch.isfinite(summary_loss):
+                per_sensor_losses["summary"] = summary_loss
+                weighted_summary_loss = summary_loss * self.summary_loss_weight
+                total_loss = weighted_summary_loss if total_loss is None else total_loss + weighted_summary_loss
         if total_loss is None:
-            raise RuntimeError("No loss terms were computed; check the sensor labels")
+            if loss_ref is None:
+                raise RuntimeError("No loss terms were computed; check the sensor labels")
+            total_loss = torch.nan_to_num(loss_ref, nan=0.0, posinf=0.0, neginf=0.0).sum() * 0.0
         return total_loss, per_sensor_losses
 
     def _ensure_sensor_keys(
@@ -1958,6 +1972,18 @@ def main(args):
                     criterion,
                     sensor_loss_weights=sensor_loss_weights,
                 )
+            if not torch.isfinite(loss):
+                bad_details = " ".join(
+                    f"{name}_loss={per_sensor_losses[name].detach().float().item():.4f}"
+                    for name in sensors_list
+                    if name in per_sensor_losses
+                )
+                print(
+                    f"[Warn] Non-finite loss at epoch={epoch} step={step_idx}; skipping step. {bad_details}",
+                    flush=True,
+                )
+                optimizer.zero_grad(set_to_none=True)
+                continue
             optimizer.zero_grad(set_to_none=True)
             scaler.scale(loss).backward()
             if args.max_grad_norm and args.max_grad_norm > 0:

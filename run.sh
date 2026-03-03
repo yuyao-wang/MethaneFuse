@@ -2,19 +2,19 @@
 
 export CUDA_VISIBLE_DEVICES=0
 
-python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
-    --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/train_2024.csv \
-    --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/test_2024.csv \
-    --device cuda \
-    --train_backbone \
-    --backbone_lr 1e-4 \
-    --head_lr 1e-4 \
-    --use_wandb \
-    --wandb_project baselines \
-    --num_workers 18 \
-    --local_cache_dir /home/yuyao/local_train_temp_cache \
-    --local_cache_warmup \
-    --local_cache_workers 18 --batch_size 16
+# python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/train_2024.csv \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/test_2024.csv \
+#     --device cuda \
+#     --train_backbone \
+#     --backbone_lr 1e-4 \
+#     --head_lr 1e-4 \
+#     --use_wandb \
+#     --wandb_project baselines \
+#     --num_workers 18 \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache \
+#     --local_cache_warmup \
+#     --local_cache_workers 18 --batch_size 16
 
 # python universal_models/multi_sensor_panopticon_4.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
@@ -35,7 +35,7 @@ python universal_models/multi_sensor_panopticon_seperate_ViTLN_loraadapter_upper
   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
   --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --adapter_lr 2e-4 \
   --train_sensor_epoch_ratio s2=1.0,l89=0.55,s5p=0.7,wv3=1.0 \
-  --sensor_head_lr_mult s2=1.2,l89=0.6,s5p=0.9, wv3=1.0 \
+  --sensor_head_lr_mult s2=1.2,l89=0.6,s5p=0.9,wv3=1.0 \
   --adapter_first_blocks 5 --lora_rank 16 --lora_alpha 16 \
   --freeze_vit_in_adapter_blocks --use_wandb --wandb_project baselines
 
