@@ -2,9 +2,23 @@
 
 export CUDA_VISIBLE_DEVICES=0
 
-python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
-    --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/train.csv \
-    --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/test.csv \
+# python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/train.csv \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/test.csv \
+#     --device cuda \
+#     --train_backbone \
+#     --backbone_lr 1e-4 \
+#     --head_lr 1e-4 \
+#     --use_wandb \
+#     --wandb_project baselines \
+#     --num_workers 18 \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache \
+#     --local_cache_warmup \
+#     --local_cache_workers 18 --batch_size 16
+
+python universal_models/multi_sensor_panopticon_4.py \
+    --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+    --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
     --device cuda \
     --train_backbone \
     --backbone_lr 1e-4 \
@@ -14,7 +28,7 @@ python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
     --num_workers 18 \
     --local_cache_dir /home/yuyao/local_train_temp_cache \
     --local_cache_warmup \
-    --local_cache_workers 18 --batch_size 16
+    --local_cache_workers 18
 
 # python universal_models/multi_sensor_panopticon_lora.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/train_2025_balanced.csv \

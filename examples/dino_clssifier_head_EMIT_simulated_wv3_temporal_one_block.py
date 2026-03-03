@@ -122,7 +122,7 @@ def load_wv3_channel_ids_from_srf(
 
 
 class StaticAnchoredCache:
-    def __init__(self, cache_dir: str, min_free_gb: float = 10.0):
+    def __init__(self, cache_dir: str, min_free_gb: float = 30.0):
         self.cache_dir = Path(cache_dir).expanduser().resolve()
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.min_free_bytes = min_free_gb * (1024**3)
@@ -344,7 +344,9 @@ def main(args):
 
     cache_obj = None
     if args.local_cache_dir:
-        cache_obj = StaticAnchoredCache(args.local_cache_dir)
+        cache_obj = StaticAnchoredCache(
+            args.local_cache_dir, min_free_gb=args.local_cache_min_free_gb
+        )
 
     wv3_band_names = [b.strip() for b in args.wv3_bands.split(",") if b.strip()]
     if len(wv3_band_names) == 0:
@@ -649,6 +651,12 @@ if __name__ == "__main__":
     parser.add_argument("--local_cache_dir", default=None)
     parser.add_argument("--local_cache_warmup", action="store_true")
     parser.add_argument("--local_cache_workers", type=int, default=8)
+    parser.add_argument(
+        "--local_cache_min_free_gb",
+        type=float,
+        default=30.0,
+        help="Stop caching new files when free disk space goes below this threshold (GB).",
+    )
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
     parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")
