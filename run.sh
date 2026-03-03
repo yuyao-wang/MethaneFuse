@@ -30,6 +30,15 @@ python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
 #     --local_cache_warmup \
 #     --local_cache_workers 18
 
+python universal_models/multi_sensor_panopticon_seperate_ViTLN_loraadapter_upper_layers_4.py \
+  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+  --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --adapter_lr 2e-4 \
+  --train_sensor_epoch_ratio s2=1.0,l89=0.55,s5p=0.7,wv3=1.0 \
+  --sensor_head_lr_mult s2=1.2,l89=0.6,s5p=0.9, wv3=1.0 \
+  --adapter_first_blocks 5 --lora_rank 16 --lora_alpha 16 \
+  --freeze_vit_in_adapter_blocks --use_wandb --wandb_project baselines
+
 # python universal_models/multi_sensor_panopticon_lora.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/train_2025_balanced.csv \
 #     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/test_filtered_2025.csv \

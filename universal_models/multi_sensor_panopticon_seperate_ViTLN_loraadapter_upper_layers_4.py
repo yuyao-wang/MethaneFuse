@@ -1,9 +1,9 @@
-"""Multi-sensor Panopticon training script with sensor-specific embeddings and heads.
+"""Multi-sensor Panopticon training script with sensor-specific embeddings and one shared head.
 
 This module exposes reusable model components (``MultiSensorPanopticonClassifier``)
 *and* a runnable training entry point that ingests mixed-sensor CSVs containing
 Sentinel-2, Landsat 8/9, Sentinel-5P, and WV3 samples. Each sensor owns its own
-Panopticon patch embedding and classifier head, while the DinoViT backbone is
+Panopticon patch embedding, while the DinoViT backbone and classifier head are
 shared and updated by the consensus of all datasets in a batch.
 """
 
@@ -13,6 +13,7 @@ import argparse
 import csv
 import copy
 import hashlib
+import importlib
 import math
 import os
 import random
@@ -23,12 +24,13 @@ from contextlib import contextmanager, suppress
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Dict, Mapping, MutableMapping, Optional, Sequence, Tuple, Union, Iterator
+from types import MethodType
 
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.cuda.amp import GradScaler, autocast
+from torch.cuda.amp import autocast
 from torch.utils.data import DataLoader, Dataset, RandomSampler, Subset, SubsetRandomSampler
 
 # Make the repository root importable so examples work when executed directly.
@@ -187,7 +189,7 @@ def load_wv3_channel_ids_from_srf(csv_path: str, band_names: Sequence[str]) -> t
 # --------------------------------------------------------------------------------------
 
 class CLSHead(nn.Module):
-    """LayerNorm + Linear classification head used per sensor."""
+    """LayerNorm + Linear classification head."""
 
     def __init__(self, embed_dim: int = 768, num_classes: int = 2):
         super().__init__()
@@ -203,7 +205,7 @@ class CLSHead(nn.Module):
 
 
 class LogitSummaryHead(nn.Module):
-    """Fuse logits from all sensor heads into one final prediction."""
+    """Fuse all sensor-head logits into a single final prediction."""
 
     def __init__(self, *, num_heads: int, num_classes: int, hidden_dim: int = 128, dropout: float = 0.1):
         super().__init__()
@@ -223,8 +225,105 @@ class LogitSummaryHead(nn.Module):
 HeadFactory = Callable[[int, int], nn.Module]
 
 
+class TinyResidualAdapter(nn.Module):
+    def __init__(
+        self,
+        embed_dim: int,
+        bottleneck_dim: int,
+        *,
+        alpha: float = 16.0,
+        dropout: float = 0.0,
+    ):
+        super().__init__()
+        if bottleneck_dim <= 0:
+            raise ValueError("adapter_bottleneck_dim (LoRA rank) must be > 0")
+        self.rank = int(bottleneck_dim)
+        self.alpha = float(alpha)
+        self.scaling = self.alpha / float(self.rank)
+        self.down = nn.Linear(embed_dim, self.rank, bias=False)
+        self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
+        self.up = nn.Linear(self.rank, embed_dim, bias=False)
+        self.reset_parameters()
+
+    def reset_parameters(self) -> None:
+        nn.init.kaiming_uniform_(self.down.weight, a=math.sqrt(5))
+        nn.init.zeros_(self.up.weight)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        return self.up(self.dropout(self.down(x))) * self.scaling
+
+
+class SensorAdapterBlock(nn.Module):
+    def __init__(
+        self,
+        block: nn.Module,
+        embed_dim: int,
+        num_domains: int,
+        bottleneck_dim: int,
+        alpha: float = 16.0,
+        dropout: float = 0.0,
+        cls_only: bool = True,
+    ):
+        super().__init__()
+        self.block = block
+        self.adapters = nn.ModuleList(
+            [
+                TinyResidualAdapter(
+                    embed_dim=embed_dim,
+                    bottleneck_dim=bottleneck_dim,
+                    alpha=alpha,
+                    dropout=dropout,
+                )
+                for _ in range(num_domains)
+            ]
+        )
+        self.cls_only = bool(cls_only)
+        self._current_domain: Optional[torch.Tensor] = None
+
+    def set_domain_id(self, domain_id: Union[int, torch.Tensor]) -> None:
+        if not torch.is_tensor(domain_id):
+            domain_id = torch.tensor(domain_id, dtype=torch.long)
+        self._current_domain = domain_id
+
+    def _resolve_domain(self, x: torch.Tensor) -> torch.Tensor:
+        if self._current_domain is None:
+            return torch.zeros((), device=x.device, dtype=torch.long)
+        domain = self._current_domain
+        if domain.device != x.device:
+            domain = domain.to(device=x.device, dtype=torch.long)
+        return domain
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        x = self.block(x)
+        domain = self._resolve_domain(x)
+        if domain.ndim == 0:
+            adapter = self.adapters[int(domain.item())]
+            if self.cls_only:
+                out = x.clone()
+                cls = out[:, :1, :]
+                out[:, :1, :] = cls + adapter(cls)
+                return out
+            return x + adapter(x)
+
+        if domain.shape[0] != x.shape[0]:
+            raise ValueError(f"domain_id batch mismatch: expected {x.shape[0]}, got {domain.shape[0]}")
+        out = x.clone()
+        for domain_idx, adapter in enumerate(self.adapters):
+            selector = domain == domain_idx
+            if selector.any():
+                x_sel = x[selector]
+                if self.cls_only:
+                    out_sel = x_sel.clone()
+                    cls = out_sel[:, :1, :]
+                    out_sel[:, :1, :] = cls + adapter(cls)
+                    out[selector] = out_sel
+                else:
+                    out[selector] = x_sel + adapter(x_sel)
+        return out
+
+
 class MultiSensorPanopticonClassifier(nn.Module):
-    """Shared DinoViT backbone with sensor-specific Panopticon PEs and heads."""
+    """Shared DinoViT backbone with sensor-specific Panopticon PEs and one universal head."""
 
     def __init__(
         self,
@@ -234,22 +333,36 @@ class MultiSensorPanopticonClassifier(nn.Module):
         num_classes: Mapping[str, int] | int = 2,
         patch_embed_overrides: Optional[Mapping[str, PanopticonPE]] = None,
         head_factory: Optional[Union[HeadFactory, nn.Module]] = None,
-        enable_summary_head: bool = True,
+        adapter_first_blocks: int = 5,
+        adapter_bottleneck_dim: int = 16,
+        adapter_alpha: float = 16.0,
+        adapter_dropout: float = 0.0,
+        adapter_cls_only: bool = True,
+        enable_summary_head: bool = False,
         summary_hidden_dim: int = 128,
         summary_dropout: float = 0.1,
         summary_loss_weight: float = 1.0,
     ):
         super().__init__()
-        if backbone is None:
-            backbone = _load_backbone()
-        if not isinstance(backbone, DinoVisionTransformer):
-            raise TypeError("backbone must be a DinoVisionTransformer instance")
-
-        self.backbone = backbone
         self.sensor_order = list(sensors)
         if not self.sensor_order:
             raise ValueError("At least one sensor must be specified")
         self.sensor_to_idx = {sensor: idx for idx, sensor in enumerate(self.sensor_order)}
+        num_domains = len(self.sensor_order)
+
+        if backbone is None:
+            backbone = _load_backbone()
+        if not isinstance(backbone, DinoVisionTransformer):
+            raise TypeError("backbone must be a DinoVisionTransformer instance")
+        _attach_sensor_adapters(
+            backbone,
+            num_domains=num_domains,
+            adapter_first_blocks=adapter_first_blocks,
+            adapter_bottleneck_dim=adapter_bottleneck_dim,
+            adapter_alpha=adapter_alpha,
+            adapter_dropout=adapter_dropout,
+            adapter_cls_only=adapter_cls_only,
+        )
 
         base_patch_embed = backbone.patch_embed
         sensor_modules = nn.ModuleDict()
@@ -261,13 +374,18 @@ class MultiSensorPanopticonClassifier(nn.Module):
             else:
                 sensor_modules[sensor] = copy.deepcopy(base_patch_embed)
         self.sensor_patch_embeds = sensor_modules
+
+        self.backbone = backbone
         self.backbone.patch_embed = self.sensor_patch_embeds[self.sensor_order[0]]
 
         embed_dim = getattr(self.backbone, "embed_dim", 768)
         if isinstance(num_classes, int):
-            class_map = {sensor: num_classes for sensor in self.sensor_order}
+            num_out_classes = int(num_classes)
         else:
-            class_map = {sensor: num_classes[sensor] for sensor in self.sensor_order}
+            class_values = [int(num_classes[sensor]) for sensor in self.sensor_order]
+            if len(set(class_values)) != 1:
+                raise ValueError("Universal head requires the same num_classes for all sensors.")
+            num_out_classes = class_values[0]
 
         def make_head(num_output_classes: int) -> nn.Module:
             if head_factory is None:
@@ -279,27 +397,15 @@ class MultiSensorPanopticonClassifier(nn.Module):
                 raise TypeError("head_factory must create an nn.Module")
             return head
 
-        self.heads = nn.ModuleDict()
-        for sensor in self.sensor_order:
-            classes = class_map[sensor]
-            self.heads[sensor] = make_head(classes)
+        self.head = make_head(num_out_classes)
         self.summary_loss_weight = float(summary_loss_weight)
         self.summary_head: Optional[LogitSummaryHead] = None
-
-        head_dims = [getattr(self.heads[sensor], "out_features", None) for sensor in self.sensor_order]
-        can_build_summary = bool(head_dims) and None not in head_dims and len(set(head_dims)) == 1
-        if enable_summary_head and can_build_summary:
-            num_out_classes = int(head_dims[0])
+        if enable_summary_head:
             self.summary_head = LogitSummaryHead(
                 num_heads=len(self.sensor_order),
                 num_classes=num_out_classes,
                 hidden_dim=summary_hidden_dim,
                 dropout=summary_dropout,
-            )
-        elif enable_summary_head and not can_build_summary:
-            warnings.warn(
-                "Summary head disabled because sensor heads do not share the same out_features.",
-                stacklevel=2,
             )
 
     @contextmanager
@@ -339,40 +445,45 @@ class MultiSensorPanopticonClassifier(nn.Module):
     def forward(
         self,
         x_dict: MutableMapping[str, torch.Tensor],
-        sensors: Sequence[str],
+        sensors: Union[Sequence[str], torch.Tensor],
         *,
+        sensor_ids: Optional[Union[Sequence[int], torch.Tensor]] = None,
         return_features: bool = False,
     ) -> Dict[str, Union[Dict[str, torch.Tensor], torch.Tensor]]:
-        sensor_labels = self._normalize_sensors(sensors)
+        if sensor_ids is not None:
+            ids = sensor_ids.detach().to("cpu").tolist() if torch.is_tensor(sensor_ids) else list(sensor_ids)
+            sensor_labels = [self.sensor_order[i] for i in ids]
+        else:
+            sensor_labels = self._normalize_sensors(sensors)
         sensor_batches = self._build_sensor_batches(x_dict, sensor_labels)
         if not sensor_batches:
             raise ValueError("No samples matched the configured sensors")
 
         outputs: Dict[str, Union[Dict[str, torch.Tensor], torch.Tensor]] = {}
-        participating = list(sensor_batches.keys())
-        merge_dims = [getattr(self.heads[sensor_name], "out_features", None) for sensor_name in participating]
-        allow_merge = bool(merge_dims) and None not in merge_dims and len(set(merge_dims)) == 1
         merged_logits: Optional[torch.Tensor] = None
-        batch_size = len(sensors)
+        batch_size = len(sensor_labels)
         summary_inputs: Optional[torch.Tensor] = None
 
         for sensor_name, sensor_batch in sensor_batches.items():
             with self._use_sensor(sensor_name):
+                if hasattr(self.backbone, "_set_domain_id"):
+                    domain_ids = torch.full(
+                        (sensor_batch.indices.shape[0],),
+                        self.sensor_to_idx[sensor_name],
+                        device=sensor_batch.indices.device,
+                        dtype=torch.long,
+                    )
+                    self.backbone._set_domain_id(domain_ids)  # type: ignore[attr-defined]
                 feats = self.backbone(sensor_batch.x_dict, is_training=True)
-            cls_token = torch.nan_to_num(feats["x_norm_clstoken"], nan=0.0, posinf=1e4, neginf=-1e4)
-            head_logits = [
-                torch.nan_to_num(self.heads[name](cls_token), nan=0.0, posinf=1e4, neginf=-1e4)
-                for name in self.sensor_order
-            ]
-            logits = head_logits[self.sensor_to_idx[sensor_name]]
-            if allow_merge:
-                if merged_logits is None:
-                    merged_logits = logits.new_zeros((batch_size, logits.shape[-1]))
-                merged_logits.index_copy_(0, sensor_batch.indices, logits)
+            cls_token = feats["x_norm_clstoken"]
+            logits = self.head(cls_token)
+            if merged_logits is None:
+                merged_logits = logits.new_zeros((batch_size, logits.shape[-1]))
+            merged_logits.index_copy_(0, sensor_batch.indices, logits)
             if self.summary_head is not None:
                 if summary_inputs is None:
                     summary_inputs = logits.new_zeros((batch_size, len(self.sensor_order) * logits.shape[-1]))
-                summary_inputs.index_copy_(0, sensor_batch.indices, torch.cat(head_logits, dim=-1))
+                summary_inputs.index_copy_(0, sensor_batch.indices, torch.cat([logits] * len(self.sensor_order), dim=-1))
             outputs[sensor_name] = {
                 "indices": sensor_batch.indices,
                 "cls_token": cls_token,
@@ -406,9 +517,10 @@ class MultiSensorPanopticonClassifier(nn.Module):
         labels: torch.Tensor,
         sensors: Union[Sequence[str], torch.Tensor],
         criterion: nn.Module,
+        sensor_loss_weights: Optional[Mapping[str, float]] = None,
     ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
         sensor_labels = self._normalize_sensors(sensors)
-        return self._loss_from_outputs(outputs, labels, sensor_labels, criterion)
+        return self._loss_from_outputs(outputs, labels, sensor_labels, criterion, sensor_loss_weights=sensor_loss_weights)
 
     def _loss_from_outputs(
         self,
@@ -416,6 +528,7 @@ class MultiSensorPanopticonClassifier(nn.Module):
         labels: torch.Tensor,
         sensors: Sequence[str],
         criterion: nn.Module,
+        sensor_loss_weights: Optional[Mapping[str, float]] = None,
     ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
         total_loss: Optional[torch.Tensor] = None
         per_sensor_losses: Dict[str, torch.Tensor] = {}
@@ -429,7 +542,9 @@ class MultiSensorPanopticonClassifier(nn.Module):
             sensor_labels = labels.index_select(0, idx)
             loss = criterion(sensor_out["logits"], sensor_labels)
             per_sensor_losses[sensor_name] = loss
-            total_loss = loss if total_loss is None else total_loss + loss
+            weight = float(sensor_loss_weights.get(sensor_name, 1.0)) if sensor_loss_weights is not None else 1.0
+            weighted_loss = loss * weight
+            total_loss = weighted_loss if total_loss is None else total_loss + weighted_loss
         summary_logits = outputs.get("summary_logits")
         if isinstance(summary_logits, torch.Tensor):
             summary_loss = criterion(summary_logits, labels)
@@ -448,12 +563,15 @@ class MultiSensorPanopticonClassifier(nn.Module):
         return_features: bool = False,
     ) -> None:
         device = next(iter(x_dict.values())).device
-        embed_dim = getattr(self.backbone, "embed_dim", 768)
+        embed_dim = getattr(self.backbone, "embed_dim", outputs[next(iter(outputs))]["cls_token"].shape[-1])
+        num_classes = next(
+            sensor_out["logits"].shape[-1]
+            for sensor_out in outputs.values()
+            if isinstance(sensor_out, dict) and "logits" in sensor_out
+        )
         for sensor_name in self.sensor_order:
             if sensor_name in outputs:
                 continue
-            head = self.heads[sensor_name]
-            num_classes = head.out_features
             empty_idx = torch.empty((0,), dtype=torch.long, device=device)
             empty_cls = torch.empty((0, embed_dim), device=device)
             empty_logits = torch.empty((0, num_classes), device=device)
@@ -478,13 +596,25 @@ class SensorBatch:
 # --------------------------------------------------------------------------------------
 
 class StaticAnchoredCache:
-    def __init__(self, cache_dir: str, min_free_gb: float = 10.0):
+    def __init__(self, cache_dir: str, min_free_gb: float = 10.0, max_cache_gb: Optional[float] = None):
         self.cache_dir = Path(cache_dir).expanduser().resolve()
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.min_free_bytes = min_free_gb * (1024**3)
+        self.max_cache_bytes = None if max_cache_gb is None else max_cache_gb * (1024**3)
+        self._cached_size_bytes: Optional[int] = None
 
     def _get_free_space(self) -> int:
         return shutil.disk_usage(self.cache_dir).free
+
+    def _cache_size_bytes(self) -> int:
+        if self._cached_size_bytes is None:
+            total = 0
+            for f in self.cache_dir.rglob("*"):
+                if f.is_file():
+                    with suppress(OSError):
+                        total += f.stat().st_size
+            self._cached_size_bytes = total
+        return self._cached_size_bytes
 
     def _hashed_path(self, original: str) -> Path:
         norm_path = os.path.abspath(original)
@@ -497,6 +627,13 @@ class StaticAnchoredCache:
         dst = self._hashed_path(original)
         if dst.exists():
             return str(dst)
+        if self.max_cache_bytes is not None:
+            try:
+                incoming_size = os.path.getsize(original)
+            except OSError:
+                incoming_size = 0
+            if self._cache_size_bytes() + incoming_size > self.max_cache_bytes:
+                return original
         if self._get_free_space() < self.min_free_bytes:
             return original
         tmp = dst.with_suffix(dst.suffix + ".tmp")
@@ -504,6 +641,8 @@ class StaticAnchoredCache:
         try:
             shutil.copy2(original, tmp)
             os.replace(tmp, dst)
+            if self.max_cache_bytes is not None:
+                self._cached_size_bytes = self._cache_size_bytes() + incoming_size
         except Exception:
             with suppress(FileNotFoundError):
                 tmp.unlink()
@@ -537,6 +676,75 @@ def _compute_mean_std(stats: Optional[Tuple[Sequence[float], Sequence[float]]]):
     mean_tensor = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
     std_tensor = torch.clamp(torch.tensor(std, dtype=torch.float32), min=1e-6).view(-1, 1, 1)
     return mean_tensor, std_tensor
+
+
+# --------------------------------------------------------------------------------------
+#  Backbone patching helpers (sensor-specific low-rank residual adapters)
+# --------------------------------------------------------------------------------------
+
+def _iter_transformer_blocks(backbone: DinoVisionTransformer) -> list[tuple[nn.ModuleList, int, nn.Module]]:
+    blocks: list[tuple[nn.ModuleList, int, nn.Module]] = []
+    for top_idx, block_chunk in enumerate(backbone.blocks):
+        if isinstance(block_chunk, nn.ModuleList):
+            for idx, block in enumerate(block_chunk):
+                if isinstance(block, nn.Identity):
+                    continue
+                blocks.append((block_chunk, idx, block))
+        else:
+            blocks.append((backbone.blocks, top_idx, block_chunk))
+    return blocks
+
+
+def _attach_sensor_adapters(
+    backbone: DinoVisionTransformer,
+    *,
+    num_domains: int,
+    adapter_first_blocks: int,
+    adapter_bottleneck_dim: int,
+    adapter_alpha: float = 16.0,
+    adapter_dropout: float = 0.0,
+    adapter_cls_only: bool = True,
+):
+    if adapter_first_blocks <= 0 or num_domains <= 0:
+        return backbone
+
+    block_entries = _iter_transformer_blocks(backbone)
+    if not block_entries:
+        raise RuntimeError("No transformer blocks found when attaching adapters.")
+    adapter_first_blocks = min(adapter_first_blocks, len(block_entries))
+    embed_dim = int(getattr(backbone, "embed_dim", 768))
+
+    wrapped_blocks: list[SensorAdapterBlock] = []
+    for container, idx, base_block in block_entries[:adapter_first_blocks]:
+        if isinstance(base_block, SensorAdapterBlock):
+            wrapped = base_block
+        else:
+            wrapped = SensorAdapterBlock(
+                block=base_block,
+                embed_dim=embed_dim,
+                num_domains=num_domains,
+                bottleneck_dim=adapter_bottleneck_dim,
+                alpha=adapter_alpha,
+                dropout=adapter_dropout,
+                cls_only=adapter_cls_only,
+            )
+            container[idx] = wrapped
+        wrapped_blocks.append(wrapped)
+
+    backbone._sensor_adapter_blocks = wrapped_blocks  # type: ignore[attr-defined]
+
+    def _set_domain_id(self, domain_id):
+        if not wrapped_blocks:
+            return
+        if not torch.is_tensor(domain_id):
+            domain_id_tensor = torch.tensor(domain_id, device=self.pos_embed.device, dtype=torch.long)
+        else:
+            domain_id_tensor = domain_id.to(self.pos_embed.device)
+        for adapter_block in wrapped_blocks:
+            adapter_block.set_domain_id(domain_id_tensor)
+
+    backbone._set_domain_id = MethodType(_set_domain_id, backbone)  # type: ignore[attr-defined]
+    return backbone
 
 
 class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
@@ -686,16 +894,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
         img = self._load_image(path, column_name=column_name, sample_id=sample_id)
         if sensor == "l89" and self._align_l89_to_s2:
             img = self._pad_l89_to_s2(img)
-
-        # WV3 values can come in different scales across sources.
-        # Auto-scale only when dynamic range is clearly raw-DN-like.
-        if sensor == "wv3":
-            abs_max = torch.amax(torch.abs(img))
-            if torch.isfinite(abs_max) and abs_max.item() > 100.0:
-                img = img / 65535.0
-
         img = torch.nan_to_num(img, nan=0.0, posinf=0.0, neginf=0.0)
-        img = torch.clamp(img, min=-50.0, max=50.0)
         x_dict = {
             "imgs": img,
             "chn_ids": self.sensor_configs[sensor]["chn_ids"],
@@ -827,6 +1026,30 @@ def _gather_sensor_indices(dataset: Dataset, sensors: Sequence[str]) -> Dict[str
     return idx_map
 
 
+def build_sensor_loss_weights(
+    dataset: Dataset,
+    sensors: Sequence[str],
+    *,
+    max_weight: Optional[float] = None,
+    normalize_mean_one: bool = True,
+) -> Dict[str, float]:
+    idx_map = _gather_sensor_indices(dataset, sensors)
+    weights: Dict[str, float] = {}
+    for sensor in sensors:
+        count = len(idx_map.get(sensor, []))
+        weights[sensor] = 0.0 if count == 0 else 1.0 / math.sqrt(float(count))
+    positive = [w for w in weights.values() if w > 0]
+    if normalize_mean_one and positive:
+        mean_w = sum(positive) / len(positive)
+        if mean_w > 0:
+            for sensor, weight in list(weights.items()):
+                weights[sensor] = weight / mean_w if weight > 0 else 0.0
+    if max_weight is not None and max_weight > 0:
+        for sensor, weight in list(weights.items()):
+            weights[sensor] = min(weight, float(max_weight))
+    return weights
+
+
 def build_sensor_dataloaders(
     dataset: Dataset,
     sensors: Sequence[str],
@@ -876,14 +1099,15 @@ def build_balanced_mixed_dataloader(
     num_workers: int,
     pin_memory: bool,
     shuffle: bool,
-    oversample_to_max: bool = True,
+    alpha: float = 0.85,
+    ensure_all_samples: bool = True,
+    sensor_epoch_ratio: Optional[Mapping[str, float]] = None,
 ) -> Tuple[DataLoader, int]:
-    """Create a single DataLoader that mixes sensors and oversamples minority ones.
+    """Create a mixed-sensor loader with temperature-based balancing.
 
-    - If ``oversample_to_max`` is True (default), each sensor is repeated until it
-      reaches the size of the largest sensor, balancing class counts.
-    - Otherwise, uses the natural counts.
-    Returns (loader, total_steps_per_epoch).
+    Sensor sampling target follows p(sensor) ∝ N_sensor^alpha.
+    ``sensor_epoch_ratio`` can downsample/upsample each sensor per epoch
+    (e.g. l89=0.35 uses ~35% of its budget).
     """
 
     idx_map = _gather_sensor_indices(dataset, sensors)
@@ -891,16 +1115,65 @@ def build_balanced_mixed_dataloader(
     if not counts:
         raise ValueError("No samples found for the configured sensors.")
 
-    target = max(counts.values()) if oversample_to_max else None
+    if alpha < 0:
+        raise ValueError("alpha must be >= 0")
+
+    ratio_map = {sensor: 1.0 for sensor in sensors}
+    if sensor_epoch_ratio:
+        for sensor_name, value in sensor_epoch_ratio.items():
+            if sensor_name in ratio_map:
+                ratio_map[sensor_name] = max(0.0, float(value))
+
+    total_count = sum(counts.values())
+    weights = {sensor: float(count) ** float(alpha) for sensor, count in counts.items()}
+    denom = sum(weights.values())
+    expected = {
+        sensor: (weights[sensor] / denom) * total_count if denom > 0 else float(counts[sensor])
+        for sensor in counts
+    }
+
+    desired_counts = {sensor: int(math.floor(value)) for sensor, value in expected.items()}
+    remaining = total_count - sum(desired_counts.values())
+    if remaining > 0:
+        remainders = sorted(
+            ((expected[sensor] - desired_counts[sensor], sensor) for sensor in desired_counts),
+            reverse=True,
+        )
+        for _, sensor in remainders[:remaining]:
+            desired_counts[sensor] += 1
+    for sensor in list(desired_counts.keys()):
+        desired_counts[sensor] = int(math.ceil(desired_counts[sensor] * ratio_map.get(sensor, 1.0)))
+
+    if ensure_all_samples:
+        for sensor, count in counts.items():
+            ratio = ratio_map.get(sensor, 1.0)
+            if ratio <= 0:
+                min_count = 0
+            elif ratio < 1.0:
+                min_count = max(1, int(math.ceil(count * ratio)))
+            else:
+                min_count = count
+            desired_counts[sensor] = max(desired_counts.get(sensor, 0), min_count)
+
     balanced_indices: list[int] = []
     for sensor, indices in idx_map.items():
         if not indices:
             continue
-        desired = target if target is not None else len(indices)
-        repeat = math.ceil(desired / len(indices))
-        expanded = (indices * repeat)[:desired]
+        desired = desired_counts.get(sensor, len(indices))
+        if desired <= 0:
+            continue
+        if desired <= len(indices):
+            expanded = random.sample(indices, desired)
+        else:
+            extra = desired - len(indices)
+            expanded = list(indices) + random.choices(indices, k=extra)
         balanced_indices.extend(expanded)
 
+    if not balanced_indices:
+        raise ValueError("No samples selected for the mixed dataloader. Check sensor_epoch_ratio settings.")
+
+    if shuffle:
+        random.shuffle(balanced_indices)
     sampler = SubsetRandomSampler(balanced_indices) if shuffle else balanced_indices
     steps = math.ceil(len(balanced_indices) / batch_size)
     loader = DataLoader(
@@ -919,7 +1192,11 @@ def build_balanced_mixed_dataloader(
 #  Training utilities
 # --------------------------------------------------------------------------------------
 
-def _load_backbone(weights_path: Optional[str] = None, *, strict: bool = True) -> DinoVisionTransformer:
+def _load_backbone(
+    weights_path: Optional[str] = None,
+    *,
+    strict: bool = True,
+) -> DinoVisionTransformer:
     from hubconf import _panopticon_vitb14
 
     backbone = _panopticon_vitb14()
@@ -960,9 +1237,57 @@ def set_trainable(module: nn.Module, requires_grad: bool):
 def init_wandb(args):
     if not args.use_wandb:
         return None
-    import wandb
+    wandb_mod = _import_wandb_sdk()
+    if wandb_mod is None:
+        warnings.warn(
+            "Weights & Biases is enabled but wandb SDK could not be imported correctly. "
+            "Training will continue without wandb logging.",
+            stacklevel=2,
+        )
+        return None
+    return wandb_mod.init(project=args.wandb_project, name=args.wandb_run_name, config=vars(args))
 
-    return wandb.init(project=args.wandb_project, name=args.wandb_run_name, config=vars(args))
+
+def _import_wandb_sdk():
+    def _try_import():
+        with suppress(Exception):
+            mod = importlib.import_module("wandb")
+            if hasattr(mod, "init"):
+                return mod
+        return None
+
+    direct = _try_import()
+    if direct is not None:
+        return direct
+
+    repo_root_resolved = REPO_ROOT.resolve()
+    original_sys_path = list(sys.path)
+    with suppress(KeyError):
+        del sys.modules["wandb"]
+    try:
+        filtered = []
+        for entry in original_sys_path:
+            try:
+                resolved = Path(entry if entry else ".").resolve()
+            except Exception:
+                filtered.append(entry)
+                continue
+            if resolved == repo_root_resolved:
+                continue
+            filtered.append(entry)
+        sys.path = filtered
+        return _try_import()
+    finally:
+        sys.path = original_sys_path
+
+
+def make_grad_scaler(*, device_type: str, enabled: bool):
+    if hasattr(torch, "amp") and hasattr(torch.amp, "GradScaler"):
+        with suppress(TypeError):
+            return torch.amp.GradScaler(device_type, enabled=enabled)
+        with suppress(TypeError):
+            return torch.amp.GradScaler(enabled=enabled)
+    return torch.cuda.amp.GradScaler(enabled=enabled)
 
 
 def default_run_name(args) -> str:
@@ -984,21 +1309,63 @@ def save_checkpoint(
     best_test_acc: float,
     args,
 ):
+    """
+    Save a checkpoint while avoiding partial writes that can corrupt files or crash training.
+
+    We write to a temporary file in the same directory and atomically replace the target on
+    success. If the default (zipfile) serialization fails—something that occasionally happens on
+    near-full or networked filesystems—we retry using the legacy serialization format, then fall
+    back to a warning so training can continue even if the checkpoint could not be updated.
+    """
+
+    state = {
+        "epoch": epoch,
+        "global_step": global_step,
+        "model": model.state_dict(),
+        "optimizer": optimizer.state_dict(),
+        "scheduler": None if scheduler is None else scheduler.state_dict(),
+        "scaler": None if scaler is None else scaler.state_dict(),
+        "best_train_acc": best_train_acc,
+        "best_test_acc": best_test_acc,
+        "args": vars(args),
+    }
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save(
-        {
-            "epoch": epoch,
-            "global_step": global_step,
-            "model": model.state_dict(),
-            "optimizer": optimizer.state_dict(),
-            "scheduler": None if scheduler is None else scheduler.state_dict(),
-            "scaler": None if scaler is None else scaler.state_dict(),
-            "best_train_acc": best_train_acc,
-            "best_test_acc": best_test_acc,
-            "args": vars(args),
-        },
-        path,
-    )
+    tmp_path = path.with_suffix(path.suffix + ".tmp")
+
+    def _attempt_save(use_legacy_serialization: bool) -> None:
+        torch.save(
+            state,
+            tmp_path,
+            _use_new_zipfile_serialization=not use_legacy_serialization,
+        )
+        os.replace(tmp_path, path)
+
+    try:
+        _attempt_save(use_legacy_serialization=False)
+        return
+    except Exception as exc:
+        with suppress(FileNotFoundError):
+            tmp_path.unlink()
+        free_gb = shutil.disk_usage(path.parent).free / (1024**3)
+        print(
+            f"[checkpoint] primary save to {path} failed ({exc}). "
+            f"Free space: {free_gb:.1f} GB. Retrying with legacy serialization...",
+            file=sys.stderr,
+            flush=True,
+        )
+
+    try:
+        _attempt_save(use_legacy_serialization=True)
+        print(f"[checkpoint] legacy serialization save succeeded -> {path}", flush=True)
+    except Exception as exc:
+        with suppress(FileNotFoundError):
+            tmp_path.unlink()
+        warnings.warn(
+            f"Checkpoint save to {path} failed twice (zip + legacy). "
+            f"Free space: {shutil.disk_usage(path.parent).free / (1024**3):.1f} GB. "
+            "Continuing training without updating checkpoint."
+        )
 
 
 def try_resume(path: Path, model: nn.Module, optimizer, scheduler, scaler, device):
@@ -1030,16 +1397,13 @@ def build_scheduler(args, optimizer):
 
 
 def _safe_ratio(numerator: float, denominator: float) -> float:
-    if denominator <= 0:
-        return float("nan")
-    return float(numerator) / float(denominator)
+    return float("nan") if denominator == 0 else float(numerator / denominator)
 
 
 def _binary_auroc_from_scores(labels: np.ndarray, scores: np.ndarray) -> float:
-    """Compute AUROC for binary labels {0,1} using rank statistics (tie-aware)."""
-    if labels.ndim != 1 or scores.ndim != 1 or labels.shape[0] != scores.shape[0]:
-        return float("nan")
-    n = labels.shape[0]
+    labels = labels.astype(np.int64, copy=False)
+    scores = scores.astype(np.float64, copy=False)
+    n = labels.size
     if n == 0:
         return float("nan")
     pos_mask = labels == 1
@@ -1080,16 +1444,133 @@ def compute_binary_metrics(labels: np.ndarray, preds: np.ndarray, pos_scores: np
     }
 
 
+def parse_sensor_float_map(
+    raw: Optional[str],
+    sensors: Sequence[str],
+    *,
+    default: float = 1.0,
+    map_name: str,
+    min_value: float = 0.0,
+) -> Dict[str, float]:
+    values = {sensor: float(default) for sensor in sensors}
+    if raw is None:
+        return values
+    text = raw.strip()
+    if not text:
+        return values
+    for piece in text.split(","):
+        token = piece.strip()
+        if not token:
+            continue
+        if "=" not in token:
+            raise ValueError(f"Invalid {map_name} entry '{token}'. Expected format sensor=value.")
+        sensor_name, value_str = token.split("=", 1)
+        sensor_name = sensor_name.strip()
+        if sensor_name not in values:
+            raise ValueError(f"Unknown sensor '{sensor_name}' in {map_name}. Valid sensors: {list(sensors)}")
+        try:
+            value = float(value_str)
+        except ValueError as exc:
+            raise ValueError(f"Invalid float value '{value_str}' for sensor '{sensor_name}' in {map_name}.") from exc
+        if value < min_value:
+            raise ValueError(f"{map_name} for sensor '{sensor_name}' must be >= {min_value}, got {value}.")
+        values[sensor_name] = value
+    return values
+
+
+def _gather_adapter_parameters_from_blocks(blocks: Sequence[nn.Module]) -> Sequence[nn.Parameter]:
+    params: list[nn.Parameter] = []
+    seen: set[int] = set()
+    for block in blocks:
+        if not isinstance(block, SensorAdapterBlock):
+            continue
+        for param in block.adapters.parameters():
+            if id(param) in seen:
+                continue
+            seen.add(id(param))
+            params.append(param)
+    return params
+
+
+def gather_adapter_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
+    blocks = getattr(model.backbone, "_sensor_adapter_blocks", [])
+    return _gather_adapter_parameters_from_blocks(blocks)
+
+
+def select_trainable_adapter_blocks(
+    blocks: Sequence[nn.Module],
+    train_blocks: Optional[int],
+) -> list[SensorAdapterBlock]:
+    available = [b for b in blocks if isinstance(b, SensorAdapterBlock)]
+    if train_blocks is None:
+        return available
+    if train_blocks < 0:
+        raise ValueError("--adapter_train_blocks must be >= 0")
+    if train_blocks == 0:
+        return []
+    if train_blocks >= len(available):
+        return available
+    return available[:train_blocks]
+
+
 def gather_head_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
     shared_patch = model.backbone.patch_embed
-    extra_patch_params = []
-    for sensor, module in model.sensor_patch_embeds.items():
+    params: list[nn.Parameter] = list(model.head.parameters())
+    for sensor_name in model.sensor_order:
+        module = model.sensor_patch_embeds[sensor_name]
         if module is shared_patch:
             continue
-        extra_patch_params.extend(list(module.parameters()))
-    summary_params = list(model.summary_head.parameters()) if model.summary_head is not None else []
-    head_params = list(model.heads.parameters()) + summary_params + extra_patch_params
-    return head_params
+        params.extend(list(module.parameters()))
+    if model.summary_head is not None:
+        params.extend(list(model.summary_head.parameters()))
+    return params
+
+
+def build_optimizer_param_groups(
+    model: MultiSensorPanopticonClassifier,
+    args,
+    *,
+    sensor_head_lr_mult: Mapping[str, float],
+    trainable_adapter_blocks: Optional[Sequence[nn.Module]] = None,
+) -> list[dict]:
+    param_groups: list[dict] = []
+    seen: set[int] = set()
+
+    def _add_group(params: Sequence[nn.Parameter], lr: float) -> None:
+        unique = [p for p in params if p.requires_grad and id(p) not in seen]
+        if not unique:
+            return
+        param_groups.append({"params": unique, "lr": float(lr)})
+        seen.update(id(p) for p in unique)
+
+    shared_patch = model.backbone.patch_embed
+    _add_group(list(model.head.parameters()), args.head_lr)
+    for sensor_name in model.sensor_order:
+        lr_mult = float(sensor_head_lr_mult.get(sensor_name, 1.0))
+        if lr_mult <= 0:
+            continue
+        patch_module = model.sensor_patch_embeds[sensor_name]
+        if patch_module is not shared_patch:
+            _add_group(list(patch_module.parameters()), args.head_lr * lr_mult)
+
+    if model.summary_head is not None:
+        _add_group(list(model.summary_head.parameters()), args.head_lr)
+
+    if args.train_backbone:
+        if trainable_adapter_blocks is None:
+            adapter_params = list(gather_adapter_parameters(model))
+        else:
+            adapter_params = list(_gather_adapter_parameters_from_blocks(trainable_adapter_blocks))
+        adapter_lr = args.adapter_lr if args.adapter_lr is not None else (args.backbone_lr * args.adapter_lr_multiplier)
+        _add_group(adapter_params, adapter_lr)
+        if not args.train_adapters_only:
+            adapter_ids = {id(p) for p in adapter_params}
+            backbone_core = [p for p in model.backbone.parameters() if id(p) not in adapter_ids]
+            _add_group(backbone_core, args.backbone_lr)
+
+    if not param_groups:
+        raise RuntimeError("No trainable parameter groups were built.")
+    return param_groups
 
 
 # --------------------------------------------------------------------------------------
@@ -1127,6 +1608,13 @@ def parse_args():
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--head_lr", type=float, default=1e-3)
     parser.add_argument("--backbone_lr", type=float, default=1e-4)
+    parser.add_argument(
+        "--adapter_lr",
+        type=float,
+        default=None,
+        help="Override adapter LR. If unset, uses backbone_lr * adapter_lr_multiplier.",
+    )
+    parser.add_argument("--adapter_lr_multiplier", type=float, default=2.0)
     parser.add_argument("--weight_decay", type=float, default=5e-4)
     parser.add_argument("--momentum", type=float, default=0.9)
     parser.add_argument("--num_workers", type=int, default=8)
@@ -1147,18 +1635,81 @@ def parse_args():
     parser.add_argument("--wandb_run_name", default=None)
     parser.add_argument("--local_cache_dir", default=None)
     parser.add_argument("--local_cache_min_free_gb", type=float, default=5.0)
+    parser.add_argument("--local_cache_max_gb", type=float, default=None)
     parser.add_argument("--local_cache_warmup", action="store_true")
     parser.add_argument("--local_cache_workers", type=int, default=8)
-    parser.add_argument("--oversample_minority", action="store_true", dest="oversample_minority")
-    parser.add_argument("--disable_oversample_minority", action="store_false", dest="oversample_minority")
-    parser.set_defaults(oversample_minority=True)
-    parser.add_argument("--sensor_switch_interval", type=int, default=100)
+    parser.add_argument("--sensor_sampling_alpha", type=float, default=1.0)
+    parser.add_argument("--ensure_all_samples", action="store_true", dest="ensure_all_samples")
+    parser.add_argument("--disable_ensure_all_samples", action="store_false", dest="ensure_all_samples")
+    parser.set_defaults(ensure_all_samples=True)
+    parser.add_argument(
+        "--train_sensor_epoch_ratio",
+        type=str,
+        default="",
+        help="Comma-separated per-sensor epoch ratio, e.g. s2=1.0,l89=0.35,s5p=1.0,wv3=1.0",
+    )
+    parser.add_argument(
+        "--sensor_head_lr_mult",
+        type=str,
+        default="",
+        help="Comma-separated per-sensor patch-embed LR multiplier, e.g. s2=1.2,l89=0.5,s5p=1.0,wv3=1.0",
+    )
+    parser.add_argument("--sensor_loss_weighting", choices=["none", "inv_sqrt"], default="inv_sqrt")
+    parser.add_argument("--sensor_loss_weight_max", type=float, default=3.0)
+    parser.add_argument("--sensor_loss_warmup_epochs", type=int, default=5)
+    parser.add_argument(
+        "--adapter_first_blocks",
+        type=int,
+        default=5,
+        help="Attach sensor adapters to the first N transformer blocks.",
+    )
+    parser.add_argument("--adapter_last_blocks", dest="adapter_first_blocks", type=int, help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--adapter_train_blocks",
+        type=int,
+        default=None,
+        help="Train only the first N adapterized blocks (default: train all adapterized blocks).",
+    )
+    parser.add_argument(
+        "--adapter_bottleneck_dim",
+        "--lora_rank",
+        dest="adapter_bottleneck_dim",
+        type=int,
+        default=16,
+        help="Low-rank dimension (LoRA rank) for sensor adapters.",
+    )
+    parser.add_argument(
+        "--adapter_alpha",
+        "--lora_alpha",
+        dest="adapter_alpha",
+        type=float,
+        default=16.0,
+        help="LoRA scaling factor (effective scale is adapter_alpha / adapter_bottleneck_dim).",
+    )
+    parser.add_argument("--adapter_dropout", type=float, default=0.0)
+    parser.add_argument("--adapter_cls_only", action="store_true", dest="adapter_cls_only")
+    parser.add_argument("--disable_adapter_cls_only", action="store_false", dest="adapter_cls_only")
+    parser.set_defaults(adapter_cls_only=True)
+    parser.add_argument(
+        "--freeze_vit_in_adapter_blocks",
+        action="store_true",
+        help="Freeze base ViT weights inside adapterized blocks.",
+    )
+    parser.add_argument("--train_adapters_only", action="store_true")
+    parser.add_argument("--train_adapters_during_freeze", action="store_true", dest="train_adapters_during_freeze")
+    parser.add_argument(
+        "--disable_train_adapters_during_freeze",
+        action="store_false",
+        dest="train_adapters_during_freeze",
+    )
+    parser.set_defaults(train_adapters_during_freeze=True)
     parser.add_argument("--summary_head", action="store_true", dest="summary_head")
     parser.add_argument("--disable_summary_head", action="store_false", dest="summary_head")
-    parser.set_defaults(summary_head=True)
+    parser.set_defaults(summary_head=False)
     parser.add_argument("--summary_hidden_dim", type=int, default=128)
     parser.add_argument("--summary_dropout", type=float, default=0.1)
     parser.add_argument("--summary_loss_weight", type=float, default=1.0)
+    parser.add_argument("--sensor_switch_interval", type=int, default=100)
     return parser.parse_args()
 
 
@@ -1177,7 +1728,11 @@ def main(args):
 
     cache_obj = None
     if args.local_cache_dir:
-        cache_obj = StaticAnchoredCache(args.local_cache_dir, min_free_gb=args.local_cache_min_free_gb)
+        cache_obj = StaticAnchoredCache(
+            args.local_cache_dir,
+            min_free_gb=args.local_cache_min_free_gb,
+            max_cache_gb=args.local_cache_max_gb,
+        )
 
     base_train_ds = TriSensorTemporalCsvDataset(
         csv_path=args.train_csv,
@@ -1212,8 +1767,29 @@ def main(args):
     train_ds = ConcatTemporalDataset(base_train_ds)
     test_ds = ConcatTemporalDataset(base_test_ds)
 
+    default_sensors = ("s2", "l89", "s5p", "wv3")
+    train_sensor_epoch_ratio = parse_sensor_float_map(
+        args.train_sensor_epoch_ratio,
+        default_sensors,
+        default=1.0,
+        map_name="train_sensor_epoch_ratio",
+        min_value=0.0,
+    )
+    sensor_head_lr_mult = parse_sensor_float_map(
+        args.sensor_head_lr_mult,
+        default_sensors,
+        default=1.0,
+        map_name="sensor_head_lr_mult",
+        min_value=0.0,
+    )
     core_model = MultiSensorPanopticonClassifier(
         backbone=_load_backbone(args.weights),
+        sensors=default_sensors,
+        adapter_first_blocks=args.adapter_first_blocks,
+        adapter_bottleneck_dim=args.adapter_bottleneck_dim,
+        adapter_alpha=args.adapter_alpha,
+        adapter_dropout=args.adapter_dropout,
+        adapter_cls_only=args.adapter_cls_only,
         enable_summary_head=args.summary_head,
         summary_hidden_dim=args.summary_hidden_dim,
         summary_dropout=args.summary_dropout,
@@ -1227,17 +1803,23 @@ def main(args):
     elif args.data_parallel:
         print("DataParallel requested but insufficient CUDA devices; running single-device.", flush=True)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
-    head_params = gather_head_parameters(core_model)
-    param_groups = [
-        {"params": head_params, "lr": args.head_lr},
-    ]
-    if args.train_backbone:
-        param_groups.insert(0, {"params": core_model.backbone.parameters(), "lr": args.backbone_lr})
-
+    adapter_blocks = list(getattr(core_model.backbone, "_sensor_adapter_blocks", []))
+    trainable_adapter_blocks = select_trainable_adapter_blocks(adapter_blocks, args.adapter_train_blocks)
+    adapter_params = list(_gather_adapter_parameters_from_blocks(trainable_adapter_blocks))
+    all_adapter_params = list(_gather_adapter_parameters_from_blocks(adapter_blocks))
+    trainable_adapter_param_ids = {id(p) for p in adapter_params}
+    frozen_adapter_params = [p for p in all_adapter_params if id(p) not in trainable_adapter_param_ids]
+    trainable_adapter_block_ids = {id(block) for block in trainable_adapter_blocks}
+    param_groups = build_optimizer_param_groups(
+        core_model,
+        args,
+        sensor_head_lr_mult=sensor_head_lr_mult,
+        trainable_adapter_blocks=trainable_adapter_blocks,
+    )
     optimizer = torch.optim.Adam(param_groups, weight_decay=args.weight_decay, betas=(args.momentum, 0.999))
     scheduler = build_scheduler(args, optimizer)
     use_amp = device.type == "cuda"
-    scaler = GradScaler(enabled=use_amp)
+    scaler = make_grad_scaler(device_type=device.type, enabled=use_amp)
 
     run_name = args.wandb_run_name or default_run_name(args)
     ckpt_dir = Path(args.checkpoint_dir) / run_name
@@ -1257,18 +1839,18 @@ def main(args):
     wandb_run = init_wandb(args)
 
     sensors_list = core_model.sensor_order
-    pin_memory = device.type == "cuda"
-    # Single mixed loader with optional oversampling so that minority sensors are repeated
-    # and batches contain mixed sensors.
-    train_loader, train_steps = build_balanced_mixed_dataloader(
-        train_ds,
-        sensors_list,
-        batch_size=args.batch_size,
-        num_workers=args.num_workers,
-        pin_memory=pin_memory,
-        shuffle=True,
-        oversample_to_max=args.oversample_minority,
+    base_sensor_loss_weights = (
+        build_sensor_loss_weights(
+            train_ds,
+            sensors_list,
+            max_weight=args.sensor_loss_weight_max,
+            normalize_mean_one=True,
+        )
+        if args.sensor_loss_weighting == "inv_sqrt"
+        else None
     )
+    pin_memory = device.type == "cuda"
+    train_steps = 0
     test_loader, test_steps = build_balanced_mixed_dataloader(
         test_ds,
         sensors_list,
@@ -1276,30 +1858,76 @@ def main(args):
         num_workers=args.num_workers,
         pin_memory=pin_memory,
         shuffle=False,
-        oversample_to_max=False,
+        alpha=1.0,
+        ensure_all_samples=True,
     )
 
+    adapter_lr_effective = args.adapter_lr if args.adapter_lr is not None else (args.backbone_lr * args.adapter_lr_multiplier)
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sensors_list}, train_backbone={args.train_backbone}",
+        f"sensors={sorted(sensors_list)}, train_backbone={args.train_backbone}, "
+        f"sampling_alpha={args.sensor_sampling_alpha}, train_sensor_epoch_ratio={train_sensor_epoch_ratio}, "
+        f"sensor_head_lr_mult={sensor_head_lr_mult}, backbone_lr={args.backbone_lr:.2e}, "
+        f"adapter_lr={adapter_lr_effective:.2e}, lora_rank={args.adapter_bottleneck_dim}, "
+        f"lora_alpha={args.adapter_alpha:.2f}, head_lr={args.head_lr:.2e}, "
+        f"sensor_loss_weighting={args.sensor_loss_weighting}, sensor_loss_warmup_epochs={args.sensor_loss_warmup_epochs}, "
+        f"adapter_blocks=train:{len(trainable_adapter_blocks)}/all:{len(adapter_blocks)}, "
+        f"freeze_vit_in_adapter_blocks={args.freeze_vit_in_adapter_blocks}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
-        freeze_backbone = (not args.train_backbone) or (
+        train_loader, train_steps = build_balanced_mixed_dataloader(
+            train_ds,
+            sensors_list,
+            batch_size=args.batch_size,
+            num_workers=args.num_workers,
+            pin_memory=pin_memory,
+            shuffle=True,
+            alpha=args.sensor_sampling_alpha,
+            ensure_all_samples=args.ensure_all_samples,
+            sensor_epoch_ratio=train_sensor_epoch_ratio,
+        )
+
+        sensor_loss_weights = None
+        if base_sensor_loss_weights is not None:
+            warmup_epochs = max(0, int(args.sensor_loss_warmup_epochs))
+            if warmup_epochs == 0:
+                warmup = 1.0
+            else:
+                warmup = min(1.0, float(epoch) / float(warmup_epochs))
+            sensor_loss_weights = {
+                sensor: (1.0 + (weight - 1.0) * warmup) for sensor, weight in base_sensor_loss_weights.items()
+            }
+
+        freeze_due_to_schedule = args.train_backbone and (not args.train_adapters_only) and (
             args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
         )
-        if freeze_backbone:
-            set_trainable(core_model.backbone, False)
-            core_model.backbone.eval()
-        else:
-            set_trainable(core_model.backbone, True)
-            core_model.backbone.train()
+        freeze_backbone_core = (not args.train_backbone) or args.train_adapters_only or freeze_due_to_schedule
+        train_adapters = args.train_backbone and (
+            args.train_adapters_only or (not freeze_due_to_schedule) or args.train_adapters_during_freeze
+        )
+
         model.train()
-        core_model.heads.train()
+        core_model.head.train()
         if core_model.summary_head is not None:
             core_model.summary_head.train()
         for sensor in core_model.sensor_patch_embeds.values():
             sensor.train()
+        set_trainable(core_model.backbone, not freeze_backbone_core)
+        if freeze_backbone_core:
+            core_model.backbone.eval()
+        else:
+            core_model.backbone.train()
+        for p in frozen_adapter_params:
+            p.requires_grad = False
+        for p in adapter_params:
+            p.requires_grad = train_adapters
+        for block in adapter_blocks:
+            if isinstance(block, SensorAdapterBlock):
+                block.adapters.train(train_adapters and (id(block) in trainable_adapter_block_ids))
+                if args.freeze_vit_in_adapter_blocks:
+                    set_trainable(block.block, False)
+                    block.block.eval()
 
         total_loss = 0.0
         total = 0
@@ -1323,12 +1951,21 @@ def main(args):
                 sensor_arg = sensors
             with autocast(enabled=use_amp):
                 outputs = model(x_dict, sensors=sensor_arg)
-                loss, per_sensor_losses = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
-            optimizer.zero_grad()
+                loss, per_sensor_losses = core_model.loss_from_outputs(
+                    outputs,
+                    labels,
+                    sensors,
+                    criterion,
+                    sensor_loss_weights=sensor_loss_weights,
+                )
+            optimizer.zero_grad(set_to_none=True)
             scaler.scale(loss).backward()
             if args.max_grad_norm and args.max_grad_norm > 0:
                 scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(param_groups[0]["params"], args.max_grad_norm)
+                torch.nn.utils.clip_grad_norm_(
+                    (p for p in core_model.parameters() if p.requires_grad),
+                    args.max_grad_norm,
+                )
             scaler.step(optimizer)
             scaler.update()
             if scheduler is not None:
@@ -1342,7 +1979,7 @@ def main(args):
             if logits is None:
                 logits = outputs.get("merged_logits")
             if logits is None:
-                logits = torch.zeros((batch, core_model.heads[sensors_list[0]].out_features), device=device)
+                logits = torch.zeros((batch, core_model.head.out_features), device=device)
                 for sensor_name, sensor_out in outputs.items():
                     if not isinstance(sensor_out, dict):
                         continue
@@ -1372,8 +2009,8 @@ def main(args):
                 if "summary" in per_sensor_losses:
                     sensor_loss_details = f"{sensor_loss_details} summary_loss={per_sensor_losses['summary'].item():.4f}".strip()
                 print(
-                    f"Epoch {epoch} step {step_idx}/{train_steps} train_loss={total_loss/total:.4f} "
-                    f"train_acc={correct/total:.4f} {sensor_loss_details}",
+                    f"Epoch {epoch} step {step_idx}/{train_steps} train_loss={total_loss/max(1,total):.4f} "
+                    f"train_acc={correct/max(1,total):.4f} {sensor_loss_details}",
                     flush=True,
                 )
 
@@ -1404,7 +2041,13 @@ def main(args):
                     sensor_arg = sensors
                 with autocast(enabled=use_amp):
                     outputs = model(x_dict, sensors=sensor_arg)
-                    loss, _ = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
+                    loss, _ = core_model.loss_from_outputs(
+                        outputs,
+                        labels,
+                        sensors,
+                        criterion,
+                        sensor_loss_weights=sensor_loss_weights,
+                    )
                 batch = labels.size(0)
                 test_loss_total += loss.item() * batch
                 total_eval += batch
@@ -1412,7 +2055,7 @@ def main(args):
                 if logits is None:
                     logits = outputs.get("merged_logits")
                 if logits is None:
-                    logits = torch.zeros((batch, core_model.heads[sensors_list[0]].out_features), device=device)
+                    logits = torch.zeros((batch, core_model.head.out_features), device=device)
                     for sensor_name, sensor_out in outputs.items():
                         if not isinstance(sensor_out, dict):
                             continue
@@ -1434,6 +2077,7 @@ def main(args):
 
         test_loss = test_loss_total / max(1, total_eval)
         test_acc = correct_eval / max(1, total_eval)
+        test_loss_objective = test_loss
         per_sensor_acc = {
             sensor: (sensor_correct[sensor] / sensor_total[sensor] if sensor_total[sensor] > 0 else float("nan"))
             for sensor in sensors_list
@@ -1495,6 +2139,7 @@ def main(args):
                 "train_loss": train_loss,
                 "train_acc": train_acc,
                 "test_loss": test_loss,
+                "test_loss_objective": test_loss_objective,
                 "test_acc": test_acc,
                 "test_fpr": test_fpr,
                 "test_recall": test_recall,
