@@ -820,7 +820,8 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
                 "chn_ids": self._wv3_chn_ids,
                 "mean_tensor": None,
                 "std_tensor": None,
-                "scale_to_unit": False,
+                # WV3 TIFFs are commonly uint16; keep dynamic range aligned with other optical sensors.
+                "scale_to_unit": True,
             }
 
         # Inject channel ids and optional scaling.
