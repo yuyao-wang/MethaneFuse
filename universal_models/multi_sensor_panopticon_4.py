@@ -1243,6 +1243,7 @@ def main(args):
     ckpt_dir = Path(args.checkpoint_dir) / run_name
     latest_path = ckpt_dir / "ckpt_latest.pth"
     best_path = ckpt_dir / "ckpt_best_test.pth"
+    print(f"Checkpoints will be saved under: {ckpt_dir}", flush=True)
 
     start_epoch = 1
     global_step = 0
@@ -1394,6 +1395,9 @@ def main(args):
         eval_labels: list[int] = []
         eval_preds: list[int] = []
         eval_pos_scores: list[float] = []
+        eval_sensor_labels = {sensor: [] for sensor in sensors_list}
+        eval_sensor_preds = {sensor: [] for sensor in sensors_list}
+        eval_sensor_pos_scores = {sensor: [] for sensor in sensors_list}
         with torch.no_grad():
             for step, (x_dict, labels, sensors) in enumerate(test_loader, 1):
                 labels = labels.to(device)
@@ -1421,13 +1425,19 @@ def main(args):
                 correct_eval += (preds == labels).sum().item()
                 eval_labels.extend(labels.detach().to("cpu").tolist())
                 eval_preds.extend(preds.detach().to("cpu").tolist())
+                batch_pos_scores: Optional[list[float]] = None
                 if logits.shape[-1] == 2:
                     pos_scores = torch.softmax(logits, dim=1)[:, 1]
-                    eval_pos_scores.extend(pos_scores.detach().to("cpu").tolist())
+                    batch_pos_scores = pos_scores.detach().to("cpu").tolist()
+                    eval_pos_scores.extend(batch_pos_scores)
                 for i, sensor_type in enumerate(sensors):
                     sensor_total[sensor_type] += 1
                     if preds[i] == labels[i]:
                         sensor_correct[sensor_type] += 1
+                    eval_sensor_labels[sensor_type].append(int(labels[i].item()))
+                    eval_sensor_preds[sensor_type].append(int(preds[i].item()))
+                    if batch_pos_scores is not None:
+                        eval_sensor_pos_scores[sensor_type].append(float(batch_pos_scores[i]))
                 eval_steps += 1
                 if args.max_eval_steps is not None and eval_steps >= args.max_eval_steps:
                     break
@@ -1450,16 +1460,38 @@ def main(args):
             test_fpr = metrics["fpr"]
             test_recall = metrics["recall"]
             test_auroc = metrics["auroc"]
+        per_sensor_binary_metrics = {
+            sensor: {"fpr": float("nan"), "recall": float("nan"), "auroc": float("nan")}
+            for sensor in sensors_list
+        }
+        for sensor in sensors_list:
+            sensor_labels = eval_sensor_labels[sensor]
+            sensor_preds = eval_sensor_preds[sensor]
+            sensor_scores = eval_sensor_pos_scores[sensor]
+            if sensor_labels and sensor_preds and sensor_scores and len(sensor_labels) == len(sensor_scores):
+                per_sensor_binary_metrics[sensor] = compute_binary_metrics(
+                    labels=np.asarray(sensor_labels, dtype=np.int64),
+                    preds=np.asarray(sensor_preds, dtype=np.int64),
+                    pos_scores=np.asarray(sensor_scores, dtype=np.float64),
+                )
 
         train_acc_str = " ".join(f"train_acc_{s}={train_per_sensor_acc[s]:.4f}" for s in sensors_list)
         test_acc_str = " ".join(f"test_acc_{s}={per_sensor_acc[s]:.4f}" for s in sensors_list)
+        test_metric_str = " ".join(
+            f"{s}(fpr={per_sensor_binary_metrics[s]['fpr']:.4f},recall={per_sensor_binary_metrics[s]['recall']:.4f},auroc={per_sensor_binary_metrics[s]['auroc']:.4f})"
+            for s in sensors_list
+        )
         print(
             f"Epoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
             f"test_loss={test_loss:.4f} test_acc={test_acc:.4f} "
             f"test_fpr={test_fpr:.4f} test_recall={test_recall:.4f} test_auroc={test_auroc:.4f} "
-            f"{train_acc_str} {test_acc_str}",
+            f"{train_acc_str} {test_acc_str} test_metrics_per_sensor={test_metric_str}",
             flush=True,
         )
+
+        prev_best_test = best_test_acc
+        best_train_acc = max(best_train_acc, train_acc)
+        best_test_acc = max(best_test_acc, test_acc)
 
         save_checkpoint(
             latest_path,
@@ -1469,12 +1501,11 @@ def main(args):
             optimizer,
             scheduler,
             scaler if use_amp else None,
-            train_acc,
-            test_acc,
+            best_train_acc,
+            best_test_acc,
             args,
         )
-        if test_acc > best_test_acc:
-            best_test_acc = test_acc
+        if test_acc > prev_best_test:
             save_checkpoint(
                 best_path,
                 epoch,
@@ -1483,12 +1514,11 @@ def main(args):
                 optimizer,
                 scheduler,
                 scaler if use_amp else None,
-                train_acc,
-                test_acc,
+                best_train_acc,
+                best_test_acc,
                 args,
             )
-
-        best_train_acc = max(best_train_acc, train_acc)
+            print(f"Saved new best checkpoint: {best_path} (test_acc={test_acc:.4f})", flush=True)
         if wandb_run is not None:
             log_payload = {
                 "epoch": epoch,
@@ -1502,6 +1532,9 @@ def main(args):
             }
             for sensor in sensors_list:
                 log_payload[f"test_acc_{sensor}"] = per_sensor_acc[sensor]
+                log_payload[f"test_fpr_{sensor}"] = per_sensor_binary_metrics[sensor]["fpr"]
+                log_payload[f"test_recall_{sensor}"] = per_sensor_binary_metrics[sensor]["recall"]
+                log_payload[f"test_auroc_{sensor}"] = per_sensor_binary_metrics[sensor]["auroc"]
                 if per_sensor_count[sensor] > 0:
                     log_payload[f"train_loss_{sensor}"] = (
                         per_sensor_loss_accum[sensor] / per_sensor_count[sensor]

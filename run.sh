@@ -1,6 +1,19 @@
 #!/bin/bash
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
+mkdir -p /transferdiniu2/yuyao/temp
+chmod 700 /transferdiniu2/yuyao/temp
+export TMPDIR=/transferdiniu2/yuyao/temp
+export TMP=/transferdiniu2/yuyao/temp
+export TEMP=/transferdiniu2/yuyao/temp
+
+
+# Keep Python multiprocessing/tempfile artifacts off the root disk (/tmp).
+# TMP_ROOT="/transferdiniu2/yuyao/tmp/panopticon"
+# mkdir -p "${TMP_ROOT}"
+# export TMPDIR="${TMP_ROOT}"
+# export TMP="${TMP_ROOT}"
+# export TEMP="${TMP_ROOT}"
 
 # python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/train_2024.csv \
@@ -14,31 +27,244 @@ export CUDA_VISIBLE_DEVICES=0
 #     --num_workers 18 \
 #     --local_cache_dir /home/yuyao/local_train_temp_cache \
 #     --local_cache_warmup \
-#     --local_cache_workers 18 --batch_size 16
+#     --local_cache_workers 18 --batch_size 16 \
+
 
 # python universal_models/multi_sensor_panopticon_4.py \
-#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
-#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4_geo.csv  \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4_geo.csv  \
 #     --device cuda \
 #     --train_backbone \
 #     --backbone_lr 1e-4 \
 #     --head_lr 1e-4 \
 #     --use_wandb \
 #     --wandb_project baselines \
-#     --num_workers 18 \
+#     --wandb_run_name "universal baseline 4 geo" \
+#     --num_workers 8 \
 #     --local_cache_dir /home/yuyao/local_train_temp_cache \
+#     --local_cache_min_free_gb 50 \
 #     --local_cache_warmup \
-#     --local_cache_workers 18
+#     --local_cache_workers 18 \
+#     --batch_size 32 \
+#     --checkpoint_dir /transferdiniu2/yuyao/checkpoints/universal
 
-python universal_models/multi_sensor_panopticon_seperate_ViTLN_loraadapter_upper_layers_4.py \
-  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
-  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
-  --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --adapter_lr 2e-4 \
-  --train_sensor_epoch_ratio s2=1.0,l89=0.55,s5p=0.55,wv3=0.55 \
-  --sensor_head_lr_mult s2=1.3,l89=0.6,s5p=0.6,wv3=0.6 \
-  --adapter_first_blocks 5 --lora_rank 16 --lora_alpha 16 \
-  --freeze_vit_in_adapter_blocks --use_wandb --wandb_project baselines --num_workers 18 \
-  --local_cache_dir /home/yuyao/local_train_temp_cache  --local_cache_warmup --local_cache_workers 18
+# python universal_models/multi_sensor_panopticon_4_loraadapter_sensor_specific_earlystopping.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+#   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+#   --device cuda \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor \
+#   --local_cache_dir /home/yuyao/local_train_temp_cache \
+#   --local_cache_min_free_gb 50 \
+#   --local_cache_warmup \
+#   --local_cache_workers 18 \
+#   --epochs 50 \
+#   --batch_size 32 \
+#   --num_workers 8 \
+#   --train_backbone \
+#   --backbone_lr 1e-4 \
+#   --head_lr 1e-4 \
+#   --adapter_lr 2e-4 \
+#   --phase1_backbone_epochs 5 \
+#   --freeze_backbone_first_blocks 5 \
+#   --lora_rank 16 \
+#   --lora_alpha 16 \
+#   --sensor_adapter_early_stop_sensors wv3,s5p,s2,l89 \
+#   --sensor_adapter_early_stopping_patience 6 \
+#   --sensor_adapter_early_stopping_warmup_epochs 5 \
+#   --sensor_adapter_early_stopping_min_delta 1e-4 \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --wandb_run_name "loraadapter_updated_2_phases_earlystopping"
+
+# from scratch (initialize from --weights, no --resume)
+# python universal_models/multi_sensor_panopticon_4_loraadapter_sensor_specific_earlystopping.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+#   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+#   --weights weights/panopticon_vitb14_teacher.pth \
+#   --device cuda \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor \
+#   --wandb_run_name "loraadapter_updated_2_phases_earlystopping_undersampling" \
+#   --epochs 50 \
+#   --batch_size 32 \
+#   --num_workers 8 \
+#   --train_backbone \
+#   --backbone_lr 1e-4 \
+#   --head_lr 1e-4 \
+#   --adapter_lr 2e-4 \
+#   --phase1_backbone_epochs 5 \
+#   --freeze_backbone_first_blocks 999 \
+#   --lora_rank 16 \
+#   --lora_alpha 16 \
+#   --sensor_adapter_early_stop_sensors wv3,s5p,s2,l89 \
+#   --sensor_adapter_early_stopping_patience 6 \
+#   --sensor_adapter_early_stopping_warmup_epochs 5 \
+#   --sensor_adapter_early_stopping_min_delta 1e-4 \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --local_cache_dir /home/yuyao/local_train_temp_cache \
+#   --local_cache_min_free_gb 50 \
+#   --local_cache_warmup \
+#   --local_cache_workers 18 \
+#   --phase1_sensor_coverages "wv3=0.55,s5p=0.25,l89=0.55"
+
+
+
+python universal_models/multi_sensor_panopticon_4_nonlinear_loraadapter_sensor_specific_earlystopping.py \
+  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4_geo.csv \
+  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4_geo.csv \
+  --device cuda \
+  --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor \
+  --local_cache_dir /home/yuyao/local_train_temp_cache \
+  --local_cache_min_free_gb 50 \
+  --local_cache_warmup \
+  --local_cache_workers 18 \
+  --epochs 50 \
+  --batch_size 32 \
+  --num_workers 16 \
+  --train_backbone \
+  --backbone_lr 1e-4 \
+  --head_lr 1e-4 \
+  --adapter_lr 2e-4 \
+  --phase1_backbone_epochs 4 \
+  --freeze_backbone_first_blocks 5 \
+  --lora_rank 16 \
+  --lora_alpha 16 \
+  --sensor_adapter_early_stop_sensors wv3,s5p,s2,l89 \
+  --sensor_adapter_early_stopping_patience 6 \
+  --sensor_adapter_early_stopping_warmup_epochs 5 \
+  --sensor_adapter_early_stopping_min_delta 1e-4 \
+  --use_wandb \
+  --wandb_project baselines \
+  --wandb_run_name "nonlinear_adapter_updated_2_phases_earlystopping_undersampling_geo" \
+  --phase1_sensor_coverages "wv3=0.55,s5p=0.25,l89=0.55"
+
+
+
+# python universal_models/multi_sensor_panopticon_seperate_ViTLNFFN.py \
+#     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+#     --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+#     --device cuda \
+#     --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache \
+#     --train_backbone \
+#     --backbone_lr 1e-4 \
+#     --head_lr 1e-4 \
+#     --use_wandb \
+#     --wandb_project baselines \
+#     --wandb_run_name "ViTLNFFN_4" \
+#     --num_workers 8 \
+#     --local_cache_dir /home/yuyao/local_train_temp_cache \
+#     --local_cache_min_free_gb 50 \
+#     --batch_size 32 \
+#     --epochs 50 
+    # --local_cache_warmup \
+    # --local_cache_workers 18 \
+
+
+# test 1
+# python universal_models/multi_sensor_panopticon_seperate_ViTLN_loraadapter_upper_layers_4.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+#   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+#   --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --adapter_lr 2e-4 \
+#   --train_sensor_epoch_ratio s2=1.0,l89=0.55,s5p=0.55,wv3=0.55 \
+#   --sensor_head_lr_mult s2=1.3,l89=0.6,s5p=0.6,wv3=0.6 \
+#   --adapter_first_blocks 5 --lora_rank 16 --lora_alpha 16 \
+#   --freeze_vit_in_adapter_blocks \
+#   --early_stopping --early_stopping_metric composite --early_stopping_patience 6 --early_stopping_warmup_epochs 6 \
+#   --sensor_threshold_min_samples 128 --sensor_threshold_ema 0.3 \
+#   --train_augment --aug_noise_std 0.02 --aug_erase_prob 0.2 \
+#   --use_wandb --wandb_project baselines --num_workers 18 \
+#   --local_cache_dir /home/yuyao/local_train_temp_cache  --local_cache_warmup --local_cache_workers 18
+
+# # test 2 (resume after disk-full interruption)
+# RUN_NAME="vitln4_earlystop_20260308_182557"
+# OLD_CKPT_ROOT="checkpoints/multi_sensor_earlystop"
+# NEW_CKPT_ROOT="/transferdiniu2/yuyao/checkpoints/multi_sensor_earlystop"
+# OLD_RUN_DIR="${OLD_CKPT_ROOT}/${RUN_NAME}"
+# NEW_RUN_DIR="${NEW_CKPT_ROOT}/${RUN_NAME}"
+
+# mkdir -p "${NEW_RUN_DIR}"
+
+# if [ ! -f "${NEW_RUN_DIR}/ckpt_latest.pth" ]; then
+#   if [ -f "${OLD_RUN_DIR}/ckpt_latest.pth" ]; then
+#     cp -f "${OLD_RUN_DIR}/ckpt_latest.pth" "${NEW_RUN_DIR}/ckpt_latest.pth"
+#   elif [ -f "${OLD_RUN_DIR}/ckpt_best_score.pth" ]; then
+#     cp -f "${OLD_RUN_DIR}/ckpt_best_score.pth" "${NEW_RUN_DIR}/ckpt_latest.pth"
+#   elif [ -f "${OLD_RUN_DIR}/ckpt_best_test.pth" ]; then
+#     cp -f "${OLD_RUN_DIR}/ckpt_best_test.pth" "${NEW_RUN_DIR}/ckpt_latest.pth"
+#   else
+#     echo "No resumable checkpoint found under ${OLD_RUN_DIR}"
+#     exit 1
+#   fi
+# fi
+
+# if [ -f "${OLD_RUN_DIR}/ckpt_best_score.pth" ] && [ ! -f "${NEW_RUN_DIR}/ckpt_best_score.pth" ]; then
+#   cp -f "${OLD_RUN_DIR}/ckpt_best_score.pth" "${NEW_RUN_DIR}/ckpt_best_score.pth"
+# fi
+# if [ -f "${OLD_RUN_DIR}/ckpt_best_test.pth" ] && [ ! -f "${NEW_RUN_DIR}/ckpt_best_test.pth" ]; then
+#   cp -f "${OLD_RUN_DIR}/ckpt_best_test.pth" "${NEW_RUN_DIR}/ckpt_best_test.pth"
+# fi
+
+# python universal_models/multi_sensor_panopticon_seperate_ViTLN_loraadapter_upper_layers_4_earlystopping.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+#   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+#   --device cuda --epochs 50 --batch_size 32 \
+#   --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --adapter_lr 2e-4 \
+#   --train_sensor_epoch_ratio s2=1.0,l89=0.55,s5p=0.55,wv3=0.55 \
+#   --sensor_head_lr_mult s2=1.3,l89=0.6,s5p=0.6,wv3=0.6 \
+#   --adapter_first_blocks 5 --lora_rank 16 --lora_alpha 16 \
+#   --freeze_vit_in_adapter_blocks \
+#   --early_stopping --early_stopping_metric composite \
+#   --early_stopping_patience 6 --early_stopping_warmup_epochs 6 --early_stopping_min_delta 1e-4 \
+#   --sensor_threshold_min_samples 128 --sensor_threshold_ema 0.3 \
+#   --train_augment --aug_noise_std 0.02 --aug_erase_prob 0.2 \
+#   --use_wandb --wandb_project baselines \
+#   --wandb_run_name "${RUN_NAME}" \
+#   --resume \
+#   --num_workers 18 \
+#   --local_cache_dir /home/yuyao/local_train_temp_cache \
+#   --local_cache_warmup --local_cache_workers 18 \
+#   --checkpoint_dir "${NEW_CKPT_ROOT}"
+
+# python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
+#  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/train_balanced.csv \
+#  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/emit_wv3_temporal_-90_-180_16_to_224/test_balanced.csv \
+#  --device cuda --train_backbone --backbone_lr 1e-4 --head_lr 1e-4 --use_wandb --wandb_project baselines --num_workers 18 \
+#  --local_cache_dir /home/yuyao/local_train_temp_cache --local_cache_warmup --local_cache_workers 18 --batch_size 16
+
+
+# python universal_models/multi_sensor_panopticon_seperate_ViTLN_loraadapter_upper_layers_4.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_4.csv \
+#   --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_4.csv \
+#   --device cuda \
+#   --data_parallel --data_parallel_num_gpus 2 \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor \
+#   --epochs 40 --batch_size 86 \
+#   --train_backbone --freeze_backbone_epochs 3 \
+#   --backbone_lr 6e-5 --head_lr 1e-4 --adapter_lr 1.5e-4 \
+#   --weight_decay 1e-3 \
+#   --adapter_first_blocks 5 --adapter_train_blocks 3 \
+#   --lora_rank 16 --lora_alpha 16 --adapter_dropout 0.1 \
+#   --freeze_vit_in_adapter_blocks \
+#   --sensor_sampling_alpha 0.85 \
+#   --train_sensor_epoch_ratio s2=0.9,l89=0.8,s5p=1.2,wv3=0.8 \
+#   --sensor_head_lr_mult s2=1.1,l89=0.9,s5p=1.0,wv3=0.9 \
+#   --sensor_loss_weighting inv_sqrt --sensor_loss_weight_max 2.0 --sensor_loss_warmup_epochs 8 \
+#   --train_augment --aug_noise_std 0.02 --aug_erase_prob 0.2 \
+#   --auto_sensor_thresholds --sensor_threshold_min_samples 128 --sensor_threshold_ema 0.3 \
+#   --early_stopping --early_stopping_metric composite --early_stopping_patience 6 --early_stopping_warmup_epochs 6 --early_stopping_min_delta 5e-4 \
+#   --disable_save_per_sensor_best \
+#   --use_wandb --wandb_project baselines \
+#   --num_workers 18 \
+#   --local_cache_dir /home/yuyao/local_train_temp_cache \
+#   --local_cache_fallback_dir /transferdiniu2/yuyao/local_train_temp_cache \
+#   --local_cache_max_gb 0 \
+#   --local_cache_min_free_gb 5 \
+#   --local_cache_fallback_max_gb 80 \
+#   --local_cache_fallback_min_free_gb 25 
+#   --local_cache_warmup \
+#   --local_cache_workers 28
+
 
 # python universal_models/multi_sensor_panopticon_lora.py \
 #     --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/data_dir_l89_L2SR/l89_temporal_16_resized_to_224_CRSfixed/train_2025_balanced.csv \
@@ -268,6 +494,3 @@ python universal_models/multi_sensor_panopticon_seperate_ViTLN_loraadapter_upper
 #   --csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2024_16/train.csv \
 #   --models earthpt \
 #   --earthpt-bands B1,B2,B3,B4,B5,B6,B7,B8,B8A,B9,B11,B12
-
-
-

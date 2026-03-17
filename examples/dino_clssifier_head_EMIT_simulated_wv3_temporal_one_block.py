@@ -286,6 +286,11 @@ def maybe_wrap_dataparallel(module: nn.Module, device: torch.device, num_gpus: i
     )
     return nn.DataParallel(module, device_ids=device_ids)
 
+
+def unwrap_module(module: nn.Module) -> nn.Module:
+    return module.module if isinstance(module, nn.DataParallel) else module
+
+
 def resize_imgs_to_224(x_dict):
     """Upsample batch of images in x_dict["imgs"] to 224x224 before the backbone."""
 
@@ -333,6 +338,40 @@ def build_scheduler(args, optimizer):
         noam_lambda = lambda step: min((step + 1) ** -0.5, (step + 1) * (warmup_steps ** -1.5))
         return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=noam_lambda)
     raise ValueError(f"Unknown lr_scheduler: {args.lr_scheduler}")
+
+
+def default_run_name(args) -> str:
+    train_stem = Path(args.train_csv).stem or "train"
+    test_stem = Path(args.test_csv).stem or "test"
+    mode = "ft" if args.train_backbone else "head"
+    return f"{train_stem}__{test_stem}__{mode}"
+
+
+def save_checkpoint(
+    path: Path,
+    epoch: int,
+    global_step: int,
+    backbone: nn.Module,
+    head: nn.Module,
+    optimizer: torch.optim.Optimizer,
+    scheduler,
+    best_test_acc: float,
+    args,
+):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    torch.save(
+        {
+            "epoch": epoch,
+            "global_step": global_step,
+            "backbone": unwrap_module(backbone).state_dict(),
+            "head": unwrap_module(head).state_dict(),
+            "optimizer": optimizer.state_dict(),
+            "scheduler": None if scheduler is None else scheduler.state_dict(),
+            "best_test_acc": best_test_acc,
+            "args": vars(args),
+        },
+        path,
+    )
 
 
 def main(args):
@@ -428,6 +467,12 @@ def main(args):
     )
     scheduler = build_scheduler(args, optimizer)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
+    run_name = args.run_name or default_run_name(args)
+    ckpt_dir = Path(args.checkpoint_dir) / run_name
+    latest_path = ckpt_dir / "ckpt_latest.pth"
+    best_path = ckpt_dir / "ckpt_best_test.pth"
+    best_test_acc = float("-inf")
+    print(f"Checkpoints will be saved under: {ckpt_dir}", flush=True)
     wandb_run = init_wandb(args)
 
     global_step = 0
@@ -544,6 +589,34 @@ def main(args):
             f"recall={recall:.4f} fpr={fpr:.4f} auroc={test_auroc:.4f}",
             flush=True,
         )
+
+        prev_best_test = best_test_acc
+        best_test_acc = max(best_test_acc, test_acc)
+        save_checkpoint(
+            latest_path,
+            epoch,
+            global_step,
+            backbone,
+            head,
+            optimizer,
+            scheduler,
+            best_test_acc,
+            args,
+        )
+        if test_acc > prev_best_test:
+            save_checkpoint(
+                best_path,
+                epoch,
+                global_step,
+                backbone,
+                head,
+                optimizer,
+                scheduler,
+                best_test_acc,
+                args,
+            )
+            print(f"Saved new best checkpoint: {best_path} (test_acc={test_acc:.4f})", flush=True)
+
         if wandb_run is not None:
             wandb_run.log(
                 {
@@ -688,6 +761,16 @@ if __name__ == "__main__":
         type=int,
         default=1,
         help="Number of GPUs to use via torch.nn.DataParallel when --device is CUDA.",
+    )
+    parser.add_argument(
+        "--checkpoint_dir",
+        default="checkpoints",
+        help="Base directory to store checkpoints (latest and best).",
+    )
+    parser.add_argument(
+        "--run_name",
+        default=None,
+        help="Run name for checkpoint subfolder. Defaults to <train_csv_stem>__<test_csv_stem>__ft|head.",
     )
     args = parser.parse_args()
     main(args)

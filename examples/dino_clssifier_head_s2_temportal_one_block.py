@@ -1,8 +1,12 @@
 import argparse
+import hashlib
 import os
 from pathlib import Path
+import shutil
 import sys
-from typing import Sequence, Tuple
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import suppress
+from typing import Optional, Sequence, Tuple
 
 import torch
 import torch.nn as nn
@@ -21,6 +25,71 @@ PRECOMPUTED_STATS = (
     [786.128173828125, 1025.8876953125, 1593.730712890625, 2315.26123046875, 2710.462890625, 3115.90087890625, 3289.0830078125, 3465.536376953125, 3495.579833984375, 3517.7958984375, 4180.28564453125, 3567.866943359375],
     [435.72607421875, 597.6113891601562, 688.5059814453125, 840.1614990234375, 801.7208251953125, 706.9466552734375, 689.823974609375, 727.5567626953125, 668.30224609375, 551.3565063476562, 629.679931640625, 641.590087890625],
 )
+
+try:
+    from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
+except ImportError:
+    S2TemporalCsvDataset = object
+
+
+class StaticAnchoredCache:
+    def __init__(self, cache_dir: str, min_free_gb: float = 10.0):
+        self.cache_dir = Path(cache_dir).expanduser().resolve()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.min_free_bytes = min_free_gb * (1024**3)
+
+    def _get_free_space(self) -> int:
+        return shutil.disk_usage(self.cache_dir).free
+
+    def _hashed_path(self, original: str) -> Path:
+        norm_path = os.path.abspath(original)
+        digest = hashlib.sha1(norm_path.encode("utf-8")).hexdigest()
+        subdir = digest[:2]
+        suffix = Path(original).suffix
+        return self.cache_dir / subdir / f"{digest}{suffix}"
+
+    def ensure_local(self, original: str) -> str:
+        dst = self._hashed_path(original)
+        if dst.exists():
+            return str(dst)
+        if self._get_free_space() < self.min_free_bytes:
+            return original
+        tmp = dst.with_suffix(dst.suffix + ".tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            shutil.copy2(original, tmp)
+            os.replace(tmp, dst)
+        except Exception:
+            with suppress(FileNotFoundError):
+                tmp.unlink()
+            return original
+        return str(dst)
+
+    def warm_up(self, paths: Sequence[str], max_workers: int = 8) -> None:
+        unique_paths = sorted({os.path.abspath(p) for p in paths if isinstance(p, str)})
+        if not unique_paths:
+            return
+        print(f"[Cache] Warming up (target: {len(unique_paths)})...", flush=True)
+
+        def _copy_one(path: str):
+            res = self.ensure_local(path)
+            return res == path
+
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            futures = [pool.submit(_copy_one, p) for p in unique_paths]
+            fallback_count = sum(1 for fut in as_completed(futures) if fut.result())
+            print(f"[Cache] Warmup complete. Cached: {len(unique_paths)-fallback_count}, Remote: {fallback_count}")
+
+
+class CachedS2TemporalCsvDataset(S2TemporalCsvDataset):
+    def __init__(self, *args, local_file_cache: Optional[StaticAnchoredCache] = None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._local_file_cache = local_file_cache
+
+    def _load_image(self, path: str, *, column_name=None, sample_id=None):
+        if self._local_file_cache is not None and isinstance(path, str):
+            path = self._local_file_cache.ensure_local(path)
+        return super()._load_image(path, column_name=column_name, sample_id=sample_id)
 
 
 class CLSHead(nn.Module):
@@ -206,8 +275,6 @@ def build_scheduler(args, optimizer):
 
 
 def main(args):
-    from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
-
     device = torch.device(args.device)
     if device.type == "cuda" and device.index is None:
         device = torch.device("cuda:0")
@@ -215,24 +282,37 @@ def main(args):
         torch.cuda.set_device(device)
 
     norm_stats = PRECOMPUTED_STATS
-    base_train_ds = S2TemporalCsvDataset(
+    ds_kwargs = {
+        "ds_cfg_name": "s2_12band",
+        "normalize_stats": norm_stats,
+        "scale_to_unit": False,
+        "pad_to_multiple": args.pad_to_multiple,
+        "compute_stats": False,
+        "path_columns": (args.t0_col, args.t90_col, args.t360_col),
+    }
+
+    dataset_cls = S2TemporalCsvDataset
+    cache_obj = None
+    if args.local_cache_dir:
+        dataset_cls = CachedS2TemporalCsvDataset
+        cache_obj = StaticAnchoredCache(args.local_cache_dir)
+        ds_kwargs["local_file_cache"] = cache_obj
+
+    base_train_ds = dataset_cls(
         csv_path=args.train_csv,
-        ds_cfg_name="s2_12band",
-        normalize_stats=norm_stats,
-        scale_to_unit=False,
-        pad_to_multiple=args.pad_to_multiple,
-        compute_stats=False,
-        path_columns=(args.t0_col, args.t90_col, args.t360_col),
+        **ds_kwargs,
     )
-    base_test_ds = S2TemporalCsvDataset(
+    base_test_ds = dataset_cls(
         csv_path=args.test_csv,
-        ds_cfg_name="s2_12band",
-        normalize_stats=norm_stats,
-        scale_to_unit=False,
-        pad_to_multiple=args.pad_to_multiple,
-        compute_stats=False,
-        path_columns=(args.t0_col, args.t90_col, args.t360_col),
+        **ds_kwargs,
     )
+
+    if args.local_cache_warmup and cache_obj:
+        all_paths = []
+        for ds in (base_train_ds, base_test_ds):
+            for col in ds.path_columns:
+                all_paths.extend(ds.df[col].tolist())
+        cache_obj.warm_up(all_paths, max_workers=args.local_cache_workers)
 
     train_ds = ConcatTemporalDataset(base_train_ds)
     test_ds = ConcatTemporalDataset(base_test_ds)
@@ -510,17 +590,17 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--t0_col",
-        default="image_path",
+        default="path_t0",
         help="CSV column for t0 image path.",
     )
     parser.add_argument(
         "--t90_col",
-        default="s2_pre_path",
+        default="path_t90",
         help="CSV column for t-90 image path.",
     )
     parser.add_argument(
         "--t360_col",
-        default="s2_pre_pre_path",
+        default="path_t360",
         help="CSV column for t-360 image path.",
     )
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
@@ -564,5 +644,8 @@ if __name__ == "__main__":
         default=768,
         help="Backbone output dimension (Panopticon teacher is 768).",
     )
+    parser.add_argument("--local_cache_dir", default=None, help="Directory for caching remote files.")
+    parser.add_argument("--local_cache_warmup", action="store_true", help="Pre-copy all files to the cache before training.")
+    parser.add_argument("--local_cache_workers", type=int, default=12, help="Number of workers for cache warmup.")
     args = parser.parse_args()
     main(args)

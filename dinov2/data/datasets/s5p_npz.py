@@ -103,8 +103,8 @@ class S5pNpzDataset(Dataset):
 
         if normalize_stats is not None:
             mean, std = normalize_stats
-            self._mean = torch.tensor(mean, dtype=torch.float32).view(-1, 1, 1)
-            std_tensor = torch.tensor(std, dtype=torch.float32)
+            self._mean = torch.as_tensor(mean, dtype=torch.float32).view(-1, 1, 1)
+            std_tensor = torch.as_tensor(std, dtype=torch.float32)
             if torch.any(std_tensor <= 0):
                 warnings.warn("Found non-positive std values; clamping to 1e-6 to avoid NaNs.")
             std_tensor = torch.clamp(std_tensor, min=1e-6)

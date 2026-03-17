@@ -1,7 +1,11 @@
 import argparse
+import hashlib
 import os
+import shutil
 from pathlib import Path
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import suppress
 from typing import Optional, Sequence, Tuple, Union
 
 import numpy as np
@@ -69,6 +73,84 @@ def load_normalization_stats(args) -> Optional[Tuple[Sequence[float], Sequence[f
         raise ValueError("normalize_mean and normalize_std must be provided together")
 
     return PRECOMPUTED_STATS
+
+
+class StaticAnchoredCache:
+    def __init__(self, cache_dir: str, min_free_gb: float = 30.0):
+        self.cache_dir = Path(cache_dir).expanduser().resolve()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.min_free_bytes = min_free_gb * (1024**3)
+
+    def _get_free_space(self) -> int:
+        return shutil.disk_usage(self.cache_dir).free
+
+    def _hashed_path(self, original: str) -> Path:
+        norm_path = os.path.abspath(original)
+        digest = hashlib.sha1(norm_path.encode("utf-8")).hexdigest()
+        subdir = digest[:2]
+        suffix = Path(original).suffix
+        return self.cache_dir / subdir / f"{digest}{suffix}"
+
+    def ensure_local(self, original: str) -> str:
+        dst = self._hashed_path(original)
+        if dst.exists():
+            return str(dst)
+        if self._get_free_space() < self.min_free_bytes:
+            return original
+        tmp = dst.with_suffix(dst.suffix + ".tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            shutil.copy2(original, tmp)
+            os.replace(tmp, dst)
+        except Exception:
+            with suppress(FileNotFoundError):
+                tmp.unlink()
+            return original
+        return str(dst)
+
+    def warm_up(self, paths: Sequence[str], max_workers: int = 8) -> None:
+        unique_paths = sorted({os.path.abspath(p) for p in paths if isinstance(p, str)})
+        if not unique_paths:
+            return
+        print(f"[Cache] Warming up (target: {len(unique_paths)})...", flush=True)
+
+        def _copy_one(path: str):
+            res = self.ensure_local(path)
+            return res == path
+
+        with ThreadPoolExecutor(max_workers=max_workers) as pool:
+            futures = [pool.submit(_copy_one, p) for p in unique_paths]
+            fallback_count = sum(1 for fut in as_completed(futures) if fut.result())
+            print(f"[Cache] Warmup complete. Cached: {len(unique_paths) - fallback_count}, Remote: {fallback_count}")
+
+
+class CachedS5pNpzDataset(Dataset):
+    """
+    S5P dataset wrapper that routes file paths through StaticAnchoredCache.
+    Defined at module scope so it remains picklable for DataLoader workers.
+    """
+
+    def __init__(self, base_ds, local_file_cache: Optional[StaticAnchoredCache] = None):
+        self.base_ds = base_ds
+        self._local_file_cache = local_file_cache
+
+    def __len__(self):
+        return len(self.base_ds)
+
+    def __getitem__(self, idx):
+        row = self.base_ds.df.iloc[idx]
+        label = int(row[self.base_ds.label_column])
+        img_path = row[self.base_ds.path_column]
+
+        if self._local_file_cache is not None and isinstance(img_path, str):
+            img_path = self._local_file_cache.ensure_local(img_path)
+
+        img, chn_ids = self.base_ds._load_image(img_path)
+        x_dict = dict(imgs=img, chn_ids=chn_ids)
+        if self.base_ds.transform is not None:
+            x_dict = self.base_ds.transform(x_dict)
+
+        return x_dict, label
 
 
 class CLSHead(nn.Module):
@@ -224,6 +306,11 @@ def main(args):
     norm_stats = load_normalization_stats(args)
     chn_ids = parse_comma_separated_floats(args.chn_ids)
     stats_subset = parse_subset_value(args.compute_stats_subset)
+    cache_obj = None
+    if args.local_cache_dir:
+        cache_obj = StaticAnchoredCache(
+            args.local_cache_dir, min_free_gb=args.local_cache_min_free_gb
+        )
 
     base_train_ds = S5pNpzDataset(
         csv_path=args.train_csv,
@@ -274,8 +361,19 @@ def main(args):
         nan_to_num=args.nan_to_num,
     )
 
-    train_ds = S5pSimpleNpzDataset(base_train_ds, resize_to=args.resize_size)
-    test_ds = S5pSimpleNpzDataset(base_test_ds, resize_to=args.resize_size)
+    train_base_source = base_train_ds
+    test_base_source = base_test_ds
+    if cache_obj is not None:
+        train_base_source = CachedS5pNpzDataset(base_train_ds, local_file_cache=cache_obj)
+        test_base_source = CachedS5pNpzDataset(base_test_ds, local_file_cache=cache_obj)
+        if args.local_cache_warmup:
+            all_paths = []
+            if args.t0_col in base_train_ds.df.columns:
+                all_paths.extend(base_train_ds.df[args.t0_col].dropna().astype(str).tolist())
+            cache_obj.warm_up(all_paths, max_workers=args.local_cache_workers)
+
+    train_ds = S5pSimpleNpzDataset(train_base_source, resize_to=args.resize_size)
+    test_ds = S5pSimpleNpzDataset(test_base_source, resize_to=args.resize_size)
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
@@ -291,7 +389,7 @@ def main(args):
 
     print(
         f"Using device={device}, resize={args.resize_size}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"norm_stats={stats_status}, train_backbone={args.train_backbone}",
+        f"norm_stats={stats_status}, nan_to_num={args.nan_to_num}, train_backbone={args.train_backbone}",
         flush=True,
     )
 
@@ -335,11 +433,20 @@ def main(args):
         for step, (x_dict, labels) in enumerate(train_loader, 1):
             labels = labels.to(device)
             x_dict = recursive_to_device(x_dict, device)
+            imgs = x_dict.get("imgs")
+            if isinstance(imgs, torch.Tensor) and not torch.isfinite(imgs).all():
+                x_dict["imgs"] = torch.nan_to_num(imgs, nan=0.0, posinf=0.0, neginf=0.0)
 
             feats = backbone(x_dict, is_training=True)
             cls_token = feats["x_norm_clstoken"]
             logits = head(cls_token)
+            if not torch.isfinite(logits).all():
+                print(f"[Warn] Non-finite logits at train step {step}; skipping batch.", flush=True)
+                continue
             loss = criterion(logits, labels)
+            if not torch.isfinite(loss):
+                print(f"[Warn] Non-finite loss at train step {step}; skipping batch.", flush=True)
+                continue
 
             optimizer.zero_grad()
             loss.backward()
@@ -377,8 +484,8 @@ def main(args):
             if args.max_train_steps is not None and step >= args.max_train_steps:
                 break
 
-        train_loss = total_loss / total
-        train_acc = correct / total
+        train_loss = total_loss / total if total > 0 else float("nan")
+        train_acc = correct / total if total > 0 else 0.0
 
         head.eval()
         backbone.eval()
@@ -392,10 +499,19 @@ def main(args):
             for step, (x_dict, labels) in enumerate(test_loader, 1):
                 labels = labels.to(device)
                 x_dict = recursive_to_device(x_dict, device)
+                imgs = x_dict.get("imgs")
+                if isinstance(imgs, torch.Tensor) and not torch.isfinite(imgs).all():
+                    x_dict["imgs"] = torch.nan_to_num(imgs, nan=0.0, posinf=0.0, neginf=0.0)
                 feats = backbone(x_dict, is_training=True)
                 cls_token = feats["x_norm_clstoken"]
                 logits = head(cls_token)
+                if not torch.isfinite(logits).all():
+                    print(f"[Warn] Non-finite logits at eval step {step}; skipping batch.", flush=True)
+                    continue
                 loss = criterion(logits, labels)
+                if not torch.isfinite(loss):
+                    print(f"[Warn] Non-finite loss at eval step {step}; skipping batch.", flush=True)
+                    continue
 
                 test_loss_total += loss.item() * labels.size(0)
                 preds = logits.argmax(dim=1)
@@ -412,7 +528,7 @@ def main(args):
                 if args.max_eval_steps is not None and step >= args.max_eval_steps:
                     break
 
-        test_acc = correct / total
+        test_acc = correct / total if total > 0 else 0.0
         test_loss = test_loss_total / total if total > 0 else float("nan")
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
         fpr = fp / (fp + tn) if (fp + tn) > 0 else 0.0
@@ -505,8 +621,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--nan_to_num",
         type=float,
-        default=None,
-        help="If set, replace NaN/Inf in NPZ arrays with this value before normalization.",
+        default=0.0,
+        help="Replace NaN/Inf in NPZ arrays with this value before normalization (default: 0.0).",
     )
     parser.add_argument(
         "--normalize_stats_npz",
@@ -546,8 +662,17 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--t0_col",
-        default="image_path",
+        default="path_t0",
         help="CSV column for the image NPZ path.",
+    )
+    parser.add_argument("--local_cache_dir", default=None, help="Directory for caching NPZ files locally.")
+    parser.add_argument("--local_cache_warmup", action="store_true", help="Pre-copy training files to the local cache.")
+    parser.add_argument("--local_cache_workers", type=int, default=8, help="Number of workers for cache warmup.")
+    parser.add_argument(
+        "--local_cache_min_free_gb",
+        type=float,
+        default=30.0,
+        help="Stop caching new files when free disk space goes below this threshold (GB).",
     )
     parser.add_argument("--use_wandb", action="store_true", help="Enable Weights & Biases logging.")
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")

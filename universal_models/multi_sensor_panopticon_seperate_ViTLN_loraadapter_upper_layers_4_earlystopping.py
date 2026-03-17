@@ -1854,6 +1854,32 @@ def gather_head_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[n
     return params
 
 
+def freeze_sensor_specific_components(
+    model: MultiSensorPanopticonClassifier,
+    adapter_blocks: Sequence[nn.Module],
+    sensor_name: str,
+) -> None:
+    """Freeze one sensor's specific components only: patch embed (Conv3D) + LoRA adapters."""
+    if sensor_name in model.sensor_patch_embeds:
+        patch_module = model.sensor_patch_embeds[sensor_name]
+        patch_module.eval()
+        for param in patch_module.parameters():
+            param.requires_grad = False
+
+    domain_idx = model.sensor_to_idx.get(sensor_name)
+    if domain_idx is None:
+        return
+    for block in adapter_blocks:
+        if not isinstance(block, SensorAdapterBlock):
+            continue
+        if domain_idx < 0 or domain_idx >= len(block.adapters):
+            continue
+        adapter = block.adapters[domain_idx]
+        adapter.eval()
+        for param in adapter.parameters():
+            param.requires_grad = False
+
+
 def build_optimizer_param_groups(
     model: MultiSensorPanopticonClassifier,
     args,
@@ -2265,6 +2291,11 @@ def main(args):
     best_selection_score = float("-inf")
     best_selection_epoch = 0
     epochs_without_improve = 0
+    sensor_early_best_score = {sensor: float("-inf") for sensor in sensors_list}
+    sensor_early_bad_epochs = {sensor: 0 for sensor in sensors_list}
+    sensor_specific_frozen = {sensor: False for sensor in sensors_list}
+    sensor_frozen_epoch = {sensor: 0 for sensor in sensors_list}
+    all_sensors_frozen_announced = False
     if isinstance(resume_state, Mapping):
         saved_thresholds = resume_state.get("sensor_thresholds")
         if isinstance(saved_thresholds, Mapping):
@@ -2280,6 +2311,30 @@ def main(args):
         best_selection_score = float(resume_state.get("best_selection_score", best_selection_score))
         best_selection_epoch = int(resume_state.get("best_selection_epoch", best_selection_epoch))
         epochs_without_improve = int(resume_state.get("epochs_without_improve", epochs_without_improve))
+        saved_sensor_early_best_score = resume_state.get("sensor_early_best_score")
+        if isinstance(saved_sensor_early_best_score, Mapping):
+            for sensor in sensors_list:
+                value = saved_sensor_early_best_score.get(sensor)
+                if value is not None:
+                    sensor_early_best_score[sensor] = float(value)
+        saved_sensor_early_bad_epochs = resume_state.get("sensor_early_bad_epochs")
+        if isinstance(saved_sensor_early_bad_epochs, Mapping):
+            for sensor in sensors_list:
+                value = saved_sensor_early_bad_epochs.get(sensor)
+                if value is not None:
+                    sensor_early_bad_epochs[sensor] = int(value)
+        saved_sensor_specific_frozen = resume_state.get("sensor_specific_frozen")
+        if isinstance(saved_sensor_specific_frozen, Mapping):
+            for sensor in sensors_list:
+                value = saved_sensor_specific_frozen.get(sensor)
+                if value is not None:
+                    sensor_specific_frozen[sensor] = bool(value)
+        saved_sensor_frozen_epoch = resume_state.get("sensor_frozen_epoch")
+        if isinstance(saved_sensor_frozen_epoch, Mapping):
+            for sensor in sensors_list:
+                value = saved_sensor_frozen_epoch.get(sensor)
+                if value is not None:
+                    sensor_frozen_epoch[sensor] = int(value)
 
     base_sensor_loss_weights = (
         build_sensor_loss_weights(
@@ -2372,6 +2427,9 @@ def main(args):
                 if args.freeze_vit_in_adapter_blocks:
                     set_trainable(block.block, False)
                     block.block.eval()
+        for sensor_name, frozen in sensor_specific_frozen.items():
+            if frozen:
+                freeze_sensor_specific_components(core_model, adapter_blocks, sensor_name)
 
         total_loss = 0.0
         total = 0
@@ -2545,11 +2603,19 @@ def main(args):
         test_fpr = float("nan")
         test_recall = float("nan")
         test_auroc = float("nan")
+        per_sensor_binary_metrics = {
+            sensor: {"fpr": float("nan"), "recall": float("nan"), "auroc": float("nan")}
+            for sensor in sensors_list
+        }
         test_acc_calibrated = test_acc
         per_sensor_acc_calibrated = dict(per_sensor_acc)
         test_fpr_calibrated = test_fpr
         test_recall_calibrated = test_recall
         test_auroc_calibrated = test_auroc
+        per_sensor_binary_metrics_calibrated = {
+            sensor: {"fpr": float("nan"), "recall": float("nan"), "auroc": float("nan")}
+            for sensor in sensors_list
+        }
         threshold_fit_acc = {sensor: float("nan") for sensor in sensors_list}
         binary_ready = (
             len(eval_labels) > 0
@@ -2571,6 +2637,16 @@ def main(args):
             test_fpr = metrics["fpr"]
             test_recall = metrics["recall"]
             test_auroc = metrics["auroc"]
+            for sensor in sensors_list:
+                mask = eval_sensors_np == sensor
+                if not np.any(mask):
+                    continue
+                sensor_metrics = compute_binary_metrics(
+                    labels=eval_labels_np[mask],
+                    preds=eval_preds_np[mask],
+                    pos_scores=eval_scores_np[mask],
+                )
+                per_sensor_binary_metrics[sensor] = sensor_metrics
 
             if args.auto_sensor_thresholds:
                 sensor_threshold_targets, threshold_fit_acc = calibrate_sensor_thresholds(
@@ -2608,6 +2684,16 @@ def main(args):
             test_fpr_calibrated = calibrated_metrics["fpr"]
             test_recall_calibrated = calibrated_metrics["recall"]
             test_auroc_calibrated = calibrated_metrics["auroc"]
+            for sensor in sensors_list:
+                mask = eval_sensors_np == sensor
+                if not np.any(mask):
+                    continue
+                sensor_metrics_cal = compute_binary_metrics(
+                    labels=eval_labels_np[mask],
+                    preds=calibrated_preds[mask],
+                    pos_scores=eval_scores_np[mask],
+                )
+                per_sensor_binary_metrics_calibrated[sensor] = sensor_metrics_cal
 
         selection_score, score_details = compute_early_stopping_score(
             metric_name=args.early_stopping_metric,
@@ -2629,10 +2715,43 @@ def main(args):
         else:
             epochs_without_improve += 1
 
+        newly_frozen_sensors: list[str] = []
+        if args.early_stopping:
+            sensor_min_delta = max(0.0, float(args.early_stopping_min_delta))
+            sensor_warmup = max(1, int(args.early_stopping_warmup_epochs))
+            sensor_patience = max(1, int(args.early_stopping_patience))
+            for sensor in sensors_list:
+                if sensor_specific_frozen[sensor]:
+                    continue
+                sensor_metric = float(per_sensor_acc_calibrated.get(sensor, float("nan")))
+                if not math.isfinite(sensor_metric):
+                    sensor_metric = float(per_sensor_acc.get(sensor, float("nan")))
+                if not math.isfinite(sensor_metric):
+                    continue
+                if sensor_metric > (sensor_early_best_score[sensor] + sensor_min_delta):
+                    sensor_early_best_score[sensor] = sensor_metric
+                    sensor_early_bad_epochs[sensor] = 0
+                else:
+                    sensor_early_bad_epochs[sensor] += 1
+                if epoch >= sensor_warmup and sensor_early_bad_epochs[sensor] >= sensor_patience:
+                    sensor_specific_frozen[sensor] = True
+                    sensor_frozen_epoch[sensor] = epoch
+                    newly_frozen_sensors.append(sensor)
+
+        for sensor in newly_frozen_sensors:
+            freeze_sensor_specific_components(core_model, adapter_blocks, sensor)
+            metric = sensor_early_best_score[sensor]
+            print(
+                f"[SensorEarlyStop] Frozen sensor={sensor} at epoch={epoch}, "
+                f"best_metric={metric:.5f}, bad_epochs={sensor_early_bad_epochs[sensor]}",
+                flush=True,
+            )
+
         train_acc_str = " ".join(f"train_acc_{s}={train_per_sensor_acc[s]:.4f}" for s in sensors_list)
         test_acc_str = " ".join(f"test_acc_{s}={per_sensor_acc[s]:.4f}" for s in sensors_list)
         test_acc_cal_str = " ".join(f"test_acc_cal_{s}={per_sensor_acc_calibrated[s]:.4f}" for s in sensors_list)
         threshold_str = " ".join(f"thr_{s}={sensor_thresholds[s]:.3f}" for s in sensors_list)
+        sensor_freeze_str = " ".join(f"frozen_{s}={int(sensor_specific_frozen[s])}" for s in sensors_list)
         print(
             f"Epoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
             f"test_loss={test_loss:.4f} test_acc={test_acc:.4f} test_acc_cal={test_acc_calibrated:.4f} "
@@ -2640,9 +2759,21 @@ def main(args):
             f"test_fpr_cal={test_fpr_calibrated:.4f} test_recall_cal={test_recall_calibrated:.4f} "
             f"stop_score={selection_score:.5f} best_stop_score={best_selection_score:.5f} "
             f"bad_epochs={epochs_without_improve} "
-            f"{train_acc_str} {test_acc_str} {test_acc_cal_str} {threshold_str}",
+            f"{train_acc_str} {test_acc_str} {test_acc_cal_str} {threshold_str} {sensor_freeze_str}",
             flush=True,
         )
+
+        ckpt_extra_state = {
+            "sensor_thresholds": sensor_thresholds,
+            "best_selection_score": best_selection_score,
+            "best_selection_epoch": best_selection_epoch,
+            "epochs_without_improve": epochs_without_improve,
+            "best_sensor_acc": best_sensor_acc,
+            "sensor_early_best_score": sensor_early_best_score,
+            "sensor_early_bad_epochs": sensor_early_bad_epochs,
+            "sensor_specific_frozen": sensor_specific_frozen,
+            "sensor_frozen_epoch": sensor_frozen_epoch,
+        }
 
         best_train_acc = max(best_train_acc, train_acc)
         if test_acc > best_test_acc:
@@ -2658,13 +2789,7 @@ def main(args):
                 best_train_acc,
                 best_test_acc,
                 args,
-                extra_state={
-                    "sensor_thresholds": sensor_thresholds,
-                    "best_selection_score": best_selection_score,
-                    "best_selection_epoch": best_selection_epoch,
-                    "epochs_without_improve": epochs_without_improve,
-                    "best_sensor_acc": best_sensor_acc,
-                },
+                extra_state=ckpt_extra_state,
             )
         if selection_improved:
             save_checkpoint(
@@ -2678,13 +2803,7 @@ def main(args):
                 best_train_acc,
                 best_test_acc,
                 args,
-                extra_state={
-                    "sensor_thresholds": sensor_thresholds,
-                    "best_selection_score": best_selection_score,
-                    "best_selection_epoch": best_selection_epoch,
-                    "epochs_without_improve": epochs_without_improve,
-                    "best_sensor_acc": best_sensor_acc,
-                },
+                extra_state=ckpt_extra_state,
             )
 
         if args.save_per_sensor_best:
@@ -2706,13 +2825,7 @@ def main(args):
                         best_train_acc,
                         best_test_acc,
                         args,
-                        extra_state={
-                            "sensor_thresholds": sensor_thresholds,
-                            "best_selection_score": best_selection_score,
-                            "best_selection_epoch": best_selection_epoch,
-                            "epochs_without_improve": epochs_without_improve,
-                            "best_sensor_acc": best_sensor_acc,
-                        },
+                        extra_state=ckpt_extra_state,
                     )
 
         save_checkpoint(
@@ -2726,13 +2839,7 @@ def main(args):
             best_train_acc,
             best_test_acc,
             args,
-            extra_state={
-                "sensor_thresholds": sensor_thresholds,
-                "best_selection_score": best_selection_score,
-                "best_selection_epoch": best_selection_epoch,
-                "epochs_without_improve": epochs_without_improve,
-                "best_sensor_acc": best_sensor_acc,
-            },
+            extra_state=ckpt_extra_state,
         )
 
         if wandb_run is not None:
@@ -2753,6 +2860,7 @@ def main(args):
                 "early_stop_score": selection_score,
                 "early_stop_best_score": best_selection_score,
                 "early_stop_bad_epochs": epochs_without_improve,
+                "sensor_frozen_count": sum(1 for s in sensors_list if sensor_specific_frozen[s]),
             }
             if math.isfinite(score_details.get("macro_raw", float("nan"))):
                 log_payload["test_acc_macro"] = score_details["macro_raw"]
@@ -2765,6 +2873,12 @@ def main(args):
             for sensor in sensors_list:
                 log_payload[f"test_acc_{sensor}"] = per_sensor_acc[sensor]
                 log_payload[f"test_acc_calibrated_{sensor}"] = per_sensor_acc_calibrated[sensor]
+                log_payload[f"test_fpr_{sensor}"] = per_sensor_binary_metrics[sensor]["fpr"]
+                log_payload[f"test_recall_{sensor}"] = per_sensor_binary_metrics[sensor]["recall"]
+                log_payload[f"test_auroc_{sensor}"] = per_sensor_binary_metrics[sensor]["auroc"]
+                log_payload[f"test_fpr_calibrated_{sensor}"] = per_sensor_binary_metrics_calibrated[sensor]["fpr"]
+                log_payload[f"test_recall_calibrated_{sensor}"] = per_sensor_binary_metrics_calibrated[sensor]["recall"]
+                log_payload[f"test_auroc_calibrated_{sensor}"] = per_sensor_binary_metrics_calibrated[sensor]["auroc"]
                 log_payload[f"sensor_threshold_{sensor}"] = sensor_thresholds[sensor]
                 if math.isfinite(threshold_fit_acc.get(sensor, float("nan"))):
                     log_payload[f"sensor_threshold_fit_acc_{sensor}"] = threshold_fit_acc[sensor]
@@ -2774,22 +2888,21 @@ def main(args):
                     )
                 if train_sensor_total[sensor] > 0:
                     log_payload[f"train_acc_{sensor}"] = train_per_sensor_acc[sensor]
+                log_payload[f"sensor_frozen_{sensor}"] = int(sensor_specific_frozen[sensor])
+                log_payload[f"sensor_early_bad_epochs_{sensor}"] = sensor_early_bad_epochs[sensor]
+                if math.isfinite(sensor_early_best_score.get(sensor, float("nan"))):
+                    log_payload[f"sensor_early_best_{sensor}"] = sensor_early_best_score[sensor]
             if summary_loss_count > 0:
                 log_payload["train_loss_summary"] = summary_loss_accum / summary_loss_count
             wandb_run.log(log_payload)
 
-        should_stop = (
-            args.early_stopping
-            and epoch >= max(1, int(args.early_stopping_warmup_epochs))
-            and epochs_without_improve >= max(1, int(args.early_stopping_patience))
-        )
-        if should_stop:
+        if args.early_stopping and (not all_sensors_frozen_announced) and all(sensor_specific_frozen.values()):
             print(
-                f"Early stopping at epoch {epoch}. best_epoch={best_selection_epoch}, "
-                f"best_score={best_selection_score:.5f}, metric={args.early_stopping_metric}",
+                f"[SensorEarlyStop] All sensor-specific blocks are frozen by epoch {epoch}. "
+                "Training continues for shared parameters.",
                 flush=True,
             )
-            break
+            all_sensors_frozen_announced = True
 
     if wandb_run is not None:
         wandb_run.finish()
