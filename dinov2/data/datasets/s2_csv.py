@@ -165,6 +165,9 @@ class S2CsvDataset(Dataset):
     ) -> torch.Tensor:
         try:
             img = self._read_image_raw(path)
+        except _SkipSample:
+            # Preserve retry/skip semantics in __getitem__ for missing/corrupt files.
+            raise
         except Exception as exc:
             context_bits = []
             if sample_id is not None:
@@ -251,8 +254,13 @@ class S2CsvDataset(Dataset):
     def _filter_invalid_rows(self) -> None:
         valid_indices: List[int] = []
         bad_entries: List[Tuple[Union[str, int], str, str, str]] = []
+        total_rows = len(self.df)
+        print(
+            f"[Data] Validating TIFF paths for {total_rows} rows across columns {self._path_columns_for_validation}...",
+            flush=True,
+        )
 
-        for idx, row in self.df.iterrows():
+        for row_num, (idx, row) in enumerate(self.df.iterrows(), 1):
             ok = True
             sample_id = row[self.id_column] if self.id_column in row else idx
 
@@ -266,6 +274,12 @@ class S2CsvDataset(Dataset):
 
             if ok:
                 valid_indices.append(idx)
+
+            if row_num % 2000 == 0 or row_num == total_rows:
+                print(
+                    f"[Data] TIFF path validation progress: {row_num}/{total_rows} rows",
+                    flush=True,
+                )
 
         if bad_entries:
             preview = "\n".join(

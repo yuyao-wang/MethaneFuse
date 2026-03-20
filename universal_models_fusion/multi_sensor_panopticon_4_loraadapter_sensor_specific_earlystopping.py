@@ -242,7 +242,6 @@ class TinyResidualAdapter(nn.Module):
         self.alpha = float(alpha)
         self.scaling = self.alpha / float(self.rank)
         self.down = nn.Linear(embed_dim, self.rank, bias=False)
-        self.activation = nn.GELU()
         self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
         self.up = nn.Linear(self.rank, embed_dim, bias=False)
         self.reset_parameters()
@@ -252,7 +251,7 @@ class TinyResidualAdapter(nn.Module):
         nn.init.zeros_(self.up.weight)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
-        return self.up(self.dropout(self.activation(self.down(x)))) * self.scaling
+        return self.up(self.dropout(self.down(x))) * self.scaling
 
 
 class SensorAdapterBlock(nn.Module):
