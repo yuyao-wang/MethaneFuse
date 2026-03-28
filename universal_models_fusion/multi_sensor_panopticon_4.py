@@ -28,7 +28,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import tifffile as tiff
 from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data import DataLoader, Dataset
 
@@ -261,6 +260,33 @@ class MaskedAttentionPooling(nn.Module):
         return out
 
 
+class RowwiseMaxPooling(nn.Module):
+    """Row-wise max pooling over active sensor features."""
+
+    def forward(
+        self,
+        feats: torch.Tensor,
+        sensor_indices: torch.Tensor,
+        sample_to_row: torch.Tensor,
+        *,
+        num_rows: int,
+    ) -> torch.Tensor:
+        if feats.ndim != 2:
+            raise ValueError(f"feats must be [N,D], got shape={tuple(feats.shape)}")
+        if sensor_indices.shape[0] != feats.shape[0] or sample_to_row.shape[0] != feats.shape[0]:
+            raise ValueError(
+                "RowwiseMaxPooling input length mismatch: "
+                f"feats={feats.shape[0]}, sensor_indices={sensor_indices.shape[0]}, sample_to_row={sample_to_row.shape[0]}"
+            )
+        out = feats.new_zeros((num_rows, feats.shape[-1]))
+        for row_idx in range(num_rows):
+            mask = sample_to_row == row_idx
+            if not torch.any(mask):
+                continue
+            out[row_idx] = torch.max(feats[mask], dim=0).values
+        return out
+
+
 HeadFactory = Callable[[int, int], nn.Module]
 
 
@@ -279,6 +305,7 @@ class MultiSensorPanopticonClassifier(nn.Module):
         summary_hidden_dim: int = 128,
         summary_dropout: float = 0.1,
         summary_loss_weight: float = 1.0,
+        row_fusion_mode: str = "map",
     ):
         super().__init__()
         if backbone is None:
@@ -326,7 +353,10 @@ class MultiSensorPanopticonClassifier(nn.Module):
             self.heads[sensor] = make_head(classes)
         self.summary_loss_weight = float(summary_loss_weight)
         self.summary_head: Optional[LogitSummaryHead] = None
-        self.row_fusion_pool: Optional[MaskedAttentionPooling] = None
+        self.row_fusion_mode = str(row_fusion_mode).strip().lower()
+        if self.row_fusion_mode not in ("map", "max"):
+            raise ValueError(f"row_fusion_mode must be one of ['map', 'max'], got {row_fusion_mode!r}")
+        self.row_fusion_pool: Optional[nn.Module] = None
         self.row_fusion_head: Optional[CLSHead] = None
 
         head_dims = [getattr(self.heads[sensor], "out_features", None) for sensor in self.sensor_order]
@@ -346,7 +376,10 @@ class MultiSensorPanopticonClassifier(nn.Module):
             )
         if can_build_summary:
             num_out_classes = int(head_dims[0])
-            self.row_fusion_pool = MaskedAttentionPooling(embed_dim=embed_dim, num_sensors=len(self.sensor_order))
+            if self.row_fusion_mode == "map":
+                self.row_fusion_pool = MaskedAttentionPooling(embed_dim=embed_dim, num_sensors=len(self.sensor_order))
+            else:
+                self.row_fusion_pool = RowwiseMaxPooling()
             self.row_fusion_head = CLSHead(embed_dim=embed_dim, num_classes=num_out_classes)
         else:
             warnings.warn(
@@ -655,7 +688,7 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
         self,
         *args,
         local_file_cache: Optional[StaticAnchoredCache] = None,
-        s5p_data_key: Optional[str] = None,
+        s5p_data_key: Optional[str] = "ch4",
         s5p_chn_ids_key: Optional[str] = "chn_ids",
         s5p_channels_last: bool = False,
         align_l89_to_s2: bool = False,
@@ -879,7 +912,9 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
         chn_ids = None
         lower_path = path.lower()
         if lower_path.endswith((".tif", ".tiff")):
-            img_np = np.array(tiff.imread(path))
+            raise ValueError(
+                f"S5P input now expects NPZ files (e.g., .../s5p_0_path -> .npz), got TIFF: {path}"
+            )
         else:
             try:
                 np_obj = np.load(path, allow_pickle=False)
@@ -966,7 +1001,40 @@ class TriSensorTemporalCsvDataset(S2TemporalCsvDataset):
             return np.array(np_obj[self._s5p_data_key])
         if len(np_obj.files) == 0:
             raise ValueError(f"No arrays found in NPZ file {path}")
-        return np.array(np_obj[np_obj.files[0]])
+        preferred_keys = ("ch4", "image", "imgs", "arr_0", "data")
+        for key in preferred_keys:
+            if key in np_obj:
+                arr = np.array(np_obj[key])
+                if self._looks_like_s5p_image(arr):
+                    return arr
+
+        for key in np_obj.files:
+            # Skip obvious metadata keys when auto-selecting the image tensor.
+            if key == self._s5p_chn_ids_key or key.lower() in {"meta", "metadata"}:
+                continue
+            try:
+                arr = np.array(np_obj[key])
+            except ValueError:
+                continue
+            if self._looks_like_s5p_image(arr):
+                return arr
+
+        raise ValueError(
+            f"Failed to infer S5P image array from NPZ file {path}. "
+            f"Available keys: {list(np_obj.files)}. Consider setting --s5p_data_key."
+        )
+
+    @staticmethod
+    def _looks_like_s5p_image(arr: np.ndarray) -> bool:
+        if not isinstance(arr, np.ndarray):
+            return False
+        if arr.dtype.kind not in {"f", "i", "u", "b"}:
+            return False
+        if arr.ndim not in (2, 3):
+            return False
+        if arr.ndim == 3 and min(arr.shape) <= 0:
+            return False
+        return True
 
     @staticmethod
     def _pad_l89_to_s2(img: torch.Tensor) -> torch.Tensor:
@@ -1317,7 +1385,11 @@ def parse_args():
         default="id",
         help="Deprecated and ignored. Group-based fusion is disabled; wide-table rows are treated as final units.",
     )
-    parser.add_argument("--s5p_data_key", default=None)
+    parser.add_argument(
+        "--s5p_data_key",
+        default="ch4",
+        help="NPZ key for S5P image tensor (defaults to 'ch4' for old 2025 S5P patches).",
+    )
     parser.add_argument("--s5p_chn_ids_key", default="chn_ids")
     parser.add_argument("--s5p_channels_last", action="store_true")
     parser.add_argument(
@@ -1368,10 +1440,16 @@ def parse_args():
     parser.add_argument("--summary_dropout", type=float, default=0.1)
     parser.add_argument("--summary_loss_weight", type=float, default=1.0)
     parser.add_argument(
+        "--row_fusion_mode",
+        choices=["map", "max"],
+        default="map",
+        help="Row-level fusion pooling mode: 'map' for masked attention pooling, 'max' for max pooling.",
+    )
+    parser.add_argument(
         "--sensor_aux_loss_weight",
         type=float,
         default=0.3,
-        help="Weight of per-sensor auxiliary CE loss when training row-level masked-attention fusion.",
+        help="Weight of per-sensor auxiliary CE loss when training row-level fusion.",
     )
     return parser.parse_args()
 
@@ -1442,6 +1520,7 @@ def main(args):
         summary_hidden_dim=args.summary_hidden_dim,
         summary_dropout=args.summary_dropout,
         summary_loss_weight=args.summary_loss_weight,
+        row_fusion_mode=args.row_fusion_mode,
     ).to(device)
     model: nn.Module = core_model
     use_data_parallel = args.data_parallel and device.type == "cuda" and torch.cuda.device_count() > 1
@@ -1518,7 +1597,7 @@ def main(args):
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
         f"sensors={sensors_list}, train_backbone={args.train_backbone}, "
-        f"fusion=masked_attention_pooling, "
+        f"fusion={'masked_attention_pooling' if args.row_fusion_mode == 'map' else 'max_pooling'}, "
         f"sensor_aux_loss_weight={args.sensor_aux_loss_weight:.3f}",
         flush=True,
     )

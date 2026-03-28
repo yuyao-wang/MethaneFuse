@@ -1,0 +1,21 @@
+{
+  "train_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025.csv",
+  "test_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025.csv",
+  "sensor_col": "anchor_sensor",
+  "path_col": "s5p_0_path",
+  "id_col": "plume_id",
+  "knn_k": 5,
+  "train_quantile": 0.95,
+  "threshold": 3.2749620158297317,
+  "train_s5p_rows": 4640,
+  "test_s5p_rows": 1132,
+  "train_units_used": 2408,
+  "test_units_used": 590,
+  "test_id_rows": 886,
+  "test_ood_rows": 246,
+  "test_id_ratio": 0.7826855123674912,
+  "test_ood_ratio": 0.21731448763250882,
+  "test_s5p_pos_rate": 0.5212014134275619,
+  "test_id_pos_rate": 0.5225733634311512,
+  "test_ood_pos_rate": 0.516260162601626
+}

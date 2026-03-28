@@ -47,18 +47,18 @@ export TEMP=/transferdiniu2/yuyao/temp
 #     --local_cache_min_free_gb 50 \
 #     --batch_size 32
 
-
-python examples/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
-    --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_wv3_geo.csv \
-    --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/test_wv3_geo.csv \
+# /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_mixed_training/train_wv3_geo.csv
+python universal_models_fusion/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
+    --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \
+    --test_csv /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_filtered_overlapfixed.csv \
     --wandb_project baselines \
-    --wandb_run_name "wv3_geo_split" \
+    --wandb_run_name "wv3_report" \
     --device cuda \
     --train_backbone \
     --backbone_lr 1e-4 \
     --head_lr 1e-4 \
-    --local_cache_dir /transferdiniu2/yuyao/local_train_temp_cache \
+    --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
     --local_cache_warmup \
     --local_cache_workers 18 \
-    --local_cache_min_free_gb 50 \
+    --local_cache_min_free_gb 200 \
     --batch_size 32

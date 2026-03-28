@@ -1,0 +1,177 @@
+{
+  "n_s5p_eval_rows": 1132,
+  "accuracy": 0.6298586572438163,
+  "pos_acc": 0.7254237288135593,
+  "neg_acc": 0.525830258302583,
+  "confusion": {
+    "tp": 428,
+    "fp": 257,
+    "fn": 162,
+    "tn": 285
+  },
+  "by_year": [
+    {
+      "year": 2025,
+      "n": 1132,
+      "acc": 0.6298586572438163
+    }
+  ],
+  "by_region": [
+    {
+      "region": "NorthAmerica",
+      "n": 360,
+      "acc": 0.6333333333333333
+    },
+    {
+      "region": "Europe",
+      "n": 352,
+      "acc": 0.6732954545454546
+    },
+    {
+      "region": "Africa",
+      "n": 166,
+      "acc": 0.5602409638554217
+    },
+    {
+      "region": "Asia",
+      "n": 157,
+      "acc": 0.7261146496815286
+    },
+    {
+      "region": "SouthAmerica",
+      "n": 91,
+      "acc": 0.43956043956043955
+    },
+    {
+      "region": "Oceania",
+      "n": 6,
+      "acc": 0.16666666666666666
+    }
+  ],
+  "feature_gap": {
+    "tex_std": {
+      "correct_mean": 13.483593480282712,
+      "wrong_mean": 7.888817741364454,
+      "pos_correct_mean": 15.558102053181033,
+      "pos_wrong_mean": 8.391784175678536,
+      "neg_correct_mean": 10.368191132210848,
+      "neg_wrong_mean": 7.571772751641181
+    },
+    "temp_absdiff_sum": {
+      "correct_mean": 31.909320603246275,
+      "wrong_mean": 32.07459944671549,
+      "pos_correct_mean": 38.80889393124625,
+      "pos_wrong_mean": 34.613926816869665,
+      "neg_correct_mean": 21.547856096635783,
+      "neg_wrong_mean": 30.473933944906243
+    }
+  },
+  "hardest_plumes_top20": [
+    {
+      "plume_id": "av320250915t184131-B",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "av320250915t190342-C",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "av320250915t190342-H",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "emi20250902t141557p09007-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250730t181831c58s4001-Q",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250731t144531c55s4001-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250806t181920c58s4001-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250806t181920c58s4001-G",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250810t075511c58s4001-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250810t141739c80s4001-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250811t230454c03s4001-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250815t140759c76s4001-F",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250816t114007c75s4001-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250816t114007c75s4001-B",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250820t103002c97s4001-J",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250824t110241c75s4001-B",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250831t092515c41s4001-D",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250831t171401c08s4001-N",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250904t083731c34s4001-A",
+      "n": 2,
+      "acc": 0.0
+    },
+    {
+      "plume_id": "tan20250908t194029c46s4001-B",
+      "n": 2,
+      "acc": 0.0
+    }
+  ],
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/s5p",
+  "train_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025.csv",
+  "test_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025.csv",
+  "out_csv": "/home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct.csv",
+  "best_metric_name": "test_acc",
+  "best_metric_value": 0.6435643564356436
+}

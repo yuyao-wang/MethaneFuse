@@ -1,0 +1,20 @@
+{
+  "input_test_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025.csv",
+  "output_test_csv": "/home/yuyao/panopticon/test_s5p_posTop78_dualMetric_keepPairs.csv",
+  "keep_top_ratio_requested": 0.78,
+  "quantile_used_for_threshold": 0.21999999999999997,
+  "threshold_tex_std": 5.031212997436524,
+  "threshold_temp_absdiff_sum": 0.0,
+  "input_rows_s5p_valid": 1132,
+  "input_unique_plumes": 590,
+  "input_pos_rows": 590,
+  "input_neg_rows": 542,
+  "positive_rows_with_metric_ok": 590,
+  "positive_unique_plumes_with_metric_ok": 590,
+  "kept_unique_plumes": 460,
+  "kept_rows": 883,
+  "kept_pos_rows": 460,
+  "kept_neg_rows": 423,
+  "kept_pos_ratio": 0.5209513023782559,
+  "kept_vs_input_row_ratio": 0.7800353356890459
+}

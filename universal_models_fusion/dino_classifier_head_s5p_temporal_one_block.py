@@ -1,6 +1,7 @@
 import argparse
 import csv
 import hashlib
+import math
 import os
 import shutil
 from pathlib import Path
@@ -11,7 +12,6 @@ from typing import Optional, Sequence, Tuple, Union
 
 import numpy as np
 import pandas as pd
-import tifffile as tiff
 
 import torch
 import torch.nn as nn
@@ -187,7 +187,7 @@ class S5pSimpleNpzDataset(Dataset):
 
 
 class S5pTemporalTiffDataset(Dataset):
-    """Temporal S5P TIFF dataset that concatenates three timepoints into 3 channels."""
+    """Temporal S5P NPZ dataset that concatenates three timepoints into 3 channels."""
 
     def __init__(
         self,
@@ -205,6 +205,12 @@ class S5pTemporalTiffDataset(Dataset):
         local_file_cache: Optional[StaticAnchoredCache] = None,
         nan_to_num: Optional[float] = 0.0,
         max_retries: int = 5,
+        data_key: Optional[str] = "ch4",
+        chn_ids_key: Optional[str] = "chn_ids",
+        channel_last: bool = False,
+        allow_pickle: bool = False,
+        scale_to_unit: bool = False,
+        scale_value: float = 65535.0,
     ):
         if len(path_columns) not in (1, 3):
             raise ValueError(
@@ -221,6 +227,14 @@ class S5pTemporalTiffDataset(Dataset):
         self.nan_to_num = nan_to_num
         self.max_retries = max(1, int(max_retries))
         self._stats_source: Optional[str] = None
+        self.data_key = data_key
+        self.chn_ids_key = chn_ids_key
+        self.channel_last = bool(channel_last)
+        self.allow_pickle = bool(allow_pickle)
+        self.scale_to_unit = bool(scale_to_unit)
+        self.scale_value = float(scale_value)
+        if self.scale_to_unit and self.scale_value <= 0:
+            raise ValueError(f"scale_value must be > 0 when scale_to_unit is enabled, got {self.scale_value}")
 
         if chn_ids is not None:
             ids = torch.as_tensor(chn_ids, dtype=torch.float32).flatten()
@@ -248,30 +262,31 @@ class S5pTemporalTiffDataset(Dataset):
                 self._std = torch.clamp(std_t, min=1e-6).view(3, 1, 1)
                 self._stats_source = "computed"
 
-    def _read_temporal_frames(self, row) -> list[torch.Tensor]:
+    def _read_temporal_sample(self, row) -> Tuple[list[torch.Tensor], torch.Tensor]:
         if len(self.path_columns) == 1:
             path = row[self.path_columns[0]]
-            arr = self._read_tiff_array(path)
-            if arr.ndim == 2:
-                single = torch.from_numpy(arr).to(dtype=torch.float32)
-                return [single, single.clone(), single.clone()]
-            if arr.ndim == 3:
-                c_first, c_last = arr.shape[0], arr.shape[-1]
-                if c_first == 3:
-                    return [torch.from_numpy(arr[i]).to(dtype=torch.float32) for i in range(3)]
-                if c_last == 3:
-                    return [torch.from_numpy(arr[..., i]).to(dtype=torch.float32) for i in range(3)]
-                if c_first == 1:
-                    single = torch.from_numpy(arr[0]).to(dtype=torch.float32)
-                    return [single, single.clone(), single.clone()]
-                if c_last == 1:
-                    single = torch.from_numpy(arr[..., 0]).to(dtype=torch.float32)
-                    return [single, single.clone(), single.clone()]
+            arr, sample_chn_ids = self._load_npz_array(path)
+            arr_chw = self._to_chw(arr, path)
+            c = int(arr_chw.shape[0])
+            if c >= 3:
+                arr_chw = arr_chw[:3]
+            else:
+                repeat = math.ceil(3 / max(1, c))
+                arr_chw = np.repeat(arr_chw, repeats=repeat, axis=0)[:3]
+            frames = [torch.from_numpy(arr_chw[i]).to(dtype=torch.float32) for i in range(3)]
+            chn_ids = self._normalize_chn_ids(sample_chn_ids, expected_channels=3)
+            return frames, chn_ids
+
+        frames = []
+        for col in self.path_columns:
+            arr, _ = self._load_npz_array(row[col])
+            arr_chw = self._to_chw(arr, row[col])
+            if arr_chw.shape[0] != 1:
                 raise ValueError(
-                    f"Single-column S5P mode expects TIFF with 1 or 3 channels, got shape {arr.shape} at {path}"
+                    f"Temporal-column S5P mode expects per-file single-channel arrays, got shape {arr.shape} at {row[col]}"
                 )
-            raise ValueError(f"Unsupported TIFF shape {arr.shape} at {path}")
-        return [self._read_single_tiff(row[col]) for col in self.path_columns]
+            frames.append(torch.from_numpy(arr_chw[0]).to(dtype=torch.float32))
+        return frames, self._chn_ids
 
     def __len__(self):
         return len(self.df)
@@ -282,7 +297,7 @@ class S5pTemporalTiffDataset(Dataset):
             try:
                 row = self.df.iloc[idx]
                 label = int(row[self.label_column])
-                frames = self._read_temporal_frames(row)
+                frames, sample_chn_ids = self._read_temporal_sample(row)
                 img = torch.stack(frames, dim=0)  # (3,H,W)
                 if self.nan_to_num is not None:
                     img = torch.nan_to_num(img, nan=self.nan_to_num, posinf=self.nan_to_num, neginf=self.nan_to_num)
@@ -290,12 +305,12 @@ class S5pTemporalTiffDataset(Dataset):
                     img = (img - self._mean) / self._std
                 if self.pad_to_multiple is not None:
                     img = self._pad_to_multiple(img, int(self.pad_to_multiple))
-                x_dict = {"imgs": img, "chn_ids": self._chn_ids}
+                x_dict = {"imgs": img, "chn_ids": sample_chn_ids}
                 return x_dict, label
             except Exception as exc:
                 attempts += 1
                 if attempts >= self.max_retries:
-                    raise RuntimeError(f"Failed to load temporal TIFF sample at index {idx}") from exc
+                    raise RuntimeError(f"Failed to load temporal NPZ sample at index {idx}") from exc
                 idx = np.random.randint(0, len(self.df))
 
     def _resolve_path(self, path: str) -> str:
@@ -303,27 +318,113 @@ class S5pTemporalTiffDataset(Dataset):
             return self._local_file_cache.ensure_local(path)
         return path
 
-    def _read_tiff_array(self, path: str) -> np.ndarray:
+    def _load_npz_array(self, path: str) -> Tuple[np.ndarray, Optional[torch.Tensor]]:
         if not isinstance(path, str) or not path.strip():
-            raise ValueError("Encountered empty TIFF path in CSV.")
+            raise ValueError("Encountered empty NPZ path in CSV.")
         path = self._resolve_path(path.strip())
-        return np.asarray(tiff.imread(path))
+        if not path.lower().endswith(".npz"):
+            raise ValueError(f"S5P dataset now expects .npz inputs, got path: {path}")
 
-    def _read_single_tiff(self, path: str) -> torch.Tensor:
-        arr = self._read_tiff_array(path)
-        if arr.ndim == 2:
-            pass
-        elif arr.ndim == 3:
-            c_first, c_last = arr.shape[0], arr.shape[-1]
-            if c_first == 1:
-                arr = arr[0]
-            elif c_last == 1:
-                arr = arr[..., 0]
+        try:
+            np_obj = np.load(path, allow_pickle=self.allow_pickle)
+        except ValueError as exc:
+            if ("allow_pickle=False" in str(exc) or "pickled data" in str(exc)) and not self.allow_pickle:
+                raise ValueError(
+                    f"NPZ at {path} requires pickle support. Re-run with --allow_pickle if the source is trusted."
+                ) from exc
+            raise
+
+        chn_ids = None
+        try:
+            if isinstance(np_obj, np.lib.npyio.NpzFile):
+                arr = self._extract_npz_array(np_obj, path)
+                if self.chn_ids_key is not None and self.chn_ids_key in np_obj:
+                    chn_ids = torch.as_tensor(np_obj[self.chn_ids_key], dtype=torch.float32)
             else:
-                raise ValueError(f"Expected single-band TIFF for S5P, got shape {arr.shape} at {path}")
-        else:
-            raise ValueError(f"Unsupported TIFF shape {arr.shape} at {path}")
-        return torch.from_numpy(arr).to(dtype=torch.float32)
+                if isinstance(np_obj, np.ndarray) and np_obj.dtype == object and np_obj.size == 1:
+                    obj = np_obj.item()
+                    if isinstance(obj, dict):
+                        if self.data_key is not None and self.data_key in obj:
+                            arr = np.asarray(obj[self.data_key])
+                        else:
+                            first_array = next((v for v in obj.values() if isinstance(v, np.ndarray)), None)
+                            if first_array is None:
+                                raise ValueError(f"Object array at {path} has no ndarray payload.")
+                            arr = np.asarray(first_array)
+                        if self.chn_ids_key is not None and self.chn_ids_key in obj:
+                            chn_ids = torch.as_tensor(obj[self.chn_ids_key], dtype=torch.float32)
+                    else:
+                        arr = np.asarray(obj)
+                else:
+                    arr = np.asarray(np_obj)
+        finally:
+            if isinstance(np_obj, np.lib.npyio.NpzFile):
+                np_obj.close()
+
+        if self.scale_to_unit:
+            arr = arr.astype(np.float32, copy=False) / self.scale_value
+        return np.asarray(arr), chn_ids
+
+    def _extract_npz_array(self, np_obj: np.lib.npyio.NpzFile, path: str) -> np.ndarray:
+        if self.data_key is not None:
+            if self.data_key not in np_obj:
+                raise KeyError(f"Key '{self.data_key}' not found in NPZ file {path}")
+            return np.array(np_obj[self.data_key])
+        preferred_keys = ("ch4", "image", "imgs", "arr_0", "data")
+        for key in preferred_keys:
+            if key in np_obj:
+                arr = np.array(np_obj[key])
+                if self._looks_like_image(arr):
+                    return arr
+        for key in np_obj.files:
+            if key == self.chn_ids_key or key.lower() in {"meta", "metadata"}:
+                continue
+            arr = np.array(np_obj[key])
+            if self._looks_like_image(arr):
+                return arr
+        raise ValueError(
+            f"Failed to infer S5P image array from NPZ file {path}. "
+            f"Available keys: {list(np_obj.files)}. Consider setting --data_key."
+        )
+
+    @staticmethod
+    def _looks_like_image(arr: np.ndarray) -> bool:
+        if not isinstance(arr, np.ndarray):
+            return False
+        if arr.ndim not in (2, 3):
+            return False
+        if arr.dtype.kind not in {"f", "i", "u", "b"}:
+            return False
+        return True
+
+    def _to_chw(self, arr: np.ndarray, path: str) -> np.ndarray:
+        if arr.ndim == 2:
+            return np.expand_dims(arr, 0)
+        if arr.ndim != 3:
+            raise ValueError(f"Unsupported S5P NPZ array shape {arr.shape} at {path}")
+        if self.channel_last:
+            return np.transpose(arr, (2, 0, 1))
+        c_first, c_last = arr.shape[0], arr.shape[-1]
+        if c_first <= 16:
+            return arr
+        if c_last <= 16:
+            return np.transpose(arr, (2, 0, 1))
+        return arr
+
+    def _normalize_chn_ids(self, sample_chn_ids: Optional[torch.Tensor], expected_channels: int) -> torch.Tensor:
+        if sample_chn_ids is None:
+            return self._chn_ids
+        ids = torch.as_tensor(sample_chn_ids, dtype=torch.float32).flatten()
+        if ids.numel() == 0:
+            return self._chn_ids
+        if ids.numel() == 1:
+            ids = ids.repeat(expected_channels)
+        elif ids.numel() < expected_channels:
+            repeat = math.ceil(expected_channels / ids.numel())
+            ids = ids.repeat(repeat)[:expected_channels]
+        elif ids.numel() > expected_channels:
+            ids = ids[:expected_channels]
+        return ids
 
     def _compute_dataset_stats(self, subset: Optional[Union[int, float]] = None) -> Tuple[torch.Tensor, torch.Tensor]:
         idxs = list(range(len(self.df)))
@@ -337,7 +438,8 @@ class S5pTemporalTiffDataset(Dataset):
         count = 0
         for i in idxs:
             row = self.df.iloc[i]
-            frames = [frame.double() for frame in self._read_temporal_frames(row)]
+            frames, _ = self._read_temporal_sample(row)
+            frames = [frame.double() for frame in frames]
             img = torch.stack(frames, dim=0)
             count += int(img.shape[1] * img.shape[2])
             sum_c += img.sum(dim=(1, 2))
@@ -570,6 +672,10 @@ def build_scheduler(args, optimizer):
     raise ValueError(f"Unknown lr_scheduler: {args.lr_scheduler}")
 
 
+def unwrap_module(module: nn.Module) -> nn.Module:
+    return module.module if isinstance(module, nn.DataParallel) else module
+
+
 def main(args):
     device = torch.device(args.device)
     if device.type == "cuda" and device.index is None:
@@ -602,6 +708,12 @@ def main(args):
         default_chn_id_value=args.default_chn_id_value,
         local_file_cache=cache_obj,
         nan_to_num=args.nan_to_num,
+        data_key=args.data_key,
+        chn_ids_key=args.chn_ids_key,
+        channel_last=args.channel_last,
+        allow_pickle=args.allow_pickle,
+        scale_to_unit=args.scale_to_unit,
+        scale_value=args.scale_value,
     )
     filter_dataset_to_s5p_only(base_train_ds, split_name="train")
 
@@ -626,6 +738,12 @@ def main(args):
         default_chn_id_value=args.default_chn_id_value,
         local_file_cache=cache_obj,
         nan_to_num=args.nan_to_num,
+        data_key=args.data_key,
+        chn_ids_key=args.chn_ids_key,
+        channel_last=args.channel_last,
+        allow_pickle=args.allow_pickle,
+        scale_to_unit=args.scale_to_unit,
+        scale_value=args.scale_value,
     )
     filter_dataset_to_s5p_only(base_test_ds, split_name="test")
 
@@ -678,6 +796,13 @@ def main(args):
     scheduler = build_scheduler(args, optimizer)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
     wandb_run = init_wandb(args)
+
+    metric_mode = args.best_mode
+    if metric_mode is None:
+        metric_mode = "min" if args.best_metric in {"test_loss", "test_fpr"} else "max"
+    best_metric_value = float("inf") if metric_mode == "min" else float("-inf")
+    best_epoch = 0
+    best_ckpt_path = args.best_ckpt_path
 
     global_step = 0
     for epoch in range(1, args.epochs + 1):
@@ -815,6 +940,60 @@ def main(args):
             f"recall={recall:.4f} fpr={fpr:.4f} auroc={test_auroc:.4f}",
             flush=True,
         )
+
+        metric_values = {
+            "test_acc": test_acc,
+            "test_loss": test_loss,
+            "test_recall": recall,
+            "test_fpr": fpr,
+            "test_auroc": test_auroc,
+        }
+        current_metric = float(metric_values[args.best_metric])
+        metric_is_finite = bool(np.isfinite(current_metric))
+        improved = False
+        if metric_is_finite:
+            if metric_mode == "max":
+                improved = current_metric > best_metric_value
+            else:
+                improved = current_metric < best_metric_value
+        if best_ckpt_path and improved:
+            best_metric_value = current_metric
+            best_epoch = epoch
+            ckpt_path = Path(best_ckpt_path)
+            ckpt_path.parent.mkdir(parents=True, exist_ok=True)
+            checkpoint = {
+                "epoch": epoch,
+                "global_step": global_step,
+                "best_metric_name": args.best_metric,
+                "best_metric_mode": metric_mode,
+                "best_metric_value": best_metric_value,
+                "metrics": {
+                    "train_loss": train_loss,
+                    "train_acc": train_acc,
+                    "test_loss": test_loss,
+                    "test_acc": test_acc,
+                    "test_recall": recall,
+                    "test_fpr": fpr,
+                    "test_auroc": test_auroc,
+                },
+                "backbone_state_dict": unwrap_module(backbone).state_dict(),
+                "head_state_dict": unwrap_module(head).state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+                "scheduler_state_dict": scheduler.state_dict() if scheduler is not None else None,
+                "args": vars(args),
+            }
+            torch.save(checkpoint, ckpt_path)
+            print(
+                f"[Checkpoint] Saved best model to {ckpt_path} "
+                f"(epoch={epoch}, {args.best_metric}={current_metric:.6f}, mode={metric_mode}).",
+                flush=True,
+            )
+        elif best_ckpt_path and not metric_is_finite:
+            print(
+                f"[Checkpoint] Skipped save at epoch {epoch}: {args.best_metric} is non-finite ({current_metric}).",
+                flush=True,
+            )
+
         if wandb_run is not None:
             wandb_run.log(
                 {
@@ -826,7 +1005,22 @@ def main(args):
                     "test_recall": recall,
                     "test_fpr": fpr,
                     "test_auroc": test_auroc,
+                    "best_metric_value": best_metric_value if np.isfinite(best_metric_value) else float("nan"),
+                    "best_metric_epoch": best_epoch,
                 }
+            )
+
+    if best_ckpt_path:
+        if best_epoch > 0:
+            print(
+                f"[Checkpoint] Best checkpoint summary: epoch={best_epoch}, "
+                f"{args.best_metric}={best_metric_value:.6f}, path={best_ckpt_path}",
+                flush=True,
+            )
+        else:
+            print(
+                f"[Checkpoint] No checkpoint was saved. Metric '{args.best_metric}' never produced a finite value.",
+                flush=True,
             )
 
     if wandb_run is not None:
@@ -835,7 +1029,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Panopticon ViT + CLS head for Sentinel-5P temporal TIFF inputs concatenated along channels."
+        description="Panopticon ViT + CLS head for Sentinel-5P temporal NPZ inputs concatenated along channels."
     )
     parser.add_argument("--train_csv", default="data_csv/hongxuan_temporal_32/train.csv")
     parser.add_argument("--test_csv", default="data_csv/hongxuan_temporal_32/test.csv")
@@ -867,7 +1061,11 @@ if __name__ == "__main__":
     parser.add_argument("--pad_value", type=float, default=0.0, help="Pad value when extending to pad_to_multiple.")
     parser.add_argument("--scale_to_unit", action="store_true", help="Divide NPZ values by scale_value before normalization.")
     parser.add_argument("--scale_value", type=float, default=65535.0, help="Divisor used when scale_to_unit is enabled.")
-    parser.add_argument("--data_key", default=None, help="Optional NPZ key that stores the image array (defaults to first).")
+    parser.add_argument(
+        "--data_key",
+        default="ch4",
+        help="NPZ key that stores the image array (default: 'ch4').",
+    )
     parser.add_argument("--chn_ids_key", default="chn_ids", help="NPZ key containing per-sample channel IDs if available.")
     parser.add_argument("--channel_last", action="store_true", help="Set if NPZ arrays are stored as HWC instead of CHW.")
     parser.add_argument("--ds_cfg_name", default=None, help="Optional dataset config name for channel IDs.")
@@ -940,7 +1138,7 @@ if __name__ == "__main__":
         default="path_t360",
         help="CSV column for t-360 path.",
     )
-    parser.add_argument("--local_cache_dir", default=None, help="Directory for caching TIFF files locally.")
+    parser.add_argument("--local_cache_dir", default=None, help="Directory for caching NPZ files locally.")
     parser.add_argument("--local_cache_warmup", action="store_true", help="Pre-copy training/testing files to the local cache.")
     parser.add_argument("--local_cache_workers", type=int, default=8, help="Number of workers for cache warmup.")
     parser.add_argument(
@@ -980,5 +1178,26 @@ if __name__ == "__main__":
         default=768,
         help="Backbone output dimension (Panopticon teacher is 768).",
     )
+    parser.add_argument(
+        "--best_ckpt_path",
+        default="checkpoints/dino_classifier_head_s5p_temporal_one_block_best.pt",
+        help="Save path for the best checkpoint. Set empty string to disable checkpoint saving.",
+    )
+    parser.add_argument(
+        "--best_metric",
+        choices=["test_acc", "test_loss", "test_recall", "test_fpr", "test_auroc"],
+        default="test_acc",
+        help="Validation metric used to decide the best checkpoint.",
+    )
+    parser.add_argument(
+        "--best_mode",
+        choices=["max", "min"],
+        default=None,
+        help="Optimization direction for best_metric. Default is automatic (min for test_loss/test_fpr, else max).",
+    )
     args = parser.parse_args()
+    if isinstance(args.best_ckpt_path, str):
+        args.best_ckpt_path = args.best_ckpt_path.strip()
+        if args.best_ckpt_path == "":
+            args.best_ckpt_path = None
     main(args)

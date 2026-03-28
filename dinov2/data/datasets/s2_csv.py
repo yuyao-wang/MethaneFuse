@@ -88,7 +88,7 @@ class S2CsvDataset(Dataset):
 
         if isinstance(csv_path, str):
             csv_path = [csv_path]
-        dfs = [pd.read_csv(p) for p in csv_path]
+        dfs = [pd.read_csv(p, low_memory=False) for p in csv_path]
         self.df = pd.concat(dfs, ignore_index=True)
 
         self.chn_ids = extract_wavemus(load_ds_cfg(ds_cfg_name), return_sigmas=full_spectra)

@@ -686,6 +686,7 @@ def main(args):
     ckpt_dir = Path(args.checkpoint_dir) / run_name
     latest_path = ckpt_dir / "ckpt_latest.pth"
     best_path = ckpt_dir / "ckpt_best_test.pth"
+    user_best_ckpt_path = Path(args.best_ckpt_path).expanduser() if args.best_ckpt_path else None
     best_test_acc = float("-inf")
     print(f"Checkpoints will be saved under: {ckpt_dir}", flush=True)
     wandb_run = init_wandb(args)
@@ -831,6 +832,22 @@ def main(args):
                 args,
             )
             print(f"Saved new best checkpoint: {best_path} (test_acc={test_acc:.4f})", flush=True)
+            if user_best_ckpt_path is not None:
+                save_checkpoint(
+                    user_best_ckpt_path,
+                    epoch,
+                    global_step,
+                    backbone,
+                    head,
+                    optimizer,
+                    scheduler,
+                    best_test_acc,
+                    args,
+                )
+                print(
+                    f"Saved new best checkpoint: {user_best_ckpt_path} (test_acc={test_acc:.4f})",
+                    flush=True,
+                )
 
         if wandb_run is not None:
             wandb_run.log(
@@ -988,9 +1005,18 @@ if __name__ == "__main__":
         help="Base directory to store checkpoints (latest and best).",
     )
     parser.add_argument(
+        "--best_ckpt_path",
+        default=None,
+        help="Optional explicit file path to save the best-test checkpoint.",
+    )
+    parser.add_argument(
         "--run_name",
         default=None,
         help="Run name for checkpoint subfolder. Defaults to <train_csv_stem>__<test_csv_stem>__ft|head.",
     )
     args = parser.parse_args()
+    if isinstance(args.best_ckpt_path, str):
+        args.best_ckpt_path = args.best_ckpt_path.strip()
+        if args.best_ckpt_path == "":
+            args.best_ckpt_path = None
     main(args)

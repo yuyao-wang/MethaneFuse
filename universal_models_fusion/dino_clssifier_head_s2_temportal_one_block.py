@@ -431,6 +431,7 @@ def main(args):
     latest_path = ckpt_dir / "ckpt_latest.pth"
     best_train_path = ckpt_dir / "ckpt_best_train.pth"
     best_test_path = ckpt_dir / "ckpt_best_test.pth"
+    user_best_ckpt_path = Path(args.best_ckpt_path).expanduser() if args.best_ckpt_path else None
 
     start_epoch = 1
     global_step = 0
@@ -603,6 +604,19 @@ def main(args):
                 best_test_acc,
                 args,
             )
+            if user_best_ckpt_path is not None:
+                save_checkpoint(
+                    user_best_ckpt_path,
+                    epoch,
+                    global_step,
+                    backbone,
+                    head,
+                    optimizer,
+                    scheduler,
+                    best_train_acc,
+                    best_test_acc,
+                    args,
+                )
 
         if wandb_run is not None:
             wandb_run.log(
@@ -688,6 +702,11 @@ if __name__ == "__main__":
         "--checkpoint_dir",
         default="checkpoints",
         help="Base directory to store checkpoints (latest/best).",
+    )
+    parser.add_argument(
+        "--best_ckpt_path",
+        default=None,
+        help="Optional explicit file path to save the best-test checkpoint.",
     )
     parser.add_argument(
         "--run_name",

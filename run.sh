@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 mkdir -p /transferdiniu2/yuyao/temp
 chmod 700 /transferdiniu2/yuyao/temp
 export TMPDIR=/transferdiniu2/yuyao/temp
@@ -570,6 +570,7 @@ export TEMP=/transferdiniu2/yuyao/temp
 #   --use_wandb \
 #   --wandb_project baselines \
 #   --wandb_run_name "s2 include all 2025 (schema2)" \
+#   --best_ckpt_path /transferdiniu2/yuyao/checkpoints/s2/ckpt_best_test.pth
 
 # python universal_models_fusion/dino_clssifier_head_l89_temportal_one_block.py \
 #   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train.csv \
@@ -588,23 +589,28 @@ export TEMP=/transferdiniu2/yuyao/temp
 #   --use_wandb \
 #   --lr_scheduler none \
 #   --wandb_project baselines \
-#   --wandb_run_name "l89 include all 2025 (schema2)"
-
-python universal_models_fusion/dino_classifier_head_s5p_temporal_one_block.py \
-  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train.csv \
-  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_test.csv \
-  --device cuda \
-  --train_backbone \
-  --backbone_lr 5e-5 \
-  --head_lr 5e-4 \
-  --max_grad_norm 0.5 \
-  --log_interval 100 \
-  --batch_size 16 \
-  --num_workers 8 \
-  --use_wandb \
-  --lr_scheduler none \
-  --wandb_project baselines \
-  --wandb_run_name "s5p include all 2025 (schema2)"
+#   --wandb_run_name "l89 include all 2025 (schema2)" \
+#   --best_ckpt_path /transferdiniu2/yuyao/checkpoints/l89/ckpt_best_test.pth
+#   /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_rm_wrong_s5p_prob_0p4_0p7.csv
+# balanced 64
+# python universal_models_fusion/dino_classifier_head_s5p_temporal_one_block.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \
+#   --test_csv /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_rm_wrong_s5p_prob_0p4_0p7.csv \
+#   --device cuda \
+#   --train_backbone \
+#   --backbone_lr 5e-5 \
+#   --head_lr 5e-4 \
+#   --max_grad_norm 0.5 \
+#   --log_interval 100 \
+#   --batch_size 32 \
+#   --num_workers 8 \
+#   --use_wandb \
+#   --lr_scheduler none \
+#   --wandb_project baselines \
+#   --wandb_run_name "s5p include all 2025 (schema2)" \
+#   --best_ckpt_path /transferdiniu2/yuyao/checkpoints/s5p_all_balanced \
+#   --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
+#   --weights weights/panopticon_vitb14_teacher.pth 
 
 # python universal_models_fusion/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py \
 #   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train.csv \
@@ -620,7 +626,9 @@ python universal_models_fusion/dino_classifier_head_s5p_temporal_one_block.py \
 #   --use_wandb \
 #   --lr_scheduler none \
 #   --wandb_project baselines \
-#   --wandb_run_name "EMIT include all 2025 (schema2)"
+#   --wandb_run_name "EMIT include all 2025 (schema2)" \
+#   --best_ckpt_path /transferdiniu2/yuyao/checkpoints/emit \
+#   --weights weights/panopticon_vitb14_teacher.pth
 
 
 # python universal_models_fusion/multi_sensor_panopticon_4_nonlinear_loraadapter_sensor_specific_earlystopping.py \

@@ -1,31 +1,196 @@
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 mkdir -p /transferdiniu2/yuyao/temp
 chmod 700 /transferdiniu2/yuyao/temp
 export TMPDIR=/transferdiniu2/yuyao/temp
 export TMP=/transferdiniu2/yuyao/temp
 export TEMP=/transferdiniu2/yuyao/temp
+  # --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025.csv \
+# python universal_models_fusion/multi_sensor_panopticon_4.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \
+#   --test_csv /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_filtered_overlapfixed.csv \
+#   --weights weights/panopticon_vitb14_teacher.pth \
+#   --batch_size 32 \
+#   --epochs 50 \
+#   --train_backbone \
+#   --freeze_backbone_epochs 1 \
+#   --backbone_lr 5e-5 \
+#   --head_lr 1e-3 \
+#   --sensor_aux_loss_weight 0.3 \
+#   --num_workers 8 \
+#   --device cuda \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_tests5p \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --wandb_run_name "max_pooling fusion universal overlap dataset include all 2025 (schema2)" \
+#   --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
+#   --local_cache_min_free_gb 200 \
+#   --row_fusion_mode max    #{map,max}
+  # --local_cache_warmup \
+  # --local_cache_workers 16 \
+  # --local_cache_min_free_gb 50
 
-python universal_models_fusion/multi_sensor_panopticon_4.py \
-  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train.csv \
-  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_test.csv \
-  --weights weights/panopticon_vitb14_teacher.pth \
-  --batch_size 32 \
-  --epochs 50 \
-  --train_backbone \
-  --freeze_backbone_epochs 1 \
-  --backbone_lr 5e-5 \
-  --head_lr 1e-3 \
-  --sensor_aux_loss_weight 0.3 \
-  --num_workers 8 \
-  --device cuda \
-  --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor \
-  --use_wandb \
-  --wandb_project baselines \
-  --wandb_run_name "Fusion universal overlap dataset include all 2025 (schema2)" \
-  --local_cache_dir /diniuvol/yuyao/local_train_temp_cache 
+# python universal_models_fusion/multi_sensor_panopticon_4_contrastive_learning.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \
+#   --test_csv /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_filtered_overlapfixed.csv \
+#   --weights weights/panopticon_vitb14_teacher.pth \
+#   --batch_size 32 \
+#   --epochs 50 \
+#   --train_backbone \
+#   --freeze_backbone_epochs 1 \
+#   --backbone_lr 5e-5 \
+#   --head_lr 1e-3 \
+#   --num_workers 8 \
+#   --device cuda \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_tests5p \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --wandb_run_name "Fusion universal overlap dataset include all 2025 (schema2)" \
+#   --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
+#   --local_cache_min_free_gb 200 \
 #   --local_cache_warmup \
 #   --local_cache_workers 16 \
 #   --local_cache_min_free_gb 50
+
+# python universal_models_fusion/multi_sensor_panopticon_4_nonlinear_loraadapter_sensor_specific_earlystopping.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \
+#   --test_csv /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_filtered_overlapfixed.csv \
+#   --weights weights/panopticon_vitb14_teacher.pth \
+#   --device cuda \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_nonlinear_adapter \
+#   --batch_size 24 \
+#   --epochs 50 \
+#   --num_workers 8 \
+#   --train_backbone \
+#   --backbone_lr 5e-5 \
+#   --head_lr 1e-3 \
+#   --adapter_lr_multiplier 2.0 \
+#   --lora_rank 16 \
+#   --lora_alpha 16 \
+#   --adapter_dropout 0.05 \
+#   --adapter_token_blocks 6 \
+#   --phase1_backbone_epochs 5 \
+#   --phase1_train_coverage 0.8 \
+#   --phase1_sensor_coverages "s2=2.0,wv3=0.6,s5p=0.9,l89=0.4" \
+#   --phase2_train_shared_adapter \
+#   --sensor_aux_loss_weight 0.4 \
+#   --sensor_aux_effective_num_beta 0.999 \
+#   --consistency_loss_weight 0.05 \
+#   --consistency_temperature 1.0 \
+#   --sensor_adapter_early_stop_sensors wv3,s5p,l89,s2 \
+#   --sensor_adapter_early_stopping_patience 5 \
+#   --sensor_adapter_early_stopping_warmup_epochs 5 \
+#   --sensor_adapter_early_stopping_min_delta 1e-4 \
+#   --fusion_group_column id \
+#   --overlap_fusion logit_mean \
+#   --overlap_fusion_train \
+#   --overlap_head \
+#   --overlap_loss_weight 0.15 \
+#   --overlap_sensor_weights 's2=1.1,l89=0.9,wv3=1.0,s5p=0.6'\
+#   --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
+#   --local_cache_min_free_gb 200 \
+#   --local_cache_warmup \
+#   --local_cache_workers 12 \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --wandb_run_name "phase1_MHSA_sharedA_phase2_allAdapters_schema2_shared_nonlinear_private_adapter_overlap_sensor" 
+  # --disable_adapter_gelu 
+
+# python universal_models_fusion/multi_sensor_panopticon_4_nonlinear_loraadapter_sensor_specific_earlystopping.py \
+#   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \
+#   --test_csv /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_filtered_overlapfixed.csv \
+#   --weights weights/panopticon_vitb14_teacher.pth \
+#   --device cuda \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_nonlinear_adapter \
+#   --batch_size 24 \
+#   --epochs 50 \
+#   --num_workers 8 \
+#   --backbone_lr 5e-5 \
+#   --head_lr 1e-3 \
+#   --adapter_lr_multiplier 2.0 \
+#   --lora_rank 16 \
+#   --lora_alpha 16 \
+#   --adapter_dropout 0.05 \
+#   --adapter_token_blocks 6 \
+#   --phase1_backbone_epochs 0 \
+#   --phase2_train_shared_adapter \
+#   --sensor_adapter_early_stop_sensors "" \
+#   --sensor_aux_loss_weight 0.4 \
+#   --sensor_aux_effective_num_beta 0.999 \
+#   --consistency_loss_weight 0.05 \
+#   --consistency_temperature 1.0 \
+#   --fusion_group_column id \
+#   --overlap_fusion logit_mean \
+#   --overlap_fusion_train \
+#   --overlap_head \
+#   --overlap_loss_weight 0.15 \
+#   --overlap_sensor_weights 's2=1.1,l89=0.9,wv3=1.0,s5p=0.6' \
+#   --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
+#   --local_cache_min_free_gb 200 \
+#   --local_cache_warmup \
+#   --local_cache_workers 12 \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --wandb_run_name "Freeze_MHSA_train_shared_private_adapter_shared_nonlinear_private_adapter_overlap_sensor"
+
+python universal_models_fusion/multi_sensor_panopticon_4_nonlinear_loraadapter_sensor_specific_earlystopping.py \
+  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \
+  --test_csv /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_filtered_overlapfixed.csv \
+  --weights weights/panopticon_vitb14_teacher.pth \
+  --device cuda \
+  --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_nonlinear_adapter \
+  --batch_size 24 \
+  --epochs 50 \
+  --num_workers 8 \
+  --train_backbone \
+  --backbone_lr 5e-5 \
+  --head_lr 1e-3 \
+  --adapter_lr_multiplier 2.0 \
+  --lora_rank 16 \
+  --lora_alpha 16 \
+  --adapter_dropout 0.05 \
+  --adapter_token_blocks 6 \
+  --phase1_train_coverage 0.8 \
+  --phase1_sensor_coverages "s2=2.0,wv3=0.6,s5p=0.9,l89=0.4" \
+  --sensor_aux_loss_weight 0.4 \
+  --sensor_aux_effective_num_beta 0.999 \
+  --consistency_loss_weight 0.05 \
+  --consistency_temperature 1.0 \
+  --phase1_backbone_epochs 0 \
+  --phase2_train_backbone \
+  --phase2_train_shared_adapter \
+  --sensor_adapter_early_stop_sensors "" \
+  --sensor_adapter_early_stopping_patience 5 \
+  --sensor_adapter_early_stopping_warmup_epochs 5 \
+  --sensor_adapter_early_stopping_min_delta 1e-4 \
+  --fusion_group_column id \
+  --overlap_fusion logit_mean \
+  --overlap_fusion_train \
+  --overlap_head \
+  --overlap_loss_weight 0.15 \
+  --overlap_sensor_weights 's2=1.1,l89=0.9,wv3=1.0,s5p=0.6'\
+  --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
+  --local_cache_min_free_gb 200 \
+  --local_cache_warmup \
+  --local_cache_workers 12 \
+  --use_wandb \
+  --wandb_project baselines \
+  --wandb_run_name "train_all_MHSA_allAdapters_schema2_shared_nonlinear_private_adapter_overlap_sensor" 
+
+# python universal_models_fusion/infer_overlap_or_single_models.py \
+#   --csv_path /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_s5p_replaced_plus_s5p_only_old2025_with_pred_correct_filtered_overlapfixed.csv \
+#   --label_column label \
+#   --s2_ckpt /transferdiniu2/yuyao/checkpoints/s2/ckpt_best_test.pth \
+#   --l89_ckpt /transferdiniu2/yuyao/checkpoints/l89/ckpt_best_test.pth \
+#   --s5p_ckpt /transferdiniu2/yuyao/checkpoints/s5p.pth \
+#   --wv3_ckpt /transferdiniu2/yuyao/checkpoints/emit.pth \
+#   --batch_size 16 \
+#   --sensor_sub_batch_size 2 \
+#   --model_resident one_by_one \
+#   --amp_dtype fp16 \
+#   --num_workers 4 \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --wandb_run_name overlap_single4_or_eval_lowmem
 
 
 #   --weights weights/panopticon_vitb14_teacher.pth \
