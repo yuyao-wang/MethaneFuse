@@ -14,6 +14,7 @@ import argparse
 import csv
 import json
 import os
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Sequence
@@ -40,12 +41,12 @@ def parse_args() -> argparse.Namespace:
     )
     p.add_argument(
         "--dest-a",
-        default="/project/def-juliana2/panopticon_data_mirror",
+        default="/project/def-juliana2/yuyao16/panopticon_data_mirror",
         help="Primary destination root (priority target).",
     )
     p.add_argument(
         "--dest-b",
-        default="/project/def-iamniudi/panopticon_data_mirror",
+        default="/project/def-iamniudi/yuyao16/panopticon_data_mirror",
         help="Secondary destination root (overflow target).",
     )
     p.add_argument(
@@ -81,6 +82,12 @@ def parse_args() -> argparse.Namespace:
         default=16.0,
         help="Estimated size (MiB) used when size probe is disabled or file is missing.",
     )
+    p.add_argument(
+        "--progress-every",
+        type=int,
+        default=5000,
+        help="Print progress every N files during long steps.",
+    )
     return p.parse_args()
 
 
@@ -98,13 +105,17 @@ def collect_paths(csv_paths: Sequence[Path]) -> Dict[str, List[str]]:
     all_paths: Dict[str, None] = {}
 
     for csv_path in csv_paths:
+        print(f"[Collect] reading CSV: {csv_path}", flush=True)
         with csv_path.open("r", newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             if not reader.fieldnames:
                 raise ValueError(f"CSV has no header: {csv_path}")
             path_cols = [c for c in reader.fieldnames if _is_path_column(c)]
             path_columns_by_csv[str(csv_path)] = path_cols
+            print(f"[Collect] path columns in {csv_path.name}: {len(path_cols)}", flush=True)
+            row_count = 0
             for row in reader:
+                row_count += 1
                 for col in path_cols:
                     val = (row.get(col) or "").strip()
                     if not val:
@@ -114,6 +125,8 @@ def collect_paths(csv_paths: Sequence[Path]) -> Dict[str, List[str]]:
                     if not val.startswith("/"):
                         continue
                     all_paths[val] = None
+            print(f"[Collect] rows scanned: {row_count}", flush=True)
+    print(f"[Collect] unique absolute paths: {len(all_paths)}", flush=True)
 
     return {
         "path_columns_by_csv": path_columns_by_csv,  # type: ignore[return-value]
@@ -121,19 +134,32 @@ def collect_paths(csv_paths: Sequence[Path]) -> Dict[str, List[str]]:
     }
 
 
-def probe_files(paths: Sequence[str], *, do_probe: bool) -> List[FileMeta]:
+def probe_files(paths: Sequence[str], *, do_probe: bool, progress_every: int = 5000) -> List[FileMeta]:
     out: List[FileMeta] = []
     if not do_probe:
         for p in paths:
             out.append(FileMeta(path=p, size=0, exists=True))
+        print("[Probe] skipped size probe (--no-size-probe).", flush=True)
         return out
 
+    total = len(paths)
+    print(f"[Probe] stat() start: {total} files", flush=True)
+    t0 = time.time()
     for p in paths:
         try:
             st = os.stat(p)
             out.append(FileMeta(path=p, size=int(st.st_size), exists=True))
         except OSError:
             out.append(FileMeta(path=p, size=0, exists=False))
+        if progress_every > 0 and len(out) % progress_every == 0:
+            dt = max(1e-6, time.time() - t0)
+            rate = len(out) / dt
+            print(
+                f"[Probe] {len(out)}/{total} ({100.0*len(out)/max(1,total):.1f}%) at {rate:.1f} files/s",
+                flush=True,
+            )
+    dt = max(1e-6, time.time() - t0)
+    print(f"[Probe] done in {dt:.1f}s", flush=True)
     return out
 
 
@@ -212,9 +238,14 @@ def main() -> None:
     data = collect_paths(csv_paths)
     path_columns_by_csv: Dict[str, List[str]] = data["path_columns_by_csv"]  # type: ignore[assignment]
     all_paths: List[str] = data["all_paths"]  # type: ignore[assignment]
-    files = probe_files(all_paths, do_probe=(not args.no_size_probe))
+    files = probe_files(
+        all_paths,
+        do_probe=(not args.no_size_probe),
+        progress_every=max(1, int(args.progress_every)),
+    )
     unknown_size_bytes = int(max(1.0, args.unknown_size_mib) * 1024 * 1024)
 
+    print("[Assign] assigning files into A/B buckets ...", flush=True)
     assignment = assign_files(
         files,
         cap_a_gib=args.cap_a_gb,
@@ -251,6 +282,10 @@ def main() -> None:
     list_a.write_text("\n".join(rel_a) + ("\n" if rel_a else ""), encoding="utf-8")
     list_b.write_text("\n".join(rel_b) + ("\n" if rel_b else ""), encoding="utf-8")
     missing.write_text("\n".join(missing_paths) + ("\n" if missing_paths else ""), encoding="utf-8")
+    print(
+        f"[Write] rsync lists written: A={len(rel_a)} files, B={len(rel_b)} files, missing={len(missing_paths)}",
+        flush=True,
+    )
 
     with map_tsv.open("w", encoding="utf-8", newline="") as f:
         f.write("old_path\tnew_path\tbucket\n")
@@ -261,6 +296,7 @@ def main() -> None:
     rewritten_csvs: List[str] = []
     for src in csv_paths:
         dst = out_dir / (src.stem + ".cc.csv")
+        print(f"[Rewrite] {src.name} -> {dst.name}", flush=True)
         rewrite_csv(
             src_csv=src,
             dst_csv=dst,
