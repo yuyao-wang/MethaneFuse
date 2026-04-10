@@ -1951,6 +1951,14 @@ def set_trainable(module: nn.Module, requires_grad: bool):
         p.requires_grad = requires_grad
 
 
+def set_optimizer_group_lrs(optimizer: torch.optim.Optimizer, lr_by_name: Mapping[str, float]) -> None:
+    for group in optimizer.param_groups:
+        name = str(group.get("name", "")).strip()
+        if name not in lr_by_name:
+            continue
+        group["lr"] = float(lr_by_name[name])
+
+
 def init_wandb(args):
     if not args.use_wandb:
         return None
@@ -2444,6 +2452,23 @@ def parse_args():
     parser.set_defaults(train_backbone=True)
     parser.add_argument("--phase1_backbone_epochs", type=int, default=4)
     parser.add_argument(
+        "--training_schedule",
+        choices=["legacy", "adapter_then_joint"],
+        default="legacy",
+        help=(
+            "Training schedule. "
+            "'legacy': existing behavior (phase1 backbone-centric then phase2 adapter-centric). "
+            "'adapter_then_joint': Stage A trains adapters with frozen backbone; "
+            "Stage B unfreezes backbone and keeps adapters trainable."
+        ),
+    )
+    parser.add_argument(
+        "--stage_a_adapter_epochs",
+        type=int,
+        default=3,
+        help="Used when --training_schedule=adapter_then_joint. Number of warmup epochs for adapter-only Stage A.",
+    )
+    parser.add_argument(
         "--phase1_train_coverage",
         type=float,
         default=1.0,
@@ -2508,6 +2533,24 @@ def parse_args():
         "--phase2_train_backbone",
         action="store_true",
         help="If set, keep ViT backbone (MHSA/MLP) trainable in phase2. Default freezes backbone after phase1.",
+    )
+    parser.add_argument(
+        "--stage_b_adapter_lr",
+        type=float,
+        default=None,
+        help=(
+            "Used when --training_schedule=adapter_then_joint. "
+            "Stage B adapter LR override. If unset, reuses adapter_lr."
+        ),
+    )
+    parser.add_argument(
+        "--stage_b_backbone_to_adapter_lr_ratio",
+        type=float,
+        default=0.4,
+        help=(
+            "Used when --training_schedule=adapter_then_joint. "
+            "Stage B backbone_lr = stage_b_adapter_lr * ratio."
+        ),
     )
     parser.add_argument(
         "--sensor_aux_loss_weight",
@@ -2770,11 +2813,15 @@ def main(args):
     head_params = gather_head_parameters(core_model)
     backbone_params = list(_gather_backbone_non_adapter_parameters(core_model))
     adapter_lr_effective = args.adapter_lr if args.adapter_lr is not None else (args.backbone_lr * args.adapter_lr_multiplier)
+    stage_b_adapter_lr = (
+        float(args.stage_b_adapter_lr) if args.stage_b_adapter_lr is not None else float(adapter_lr_effective)
+    )
+    stage_b_backbone_lr = float(stage_b_adapter_lr) * float(args.stage_b_backbone_to_adapter_lr_ratio)
     param_groups = [
-        {"params": backbone_params, "lr": args.backbone_lr},
-        {"params": adapter_private_params, "lr": adapter_lr_effective},
-        {"params": adapter_shared_params, "lr": adapter_lr_effective},
-        {"params": head_params, "lr": args.head_lr},
+        {"name": "backbone", "params": backbone_params, "lr": args.backbone_lr},
+        {"name": "adapter_private", "params": adapter_private_params, "lr": adapter_lr_effective},
+        {"name": "adapter_shared", "params": adapter_shared_params, "lr": adapter_lr_effective},
+        {"name": "head", "params": head_params, "lr": args.head_lr},
     ]
     param_groups = [group for group in param_groups if len(group["params"]) > 0]
     optimizer = torch.optim.Adam(param_groups, weight_decay=args.weight_decay, betas=(args.momentum, 0.999))
@@ -2801,7 +2848,13 @@ def main(args):
     wandb_run = init_wandb(args)
 
     sensors_list = core_model.sensor_order
-    phase1_epochs = max(0, int(args.phase1_backbone_epochs))
+    training_schedule = str(args.training_schedule).strip().lower()
+    if training_schedule not in ("legacy", "adapter_then_joint"):
+        raise ValueError(f"Unsupported --training_schedule value: {args.training_schedule!r}")
+    if training_schedule == "adapter_then_joint":
+        phase1_epochs = max(0, int(args.stage_a_adapter_epochs))
+    else:
+        phase1_epochs = max(0, int(args.phase1_backbone_epochs))
     phase1_train_coverage = float(args.phase1_train_coverage)
     if not (0.0 < phase1_train_coverage <= 1.0):
         raise ValueError(f"--phase1_train_coverage must be in (0, 1], got {phase1_train_coverage}.")
@@ -2838,6 +2891,11 @@ def main(args):
     if not (0.0 <= float(args.sensor_aux_effective_num_beta) <= 1.0):
         raise ValueError(
             f"--sensor_aux_effective_num_beta must be in [0, 1], got {args.sensor_aux_effective_num_beta}."
+        )
+    if args.stage_b_backbone_to_adapter_lr_ratio <= 0.0:
+        raise ValueError(
+            "--stage_b_backbone_to_adapter_lr_ratio must be > 0, "
+            f"got {args.stage_b_backbone_to_adapter_lr_ratio}."
         )
 
     train_sensor_index_map = _gather_sensor_indices(train_ds, sensors_list)
@@ -2936,18 +2994,22 @@ def main(args):
     sensor_stats_mode = "precomputed_defaults"
     if sensor_stats_overrides:
         sensor_stats_mode = f"train_estimated({sorted(sensor_stats_overrides.keys())})"
-    phase2_mode = (
-        "train_vit_backbone_train_private_adapters_sensor_heads_patch_embed"
-        if args.phase2_train_backbone
-        else "freeze_vit_backbone_train_private_adapters_sensor_heads_patch_embed"
-    )
+    if training_schedule == "adapter_then_joint":
+        phase2_mode = "train_vit_backbone_train_all_adapters_sensor_heads_patch_embed"
+    else:
+        phase2_mode = (
+            "train_vit_backbone_train_private_adapters_sensor_heads_patch_embed"
+            if args.phase2_train_backbone
+            else "freeze_vit_backbone_train_private_adapters_sensor_heads_patch_embed"
+        )
 
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sensors_list}, phase1_backbone_epochs={phase1_epochs}, "
+        f"sensors={sensors_list}, training_schedule={training_schedule}, phase1_backbone_epochs={phase1_epochs}, "
         f"phase1_train_coverage={phase1_train_coverage:.3f}, phase1_sensor_coverages={phase1_sensor_coverages}, "
         f"adapter_layers={adapter_layer_count}, adapter_token_blocks={args.adapter_token_blocks}, "
         f"adapter_lr={adapter_lr_effective:.2e}, "
+        f"stage_b_adapter_lr={stage_b_adapter_lr:.2e}, stage_b_backbone_lr={stage_b_backbone_lr:.2e}, "
         f"phase2_mode={phase2_mode}, "
         f"phase2_train_shared_adapter={int(args.phase2_train_shared_adapter)}, "
         f"phase2_train_backbone={int(args.phase2_train_backbone)}, "
@@ -2993,45 +3055,97 @@ def main(args):
             set_trainable(sensor, True)
             sensor.train()
 
-        if in_phase1:
-            set_trainable(core_model.backbone, args.train_backbone)
-            if args.train_backbone:
-                core_model.backbone.train()
-            else:
+        if training_schedule == "adapter_then_joint":
+            if in_phase1:
+                # Stage A: train all adapters with frozen backbone.
+                set_optimizer_group_lrs(
+                    optimizer,
+                    {
+                        "backbone": float(args.backbone_lr),
+                        "adapter_private": float(adapter_lr_effective),
+                        "adapter_shared": float(adapter_lr_effective),
+                        "head": float(args.head_lr),
+                    },
+                )
+                set_trainable(core_model.backbone, False)
                 core_model.backbone.eval()
-            for param in adapter_private_params:
-                param.requires_grad = False
-            for block in adapter_blocks:
-                if isinstance(block, SensorAdapterBlock):
-                    block.private_adapters.eval()
-            for param in adapter_shared_params:
-                param.requires_grad = bool(args.train_backbone)
-            for block in adapter_blocks:
-                if isinstance(block, SensorAdapterBlock):
-                    block.shared_adapter.train(bool(args.train_backbone))
+                for param in adapter_private_params:
+                    param.requires_grad = True
+                for param in adapter_shared_params:
+                    param.requires_grad = True
+                for block in adapter_blocks:
+                    if isinstance(block, SensorAdapterBlock):
+                        block.private_adapters.train()
+                        block.shared_adapter.train()
+            else:
+                # Stage B: unfreeze backbone and keep all adapters trainable.
+                set_optimizer_group_lrs(
+                    optimizer,
+                    {
+                        "backbone": float(stage_b_backbone_lr),
+                        "adapter_private": float(stage_b_adapter_lr),
+                        "adapter_shared": float(stage_b_adapter_lr),
+                        "head": float(args.head_lr),
+                    },
+                )
+                set_trainable(core_model.backbone, True)
+                core_model.backbone.train()
+                for sensor in core_model.sensor_patch_embeds.values():
+                    set_trainable(sensor, True)
+                    sensor.train()
+                for param in adapter_private_params:
+                    param.requires_grad = True
+                for param in adapter_shared_params:
+                    param.requires_grad = True
+                for block in adapter_blocks:
+                    if isinstance(block, SensorAdapterBlock):
+                        block.private_adapters.train()
+                        block.shared_adapter.train()
+                for sensor_name, frozen in sensor_adapter_frozen.items():
+                    if frozen:
+                        _set_sensor_adapter_trainable(core_model, sensor_name, requires_grad=False)
+                        _set_sensor_head_trainable(core_model, sensor_name, requires_grad=False)
+                        _set_sensor_patch_embed_trainable(core_model, sensor_name, requires_grad=False)
         else:
-            # After phase 1: by default freeze ViT backbone; optionally keep it trainable.
-            set_trainable(core_model.backbone, bool(args.phase2_train_backbone))
-            if args.phase2_train_backbone:
-                core_model.backbone.train()
+            if in_phase1:
+                set_trainable(core_model.backbone, args.train_backbone)
+                if args.train_backbone:
+                    core_model.backbone.train()
+                else:
+                    core_model.backbone.eval()
+                for param in adapter_private_params:
+                    param.requires_grad = False
+                for block in adapter_blocks:
+                    if isinstance(block, SensorAdapterBlock):
+                        block.private_adapters.eval()
+                for param in adapter_shared_params:
+                    param.requires_grad = bool(args.train_backbone)
+                for block in adapter_blocks:
+                    if isinstance(block, SensorAdapterBlock):
+                        block.shared_adapter.train(bool(args.train_backbone))
             else:
-                core_model.backbone.eval()
-            for sensor in core_model.sensor_patch_embeds.values():
-                set_trainable(sensor, True)
-                sensor.train()
-            for param in adapter_private_params:
-                param.requires_grad = True
-            for param in adapter_shared_params:
-                param.requires_grad = bool(args.phase2_train_shared_adapter)
-            for block in adapter_blocks:
-                if isinstance(block, SensorAdapterBlock):
-                    block.private_adapters.train()
-                    block.shared_adapter.train(bool(args.phase2_train_shared_adapter))
-            for sensor_name, frozen in sensor_adapter_frozen.items():
-                if frozen:
-                    _set_sensor_adapter_trainable(core_model, sensor_name, requires_grad=False)
-                    _set_sensor_head_trainable(core_model, sensor_name, requires_grad=False)
-                    _set_sensor_patch_embed_trainable(core_model, sensor_name, requires_grad=False)
+                # After phase 1: by default freeze ViT backbone; optionally keep it trainable.
+                set_trainable(core_model.backbone, bool(args.phase2_train_backbone))
+                if args.phase2_train_backbone:
+                    core_model.backbone.train()
+                else:
+                    core_model.backbone.eval()
+                for sensor in core_model.sensor_patch_embeds.values():
+                    set_trainable(sensor, True)
+                    sensor.train()
+                for param in adapter_private_params:
+                    param.requires_grad = True
+                for param in adapter_shared_params:
+                    param.requires_grad = bool(args.phase2_train_shared_adapter)
+                for block in adapter_blocks:
+                    if isinstance(block, SensorAdapterBlock):
+                        block.private_adapters.train()
+                        block.shared_adapter.train(bool(args.phase2_train_shared_adapter))
+                for sensor_name, frozen in sensor_adapter_frozen.items():
+                    if frozen:
+                        _set_sensor_adapter_trainable(core_model, sensor_name, requires_grad=False)
+                        _set_sensor_head_trainable(core_model, sensor_name, requires_grad=False)
+                        _set_sensor_patch_embed_trainable(core_model, sensor_name, requires_grad=False)
 
         total_loss = 0.0
         total = 0

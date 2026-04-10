@@ -1,0 +1,256 @@
+nohup: ignoring input
+[Data] /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_train_geo_resplit.csv: requested columns ('path_t0', 'path_t90', 'path_t360') not found; using wide-table EMIT columns ('emit_0_path', 'emit_90_path', 'emit_360_path').
+[Data] /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_geo_resplit.csv: requested columns ('path_t0', 'path_t90', 'path_t360') not found; using wide-table EMIT columns ('emit_0_path', 'emit_90_path', 'emit_360_path').
+[Data] train: no rows matched sensor in {emit,wv3} after path filtering; ignoring sensor column for wide-table compatibility.
+[Data] train: prefiltered EMIT/WV3 rows 41755/132006 into temp CSV /transferdiniu2/yuyao/temp/emit_wv3_prefilter_train_faeb2eup.csv.
+[Data] test: no rows matched sensor in {emit,wv3} after path filtering; ignoring sensor column for wide-table compatibility.
+[Data] test: prefiltered EMIT/WV3 rows 3518/36826 into temp CSV /transferdiniu2/yuyao/temp/emit_wv3_prefilter_test_y7mfui09.csv.
+[Data] train: kept 41755/41755 rows for EMIT/WV3 using path columns ('emit_0_path', 'emit_90_path', 'emit_360_path').
+[Data] test: kept 3518/3518 rows for EMIT/WV3 using path columns ('emit_0_path', 'emit_90_path', 'emit_360_path').
+Loaded overlap flags from 'overlap_mode': overlap=305, single=3213
+WV3 channel IDs loaded from /home/yuyao/panopticon/WV3_VNIR_SWIR_response.csv: bands/timepoint=16, total_temporal_bands=48, mu_range=[427, 2330] nm
+[Cache] Warming up (target: 135819)...
+[Cache] Warmup complete. Cached: 133740, Remote: 2079
+Using device=cuda:0, train_samples=41755, test_samples=3518, train_backbone=True
+/home/yuyao/panopticon/dinov2/layers/swiglu_ffn.py:45: UserWarning: xFormers is disabled (SwiGLU)
+  warnings.warn("xFormers is disabled (SwiGLU)")
+/home/yuyao/panopticon/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/home/yuyao/panopticon/dinov2/layers/attention.py:30: UserWarning: xFormers is disabled (Attention)
+  warnings.warn("xFormers is disabled (Attention)")
+/home/yuyao/panopticon/dinov2/layers/attention.py:34: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/home/yuyao/panopticon/dinov2/layers/block.py:35: UserWarning: xFormers is disabled (Block)
+  warnings.warn("xFormers is disabled (Block)")
+/home/yuyao/panopticon/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+Loading checkpoint from weights/panopticon_vitb14_teacher.pth
+Checkpoints will be saved under: checkpoints/manifest_multisensor_crop_scheme2_train_geo_resplit__manifest_multisensor_crop_scheme2_test_geo_resplit__ft
+Traceback (most recent call last):
+  File "/home/yuyao/panopticon/universal_models_fusion/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py", line 1207, in <module>
+    main(args)
+  File "/home/yuyao/panopticon/universal_models_fusion/dino_clssifier_head_EMIT_simulated_wv3_temporal_one_block.py", line 841, in main
+    feats = backbone(x_dict, is_training=True)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yuyao/panopticon/dinov2/models/vision_transformer.py", line 343, in forward
+    ret = self.forward_features(*args, **kwargs)
+  File "/home/yuyao/panopticon/dinov2/models/vision_transformer.py", line 276, in forward_features
+    x = self.prepare_tokens_with_masks(x, masks)
+  File "/home/yuyao/panopticon/dinov2/models/vision_transformer.py", line 233, in prepare_tokens_with_masks
+    x, h, w = self.patch_embed(x)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yuyao/panopticon/dinov2/models/panopticon.py", line 39, in forward
+    x = self.chnfus(x, chn_ids=chn_ids, mask=mask) # B,L,D
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yuyao/panopticon/dinov2/models/panopticon.py", line 117, in forward
+    x = self.xattn(query, x, x, key_padding_mask=mask)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/yuyao/panopticon/dinov2/models/panopticon.py", line 246, in forward
+    x = (attn @ v).transpose(1, 2).reshape(B, Nq, D)
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 3.38 GiB (GPU 0; 79.25 GiB total capacity; 18.81 GiB already allocated; 2.78 GiB free; 30.14 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[Data] /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_train_geo_resplit.csv: requested columns ('path_t0', 'path_t90', 'path_t360') not found; using wide-table S5P columns ('s5p_0_path', 's5p_90_path', 's5p_360_path').
+[Data] /home/yuyao/panopticon/manifest_multisensor_crop_scheme2_test_geo_resplit.csv: requested columns ('path_t0', 'path_t90', 'path_t360') not found; using wide-table S5P columns ('s5p_0_path', 's5p_90_path', 's5p_360_path').
+/home/yuyao/panopticon/universal_models_fusion/dino_classifier_head_s5p_temporal_one_block.py:220: DtypeWarning: Columns (10,11,12,13,14,15,16,17,18,19,20,21) have mixed types. Specify dtype option on import or set low_memory=False.
+  self.df = pd.read_csv(csv_path)
+/home/yuyao/panopticon/universal_models_fusion/dino_classifier_head_s5p_temporal_one_block.py:537: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  filtered_df = filtered_df[valid_masks[col]]
+[Data] train: no rows with all temporal columns valid for ('s5p_0_path', 's5p_90_path', 's5p_360_path'); falling back to single-column S5P mode using 's5p_0_path' (33125 rows).
+[Data] train: kept 33125/132006 rows for S5P using path columns ('s5p_0_path',).
+/home/yuyao/panopticon/universal_models_fusion/dino_classifier_head_s5p_temporal_one_block.py:537: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  filtered_df = filtered_df[valid_masks[col]]
+[Data] test: no rows with all temporal columns valid for ('s5p_0_path', 's5p_90_path', 's5p_360_path'); falling back to single-column S5P mode using 's5p_0_path' (7404 rows).
+[Data] test: kept 7404/36826 rows for S5P using path columns ('s5p_0_path',).
+Loaded overlap flags from 'overlap_mode': overlap=123, single=7281
+[Cache] Warming up (target: 8070)...
+[Cache] Warmup complete. Cached: 7944, Remote: 126
+Using device=cuda:0, resize=224, train_samples=33125, test_samples=7404, norm_stats=provided, nan_to_num=0.0, train_backbone=True
+/home/yuyao/panopticon/dinov2/layers/swiglu_ffn.py:45: UserWarning: xFormers is disabled (SwiGLU)
+  warnings.warn("xFormers is disabled (SwiGLU)")
+/home/yuyao/panopticon/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/home/yuyao/panopticon/dinov2/layers/attention.py:30: UserWarning: xFormers is disabled (Attention)
+  warnings.warn("xFormers is disabled (Attention)")
+/home/yuyao/panopticon/dinov2/layers/attention.py:34: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/home/yuyao/panopticon/dinov2/layers/block.py:35: UserWarning: xFormers is disabled (Block)
+  warnings.warn("xFormers is disabled (Block)")
+/home/yuyao/panopticon/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+Loading checkpoint from weights/panopticon_vitb14_teacher.pth
+Epoch 1 step 100/1036 train_loss=0.8183 train_acc=0.4537
+Epoch 1 step 200/1036 train_loss=0.7939 train_acc=0.4620
+Epoch 1 step 300/1036 train_loss=0.7607 train_acc=0.4884
+Epoch 1 step 400/1036 train_loss=0.7364 train_acc=0.5158
+Epoch 1 step 500/1036 train_loss=0.7164 train_acc=0.5419
+Epoch 1 step 600/1036 train_loss=0.7015 train_acc=0.5621
+Epoch 1 step 700/1036 train_loss=0.6887 train_acc=0.5780
+Epoch 1 step 800/1036 train_loss=0.6795 train_acc=0.5901
+Epoch 1 step 900/1036 train_loss=0.6708 train_acc=0.6003
+Epoch 1 step 1000/1036 train_loss=0.6642 train_acc=0.6076
+Epoch 1: train_loss=0.6618 train_acc=0.6100 test_loss=0.6773 test_acc=0.5850 test_fpr=0.3946 test_recall=0.5666 test_auroc=0.6367
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.5850 fpr=0.3946 recall=0.5666 auroc=0.6367
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.8699 fpr=0.0000 recall=0.7500 auroc=1.0000
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.5801 fpr=0.4013 recall=0.5635 auroc=0.6298
+  test_overall: count=7404 acc=0.5850 fpr=0.3946 recall=0.5666 auroc=0.6367
+  test_single: count=7281 acc=0.5801 fpr=0.4013 recall=0.5635 auroc=0.6298
+  test_overlap: count=123 acc=0.8699 fpr=0.0000 recall=0.7500 auroc=1.0000
+[Checkpoint] Saved best model to checkpoints/dino_classifier_head_s5p_temporal_one_block_best.pt (epoch=1, test_acc=0.584954, mode=max).
+Epoch 2 step 100/1036 train_loss=0.5911 train_acc=0.6966
+Epoch 2 step 200/1036 train_loss=0.5831 train_acc=0.7003
+Epoch 2 step 300/1036 train_loss=0.5783 train_acc=0.7056
+Epoch 2 step 400/1036 train_loss=0.5777 train_acc=0.7062
+Epoch 2 step 500/1036 train_loss=0.5738 train_acc=0.7089
+Epoch 2 step 600/1036 train_loss=0.5705 train_acc=0.7109
+Epoch 2 step 700/1036 train_loss=0.5668 train_acc=0.7142
+Epoch 2 step 800/1036 train_loss=0.5622 train_acc=0.7186
+Epoch 2 step 900/1036 train_loss=0.5587 train_acc=0.7218
+Epoch 2 step 1000/1036 train_loss=0.5557 train_acc=0.7248
+Epoch 2: train_loss=0.5547 train_acc=0.7254 test_loss=0.6990 test_acc=0.5708 test_fpr=0.2802 test_recall=0.4368 test_auroc=0.6507
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.5708 fpr=0.2802 recall=0.4368 auroc=0.6507
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.8699 fpr=0.0000 recall=0.7500 auroc=0.9322
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.5657 fpr=0.2850 recall=0.4316 auroc=0.6459
+  test_overall: count=7404 acc=0.5708 fpr=0.2802 recall=0.4368 auroc=0.6507
+  test_single: count=7281 acc=0.5657 fpr=0.2850 recall=0.4316 auroc=0.6459
+  test_overlap: count=123 acc=0.8699 fpr=0.0000 recall=0.7500 auroc=0.9322
+Epoch 3 step 100/1036 train_loss=0.5081 train_acc=0.7688
+Epoch 3 step 200/1036 train_loss=0.5041 train_acc=0.7700
+Epoch 3 step 300/1036 train_loss=0.4947 train_acc=0.7743
+Epoch 3 step 400/1036 train_loss=0.4897 train_acc=0.7752
+Epoch 3 step 500/1036 train_loss=0.4856 train_acc=0.7779
+Epoch 3 step 600/1036 train_loss=0.4817 train_acc=0.7822
+Epoch 3 step 700/1036 train_loss=0.4773 train_acc=0.7860
+Epoch 3 step 800/1036 train_loss=0.4725 train_acc=0.7904
+Epoch 3 step 900/1036 train_loss=0.4661 train_acc=0.7964
+Epoch 3 step 1000/1036 train_loss=0.4617 train_acc=0.7996
+Epoch 3: train_loss=0.4594 train_acc=0.8019 test_loss=0.7691 test_acc=0.5804 test_fpr=0.2394 test_recall=0.4183 test_auroc=0.6800
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.5804 fpr=0.2394 recall=0.4183 auroc=0.6800
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.6098 fpr=0.0000 recall=0.2500 auroc=0.7966
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.5799 fpr=0.2435 recall=0.4211 auroc=0.6781
+  test_overall: count=7404 acc=0.5804 fpr=0.2394 recall=0.4183 auroc=0.6800
+  test_single: count=7281 acc=0.5799 fpr=0.2435 recall=0.4211 auroc=0.6781
+  test_overlap: count=123 acc=0.6098 fpr=0.0000 recall=0.2500 auroc=0.7966
+Epoch 4 step 100/1036 train_loss=0.3760 train_acc=0.8631
+Epoch 4 step 200/1036 train_loss=0.3818 train_acc=0.8572
+Epoch 4 step 300/1036 train_loss=0.3787 train_acc=0.8599
+Epoch 4 step 400/1036 train_loss=0.3757 train_acc=0.8620
+Epoch 4 step 500/1036 train_loss=0.3707 train_acc=0.8646
+Epoch 4 step 600/1036 train_loss=0.3690 train_acc=0.8653
+Epoch 4 step 700/1036 train_loss=0.3682 train_acc=0.8649
+Epoch 4 step 800/1036 train_loss=0.3655 train_acc=0.8671
+Epoch 4 step 900/1036 train_loss=0.3636 train_acc=0.8688
+Epoch 4 step 1000/1036 train_loss=0.3598 train_acc=0.8709
+Epoch 4: train_loss=0.3584 train_acc=0.8718 test_loss=0.7561 test_acc=0.6469 test_fpr=0.2553 test_recall=0.5591 test_auroc=0.7129
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.6469 fpr=0.2553 recall=0.5591 auroc=0.7129
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.6098 fpr=0.0000 recall=0.2500 auroc=0.8644
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.6476 fpr=0.2597 recall=0.5643 auroc=0.7114
+  test_overall: count=7404 acc=0.6469 fpr=0.2553 recall=0.5591 auroc=0.7129
+  test_single: count=7281 acc=0.6476 fpr=0.2597 recall=0.5643 auroc=0.7114
+  test_overlap: count=123 acc=0.6098 fpr=0.0000 recall=0.2500 auroc=0.8644
+[Checkpoint] Saved best model to checkpoints/dino_classifier_head_s5p_temporal_one_block_best.pt (epoch=4, test_acc=0.646948, mode=max).
+Epoch 5 step 100/1036 train_loss=0.3048 train_acc=0.9097
+Epoch 5 step 200/1036 train_loss=0.3052 train_acc=0.9087
+Epoch 5 step 300/1036 train_loss=0.3006 train_acc=0.9106
+Epoch 5 step 400/1036 train_loss=0.2976 train_acc=0.9110
+Epoch 5 step 500/1036 train_loss=0.2978 train_acc=0.9104
+Epoch 5 step 600/1036 train_loss=0.2982 train_acc=0.9099
+Epoch 5 step 700/1036 train_loss=0.2954 train_acc=0.9122
+Epoch 5 step 800/1036 train_loss=0.2935 train_acc=0.9130
+Epoch 5 step 900/1036 train_loss=0.2904 train_acc=0.9148
+Epoch 5 step 1000/1036 train_loss=0.2893 train_acc=0.9155
+Epoch 5: train_loss=0.2884 train_acc=0.9161 test_loss=0.9108 test_acc=0.6063 test_fpr=0.3187 test_recall=0.5389 test_auroc=0.6400
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.6063 fpr=0.3187 recall=0.5389 auroc=0.6400
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.4797 fpr=0.2712 recall=0.2500 auroc=0.6610
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.6084 fpr=0.3195 recall=0.5437 auroc=0.6391
+  test_overall: count=7404 acc=0.6063 fpr=0.3187 recall=0.5389 auroc=0.6400
+  test_single: count=7281 acc=0.6084 fpr=0.3195 recall=0.5437 auroc=0.6391
+  test_overlap: count=123 acc=0.4797 fpr=0.2712 recall=0.2500 auroc=0.6610
+Epoch 6 step 100/1036 train_loss=0.2480 train_acc=0.9391
+Epoch 6 step 200/1036 train_loss=0.2524 train_acc=0.9348
+Epoch 6 step 300/1036 train_loss=0.2510 train_acc=0.9358
+Epoch 6 step 400/1036 train_loss=0.2493 train_acc=0.9369
+Epoch 6 step 500/1036 train_loss=0.2497 train_acc=0.9361
+Epoch 6 step 600/1036 train_loss=0.2488 train_acc=0.9373
+Epoch 6 step 700/1036 train_loss=0.2495 train_acc=0.9369
+Epoch 6 step 800/1036 train_loss=0.2497 train_acc=0.9366
+Epoch 6 step 900/1036 train_loss=0.2506 train_acc=0.9356
+Epoch 6 step 1000/1036 train_loss=0.2508 train_acc=0.9355
+Epoch 6: train_loss=0.2507 train_acc=0.9354 test_loss=0.9145 test_acc=0.6008 test_fpr=0.2867 test_recall=0.4996 test_auroc=0.6707
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.6008 fpr=0.2867 recall=0.4996 auroc=0.6707
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.6098 fpr=0.2712 recall=0.5000 auroc=0.7288
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.6006 fpr=0.2870 recall=0.4996 auroc=0.6703
+  test_overall: count=7404 acc=0.6008 fpr=0.2867 recall=0.4996 auroc=0.6707
+  test_single: count=7281 acc=0.6006 fpr=0.2870 recall=0.4996 auroc=0.6703
+  test_overlap: count=123 acc=0.6098 fpr=0.2712 recall=0.5000 auroc=0.7288
+Epoch 7 step 100/1036 train_loss=0.2228 train_acc=0.9494
+Epoch 7 step 200/1036 train_loss=0.2265 train_acc=0.9475
+Epoch 7 step 300/1036 train_loss=0.2297 train_acc=0.9454
+Epoch 7 step 400/1036 train_loss=0.2301 train_acc=0.9443
+Epoch 7 step 500/1036 train_loss=0.2288 train_acc=0.9450
+Epoch 7 step 600/1036 train_loss=0.2284 train_acc=0.9445
+Epoch 7 step 700/1036 train_loss=0.2291 train_acc=0.9444
+Epoch 7 step 800/1036 train_loss=0.2286 train_acc=0.9446
+Epoch 7 step 900/1036 train_loss=0.2283 train_acc=0.9448
+Epoch 7 step 1000/1036 train_loss=0.2279 train_acc=0.9452
+Epoch 7: train_loss=0.2277 train_acc=0.9452 test_loss=0.9721 test_acc=0.6095 test_fpr=0.2328 test_recall=0.4678 test_auroc=0.6649
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.6095 fpr=0.2328 recall=0.4678 auroc=0.6649
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.7398 fpr=0.2712 recall=0.7500 auroc=0.5466
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.6073 fpr=0.2322 recall=0.4631 auroc=0.6645
+  test_overall: count=7404 acc=0.6095 fpr=0.2328 recall=0.4678 auroc=0.6649
+  test_single: count=7281 acc=0.6073 fpr=0.2322 recall=0.4631 auroc=0.6645
+  test_overlap: count=123 acc=0.7398 fpr=0.2712 recall=0.7500 auroc=0.5466
+Epoch 8 step 100/1036 train_loss=0.2176 train_acc=0.9487
+Epoch 8 step 200/1036 train_loss=0.2154 train_acc=0.9506
+Epoch 8 step 300/1036 train_loss=0.2123 train_acc=0.9525
+Epoch 8 step 400/1036 train_loss=0.2131 train_acc=0.9520
+Epoch 8 step 500/1036 train_loss=0.2147 train_acc=0.9511
+Epoch 8 step 600/1036 train_loss=0.2152 train_acc=0.9513
+Epoch 8 step 700/1036 train_loss=0.2146 train_acc=0.9517
+Epoch 8 step 800/1036 train_loss=0.2133 train_acc=0.9523
+Epoch 8 step 900/1036 train_loss=0.2124 train_acc=0.9527
+Epoch 8 step 1000/1036 train_loss=0.2129 train_acc=0.9523
+Epoch 8: train_loss=0.2133 train_acc=0.9521 test_loss=1.0456 test_acc=0.5940 test_fpr=0.2488 test_recall=0.4527 test_auroc=0.6403
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.5940 fpr=0.2488 recall=0.4527 auroc=0.6403
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.6098 fpr=0.2712 recall=0.5000 auroc=0.6610
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.5937 fpr=0.2484 recall=0.4519 auroc=0.6390
+  test_overall: count=7404 acc=0.5940 fpr=0.2488 recall=0.4527 auroc=0.6403
+  test_single: count=7281 acc=0.5937 fpr=0.2484 recall=0.4519 auroc=0.6390
+  test_overlap: count=123 acc=0.6098 fpr=0.2712 recall=0.5000 auroc=0.6610
+Epoch 9 step 100/1036 train_loss=0.2102 train_acc=0.9513
+Epoch 9 step 200/1036 train_loss=0.2039 train_acc=0.9552
+Epoch 9 step 300/1036 train_loss=0.2086 train_acc=0.9519
+Epoch 9 step 400/1036 train_loss=0.2067 train_acc=0.9535
+Epoch 9 step 500/1036 train_loss=0.2051 train_acc=0.9557
+Epoch 9 step 600/1036 train_loss=0.2054 train_acc=0.9554
+Epoch 9 step 700/1036 train_loss=0.2059 train_acc=0.9550
+Epoch 9 step 800/1036 train_loss=0.2054 train_acc=0.9551
+Epoch 9 step 900/1036 train_loss=0.2053 train_acc=0.9552
+Epoch 9 step 1000/1036 train_loss=0.2053 train_acc=0.9550
+Epoch 9: train_loss=0.2047 train_acc=0.9554 test_loss=0.9943 test_acc=0.5949 test_fpr=0.3104 test_recall=0.5099 test_auroc=0.6465
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.5949 fpr=0.3104 recall=0.5099 auroc=0.6465
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.7398 fpr=0.2712 recall=0.7500 auroc=0.7288
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.5925 fpr=0.3111 recall=0.5059 auroc=0.6457
+  test_overall: count=7404 acc=0.5949 fpr=0.3104 recall=0.5099 auroc=0.6465
+  test_single: count=7281 acc=0.5925 fpr=0.3111 recall=0.5059 auroc=0.6457
+  test_overlap: count=123 acc=0.7398 fpr=0.2712 recall=0.7500 auroc=0.7288
+Epoch 10 step 100/1036 train_loss=0.1994 train_acc=0.9581
+Epoch 10 step 200/1036 train_loss=0.1959 train_acc=0.9600
+Epoch 10 step 300/1036 train_loss=0.1941 train_acc=0.9614
+Epoch 10 step 400/1036 train_loss=0.1942 train_acc=0.9616
+Epoch 10 step 500/1036 train_loss=0.1935 train_acc=0.9616
+Epoch 10 step 600/1036 train_loss=0.1948 train_acc=0.9608
+Epoch 10 step 700/1036 train_loss=0.1953 train_acc=0.9602
+Epoch 10 step 800/1036 train_loss=0.1955 train_acc=0.9600
+Epoch 10 step 900/1036 train_loss=0.1954 train_acc=0.9595
+Epoch 10 step 1000/1036 train_loss=0.1965 train_acc=0.9588
+Epoch 10: train_loss=0.1963 train_acc=0.9589 test_loss=1.0823 test_acc=0.5879 test_fpr=0.2593 test_recall=0.4506 test_auroc=0.6242
+[EvalSplit][FUSED][ALL][OVERALL] count=7404 acc=0.5879 fpr=0.2593 recall=0.4506 auroc=0.6242
+[EvalSplit][FUSED][OVERLAP][OVERALL] count=123 acc=0.6098 fpr=0.2712 recall=0.5000 auroc=0.7288
+[EvalSplit][FUSED][SINGLE][OVERALL] count=7281 acc=0.5876 fpr=0.2591 recall=0.4498 auroc=0.6237
+  test_overall: count=7404 acc=0.5879 fpr=0.2593 recall=0.4506 auroc=0.6242
+  test_single: count=7281 acc=0.5876 fpr=0.2591 recall=0.4498 auroc=0.6237
+  test_overlap: count=123 acc=0.6098 fpr=0.2712 recall=0.5000 auroc=0.7288
+[Checkpoint] Best checkpoint summary: epoch=4, test_acc=0.646948, path=checkpoints/dino_classifier_head_s5p_temporal_one_block_best.pt

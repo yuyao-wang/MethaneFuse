@@ -8,7 +8,7 @@ from pathlib import Path
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import suppress
-from typing import Optional, Sequence, Tuple, Union
+from typing import Any, Optional, Sequence, Tuple, Union
 
 import numpy as np
 import pandas as pd
@@ -625,6 +625,122 @@ def resize_imgs(x_dict, size: int):
     return x_dict
 
 
+def _as_bool(value: Any) -> bool:
+    if value is None:
+        return False
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        if isinstance(value, float) and value != value:
+            return False
+        return value >= 0.5
+    text = str(value).strip().lower()
+    if text in {"1", "true", "t", "yes", "y"}:
+        return True
+    if text in {"0", "false", "f", "no", "n", "", "nan", "none", "null"}:
+        return False
+    try:
+        return float(text) >= 0.5
+    except Exception:
+        return False
+
+
+def resolve_overlap_flags_from_df(df: pd.DataFrame, overlap_column: str) -> Tuple[torch.Tensor, str]:
+    candidate_columns = []
+    if overlap_column:
+        candidate_columns.extend([c.strip() for c in overlap_column.split(",") if c.strip()])
+    candidate_columns.extend(["overlap_mode", "is_overlap", "overlap", "overlap_flag"])
+
+    seen = set()
+    deduped = []
+    for col in candidate_columns:
+        if col not in seen:
+            deduped.append(col)
+            seen.add(col)
+    candidate_columns = deduped
+
+    chosen_col = None
+    for col in candidate_columns:
+        if col in df.columns:
+            chosen_col = col
+            break
+
+    if chosen_col is not None:
+        flags = torch.tensor([_as_bool(v) for v in df[chosen_col].tolist()], dtype=torch.bool)
+        return flags, chosen_col
+
+    count_columns = ["available_sensor_count_single4", "available_sensor_count", "sensor_count", "num_sensors"]
+    for col in count_columns:
+        if col in df.columns:
+            numeric_values = []
+            for v in df[col].tolist():
+                try:
+                    numeric_values.append(float(v))
+                except Exception:
+                    numeric_values.append(0.0)
+            numeric = torch.tensor(numeric_values, dtype=torch.float32)
+            flags = numeric >= 2.0
+            return flags, f"{col}>=2"
+
+    raise ValueError(
+        f"Could not infer overlap flags from test CSV columns. "
+        f"Provide --overlap_column and ensure it exists. Available columns: {list(df.columns)}"
+    )
+
+
+def compute_binary_split_metrics(labels: torch.Tensor, preds: torch.Tensor, probs: torch.Tensor) -> dict:
+    n = int(labels.numel())
+    out = {
+        "count": n,
+        "acc": float("nan"),
+        "fpr": float("nan"),
+        "recall": float("nan"),
+        "auroc": float("nan"),
+    }
+    if n == 0:
+        return out
+
+    labels = labels.to(torch.int64)
+    preds = preds.to(torch.int64)
+    out["acc"] = float((preds == labels).float().mean().item())
+
+    tp = int(((preds == 1) & (labels == 1)).sum().item())
+    fp = int(((preds == 1) & (labels == 0)).sum().item())
+    fn = int(((preds == 0) & (labels == 1)).sum().item())
+    tn = int(((preds == 0) & (labels == 0)).sum().item())
+    out["recall"] = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    out["fpr"] = fp / (fp + tn) if (fp + tn) > 0 else 0.0
+
+    try:
+        from sklearn.metrics import roc_auc_score
+
+        out["auroc"] = float(roc_auc_score(labels.cpu().numpy(), probs.cpu().numpy()))
+    except Exception:
+        out["auroc"] = float("nan")
+    return out
+
+
+def compute_eval_split_panel(
+    labels: torch.Tensor, preds: torch.Tensor, probs: torch.Tensor, overlap_flags: torch.Tensor
+) -> dict:
+    if not (labels.shape == preds.shape == probs.shape == overlap_flags.shape):
+        raise ValueError("labels/preds/probs/overlap_flags must have identical shape")
+    split_masks = {
+        "overall": torch.ones_like(labels, dtype=torch.bool),
+        "single": ~overlap_flags.to(torch.bool),
+        "overlap": overlap_flags.to(torch.bool),
+    }
+    panel = {}
+    for name, mask in split_masks.items():
+        idx = torch.nonzero(mask, as_tuple=False).flatten()
+        panel[name] = compute_binary_split_metrics(
+            labels.index_select(0, idx),
+            preds.index_select(0, idx),
+            probs.index_select(0, idx),
+        )
+    return panel
+
+
 def set_trainable(module: nn.Module, requires_grad: bool):
     if isinstance(module, nn.DataParallel):
         module = module.module
@@ -746,6 +862,12 @@ def main(args):
         scale_value=args.scale_value,
     )
     filter_dataset_to_s5p_only(base_test_ds, split_name="test")
+    test_overlap_flags, overlap_source = resolve_overlap_flags_from_df(base_test_ds.df, args.overlap_column)
+    overlap_count = int(test_overlap_flags.sum().item())
+    print(
+        f"Loaded overlap flags from '{overlap_source}': overlap={overlap_count}, single={len(test_overlap_flags) - overlap_count}",
+        flush=True,
+    )
 
     if args.local_cache_warmup and cache_obj is not None:
         all_paths = []
@@ -757,6 +879,10 @@ def main(args):
 
     train_ds = S5pSimpleNpzDataset(base_train_ds, resize_to=args.resize_size)
     test_ds = S5pSimpleNpzDataset(base_test_ds, resize_to=args.resize_size)
+    if len(test_overlap_flags) != len(test_ds):
+        raise RuntimeError(
+            f"Overlap flags length mismatch: flags={len(test_overlap_flags)} vs test_ds={len(test_ds)}"
+        )
 
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
@@ -882,11 +1008,22 @@ def main(args):
         correct = 0
         total = 0
         test_loss_total = 0.0
-        tp = fp = fn = tn = 0
+        eval_offset = 0
         all_probs = []
+        all_preds = []
         all_targets = []
+        all_overlap_flags = []
         with torch.no_grad():
             for step, (x_dict, labels) in enumerate(test_loader, 1):
+                batch_size = labels.size(0)
+                batch_overlap = test_overlap_flags[eval_offset : eval_offset + batch_size]
+                if batch_overlap.numel() != batch_size:
+                    raise RuntimeError(
+                        f"Overlap flag length mismatch during eval: offset={eval_offset}, "
+                        f"batch={batch_size}, flags_total={len(test_overlap_flags)}"
+                    )
+                eval_offset += batch_size
+
                 labels = labels.to(device)
                 x_dict = recursive_to_device(x_dict, device)
                 imgs = x_dict.get("imgs")
@@ -909,37 +1046,65 @@ def main(args):
                 total += labels.size(0)
                 probs = F.softmax(logits, dim=1)[:, 1]
                 all_probs.append(probs.detach().cpu())
+                all_preds.append(preds.detach().cpu())
                 all_targets.append(labels.detach().cpu())
-                tp += ((preds == 1) & (labels == 1)).sum().item()
-                fp += ((preds == 1) & (labels == 0)).sum().item()
-                fn += ((preds == 0) & (labels == 1)).sum().item()
-                tn += ((preds == 0) & (labels == 0)).sum().item()
+                all_overlap_flags.append(batch_overlap.clone())
 
                 if args.max_eval_steps is not None and step >= args.max_eval_steps:
                     break
 
-        test_acc = correct / total if total > 0 else 0.0
+        test_acc = correct / total if total > 0 else float("nan")
         test_loss = test_loss_total / total if total > 0 else float("nan")
-        recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-        fpr = fp / (fp + tn) if (fp + tn) > 0 else 0.0
         all_probs = torch.cat(all_probs) if len(all_probs) > 0 else torch.tensor([])
+        all_preds = torch.cat(all_preds) if len(all_preds) > 0 else torch.tensor([], dtype=torch.int64)
         all_targets = torch.cat(all_targets) if len(all_targets) > 0 else torch.tensor([])
-        if all_probs.numel() > 0:
-            try:
-                from sklearn.metrics import roc_auc_score
+        all_overlap_flags = torch.cat(all_overlap_flags) if len(all_overlap_flags) > 0 else torch.tensor([], dtype=torch.bool)
 
-                test_auroc = float(roc_auc_score(all_targets.numpy(), all_probs.numpy()))
-            except Exception:
-                test_auroc = float("nan")
+        if all_targets.numel() > 0:
+            split_panel = compute_eval_split_panel(all_targets, all_preds, all_probs, all_overlap_flags)
         else:
-            test_auroc = float("nan")
+            empty = {"count": 0, "acc": float("nan"), "fpr": float("nan"), "recall": float("nan"), "auroc": float("nan")}
+            split_panel = {"overall": dict(empty), "single": dict(empty), "overlap": dict(empty)}
+
+        overall_metrics = split_panel["overall"]
+        single_metrics = split_panel["single"]
+        overlap_metrics = split_panel["overlap"]
+        test_acc = overall_metrics["acc"]
+        recall = overall_metrics["recall"]
+        fpr = overall_metrics["fpr"]
+        test_auroc = overall_metrics["auroc"]
 
         print(
             f"Epoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
             f"test_loss={test_loss:.4f} test_acc={test_acc:.4f} "
-            f"recall={recall:.4f} fpr={fpr:.4f} auroc={test_auroc:.4f}",
+            f"test_fpr={fpr:.4f} test_recall={recall:.4f} test_auroc={test_auroc:.4f}",
             flush=True,
         )
+        print(
+            f"[EvalSplit][FUSED][ALL][OVERALL] count={int(overall_metrics['count'])} "
+            f"acc={overall_metrics['acc']:.4f} fpr={overall_metrics['fpr']:.4f} "
+            f"recall={overall_metrics['recall']:.4f} auroc={overall_metrics['auroc']:.4f}",
+            flush=True,
+        )
+        print(
+            f"[EvalSplit][FUSED][OVERLAP][OVERALL] count={int(overlap_metrics['count'])} "
+            f"acc={overlap_metrics['acc']:.4f} fpr={overlap_metrics['fpr']:.4f} "
+            f"recall={overlap_metrics['recall']:.4f} auroc={overlap_metrics['auroc']:.4f}",
+            flush=True,
+        )
+        print(
+            f"[EvalSplit][FUSED][SINGLE][OVERALL] count={int(single_metrics['count'])} "
+            f"acc={single_metrics['acc']:.4f} fpr={single_metrics['fpr']:.4f} "
+            f"recall={single_metrics['recall']:.4f} auroc={single_metrics['auroc']:.4f}",
+            flush=True,
+        )
+        for split_name in ("overall", "single", "overlap"):
+            m = split_panel[split_name]
+            print(
+                f"  test_{split_name}: count={int(m['count'])} acc={m['acc']:.4f} "
+                f"fpr={m['fpr']:.4f} recall={m['recall']:.4f} auroc={m['auroc']:.4f}",
+                flush=True,
+            )
 
         metric_values = {
             "test_acc": test_acc,
@@ -975,6 +1140,17 @@ def main(args):
                     "test_recall": recall,
                     "test_fpr": fpr,
                     "test_auroc": test_auroc,
+                    "test_overall_count": int(overall_metrics["count"]),
+                    "test_single_count": int(single_metrics["count"]),
+                    "test_single_acc": single_metrics["acc"],
+                    "test_single_recall": single_metrics["recall"],
+                    "test_single_fpr": single_metrics["fpr"],
+                    "test_single_auroc": single_metrics["auroc"],
+                    "test_overlap_count": int(overlap_metrics["count"]),
+                    "test_overlap_acc": overlap_metrics["acc"],
+                    "test_overlap_recall": overlap_metrics["recall"],
+                    "test_overlap_fpr": overlap_metrics["fpr"],
+                    "test_overlap_auroc": overlap_metrics["auroc"],
                 },
                 "backbone_state_dict": unwrap_module(backbone).state_dict(),
                 "head_state_dict": unwrap_module(head).state_dict(),
@@ -1005,6 +1181,17 @@ def main(args):
                     "test_recall": recall,
                     "test_fpr": fpr,
                     "test_auroc": test_auroc,
+                    "test_overall_count": int(overall_metrics["count"]),
+                    "test_single_count": int(single_metrics["count"]),
+                    "test_single_acc": single_metrics["acc"],
+                    "test_single_recall": single_metrics["recall"],
+                    "test_single_fpr": single_metrics["fpr"],
+                    "test_single_auroc": single_metrics["auroc"],
+                    "test_overlap_count": int(overlap_metrics["count"]),
+                    "test_overlap_acc": overlap_metrics["acc"],
+                    "test_overlap_recall": overlap_metrics["recall"],
+                    "test_overlap_fpr": overlap_metrics["fpr"],
+                    "test_overlap_auroc": overlap_metrics["auroc"],
                     "best_metric_value": best_metric_value if np.isfinite(best_metric_value) else float("nan"),
                     "best_metric_epoch": best_epoch,
                 }
@@ -1137,6 +1324,14 @@ if __name__ == "__main__":
         "--t360_col",
         default="path_t360",
         help="CSV column for t-360 path.",
+    )
+    parser.add_argument(
+        "--overlap_column",
+        default="overlap_mode",
+        help=(
+            "CSV column name (or comma-separated candidate names) indicating overlap rows. "
+            "Truthy values are treated as overlap; others as single."
+        ),
     )
     parser.add_argument("--local_cache_dir", default=None, help="Directory for caching NPZ files locally.")
     parser.add_argument("--local_cache_warmup", action="store_true", help="Pre-copy training/testing files to the local cache.")

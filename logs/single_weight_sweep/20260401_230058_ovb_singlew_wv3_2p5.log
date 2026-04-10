@@ -1,0 +1,42 @@
+/home/yuyao/panopticon/dinov2/layers/swiglu_ffn.py:45: UserWarning: xFormers is disabled (SwiGLU)
+  warnings.warn("xFormers is disabled (SwiGLU)")
+/home/yuyao/panopticon/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/home/yuyao/panopticon/dinov2/layers/attention.py:30: UserWarning: xFormers is disabled (Attention)
+  warnings.warn("xFormers is disabled (Attention)")
+/home/yuyao/panopticon/dinov2/layers/attention.py:34: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/home/yuyao/panopticon/dinov2/layers/block.py:35: UserWarning: xFormers is disabled (Block)
+  warnings.warn("xFormers is disabled (Block)")
+/home/yuyao/panopticon/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+[Cache] Enabled local cache dir=/diniuvol/yuyao/local_train_temp_cache (min_free_gb=200.00)
+[Cache] Warmup disabled; cache will populate lazily on first file access.
+Traceback (most recent call last):
+  File "/home/yuyao/panopticon/universal_models_fusion/multi_sensor_panopticon_4_overall_boost.py", line 2584, in <module>
+    main(args)
+  File "/home/yuyao/panopticon/universal_models_fusion/multi_sensor_panopticon_4_overall_boost.py", line 1657, in main
+    base_train_ds = TriSensorTemporalCsvDataset(
+  File "/home/yuyao/panopticon/universal_models_fusion/multi_sensor_panopticon_4_overall_boost.py", line 766, in __init__
+    super().__init__(*args, **kwargs)
+  File "/home/yuyao/panopticon/dinov2/data/datasets/s2_csv.py", line 401, in __init__
+    super().__init__(
+  File "/home/yuyao/panopticon/dinov2/data/datasets/s2_csv.py", line 91, in __init__
+    dfs = [pd.read_csv(p, low_memory=False) for p in csv_path]
+  File "/home/yuyao/panopticon/dinov2/data/datasets/s2_csv.py", line 91, in <listcomp>
+    dfs = [pd.read_csv(p, low_memory=False) for p in csv_path]
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/pandas/util/_decorators.py", line 211, in wrapper
+    return func(*args, **kwargs)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/pandas/util/_decorators.py", line 331, in wrapper
+    return func(*args, **kwargs)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 950, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 605, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1442, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1735, in _make_engine
+    self.handles = get_handle(
+  File "/home/yuyao/miniconda3/envs/panopticon/lib/python3.9/site-packages/pandas/io/common.py", line 856, in get_handle
+    handle = open(
+PermissionError: [Errno 13] Permission denied: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv'
