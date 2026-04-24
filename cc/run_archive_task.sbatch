@@ -35,7 +35,7 @@ cd "$REPO"
 
 WORK_ROOT="$SLURM_TMPDIR/panopticon_data"
 DATA_ROOT="$WORK_ROOT/$DATASET"
-mkdir -p "$DATA_ROOT" "$SLURM_TMPDIR/cache" "$SLURM_TMPDIR/tmp"
+mkdir -p "$DATA_ROOT" "$SLURM_TMPDIR/tmp"
 
 shopt -s nullglob
 archive_parts=($ARCHIVE_PART_GLOB)
@@ -59,7 +59,7 @@ export DATA_ROOT
 export TRAIN_CSV="$DATA_ROOT/manifest_time_train.csv"
 export TEST_CSV="$DATA_ROOT/manifest_time_test.csv"
 export TMP_BASE="$SLURM_TMPDIR/tmp"
-export CACHE_DIR="$SLURM_TMPDIR/cache"
+export CACHE_DIR="${CACHE_DIR:-}"
 export WEIGHTS
 export RUN_LABEL
 export PYTHON_BIN=python
