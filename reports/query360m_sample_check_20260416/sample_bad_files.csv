@@ -1,0 +1,4 @@
+manifest,row_idx,id,column,sensor,path,error_type,error_msg
+test,848,73425,s2_90_path,s2,/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/query_360m/crops/query_00073425/s2_90.tif,DeflateError,libdeflate_zlib_decompress returned LIBDEFLATE_INSUFFICIENT_SPACE
+train,95905,99800,emit_360_path,emit(wv3),/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/query_360m/crops/query_00099800/emit_360.tif,DeflateError,libdeflate_zlib_decompress returned LIBDEFLATE_INSUFFICIENT_SPACE
+test,14896,184071,emit_360_path,emit(wv3),/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/query_360m/crops/query_00184071/emit_360.tif,DeflateError,libdeflate_zlib_decompress returned LIBDEFLATE_INSUFFICIENT_SPACE

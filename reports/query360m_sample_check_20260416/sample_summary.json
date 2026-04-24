@@ -1,0 +1,25 @@
+{
+  "seed": 20260416,
+  "train_total_rows": 167651,
+  "test_total_rows": 23083,
+  "train_sampled_rows": 350,
+  "test_sampled_rows": 150,
+  "sampled_rows_total": 500,
+  "checked_tiff_refs": 2264,
+  "unique_tiffs_checked": 2264,
+  "rows_with_error": 3,
+  "error_records": 3,
+  "error_type_counts": {
+    "DeflateError": 3
+  },
+  "sensor_error_counts": {
+    "s2": 1,
+    "emit(wv3)": 2
+  },
+  "column_error_counts": {
+    "s2_90_path": 1,
+    "emit_360_path": 2
+  },
+  "bad_unique_paths": 3,
+  "bad_csv": "/home/yuyao/panopticon/reports/query360m_sample_check_20260416/sample_bad_files.csv"
+}

@@ -221,6 +221,76 @@ class LogitSummaryHead(nn.Module):
         return self.net(x)
 
 
+class LoRAExpert(nn.Module):
+    """Low-rank residual branch: x A B, scaled by alpha / rank."""
+
+    def __init__(self, in_features: int, out_features: int, rank: int, alpha: float):
+        super().__init__()
+        if rank <= 0:
+            raise ValueError(f"LoRA rank must be > 0, got {rank}")
+        self.down = nn.Linear(in_features, rank, bias=False)
+        self.up = nn.Linear(rank, out_features, bias=False)
+        self.scaling = float(alpha) / float(rank)
+        nn.init.kaiming_uniform_(self.down.weight, a=math.sqrt(5))
+        nn.init.zeros_(self.up.weight)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        return self.up(self.down(x)) * self.scaling
+
+
+class LoRAMoEQKV(nn.Module):
+    """Wrap a ViT qkv projection with gated LoRA experts on Q and V only.
+
+    The base projection remains ``xWq/xWk/xWv``. For Q and V, the wrapper adds
+    ``sum_i softmax(Wg CLS(x))_i * LoRA_i(x)``.
+    """
+
+    def __init__(
+        self,
+        base_qkv: nn.Linear,
+        *,
+        num_experts: int,
+        rank: int = 8,
+        alpha: float = 16.0,
+    ):
+        super().__init__()
+        if not isinstance(base_qkv, nn.Linear):
+            raise TypeError("base_qkv must be nn.Linear")
+        if base_qkv.out_features != base_qkv.in_features * 3:
+            raise ValueError(
+                "LoRAMoEQKV expects a fused qkv Linear with out_features == 3 * in_features, "
+                f"got in={base_qkv.in_features}, out={base_qkv.out_features}"
+            )
+        if num_experts <= 0:
+            raise ValueError(f"num_experts must be > 0, got {num_experts}")
+        self.base_qkv = base_qkv
+        self.in_features = base_qkv.in_features
+        self.out_features = base_qkv.out_features
+        self.num_experts = int(num_experts)
+        self.gate = nn.Linear(self.in_features, self.num_experts)
+        self.q_experts = nn.ModuleList(
+            LoRAExpert(self.in_features, self.in_features, rank, alpha) for _ in range(self.num_experts)
+        )
+        self.v_experts = nn.ModuleList(
+            LoRAExpert(self.in_features, self.in_features, rank, alpha) for _ in range(self.num_experts)
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        qkv = self.base_qkv(x)
+        q, k, v = qkv.chunk(3, dim=-1)
+        cls_token = x[:, 0, :]
+        gate = torch.softmax(self.gate(cls_token.float()), dim=-1).to(dtype=x.dtype)
+
+        q_delta = torch.zeros_like(q)
+        v_delta = torch.zeros_like(v)
+        for expert_idx, (q_expert, v_expert) in enumerate(zip(self.q_experts, self.v_experts)):
+            weight = gate[:, expert_idx].view(-1, 1, 1)
+            q_delta = q_delta + weight * q_expert(x)
+            v_delta = v_delta + weight * v_expert(x)
+
+        return torch.cat((q + q_delta, k, v + v_delta), dim=-1)
+
+
 class MaskedAttentionPooling(nn.Module):
     """Mask-aware attention pooling over a variable number of sensor features per row."""
 
@@ -1250,6 +1320,47 @@ def set_trainable(module: nn.Module, requires_grad: bool):
         p.requires_grad = requires_grad
 
 
+def install_lora_moe_qv_adapters(
+    backbone: DinoVisionTransformer,
+    *,
+    num_experts: int,
+    rank: int,
+    alpha: float,
+) -> int:
+    installed = 0
+    for module in backbone.modules():
+        qkv = getattr(module, "qkv", None)
+        if isinstance(qkv, LoRAMoEQKV):
+            continue
+        if isinstance(qkv, nn.Linear) and qkv.out_features == qkv.in_features * 3:
+            module.qkv = LoRAMoEQKV(qkv, num_experts=num_experts, rank=rank, alpha=alpha)
+            installed += 1
+    if installed == 0:
+        raise RuntimeError("No fused qkv Linear modules found for LoRA-MoE injection.")
+    return installed
+
+
+def lora_moe_parameters(module: nn.Module) -> list[nn.Parameter]:
+    params: list[nn.Parameter] = []
+    for child in module.modules():
+        if isinstance(child, LoRAMoEQKV):
+            params.extend(list(child.gate.parameters()))
+            params.extend(list(child.q_experts.parameters()))
+            params.extend(list(child.v_experts.parameters()))
+    return params
+
+
+def set_lora_moe_trainable(module: nn.Module, requires_grad: bool) -> None:
+    for param in lora_moe_parameters(module):
+        param.requires_grad = requires_grad
+
+
+def set_lora_moe_mode(module: nn.Module, training: bool) -> None:
+    for child in module.modules():
+        if isinstance(child, LoRAMoEQKV):
+            child.train(training)
+
+
 def init_wandb(args):
     if not args.use_wandb:
         return None
@@ -1310,6 +1421,36 @@ def try_resume(path: Path, model: nn.Module, optimizer, scheduler, scaler, devic
     best_test_acc = ckpt.get("best_test_acc", 0.0)
     print(f"Resumed from {path} at epoch {start_epoch-1}", flush=True)
     return start_epoch, global_step, best_train_acc, best_test_acc
+
+
+def load_model_checkpoint_flexible(path: Path, model: nn.Module, device: torch.device) -> None:
+    if not path.is_file():
+        raise FileNotFoundError(f"Checkpoint not found: {path}")
+    ckpt = torch.load(path, map_location=device)
+    state = ckpt["model"] if isinstance(ckpt, Mapping) and "model" in ckpt else ckpt
+    if not isinstance(state, Mapping):
+        raise TypeError(f"Checkpoint does not contain a state dict: {path}")
+
+    model_keys = set(model.state_dict().keys())
+    mapped_state: Dict[str, torch.Tensor] = {}
+    for key, value in state.items():
+        mapped_key = str(key)
+        if ".qkv." in mapped_key:
+            candidate = mapped_key.replace(".qkv.", ".qkv.base_qkv.")
+            if candidate in model_keys:
+                mapped_key = candidate
+        mapped_state[mapped_key] = value
+
+    incompatible = model.load_state_dict(mapped_state, strict=False)
+    missing = [key for key in incompatible.missing_keys if "q_experts" not in key and "v_experts" not in key and ".gate." not in key]
+    if missing:
+        print(f"[Checkpoint][Warn] Missing non-adapter keys while loading {path}: {missing[:20]}", flush=True)
+    if incompatible.unexpected_keys:
+        print(
+            f"[Checkpoint][Warn] Unexpected keys while loading {path}: {incompatible.unexpected_keys[:20]}",
+            flush=True,
+        )
+    print(f"Loaded model weights from {path}", flush=True)
 
 
 def build_scheduler(args, optimizer):
@@ -1430,13 +1571,18 @@ def mean_logits_by_row(
     return row_ids, row_logits
 
 
-def gather_head_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
+def gather_head_parameters(
+    model: MultiSensorPanopticonClassifier,
+    *,
+    include_patch_embeds: bool = True,
+) -> Sequence[nn.Parameter]:
     shared_patch = model.backbone.patch_embed
     extra_patch_params = []
-    for sensor, module in model.sensor_patch_embeds.items():
-        if module is shared_patch:
-            continue
-        extra_patch_params.extend(list(module.parameters()))
+    if include_patch_embeds:
+        for sensor, module in model.sensor_patch_embeds.items():
+            if module is shared_patch:
+                continue
+            extra_patch_params.extend(list(module.parameters()))
     summary_params = list(model.summary_head.parameters()) if model.summary_head is not None else []
     row_fusion_params = []
     if model.row_fusion_pool is not None:
@@ -1495,12 +1641,30 @@ def parse_args():
     parser.add_argument("--data_parallel", action="store_true")
     parser.add_argument("--train_backbone", action="store_true")
     parser.add_argument("--freeze_backbone_epochs", type=int, default=0)
+    parser.add_argument(
+        "--stage",
+        choices=["a", "b"],
+        default="a",
+        help="Stage A keeps the original training path. Stage B freezes backbone base weights and trains Q/V LoRA-MoE.",
+    )
+    parser.add_argument("--lora_rank", type=int, default=8)
+    parser.add_argument("--lora_alpha", type=float, default=16.0)
+    parser.add_argument(
+        "--stage_b_freeze_heads",
+        action="store_true",
+        help="In Stage B, freeze classifier/fusion heads too and train only LoRA-MoE adapter/gate parameters.",
+    )
     parser.add_argument("--max_grad_norm", type=float, default=1.0)
     parser.add_argument("--max_train_steps", type=int, default=None)
     parser.add_argument("--max_eval_steps", type=int, default=None)
     parser.add_argument("--log_interval", type=int, default=50)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--checkpoint_dir", default="checkpoints/multi_sensor")
+    parser.add_argument(
+        "--stage_a_checkpoint",
+        default=None,
+        help="Optional full-model checkpoint to initialize Stage B before training LoRA-MoE adapters.",
+    )
     parser.add_argument("--lr_scheduler", choices=["none", "noam"], default="noam")
     parser.add_argument("--warmup_steps", type=int, default=4000)
     parser.add_argument("--use_wandb", action="store_true")
@@ -1607,12 +1771,40 @@ def main(args):
     elif args.data_parallel:
         print("DataParallel requested but insufficient CUDA devices; running single-device.", flush=True)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
-    head_params = gather_head_parameters(core_model)
-    param_groups = [
-        {"params": head_params, "lr": args.head_lr},
-    ]
-    if args.train_backbone:
-        param_groups.insert(0, {"params": core_model.backbone.parameters(), "lr": args.backbone_lr})
+    stage = str(args.stage).strip().lower()
+    if stage == "b":
+        installed = install_lora_moe_qv_adapters(
+            core_model.backbone,
+            num_experts=len(core_model.sensor_order),
+            rank=args.lora_rank,
+            alpha=args.lora_alpha,
+        )
+        print(
+            f"[Stage B] Installed Q/V LoRA-MoE adapters in {installed} qkv modules "
+            f"(experts={len(core_model.sensor_order)}, rank={args.lora_rank}, alpha={args.lora_alpha:g}).",
+            flush=True,
+        )
+        if args.stage_a_checkpoint:
+            load_model_checkpoint_flexible(Path(args.stage_a_checkpoint), core_model, device)
+    head_params = list(gather_head_parameters(core_model, include_patch_embeds=(stage != "b")))
+    lora_params = lora_moe_parameters(core_model.backbone)
+    if stage == "b":
+        set_trainable(core_model.backbone, False)
+        for patch_embed in core_model.sensor_patch_embeds.values():
+            set_trainable(patch_embed, False)
+        set_lora_moe_trainable(core_model.backbone, True)
+        if args.stage_b_freeze_heads:
+            for param in head_params:
+                param.requires_grad = False
+        param_groups = [{"params": lora_params, "lr": args.backbone_lr}]
+        if not args.stage_b_freeze_heads:
+            param_groups.append({"params": head_params, "lr": args.head_lr})
+    else:
+        param_groups = [
+            {"params": head_params, "lr": args.head_lr},
+        ]
+        if args.train_backbone:
+            param_groups.insert(0, {"params": core_model.backbone.parameters(), "lr": args.backbone_lr})
 
     optimizer = torch.optim.Adam(param_groups, weight_decay=args.weight_decay, betas=(args.momentum, 0.999))
     scheduler = build_scheduler(args, optimizer)
@@ -1673,29 +1865,37 @@ def main(args):
 
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"sensors={sensors_list}, train_backbone={args.train_backbone}, "
+        f"sensors={sensors_list}, stage={stage.upper()}, train_backbone={args.train_backbone}, "
         f"fusion={'masked_attention_pooling' if args.row_fusion_mode == 'map' else 'max_pooling'}, "
         f"sensor_aux_loss_weight={args.sensor_aux_loss_weight:.3f}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
-        freeze_backbone = (not args.train_backbone) or (
+        model.train()
+        freeze_backbone = stage == "b" or (not args.train_backbone) or (
             args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
         )
-        if freeze_backbone:
+        if stage == "b":
+            set_trainable(core_model.backbone, False)
+            for patch_embed in core_model.sensor_patch_embeds.values():
+                set_trainable(patch_embed, False)
+            set_lora_moe_trainable(core_model.backbone, True)
+            core_model.backbone.eval()
+            set_lora_moe_mode(core_model.backbone, True)
+        elif freeze_backbone:
             set_trainable(core_model.backbone, False)
             core_model.backbone.eval()
         else:
             set_trainable(core_model.backbone, True)
             core_model.backbone.train()
-        model.train()
         core_model.heads.train()
         if core_model.row_fusion_pool is not None:
             core_model.row_fusion_pool.train()
         if core_model.row_fusion_head is not None:
             core_model.row_fusion_head.train()
-        for sensor in core_model.sensor_patch_embeds.values():
-            sensor.train()
+        if stage != "b":
+            for sensor in core_model.sensor_patch_embeds.values():
+                sensor.train()
 
         total_loss = 0.0
         total = 0

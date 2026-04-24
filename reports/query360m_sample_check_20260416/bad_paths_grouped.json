@@ -1,0 +1,32 @@
+{
+  "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/query_360m/crops/query_00073425/s2_90.tif": [
+    {
+      "manifest": "test",
+      "row_idx": 848,
+      "id": "73425",
+      "column": "s2_90_path",
+      "error_type": "DeflateError",
+      "error_msg": "libdeflate_zlib_decompress returned LIBDEFLATE_INSUFFICIENT_SPACE"
+    }
+  ],
+  "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/query_360m/crops/query_00099800/emit_360.tif": [
+    {
+      "manifest": "train",
+      "row_idx": 95905,
+      "id": "99800",
+      "column": "emit_360_path",
+      "error_type": "DeflateError",
+      "error_msg": "libdeflate_zlib_decompress returned LIBDEFLATE_INSUFFICIENT_SPACE"
+    }
+  ],
+  "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/query_360m/crops/query_00184071/emit_360.tif": [
+    {
+      "manifest": "test",
+      "row_idx": 14896,
+      "id": "184071",
+      "column": "emit_360_path",
+      "error_type": "DeflateError",
+      "error_msg": "libdeflate_zlib_decompress returned LIBDEFLATE_INSUFFICIENT_SPACE"
+    }
+  ]
+}

@@ -291,6 +291,165 @@ class RowwiseMaxPooling(nn.Module):
 HeadFactory = Callable[[int, int], nn.Module]
 
 
+class LoRAProjection(nn.Module):
+    """Low-rank projection used for Q/V LoRA branches."""
+
+    def __init__(
+        self,
+        in_dim: int,
+        out_dim: int,
+        rank: int,
+        *,
+        alpha: float = 16.0,
+        dropout: float = 0.0,
+    ):
+        super().__init__()
+        if rank <= 0:
+            raise ValueError("LoRA rank must be > 0")
+        self.rank = int(rank)
+        self.alpha = float(alpha)
+        self.scaling = self.alpha / float(self.rank)
+        self.down = nn.Linear(in_dim, self.rank, bias=False)
+        self.dropout = nn.Dropout(dropout) if dropout > 0 else nn.Identity()
+        self.up = nn.Linear(self.rank, out_dim, bias=False)
+        self.reset_parameters()
+
+    def reset_parameters(self) -> None:
+        nn.init.kaiming_uniform_(self.down.weight, a=math.sqrt(5))
+        nn.init.zeros_(self.up.weight)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        return self.up(self.dropout(self.down(x))) * self.scaling
+
+
+class SensorLoRAQKV(nn.Module):
+    """Wrap a frozen DINO qkv projection with shared and sensor-private Q/V LoRA."""
+
+    def __init__(
+        self,
+        base_qkv: nn.Linear,
+        *,
+        num_domains: int,
+        rank: int = 16,
+        alpha: float = 16.0,
+        dropout: float = 0.0,
+    ):
+        super().__init__()
+        if not isinstance(base_qkv, nn.Linear):
+            raise TypeError("SensorLoRAQKV expects an nn.Linear qkv projection")
+        if base_qkv.out_features % 3 != 0:
+            raise ValueError(f"qkv out_features must be divisible by 3, got {base_qkv.out_features}")
+        self.base_qkv = base_qkv
+        self.embed_dim = int(base_qkv.out_features // 3)
+        self.shared_q = LoRAProjection(base_qkv.in_features, self.embed_dim, rank, alpha=alpha, dropout=dropout)
+        self.shared_v = LoRAProjection(base_qkv.in_features, self.embed_dim, rank, alpha=alpha, dropout=dropout)
+        self.private_q = nn.ModuleList(
+            [LoRAProjection(base_qkv.in_features, self.embed_dim, rank, alpha=alpha, dropout=dropout) for _ in range(num_domains)]
+        )
+        self.private_v = nn.ModuleList(
+            [LoRAProjection(base_qkv.in_features, self.embed_dim, rank, alpha=alpha, dropout=dropout) for _ in range(num_domains)]
+        )
+        self.private_gate_logits = nn.ParameterList(
+            [nn.Parameter(torch.zeros((), dtype=torch.float32)) for _ in range(num_domains)]
+        )
+        self._current_domain: Optional[torch.Tensor] = None
+
+    def set_domain_id(self, domain_id: Union[int, torch.Tensor]) -> None:
+        if not torch.is_tensor(domain_id):
+            domain_id = torch.tensor(domain_id, dtype=torch.long)
+        self._current_domain = domain_id
+
+    def _resolve_domain(self, x: torch.Tensor) -> torch.Tensor:
+        if self._current_domain is None:
+            return torch.zeros((), device=x.device, dtype=torch.long)
+        domain = self._current_domain
+        if domain.device != x.device:
+            domain = domain.to(device=x.device, dtype=torch.long)
+        return domain
+
+    def _gate(self, domain_idx: int, *, device: torch.device, dtype: torch.dtype) -> torch.Tensor:
+        return torch.sigmoid(self.private_gate_logits[domain_idx]).to(device=device, dtype=dtype)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
+        out = self.base_qkv(x)
+        q_delta = self.shared_q(x)
+        v_delta = self.shared_v(x)
+        domain = self._resolve_domain(x)
+
+        if domain.ndim == 0:
+            domain_idx = int(domain.item())
+            gate = self._gate(domain_idx, device=x.device, dtype=x.dtype)
+            q_delta = q_delta + gate * self.private_q[domain_idx](x)
+            v_delta = v_delta + gate * self.private_v[domain_idx](x)
+        else:
+            if domain.shape[0] != x.shape[0]:
+                raise ValueError(f"domain_id batch mismatch: expected {x.shape[0]}, got {domain.shape[0]}")
+            for domain_idx in range(len(self.private_q)):
+                selector = domain == domain_idx
+                if selector.any():
+                    x_sel = x[selector]
+                    gate = self._gate(domain_idx, device=x_sel.device, dtype=x_sel.dtype)
+                    q_delta[selector] = q_delta[selector] + gate * self.private_q[domain_idx](x_sel)
+                    v_delta[selector] = v_delta[selector] + gate * self.private_v[domain_idx](x_sel)
+
+        out = out.clone()
+        out[..., : self.embed_dim] = out[..., : self.embed_dim] + q_delta
+        out[..., 2 * self.embed_dim :] = out[..., 2 * self.embed_dim :] + v_delta
+        return out
+
+
+def _iter_transformer_blocks(backbone: DinoVisionTransformer) -> list[tuple[nn.ModuleList, int, nn.Module]]:
+    blocks: list[tuple[nn.ModuleList, int, nn.Module]] = []
+    for top_idx, block_chunk in enumerate(backbone.blocks):
+        if isinstance(block_chunk, nn.ModuleList):
+            for idx, block in enumerate(block_chunk):
+                if isinstance(block, nn.Identity):
+                    continue
+                blocks.append((block_chunk, idx, block))
+        else:
+            blocks.append((backbone.blocks, top_idx, block_chunk))
+    return blocks
+
+
+def _attach_sensor_lora_qv(
+    backbone: DinoVisionTransformer,
+    *,
+    num_domains: int,
+    adapter_blocks: int,
+    rank: int = 16,
+    alpha: float = 16.0,
+    dropout: float = 0.0,
+) -> DinoVisionTransformer:
+    if adapter_blocks <= 0 or num_domains <= 0:
+        backbone._sensor_lora_qkv_modules = []  # type: ignore[attr-defined]
+        return backbone
+
+    block_entries = _iter_transformer_blocks(backbone)
+    if not block_entries:
+        raise RuntimeError("No transformer blocks found when attaching Q/V LoRA.")
+    adapter_blocks = min(int(adapter_blocks), len(block_entries))
+    wrapped: list[SensorLoRAQKV] = []
+    for _, _, block in block_entries[:adapter_blocks]:
+        attn = getattr(block, "attn", None)
+        qkv = getattr(attn, "qkv", None)
+        if isinstance(qkv, SensorLoRAQKV):
+            qkv_module = qkv
+        elif isinstance(qkv, nn.Linear):
+            qkv_module = SensorLoRAQKV(
+                qkv,
+                num_domains=num_domains,
+                rank=rank,
+                alpha=alpha,
+                dropout=dropout,
+            )
+            attn.qkv = qkv_module
+        else:
+            raise TypeError(f"Transformer block attention qkv must be nn.Linear, got {type(qkv).__name__}")
+        wrapped.append(qkv_module)
+    backbone._sensor_lora_qkv_modules = wrapped  # type: ignore[attr-defined]
+    return backbone
+
+
 class MultiSensorPanopticonClassifier(nn.Module):
     """Shared DinoViT backbone with sensor-specific Panopticon PEs and heads."""
 
@@ -302,6 +461,10 @@ class MultiSensorPanopticonClassifier(nn.Module):
         num_classes: Mapping[str, int] | int = 2,
         patch_embed_overrides: Optional[Mapping[str, PanopticonPE]] = None,
         head_factory: Optional[Union[HeadFactory, nn.Module]] = None,
+        adapter_blocks: int = 12,
+        adapter_bottleneck_dim: int = 16,
+        adapter_alpha: float = 16.0,
+        adapter_dropout: float = 0.0,
         enable_summary_head: bool = True,
         summary_hidden_dim: int = 128,
         summary_dropout: float = 0.1,
@@ -319,6 +482,14 @@ class MultiSensorPanopticonClassifier(nn.Module):
         if not self.sensor_order:
             raise ValueError("At least one sensor must be specified")
         self.sensor_to_idx = {sensor: idx for idx, sensor in enumerate(self.sensor_order)}
+        _attach_sensor_lora_qv(
+            self.backbone,
+            num_domains=len(self.sensor_order),
+            adapter_blocks=adapter_blocks,
+            rank=adapter_bottleneck_dim,
+            alpha=adapter_alpha,
+            dropout=adapter_dropout,
+        )
 
         base_patch_embed = backbone.patch_embed
         sensor_modules = nn.ModuleDict()
@@ -392,6 +563,9 @@ class MultiSensorPanopticonClassifier(nn.Module):
     def _use_sensor(self, sensor: str):
         original = self.backbone.patch_embed
         self.backbone.patch_embed = self.sensor_patch_embeds[sensor]
+        domain_idx = self.sensor_to_idx[sensor]
+        for lora_qkv in getattr(self.backbone, "_sensor_lora_qkv_modules", []):
+            lora_qkv.set_domain_id(domain_idx)
         try:
             yield
         finally:
@@ -1447,6 +1621,58 @@ def gather_head_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[n
     return head_params
 
 
+def gather_shared_adapter_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
+    params: list[nn.Parameter] = []
+    seen: set[int] = set()
+    for qkv in getattr(model.backbone, "_sensor_lora_qkv_modules", []):
+        if not isinstance(qkv, SensorLoRAQKV):
+            continue
+        for module in (qkv.shared_q, qkv.shared_v):
+            for param in module.parameters():
+                if id(param) in seen:
+                    continue
+                seen.add(id(param))
+                params.append(param)
+    return params
+
+
+def gather_private_adapter_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
+    params: list[nn.Parameter] = []
+    seen: set[int] = set()
+    for qkv in getattr(model.backbone, "_sensor_lora_qkv_modules", []):
+        if not isinstance(qkv, SensorLoRAQKV):
+            continue
+        for module in (qkv.private_q, qkv.private_v):
+            for param in module.parameters():
+                if id(param) in seen:
+                    continue
+                seen.add(id(param))
+                params.append(param)
+        for gate in qkv.private_gate_logits:
+            if id(gate) in seen:
+                continue
+            seen.add(id(gate))
+            params.append(gate)
+    return params
+
+
+def gather_adapter_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
+    return list(gather_shared_adapter_parameters(model)) + list(gather_private_adapter_parameters(model))
+
+
+def gather_backbone_non_adapter_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[nn.Parameter]:
+    adapter_ids = {id(param) for param in gather_adapter_parameters(model)}
+    return [param for param in model.backbone.parameters() if id(param) not in adapter_ids]
+
+
+def set_qv_lora_trainable(model: MultiSensorPanopticonClassifier, requires_grad: bool) -> None:
+    for param in gather_adapter_parameters(model):
+        param.requires_grad = requires_grad
+    for qkv in getattr(model.backbone, "_sensor_lora_qkv_modules", []):
+        if isinstance(qkv, SensorLoRAQKV):
+            qkv.train(requires_grad)
+
+
 # --------------------------------------------------------------------------------------
 #  CLI / training loop
 # --------------------------------------------------------------------------------------
@@ -1488,12 +1714,48 @@ def parse_args():
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--head_lr", type=float, default=1e-3)
     parser.add_argument("--backbone_lr", type=float, default=1e-4)
+    parser.add_argument(
+        "--adapter_lr",
+        type=float,
+        default=None,
+        help="Stage B Q/V LoRA LR. If unset, uses backbone_lr * adapter_lr_multiplier.",
+    )
+    parser.add_argument("--adapter_lr_multiplier", type=float, default=2.0)
     parser.add_argument("--weight_decay", type=float, default=5e-4)
     parser.add_argument("--momentum", type=float, default=0.9)
     parser.add_argument("--num_workers", type=int, default=8)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--data_parallel", action="store_true")
     parser.add_argument("--train_backbone", action="store_true")
+    parser.add_argument(
+        "--stage_a_epochs",
+        type=int,
+        default=3,
+        help="Stage A epochs using the existing training behavior with the added Q/V LoRA branches frozen.",
+    )
+    parser.add_argument(
+        "--adapter_blocks",
+        type=int,
+        default=12,
+        help="Number of ViT blocks adapted with Q/V shared + sensor-private LoRA.",
+    )
+    parser.add_argument(
+        "--adapter_bottleneck_dim",
+        "--lora_rank",
+        dest="adapter_bottleneck_dim",
+        type=int,
+        default=16,
+        help="Low-rank dimension for each Q/V LoRA branch.",
+    )
+    parser.add_argument(
+        "--adapter_alpha",
+        "--lora_alpha",
+        dest="adapter_alpha",
+        type=float,
+        default=16.0,
+        help="LoRA alpha; effective scale is alpha / rank.",
+    )
+    parser.add_argument("--adapter_dropout", type=float, default=0.0)
     parser.add_argument("--freeze_backbone_epochs", type=int, default=0)
     parser.add_argument("--max_grad_norm", type=float, default=1.0)
     parser.add_argument("--max_train_steps", type=int, default=None)
@@ -1593,6 +1855,10 @@ def main(args):
 
     core_model = MultiSensorPanopticonClassifier(
         backbone=_load_backbone(args.weights),
+        adapter_blocks=args.adapter_blocks,
+        adapter_bottleneck_dim=args.adapter_bottleneck_dim,
+        adapter_alpha=args.adapter_alpha,
+        adapter_dropout=args.adapter_dropout,
         enable_summary_head=False,
         summary_hidden_dim=args.summary_hidden_dim,
         summary_dropout=args.summary_dropout,
@@ -1608,11 +1874,17 @@ def main(args):
         print("DataParallel requested but insufficient CUDA devices; running single-device.", flush=True)
     criterion = nn.CrossEntropyLoss(label_smoothing=0.05)
     head_params = gather_head_parameters(core_model)
+    adapter_shared_params = list(gather_shared_adapter_parameters(core_model))
+    adapter_private_params = list(gather_private_adapter_parameters(core_model))
+    backbone_params = list(gather_backbone_non_adapter_parameters(core_model))
+    adapter_lr_effective = args.adapter_lr if args.adapter_lr is not None else (args.backbone_lr * args.adapter_lr_multiplier)
     param_groups = [
-        {"params": head_params, "lr": args.head_lr},
+        {"name": "backbone", "params": backbone_params, "lr": args.backbone_lr},
+        {"name": "adapter_shared", "params": adapter_shared_params, "lr": adapter_lr_effective},
+        {"name": "adapter_private", "params": adapter_private_params, "lr": adapter_lr_effective},
+        {"name": "head", "params": head_params, "lr": args.head_lr},
     ]
-    if args.train_backbone:
-        param_groups.insert(0, {"params": core_model.backbone.parameters(), "lr": args.backbone_lr})
+    param_groups = [group for group in param_groups if len(group["params"]) > 0]
 
     optimizer = torch.optim.Adam(param_groups, weight_decay=args.weight_decay, betas=(args.momentum, 0.999))
     scheduler = build_scheduler(args, optimizer)
@@ -1651,6 +1923,8 @@ def main(args):
         )
     if args.sensor_aux_loss_weight < 0.0:
         raise ValueError(f"--sensor_aux_loss_weight must be >= 0, got {args.sensor_aux_loss_weight}.")
+    if args.stage_a_epochs < 0:
+        raise ValueError(f"--stage_a_epochs must be >= 0, got {args.stage_a_epochs}.")
     pin_memory = device.type == "cuda"
     train_loader = DataLoader(
         train_ds,
@@ -1674,21 +1948,32 @@ def main(args):
     print(
         f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
         f"sensors={sensors_list}, train_backbone={args.train_backbone}, "
+        f"stage_a_epochs={args.stage_a_epochs}, stage_b=frozen_dinovit_qv_lora_moe, "
+        f"adapter_blocks={args.adapter_blocks}, lora_rank={args.adapter_bottleneck_dim}, "
+        f"adapter_lr={adapter_lr_effective:.2e}, "
         f"fusion={'masked_attention_pooling' if args.row_fusion_mode == 'map' else 'max_pooling'}, "
         f"sensor_aux_loss_weight={args.sensor_aux_loss_weight:.3f}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
-        freeze_backbone = (not args.train_backbone) or (
-            args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
-        )
+        in_stage_a = epoch <= int(args.stage_a_epochs)
+        model.train()
+        if in_stage_a:
+            freeze_backbone = (not args.train_backbone) or (
+                args.freeze_backbone_epochs > 0 and epoch <= args.freeze_backbone_epochs
+            )
+        else:
+            freeze_backbone = True
         if freeze_backbone:
             set_trainable(core_model.backbone, False)
             core_model.backbone.eval()
         else:
             set_trainable(core_model.backbone, True)
             core_model.backbone.train()
-        model.train()
+        if in_stage_a:
+            set_qv_lora_trainable(core_model, False)
+        else:
+            set_qv_lora_trainable(core_model, True)
         core_model.heads.train()
         if core_model.row_fusion_pool is not None:
             core_model.row_fusion_pool.train()
@@ -1734,7 +2019,8 @@ def main(args):
             scaler.scale(loss).backward()
             if args.max_grad_norm and args.max_grad_norm > 0:
                 scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(param_groups[0]["params"], args.max_grad_norm)
+                trainable_params = [p for group in param_groups for p in group["params"] if p.requires_grad]
+                torch.nn.utils.clip_grad_norm_(trainable_params, args.max_grad_norm)
             scaler.step(optimizer)
             scaler.update()
             if scheduler is not None:

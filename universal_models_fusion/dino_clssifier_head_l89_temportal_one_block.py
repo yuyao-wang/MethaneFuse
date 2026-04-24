@@ -252,12 +252,34 @@ def init_wandb(args):
         return None
     import wandb
 
-    run = wandb.init(
-        project=args.wandb_project,
-        name=args.wandb_run_name,
-        config=vars(args),
-    )
-    return run
+    run_kwargs = {
+        "project": args.wandb_project,
+        "name": args.wandb_run_name,
+        "config": vars(args),
+    }
+    settings = wandb.Settings(init_timeout=300)
+
+    try:
+        return wandb.init(**run_kwargs, settings=settings)
+    except Exception as exc:
+        print(
+            f"[W&B] Online init failed ({type(exc).__name__}: {exc}). Falling back to offline mode.",
+            flush=True,
+        )
+
+    with suppress(Exception):
+        wandb.teardown()
+
+    try:
+        run = wandb.init(**run_kwargs, mode="offline", settings=settings)
+        print("[W&B] Running in offline mode. Use `wandb sync` to upload later.", flush=True)
+        return run
+    except Exception as exc:
+        print(
+            f"[W&B] Offline init failed ({type(exc).__name__}: {exc}). Continuing without W&B logging.",
+            flush=True,
+        )
+        return None
 
 
 def build_scheduler(args, optimizer):

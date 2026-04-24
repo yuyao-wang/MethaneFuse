@@ -124,26 +124,44 @@ export TEMP=/transferdiniu2/yuyao/temp
 #   --local_cache_min_free_gb 200 \
 #   --row_fusion_mode max    #{map,max}
 
-python universal_models_fusion/multi_sensor_panopticon_4.py \
-  --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid_emit_binary_mask_cleaned_train.csv \
-  --test_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid_emit_binary_mask_cleaned_test.csv \
+# python universal_models_fusion/multi_sensor_panopticon_4.py \
+#   --train_csv /home/yuyao/panopticon/data_csv/emit_s5p_balanced_clean_train.csv \
+#   --test_csv /home/yuyao/panopticon/data_csv/emit_s5p_balanced_clean_test.csv \
+#   --weights weights/panopticon_vitb14_teacher.pth \
+#   --batch_size 32 \
+#   --epochs 50 \
+#   --train_backbone \
+#   --freeze_backbone_epochs 1 \
+#   --backbone_lr 5e-5 \
+#   --head_lr 1e-3 \
+#   --sensor_aux_loss_weight 0.3 \
+#   --num_workers 8 \
+#   --device cuda \
+#   --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_tests5p \
+#   --use_wandb \
+#   --wandb_project baselines \
+#   --wandb_run_name "Geo universal overlap dataset include all 2025 (schema2)" \
+#   --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
+#   --local_cache_min_free_gb 200 \
+#   --row_fusion_mode max    #{map,max}
+
+python universal_models_fusion/multi_sensor_panopticon_4_segmentation.py \
+  --train_csv /home/yuyao/panopticon/data_csv/emit_s5p_balanced_clean_train.csv \
+  --test_csv /home/yuyao/panopticon/data_csv/emit_s5p_balanced_clean_test.csv \
+  --tasks s2,l89,emit \
   --weights weights/panopticon_vitb14_teacher.pth \
   --batch_size 32 \
   --epochs 50 \
-  --train_backbone \
-  --freeze_backbone_epochs 1 \
+  --freeze_backbone_epochs 2 \
   --backbone_lr 5e-5 \
   --head_lr 1e-3 \
-  --sensor_aux_loss_weight 0.3 \
   --num_workers 8 \
   --device cuda \
-  --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_tests5p \
+  --checkpoint_dir /transferdiniu2/yuyao/checkpoints/multi_sensor_seg \
   --use_wandb \
   --wandb_project baselines \
-  --wandb_run_name "Geo universal overlap dataset include all 2025 (schema2)" \
-  --local_cache_dir /diniuvol/yuyao/local_train_temp_cache \
-  --local_cache_min_free_gb 200 \
-  --row_fusion_mode max    #{map,max}
+  --wandb_run_name "seg_s2_l89_emit_iou_plus"
+
 
 # python universal_models_fusion/multi_sensor_panopticon_4_nonlinear_loraadapter_sensor_specific_earlystopping.py \
 #   --train_csv /mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset/manifest_multisensor_crop_scheme2_train_s5p_replaced_plus_s5p_only_old2025_s5p_balanced_by_plumeid.csv \

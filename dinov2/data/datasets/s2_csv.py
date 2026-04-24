@@ -185,6 +185,21 @@ class S2CsvDataset(Dataset):
 
         return img
 
+    @staticmethod
+    def _is_skippable_tiff_error(exc: Exception) -> bool:
+        msg = str(exc).lower()
+        return any(
+            token in msg
+            for token in (
+                "deflateerror",
+                "libdeflate",
+                "decompress",
+                "truncated stream",
+                "unknown compression method",
+                "tiff",
+            )
+        )
+
     def _read_image_raw(self, path: str) -> torch.Tensor:
         if not os.path.isfile(path):
             raise _SkipSample(f"Missing file: {path}")
@@ -193,6 +208,15 @@ class S2CsvDataset(Dataset):
             img_np = tiff.imread(path)
         except (tiff.TiffFileError, ValueError, OSError) as exc:
             raise _SkipSample(f"TIFF read failed for {path}: {exc}") from exc
+        except Exception as exc:
+            if self._is_skippable_tiff_error(exc):
+                raise _SkipSample(f"TIFF decode failed for {path}: {exc}") from exc
+            raise
+
+        if not isinstance(img_np, np.ndarray):
+            raise _SkipSample(f"TIFF returned non-array object for {path}: {type(img_np)!r}")
+        if img_np.size == 0 or any(dim == 0 for dim in img_np.shape):
+            raise _SkipSample(f"Empty/zero-sized TIFF array for {path}: shape={img_np.shape}")
 
         # torch.from_numpy does not support uint16; cast to float32 up front.
         if img_np.dtype == np.uint16:
@@ -236,13 +260,13 @@ class S2CsvDataset(Dataset):
                 img_np = np.transpose(img_np, (2, 0, 1))
 
             else:
-                raise RuntimeError(
+                raise _SkipSample(
                     f"Unexpected image shape {img_np.shape} for {path}; expected channel dim {exp_c} "
                     "either first (C,H,W) or last (H,W,C)."
                 )
 
         else:
-            raise RuntimeError(f"Unsupported image dimensions {img_np.shape} for {path}")
+            raise _SkipSample(f"Unsupported image dimensions {img_np.shape} for {path}")
 
         img = torch.from_numpy(img_np).to(dtype=torch.float32)
 

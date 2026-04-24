@@ -5,6 +5,11 @@ This module exposes reusable model components (``MultiSensorPanopticonClassifier
 Sentinel-2, Landsat 8/9, Sentinel-5P, and WV3 samples. Each sensor owns its own
 Panopticon patch embedding and classifier head, while the DinoViT backbone is
 shared and updated by the consensus of all datasets in a batch.
+
+This variant replaces the sensor-selected private adapter branch with a true
+post-block mixture-of-experts adapter: every sample/token evaluates all sensor
+experts and a learned router computes softmax mixture weights from the hidden
+state.
 """
 
 from __future__ import annotations
@@ -224,6 +229,73 @@ class LogitSummaryHead(nn.Module):
         return self.net(x)
 
 
+class MaskedAttentionPooling(nn.Module):
+    """Baseline row-level masked attention pooling over sensor features."""
+
+    def __init__(self, *, embed_dim: int, num_sensors: int):
+        super().__init__()
+        self.sensor_embed = nn.Embedding(num_sensors, embed_dim)
+        self.score = nn.Sequential(
+            nn.LayerNorm(embed_dim),
+            nn.Linear(embed_dim, embed_dim),
+            nn.GELU(),
+            nn.Linear(embed_dim, 1),
+        )
+
+    def forward(
+        self,
+        feats: torch.Tensor,
+        sensor_indices: torch.Tensor,
+        sample_to_row: torch.Tensor,
+        *,
+        num_rows: int,
+    ) -> torch.Tensor:
+        if feats.ndim != 2:
+            raise ValueError(f"feats must be [N,D], got shape={tuple(feats.shape)}")
+        if sensor_indices.shape[0] != feats.shape[0] or sample_to_row.shape[0] != feats.shape[0]:
+            raise ValueError(
+                "MaskedAttentionPooling input length mismatch: "
+                f"feats={feats.shape[0]}, sensor_indices={sensor_indices.shape[0]}, sample_to_row={sample_to_row.shape[0]}"
+            )
+        attn_in = feats + self.sensor_embed(sensor_indices)
+        scores = self.score(attn_in).squeeze(-1)
+        out = feats.new_zeros((num_rows, feats.shape[-1]))
+        for row_idx in range(num_rows):
+            mask = sample_to_row == row_idx
+            if not torch.any(mask):
+                continue
+            weights = torch.softmax(scores[mask], dim=0)
+            out[row_idx] = torch.sum(feats[mask] * weights.unsqueeze(-1), dim=0)
+        return out
+
+
+class RowwiseMaxPooling(nn.Module):
+    """Baseline row-wise max pooling over active sensor features."""
+
+    def forward(
+        self,
+        feats: torch.Tensor,
+        sensor_indices: torch.Tensor,
+        sample_to_row: torch.Tensor,
+        *,
+        num_rows: int,
+    ) -> torch.Tensor:
+        if feats.ndim != 2:
+            raise ValueError(f"feats must be [N,D], got shape={tuple(feats.shape)}")
+        if sensor_indices.shape[0] != feats.shape[0] or sample_to_row.shape[0] != feats.shape[0]:
+            raise ValueError(
+                "RowwiseMaxPooling input length mismatch: "
+                f"feats={feats.shape[0]}, sensor_indices={sensor_indices.shape[0]}, sample_to_row={sample_to_row.shape[0]}"
+            )
+        out = feats.new_zeros((num_rows, feats.shape[-1]))
+        for row_idx in range(num_rows):
+            mask = sample_to_row == row_idx
+            if not torch.any(mask):
+                continue
+            out[row_idx] = torch.max(feats[mask], dim=0).values
+        return out
+
+
 HeadFactory = Callable[[int, int], nn.Module]
 
 
@@ -239,7 +311,7 @@ class TinyResidualAdapter(nn.Module):
     ):
         super().__init__()
         if bottleneck_dim <= 0:
-            raise ValueError("adapter_bottleneck_dim (LoRA rank) must be > 0")
+            raise ValueError("adapter_bottleneck_dim (expert rank) must be > 0")
         self.rank = int(bottleneck_dim)
         self.alpha = float(alpha)
         self.scaling = self.alpha / float(self.rank)
@@ -272,13 +344,7 @@ class SensorAdapterBlock(nn.Module):
     ):
         super().__init__()
         self.block = block
-        self.shared_adapter = TinyResidualAdapter(
-            embed_dim=embed_dim,
-            bottleneck_dim=bottleneck_dim,
-            alpha=alpha,
-            dropout=dropout,
-            use_gelu=adapter_use_gelu,
-        )
+        self.shared_adapter = nn.Identity()
         self.private_adapters = nn.ModuleList(
             [
                 TinyResidualAdapter(
@@ -293,10 +359,9 @@ class SensorAdapterBlock(nn.Module):
         )
         # Backward-compat alias used by a few helper functions.
         self.adapters = self.private_adapters
-        # Per-sensor private gate (sigmoid(logit) in forward).
-        self.private_gate_logits = nn.ParameterList(
-            [nn.Parameter(torch.zeros((), dtype=torch.float32)) for _ in range(num_domains)]
-        )
+        self.moe_router = nn.Linear(embed_dim, num_domains)
+        nn.init.zeros_(self.moe_router.weight)
+        nn.init.zeros_(self.moe_router.bias)
         self.cls_only = bool(cls_only)
         self._current_domain: Optional[torch.Tensor] = None
 
@@ -313,48 +378,22 @@ class SensorAdapterBlock(nn.Module):
             domain = domain.to(device=x.device, dtype=torch.long)
         return domain
 
-    def _gate(self, domain_idx: int, *, device: torch.device, dtype: torch.dtype) -> torch.Tensor:
-        gate = torch.sigmoid(self.private_gate_logits[domain_idx])
-        return gate.to(device=device, dtype=dtype)
+    def _moe_delta(self, x: torch.Tensor) -> torch.Tensor:
+        route_logits = self.moe_router(x)
+        route_weights = torch.softmax(route_logits, dim=-1)
+        expert_outputs = torch.stack([adapter(x) for adapter in self.private_adapters], dim=-2)
+        return torch.sum(expert_outputs * route_weights.unsqueeze(-1), dim=-2)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:  # type: ignore[override]
         x = self.block(x)
-        domain = self._resolve_domain(x)
         if self.cls_only:
             out = x.clone()
             cls = out[:, :1, :]
-            cls = cls + self.shared_adapter(cls)
-            if domain.ndim == 0:
-                domain_idx = int(domain.item())
-                gate = self._gate(domain_idx, device=cls.device, dtype=cls.dtype)
-                cls = cls + (gate * self.private_adapters[domain_idx](cls))
-            else:
-                if domain.shape[0] != x.shape[0]:
-                    raise ValueError(f"domain_id batch mismatch: expected {x.shape[0]}, got {domain.shape[0]}")
-                for domain_idx, adapter in enumerate(self.private_adapters):
-                    selector = domain == domain_idx
-                    if selector.any():
-                        cls_sel = cls[selector]
-                        gate = self._gate(domain_idx, device=cls_sel.device, dtype=cls_sel.dtype)
-                        cls[selector] = cls_sel + (gate * adapter(cls_sel))
+            cls = cls + self._moe_delta(cls)
             out[:, :1, :] = cls
             return out
 
-        out = x + self.shared_adapter(x)
-        if domain.ndim == 0:
-            domain_idx = int(domain.item())
-            gate = self._gate(domain_idx, device=x.device, dtype=x.dtype)
-            return out + (gate * self.private_adapters[domain_idx](x))
-
-        if domain.shape[0] != x.shape[0]:
-            raise ValueError(f"domain_id batch mismatch: expected {x.shape[0]}, got {domain.shape[0]}")
-        for domain_idx, adapter in enumerate(self.private_adapters):
-            selector = domain == domain_idx
-            if selector.any():
-                x_sel = x[selector]
-                gate = self._gate(domain_idx, device=x_sel.device, dtype=x_sel.dtype)
-                out[selector] = out[selector] + (gate * adapter(x_sel))
-        return out
+        return x + self._moe_delta(x)
 
 
 class MultiSensorPanopticonClassifier(nn.Module):
@@ -379,10 +418,7 @@ class MultiSensorPanopticonClassifier(nn.Module):
         summary_hidden_dim: int = 128,
         summary_dropout: float = 0.1,
         summary_loss_weight: float = 1.0,
-        enable_overlap_head: bool = True,
-        overlap_hidden_dim: int = 128,
-        overlap_dropout: float = 0.1,
-        overlap_loss_weight: float = 0.0,
+        row_fusion_mode: str = "map",
     ):
         super().__init__()
         if backbone is None:
@@ -440,9 +476,14 @@ class MultiSensorPanopticonClassifier(nn.Module):
             classes = class_map[sensor]
             self.heads[sensor] = make_head(classes)
         self.summary_loss_weight = float(summary_loss_weight)
-        self.overlap_loss_weight = float(overlap_loss_weight)
         self.summary_head: Optional[LogitSummaryHead] = None
         self.overlap_head: Optional[LogitSummaryHead] = None
+        self.overlap_loss_weight = 0.0
+        self.row_fusion_mode = str(row_fusion_mode).strip().lower()
+        if self.row_fusion_mode not in ("map", "max"):
+            raise ValueError(f"row_fusion_mode must be one of ['map', 'max'], got {row_fusion_mode!r}")
+        self.row_fusion_pool: Optional[nn.Module] = None
+        self.row_fusion_head: Optional[CLSHead] = None
 
         head_dims = [getattr(self.heads[sensor], "out_features", None) for sensor in self.sensor_order]
         can_build_summary = bool(head_dims) and None not in head_dims and len(set(head_dims)) == 1
@@ -459,17 +500,16 @@ class MultiSensorPanopticonClassifier(nn.Module):
                 "Summary head disabled because sensor heads do not share the same out_features.",
                 stacklevel=2,
             )
-        if enable_overlap_head and can_build_summary:
+        if can_build_summary:
             num_out_classes = int(head_dims[0])
-            self.overlap_head = LogitSummaryHead(
-                num_heads=len(self.sensor_order),
-                num_classes=num_out_classes,
-                hidden_dim=overlap_hidden_dim,
-                dropout=overlap_dropout,
-            )
-        elif enable_overlap_head and not can_build_summary:
+            if self.row_fusion_mode == "map":
+                self.row_fusion_pool = MaskedAttentionPooling(embed_dim=embed_dim, num_sensors=len(self.sensor_order))
+            else:
+                self.row_fusion_pool = RowwiseMaxPooling()
+            self.row_fusion_head = CLSHead(embed_dim=embed_dim, num_classes=num_out_classes)
+        else:
             warnings.warn(
-                "Overlap head disabled because sensor heads do not share the same out_features.",
+                "Row fusion head disabled because sensor heads do not share the same out_features.",
                 stacklevel=2,
             )
 
@@ -649,6 +689,43 @@ class MultiSensorPanopticonClassifier(nn.Module):
             if return_features:
                 placeholder["feats"] = torch.empty((0, 0), device=device)
             outputs[sensor_name] = placeholder
+
+    def compute_row_fused_logits(
+        self,
+        outputs: Dict[str, Union[Dict[str, torch.Tensor], torch.Tensor]],
+        *,
+        sample_to_row: torch.Tensor,
+        num_rows: int,
+        device: torch.device,
+    ) -> torch.Tensor:
+        if self.row_fusion_pool is None or self.row_fusion_head is None:
+            raise RuntimeError("Row fusion modules are not initialized")
+        if sample_to_row.ndim != 1:
+            raise ValueError(f"sample_to_row must be rank-1, got shape={tuple(sample_to_row.shape)}")
+
+        num_samples = int(sample_to_row.shape[0])
+        embed_dim = getattr(self.backbone, "embed_dim", 768)
+        flat_feats = torch.zeros((num_samples, embed_dim), device=device)
+        flat_sensor_indices = torch.zeros((num_samples,), dtype=torch.long, device=device)
+
+        for sensor_name in self.sensor_order:
+            sensor_out = outputs.get(sensor_name)
+            if not isinstance(sensor_out, dict):
+                continue
+            idx = sensor_out.get("indices")
+            cls_token = sensor_out.get("cls_token")
+            if not isinstance(idx, torch.Tensor) or not isinstance(cls_token, torch.Tensor) or idx.numel() == 0:
+                continue
+            flat_feats.index_copy_(0, idx, cls_token)
+            flat_sensor_indices.index_fill_(0, idx, int(self.sensor_to_idx[sensor_name]))
+
+        row_features = self.row_fusion_pool(
+            flat_feats,
+            flat_sensor_indices,
+            sample_to_row,
+            num_rows=num_rows,
+        )
+        return self.row_fusion_head(row_features)
 
 
 @dataclass
@@ -1286,6 +1363,53 @@ def custom_collate_fn(batch):
         padded_chn_ids.append(chn_ids)
     batched_x_dict = {"imgs": torch.stack(padded_imgs), "chn_ids": torch.stack(padded_chn_ids)}
     return batched_x_dict, torch.tensor(labels), list(sensors), list(group_ids)
+
+
+def baseline_row_collate_fn(batch):
+    x_dicts: list[Dict[str, torch.Tensor]] = []
+    sensors: list[str] = []
+    sample_to_row: list[int] = []
+    row_labels: list[int] = []
+
+    for row_idx, item in enumerate(batch):
+        sensor_samples, label = item[:2]
+        row_labels.append(int(label))
+        for sensor, x_list in sensor_samples:
+            imgs = torch.cat([x["imgs"] for x in x_list], dim=0)
+            chn_ids = torch.cat([x["chn_ids"] for x in x_list], dim=0)
+            x_dicts.append(dict(imgs=imgs, chn_ids=chn_ids))
+            sensors.append(str(sensor))
+            sample_to_row.append(int(row_idx))
+
+    if len(x_dicts) == 0:
+        raise ValueError("Batch has no valid sensor samples.")
+
+    max_channels = max(x["imgs"].shape[0] for x in x_dicts)
+    max_h = max(x["imgs"].shape[1] for x in x_dicts)
+    max_w = max(x["imgs"].shape[2] for x in x_dicts)
+
+    padded_imgs = []
+    padded_chn_ids = []
+    for x_dict in x_dicts:
+        img = x_dict["imgs"]
+        chn_ids = x_dict["chn_ids"]
+        c, h, w = img.shape
+        pad_h = max_h - h
+        pad_w = max_w - w
+        img = F.pad(img, (0, pad_w, 0, pad_h))
+        pad_c = max_channels - c
+        if pad_c:
+            img = torch.cat([img, torch.zeros((pad_c, max_h, max_w), dtype=img.dtype)], dim=0)
+            chn_ids = torch.cat([chn_ids, torch.zeros((pad_c, *chn_ids.shape[1:]), dtype=chn_ids.dtype)], dim=0)
+        padded_imgs.append(img)
+        padded_chn_ids.append(chn_ids)
+    batched_x_dict = {"imgs": torch.stack(padded_imgs), "chn_ids": torch.stack(padded_chn_ids)}
+    return (
+        batched_x_dict,
+        torch.tensor(row_labels, dtype=torch.long),
+        list(sensors),
+        torch.tensor(sample_to_row, dtype=torch.long),
+    )
 
 
 def _resolve_base_dataset(dataset: Dataset) -> Dataset:
@@ -2181,8 +2305,12 @@ def gather_head_parameters(model: MultiSensorPanopticonClassifier) -> Sequence[n
             continue
         extra_patch_params.extend(list(module.parameters()))
     summary_params = list(model.summary_head.parameters()) if model.summary_head is not None else []
-    overlap_params = list(model.overlap_head.parameters()) if model.overlap_head is not None else []
-    head_params = list(model.heads.parameters()) + summary_params + overlap_params + extra_patch_params
+    row_fusion_params = []
+    if model.row_fusion_pool is not None:
+        row_fusion_params.extend(list(model.row_fusion_pool.parameters()))
+    if model.row_fusion_head is not None:
+        row_fusion_params.extend(list(model.row_fusion_head.parameters()))
+    head_params = list(model.heads.parameters()) + summary_params + row_fusion_params + extra_patch_params
     return head_params
 
 
@@ -2211,11 +2339,11 @@ def _gather_private_adapter_parameters_from_blocks(blocks: Sequence[nn.Module]) 
                 continue
             seen.add(id(param))
             params.append(param)
-        for gate in block.private_gate_logits:
-            if id(gate) in seen:
+        for param in block.moe_router.parameters():
+            if id(param) in seen:
                 continue
-            seen.add(id(gate))
-            params.append(gate)
+            seen.add(id(param))
+            params.append(param)
     return params
 
 
@@ -2271,8 +2399,6 @@ def _set_sensor_adapter_trainable(
         adapter.train(requires_grad)
         for param in adapter.parameters():
             param.requires_grad = requires_grad
-        gate_param = block.private_gate_logits[domain_idx]
-        gate_param.requires_grad = requires_grad
 
 
 def _set_sensor_head_trainable(
@@ -2307,18 +2433,15 @@ def _collect_sensor_adapter_state(
     model: MultiSensorPanopticonClassifier,
     sensor_name: str,
 ) -> Dict[str, Dict[str, Any]]:
-    domain_idx = model.sensor_to_idx.get(sensor_name)
     state: Dict[str, Dict[str, Any]] = {}
-    if domain_idx is None:
+    if sensor_name not in model.sensor_to_idx:
         return state
     for block_idx, block in enumerate(getattr(model.backbone, "_sensor_adapter_blocks", [])):
         if not isinstance(block, SensorAdapterBlock):
             continue
-        if domain_idx < 0 or domain_idx >= len(block.private_adapters):
-            continue
         state[str(block_idx)] = {
-            "adapter": copy.deepcopy(block.private_adapters[domain_idx].state_dict()),
-            "gate_logit": copy.deepcopy(block.private_gate_logits[domain_idx].detach()),
+            "private_adapters": copy.deepcopy(block.private_adapters.state_dict()),
+            "moe_router": copy.deepcopy(block.moe_router.state_dict()),
         }
     return state
 
@@ -2344,17 +2467,17 @@ def _restore_sensor_adapter_state(
             continue
         if domain_idx < 0 or domain_idx >= len(block.private_adapters):
             continue
-        # Backward compatibility:
-        # old format -> adapter_state is direct state_dict
-        # new format -> {"adapter": state_dict, "gate_logit": tensor}
+        private_adapters_state = adapter_state.get("private_adapters")
+        if isinstance(private_adapters_state, Mapping):
+            block.private_adapters.load_state_dict(dict(private_adapters_state))
+            moe_router_state = adapter_state.get("moe_router")
+            if isinstance(moe_router_state, Mapping):
+                block.moe_router.load_state_dict(dict(moe_router_state))
+            continue
+        # Backward compatibility with the old sensor-selected adapter checkpoints.
         maybe_adapter_state = adapter_state.get("adapter")
         if isinstance(maybe_adapter_state, Mapping):
             block.private_adapters[domain_idx].load_state_dict(dict(maybe_adapter_state))
-            gate_logit = adapter_state.get("gate_logit")
-            if isinstance(gate_logit, torch.Tensor):
-                block.private_gate_logits[domain_idx].data.copy_(gate_logit.to(block.private_gate_logits[domain_idx].device))
-            elif gate_logit is not None:
-                block.private_gate_logits[domain_idx].data.fill_(float(gate_logit))
         else:
             block.private_adapters[domain_idx].load_state_dict(dict(adapter_state))
 
@@ -2507,41 +2630,26 @@ def parse_args():
     parser.add_argument("--phase1_backbone_epochs", type=int, default=4)
     parser.add_argument(
         "--training_schedule",
-        choices=["legacy", "adapter_then_joint"],
-        default="legacy",
+        choices=["vit_then_moe", "adapter_then_joint"],
+        default="vit_then_moe",
         help=(
-            "Training schedule. "
-            "'legacy': existing behavior (phase1 backbone-centric then phase2 adapter-centric). "
-            "'adapter_then_joint': Stage A trains adapters with frozen backbone; "
-            "Stage B unfreezes backbone and keeps adapters trainable."
+            "Two-stage training: Stage A exactly follows multi_sensor_panopticon_4.py baseline "
+            "row-level pretraining with frozen MOE; Stage B freezes ViT blocks and trains MOE."
         ),
     )
     parser.add_argument(
+        "--stage_a_epochs",
         "--stage_a_adapter_epochs",
+        dest="stage_a_epochs",
         type=int,
-        default=3,
-        help="Used when --training_schedule=adapter_then_joint. Number of warmup epochs for adapter-only Stage A.",
-    )
-    parser.add_argument(
-        "--phase1_train_coverage",
-        type=float,
-        default=1.0,
-        help="Fraction of train samples seen per epoch during phase1 backbone training. Range: (0, 1].",
-    )
-    parser.add_argument(
-        "--phase1_sensor_coverages",
-        type=str,
-        default="",
-        help=(
-            "Optional per-sensor phase1 coverage overrides (sensor=value), "
-            "e.g. 'wv3=0.4,s5p=1.5'. Values in (0,1) undersample, values >1 oversample."
-        ),
+        default=4,
+        help="Number of baseline-pretrain epochs before MOE-adapter Stage B.",
     )
     parser.add_argument(
         "--freeze_backbone_first_blocks",
         type=int,
         default=12,
-        help="Kept for compatibility; this script uses LoRA adapters on all 12 ViT blocks.",
+        help="Kept for compatibility; this script uses MOE adapters on all 12 ViT blocks.",
     )
     parser.add_argument("--freeze_backbone_epochs", type=int, default=0)
     parser.add_argument(
@@ -2550,7 +2658,7 @@ def parse_args():
         dest="adapter_bottleneck_dim",
         type=int,
         default=16,
-        help="Low-rank dimension (LoRA rank) for sensor-specific adapters.",
+        help="Low-rank dimension for each MOE adapter expert.",
     )
     parser.add_argument(
         "--adapter_alpha",
@@ -2558,7 +2666,7 @@ def parse_args():
         dest="adapter_alpha",
         type=float,
         default=16.0,
-        help="LoRA scaling factor (effective scale is adapter_alpha / adapter_bottleneck_dim).",
+        help="Adapter scaling factor (effective scale is adapter_alpha / adapter_bottleneck_dim).",
     )
     parser.add_argument("--adapter_dropout", type=float, default=0.0)
     parser.add_argument("--adapter_gelu", action="store_true", dest="adapter_gelu")
@@ -2566,7 +2674,7 @@ def parse_args():
         "--disable_adapter_gelu",
         action="store_false",
         dest="adapter_gelu",
-        help="Disable GELU inside LoRA adapters (use linear low-rank adapter).",
+        help="Disable GELU inside MOE adapter experts (use linear low-rank experts).",
     )
     parser.set_defaults(adapter_gelu=True)
     parser.add_argument(
@@ -2579,72 +2687,40 @@ def parse_args():
     parser.add_argument("--disable_adapter_cls_only", action="store_false", dest="adapter_cls_only")
     parser.set_defaults(adapter_cls_only=False)
     parser.add_argument(
-        "--phase2_train_shared_adapter",
-        action="store_true",
-        help="If set, keep shared adapters trainable in phase2. Default freezes shared adapters after phase1.",
-    )
-    parser.add_argument(
-        "--phase2_train_backbone",
-        action="store_true",
-        help="If set, keep ViT backbone (MHSA/MLP) trainable in phase2. Default freezes backbone after phase1.",
-    )
-    parser.add_argument(
         "--stage_b_adapter_lr",
         type=float,
         default=None,
-        help=(
-            "Used when --training_schedule=adapter_then_joint. "
-            "Stage B adapter LR override. If unset, reuses adapter_lr."
-        ),
-    )
-    parser.add_argument(
-        "--stage_b_backbone_to_adapter_lr_ratio",
-        type=float,
-        default=0.4,
-        help=(
-            "Used when --training_schedule=adapter_then_joint. "
-            "Stage B backbone_lr = stage_b_adapter_lr * ratio."
-        ),
+        help="Stage B adapter LR override. If unset, reuses adapter_lr.",
     )
     parser.add_argument(
         "--sensor_aux_loss_weight",
         type=float,
-        default=0.4,
-        help="Weight for weighted per-sensor auxiliary CE loss.",
+        default=0.3,
+        help="Baseline-compatible per-sensor auxiliary CE loss weight.",
     )
-    parser.add_argument(
-        "--sensor_aux_effective_num_beta",
-        type=float,
-        default=0.999,
-        help="Beta in effective-number reweighting for per-sensor aux loss. Use 0 to disable.",
+    parser.add_argument("--row_fusion_mode", choices=["map", "max"], default="map")
+    parser.set_defaults(
+        phase1_train_coverage=1.0,
+        phase1_sensor_coverages="",
+        phase2_train_backbone=False,
+        phase2_train_shared_adapter=False,
+        stage_b_backbone_to_adapter_lr_ratio=0.0,
+        sensor_aux_effective_num_beta=0.0,
+        sensor_aux_weights="",
+        consistency_loss_weight=0.0,
+        consistency_temperature=1.0,
+        sensor_adapter_early_stop_sensors="",
+        sensor_adapter_early_stopping_patience=1,
+        sensor_adapter_early_stopping_warmup_epochs=1,
+        sensor_adapter_early_stopping_min_delta=0.0,
+        overlap_head=False,
+        overlap_hidden_dim=128,
+        overlap_dropout=0.0,
+        overlap_loss_weight=0.0,
+        overlap_fusion="none",
+        overlap_fusion_train=False,
+        overlap_sensor_weights="",
     )
-    parser.add_argument(
-        "--sensor_aux_weights",
-        type=str,
-        default="",
-        help="Optional per-sensor aux-loss weight overrides (sensor=value), e.g. 'wv3=1.4,s5p=1.2'.",
-    )
-    parser.add_argument(
-        "--consistency_loss_weight",
-        type=float,
-        default=0.05,
-        help="Weight for KL consistency loss between fused logits and per-sensor logits.",
-    )
-    parser.add_argument(
-        "--consistency_temperature",
-        type=float,
-        default=1.0,
-        help="Temperature for fused-vs-sensor KL consistency.",
-    )
-    parser.add_argument(
-        "--sensor_adapter_early_stop_sensors",
-        type=str,
-        default="wv3,s5p,s2",
-        help="Comma-separated sensors using adapter early stopping rollback.",
-    )
-    parser.add_argument("--sensor_adapter_early_stopping_patience", type=int, default=6)
-    parser.add_argument("--sensor_adapter_early_stopping_warmup_epochs", type=int, default=5)
-    parser.add_argument("--sensor_adapter_early_stopping_min_delta", type=float, default=1e-4)
     parser.add_argument("--max_grad_norm", type=float, default=1.0)
     parser.add_argument("--max_train_steps", type=int, default=None)
     parser.add_argument("--max_eval_steps", type=int, default=None)
@@ -2678,12 +2754,7 @@ def parse_args():
         help="Max train rows sampled per sensor when estimating mean/std; <=0 means all rows.",
     )
     parser.add_argument("--sensor_stats_seed", type=int, default=42)
-    parser.add_argument(
-        "--overlap_report_jsonl",
-        type=str,
-        default="",
-        help="Optional JSONL path to append overlap-only evaluation reports each epoch.",
-    )
+    parser.set_defaults(overlap_report_jsonl="")
     parser.add_argument("--oversample_minority", action="store_true", dest="oversample_minority")
     parser.add_argument("--disable_oversample_minority", action="store_false", dest="oversample_minority")
     parser.set_defaults(oversample_minority=True)
@@ -2694,29 +2765,6 @@ def parse_args():
     parser.add_argument("--summary_hidden_dim", type=int, default=128)
     parser.add_argument("--summary_dropout", type=float, default=0.1)
     parser.add_argument("--summary_loss_weight", type=float, default=1.0)
-    parser.add_argument("--overlap_head", action="store_true", dest="overlap_head")
-    parser.add_argument("--disable_overlap_head", action="store_false", dest="overlap_head")
-    parser.set_defaults(overlap_head=True)
-    parser.add_argument("--overlap_hidden_dim", type=int, default=128)
-    parser.add_argument("--overlap_dropout", type=float, default=0.1)
-    parser.add_argument("--overlap_loss_weight", type=float, default=0.0)
-    parser.add_argument(
-        "--overlap_fusion",
-        choices=["none", "majority_vote", "logit_mean", "prob_mean", "overall_head"],
-        default="logit_mean",
-        help="How to fuse logits inside overlap groups at decision time (default: weighted logit mean).",
-    )
-    parser.add_argument(
-        "--overlap_fusion_train",
-        action="store_true",
-        help="Also apply overlap fusion to train-time accuracy reporting (evaluation always follows --overlap_fusion).",
-    )
-    parser.add_argument(
-        "--overlap_sensor_weights",
-        type=str,
-        default="",
-        help="Optional sensor reliability weights for overlap fusion (sensor=value), e.g. 'wv3=1.5,s5p=0.6'.",
-    )
     return parser.parse_args()
 
 
@@ -2824,14 +2872,14 @@ def main(args):
         all_paths.extend(collect_cache_paths_from_df(base_test_ds.df, candidate_columns))
         cache_obj.warm_up(all_paths, max_workers=args.local_cache_workers)
 
-    train_ds = ConcatTemporalDataset(base_train_ds)
-    test_ds = ConcatTemporalDataset(base_test_ds)
+    flat_train_ds = ConcatTemporalDataset(base_train_ds)
+    flat_test_ds = ConcatTemporalDataset(base_test_ds)
 
     adapter_layer_count = 12
     if int(args.freeze_backbone_first_blocks) != adapter_layer_count:
         print(
             f"[Info] Overriding --freeze_backbone_first_blocks={args.freeze_backbone_first_blocks} "
-            f"to {adapter_layer_count} so LoRA adapters cover all ViT blocks.",
+            f"to {adapter_layer_count} so MOE adapters cover all ViT blocks.",
             flush=True,
         )
 
@@ -2848,10 +2896,7 @@ def main(args):
         summary_hidden_dim=args.summary_hidden_dim,
         summary_dropout=args.summary_dropout,
         summary_loss_weight=args.summary_loss_weight,
-        enable_overlap_head=args.overlap_head,
-        overlap_hidden_dim=args.overlap_hidden_dim,
-        overlap_dropout=args.overlap_dropout,
-        overlap_loss_weight=args.overlap_loss_weight,
+        row_fusion_mode=args.row_fusion_mode,
     ).to(device)
     model: nn.Module = core_model
     use_data_parallel = args.data_parallel and device.type == "cuda" and torch.cuda.device_count() > 1
@@ -2870,7 +2915,7 @@ def main(args):
     stage_b_adapter_lr = (
         float(args.stage_b_adapter_lr) if args.stage_b_adapter_lr is not None else float(adapter_lr_effective)
     )
-    stage_b_backbone_lr = float(stage_b_adapter_lr) * float(args.stage_b_backbone_to_adapter_lr_ratio)
+    stage_b_backbone_lr = 0.0
     param_groups = [
         {"name": "backbone", "params": backbone_params, "lr": args.backbone_lr},
         {"name": "adapter_private", "params": adapter_private_params, "lr": adapter_lr_effective},
@@ -2903,74 +2948,17 @@ def main(args):
 
     sensors_list = core_model.sensor_order
     training_schedule = str(args.training_schedule).strip().lower()
-    if training_schedule not in ("legacy", "adapter_then_joint"):
-        raise ValueError(f"Unsupported --training_schedule value: {args.training_schedule!r}")
     if training_schedule == "adapter_then_joint":
-        phase1_epochs = max(0, int(args.stage_a_adapter_epochs))
-    else:
-        phase1_epochs = max(0, int(args.phase1_backbone_epochs))
-    phase1_train_coverage = float(args.phase1_train_coverage)
-    if not (0.0 < phase1_train_coverage <= 1.0):
-        raise ValueError(f"--phase1_train_coverage must be in (0, 1], got {phase1_train_coverage}.")
-    phase1_sensor_coverages = parse_sensor_coverage_overrides(args.phase1_sensor_coverages)
-    unknown_phase1_coverage_sensors = [s for s in phase1_sensor_coverages if s not in sensors_list]
-    if unknown_phase1_coverage_sensors:
-        raise ValueError(
-            "Unknown sensors in --phase1_sensor_coverages: "
-            f"{unknown_phase1_coverage_sensors}. Valid sensors: {sensors_list}"
-        )
-    overlap_sensor_weights = parse_sensor_weight_overrides(args.overlap_sensor_weights)
-    unknown_overlap_weight_sensors = [s for s in overlap_sensor_weights if s not in sensors_list]
-    if unknown_overlap_weight_sensors:
-        raise ValueError(
-            "Unknown sensors in --overlap_sensor_weights: "
-            f"{unknown_overlap_weight_sensors}. Valid sensors: {sensors_list}"
-        )
-    sensor_aux_weight_overrides = parse_sensor_weight_overrides(
-        args.sensor_aux_weights,
-        arg_name="--sensor_aux_weights",
-    )
-    unknown_aux_weight_sensors = [s for s in sensor_aux_weight_overrides if s not in sensors_list]
-    if unknown_aux_weight_sensors:
-        raise ValueError(
-            "Unknown sensors in --sensor_aux_weights: "
-            f"{unknown_aux_weight_sensors}. Valid sensors: {sensors_list}"
-        )
+        training_schedule = "vit_then_moe"
+    if training_schedule != "vit_then_moe":
+        raise ValueError(f"Unsupported --training_schedule value: {args.training_schedule!r}")
+    phase1_epochs = max(0, int(args.stage_a_epochs))
+    overlap_sensor_weights: Dict[str, float] = {}
+    sensor_aux_weight_overrides: Dict[str, float] = {}
     if args.sensor_aux_loss_weight < 0.0:
         raise ValueError(f"--sensor_aux_loss_weight must be >= 0, got {args.sensor_aux_loss_weight}.")
-    if args.consistency_loss_weight < 0.0:
-        raise ValueError(f"--consistency_loss_weight must be >= 0, got {args.consistency_loss_weight}.")
-    if args.consistency_temperature <= 0.0:
-        raise ValueError(f"--consistency_temperature must be > 0, got {args.consistency_temperature}.")
-    if not (0.0 <= float(args.sensor_aux_effective_num_beta) <= 1.0):
-        raise ValueError(
-            f"--sensor_aux_effective_num_beta must be in [0, 1], got {args.sensor_aux_effective_num_beta}."
-        )
-    if args.stage_b_backbone_to_adapter_lr_ratio <= 0.0:
-        raise ValueError(
-            "--stage_b_backbone_to_adapter_lr_ratio must be > 0, "
-            f"got {args.stage_b_backbone_to_adapter_lr_ratio}."
-        )
 
-    train_sensor_index_map = _gather_sensor_indices(train_ds, sensors_list)
-    train_sensor_counts = {sensor: len(train_sensor_index_map.get(sensor, [])) for sensor in sensors_list}
-    sensor_aux_weights = build_effective_num_sensor_weights(
-        train_sensor_counts,
-        beta=float(args.sensor_aux_effective_num_beta),
-        overrides=sensor_aux_weight_overrides if sensor_aux_weight_overrides else None,
-    )
-    if args.overlap_loss_weight < 0.0:
-        raise ValueError(f"--overlap_loss_weight must be >= 0, got {args.overlap_loss_weight}.")
-    if args.overlap_fusion == "overall_head" and core_model.overlap_head is None:
-        warnings.warn(
-            "--overlap_fusion=overall_head requested but overlap head is unavailable; falling back to logit_mean.",
-            stacklevel=2,
-        )
-    if args.overlap_loss_weight > 0.0 and core_model.overlap_head is None:
-        warnings.warn(
-            "overlap_loss_weight > 0 but overlap head is unavailable; overlap loss will be skipped.",
-            stacklevel=2,
-        )
+    sensor_aux_weights = {sensor: 1.0 for sensor in sensors_list}
     early_stop_warmup = max(1, int(args.sensor_adapter_early_stopping_warmup_epochs))
     early_stop_patience = max(1, int(args.sensor_adapter_early_stopping_patience))
     early_stop_min_delta = max(0.0, float(args.sensor_adapter_early_stopping_min_delta))
@@ -3025,9 +3013,25 @@ def main(args):
                 _set_sensor_patch_embed_trainable(core_model, sensor, requires_grad=False)
 
     pin_memory = device.type == "cuda"
-    # Default train loader (full coverage), reused outside phase1 undersampling.
+    row_train_loader = DataLoader(
+        base_train_ds,
+        batch_size=args.batch_size,
+        shuffle=True,
+        num_workers=args.num_workers,
+        pin_memory=pin_memory,
+        collate_fn=baseline_row_collate_fn,
+    )
+    row_train_steps = max(1, len(row_train_loader))
+    row_test_loader = DataLoader(
+        base_test_ds,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=args.num_workers,
+        pin_memory=pin_memory,
+        collate_fn=baseline_row_collate_fn,
+    )
     train_loader_default, train_steps_default = build_balanced_mixed_dataloader(
-        train_ds,
+        flat_train_ds,
         sensors_list,
         batch_size=args.batch_size,
         num_workers=args.num_workers,
@@ -3035,9 +3039,8 @@ def main(args):
         shuffle=True,
         oversample_to_max=args.oversample_minority,
     )
-    phase1_dynamic_loader = (phase1_train_coverage < 1.0) or bool(phase1_sensor_coverages)
     test_loader, test_steps = build_balanced_mixed_dataloader(
-        test_ds,
+        flat_test_ds,
         sensors_list,
         batch_size=args.batch_size,
         num_workers=args.num_workers,
@@ -3048,36 +3051,20 @@ def main(args):
     sensor_stats_mode = "precomputed_defaults"
     if sensor_stats_overrides:
         sensor_stats_mode = f"train_estimated({sorted(sensor_stats_overrides.keys())})"
-    if training_schedule == "adapter_then_joint":
-        phase2_mode = "train_vit_backbone_train_all_adapters_sensor_heads_patch_embed"
-    else:
-        phase2_mode = (
-            "train_vit_backbone_train_private_adapters_sensor_heads_patch_embed"
-            if args.phase2_train_backbone
-            else "freeze_vit_backbone_train_private_adapters_sensor_heads_patch_embed"
-        )
+    phase2_mode = "stage_a_baseline_pretrain_then_stage_b_freeze_vit_train_moe"
 
     print(
-        f"Using device={device}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
+        f"Using device={device}, train_samples={len(base_train_ds)}, test_samples={len(base_test_ds)}, "
         f"sensors={sensors_list}, training_schedule={training_schedule}, phase1_backbone_epochs={phase1_epochs}, "
-        f"phase1_train_coverage={phase1_train_coverage:.3f}, phase1_sensor_coverages={phase1_sensor_coverages}, "
         f"adapter_layers={adapter_layer_count}, adapter_token_blocks={args.adapter_token_blocks}, "
         f"adapter_lr={adapter_lr_effective:.2e}, "
-        f"stage_b_adapter_lr={stage_b_adapter_lr:.2e}, stage_b_backbone_lr={stage_b_backbone_lr:.2e}, "
+        f"stage_b_adapter_lr={stage_b_adapter_lr:.2e}, "
         f"phase2_mode={phase2_mode}, "
-        f"phase2_train_shared_adapter={int(args.phase2_train_shared_adapter)}, "
-        f"phase2_train_backbone={int(args.phase2_train_backbone)}, "
-        f"lora_rank={args.adapter_bottleneck_dim}, lora_alpha={args.adapter_alpha:.2f}, "
+        f"shared_adapter=0, "
+        f"moe_experts={len(sensors_list)}, expert_rank={args.adapter_bottleneck_dim}, adapter_alpha={args.adapter_alpha:.2f}, "
         f"adapter_gelu={int(args.adapter_gelu)}, "
         f"sensor_aux_loss_weight={args.sensor_aux_loss_weight:.3f}, "
-        f"sensor_aux_effective_beta={args.sensor_aux_effective_num_beta:.6f}, "
-        f"sensor_aux_weights={sensor_aux_weights}, "
-        f"consistency_loss_weight={args.consistency_loss_weight:.3f}, "
-        f"consistency_temperature={args.consistency_temperature:.3f}, "
-        f"adapter_early_stop_sensors={early_stop_sensors}, "
-        f"overlap_group_column={args.fusion_group_column}, overlap_fusion={args.overlap_fusion}, "
-        f"overlap_fusion_train={int(args.overlap_fusion_train)}, overlap_loss_weight={args.overlap_loss_weight:.3f}, "
-        f"overlap_sensor_weights={overlap_sensor_weights}, sensor_stats={sensor_stats_mode}",
+        f"row_fusion_mode={args.row_fusion_mode}, sensor_stats={sensor_stats_mode}",
         flush=True,
     )
     for epoch in range(start_epoch, args.epochs + 1):
@@ -3111,7 +3098,7 @@ def main(args):
 
         if training_schedule == "adapter_then_joint":
             if in_phase1:
-                # Stage A: train all adapters with frozen backbone.
+                # Stage A: train ViT blocks while keeping MOE adapters frozen.
                 set_optimizer_group_lrs(
                     optimizer,
                     {
@@ -3121,18 +3108,19 @@ def main(args):
                         "head": float(args.head_lr),
                     },
                 )
-                set_trainable(core_model.backbone, False)
-                core_model.backbone.eval()
+                set_trainable(core_model.backbone, True)
+                core_model.backbone.train()
                 for param in adapter_private_params:
-                    param.requires_grad = True
+                    param.requires_grad = False
                 for param in adapter_shared_params:
-                    param.requires_grad = True
+                    param.requires_grad = False
                 for block in adapter_blocks:
                     if isinstance(block, SensorAdapterBlock):
-                        block.private_adapters.train()
-                        block.shared_adapter.train()
+                        block.private_adapters.eval()
+                        block.moe_router.eval()
+                        block.shared_adapter.eval()
             else:
-                # Stage B: unfreeze backbone and keep all adapters trainable.
+                # Stage B: freeze ViT blocks and train MOE adapters.
                 set_optimizer_group_lrs(
                     optimizer,
                     {
@@ -3142,19 +3130,20 @@ def main(args):
                         "head": float(args.head_lr),
                     },
                 )
-                set_trainable(core_model.backbone, True)
-                core_model.backbone.train()
+                set_trainable(core_model.backbone, False)
+                core_model.backbone.eval()
                 for sensor in core_model.sensor_patch_embeds.values():
                     set_trainable(sensor, True)
                     sensor.train()
                 for param in adapter_private_params:
                     param.requires_grad = True
                 for param in adapter_shared_params:
-                    param.requires_grad = True
+                    param.requires_grad = False
                 for block in adapter_blocks:
                     if isinstance(block, SensorAdapterBlock):
                         block.private_adapters.train()
-                        block.shared_adapter.train()
+                        block.moe_router.train()
+                        block.shared_adapter.eval()
                 for sensor_name, frozen in sensor_adapter_frozen.items():
                     if frozen:
                         _set_sensor_adapter_trainable(core_model, sensor_name, requires_grad=False)
@@ -3172,6 +3161,7 @@ def main(args):
                 for block in adapter_blocks:
                     if isinstance(block, SensorAdapterBlock):
                         block.private_adapters.eval()
+                        block.moe_router.eval()
                 for param in adapter_shared_params:
                     param.requires_grad = bool(args.train_backbone)
                 for block in adapter_blocks:
@@ -3194,6 +3184,7 @@ def main(args):
                 for block in adapter_blocks:
                     if isinstance(block, SensorAdapterBlock):
                         block.private_adapters.train()
+                        block.moe_router.train()
                         block.shared_adapter.train(bool(args.phase2_train_shared_adapter))
                 for sensor_name, frozen in sensor_adapter_frozen.items():
                     if frozen:

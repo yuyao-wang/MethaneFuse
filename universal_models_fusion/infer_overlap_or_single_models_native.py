@@ -36,7 +36,6 @@ from universal_models_fusion.multi_sensor_panopticon_4_nonlinear_loraadapter_sen
     StaticAnchoredCache,
     TriSensorTemporalCsvDataset,
     compute_binary_metrics,
-    custom_collate_fn,
     load_wv3_channel_ids_from_srf,
     recursive_to_device,
 )
@@ -165,6 +164,7 @@ def _infer_num_classes(head_state: Mapping[str, torch.Tensor]) -> int:
 
 def _load_sensor_model(sensor: str, ckpt_path: str, device: torch.device) -> SensorModel:
     resolved = _resolve_checkpoint_path(ckpt_path)
+    print(f"[Infer] {sensor} checkpoint resolved to: {resolved}", flush=True)
     payload = torch.load(resolved, map_location="cpu")
     if not isinstance(payload, Mapping):
         raise ValueError(f"Checkpoint must be a mapping/dict: {resolved}")
@@ -183,6 +183,49 @@ def _load_sensor_model(sensor: str, ckpt_path: str, device: torch.device) -> Sen
 
 def _slice_x_dict(x_dict: MutableMapping[str, torch.Tensor], idx: torch.Tensor) -> Dict[str, torch.Tensor]:
     return {k: v.index_select(0, idx) for k, v in x_dict.items()}
+
+
+def _flatten_collate_no_pad(batch):
+    flat_batch = []
+    for item in batch:
+        if isinstance(item, list):
+            flat_batch.extend(item)
+        else:
+            flat_batch.append(item)
+    if len(flat_batch) == 0:
+        raise RuntimeError("Empty batch encountered in _flatten_collate_no_pad.")
+    return flat_batch
+
+
+def _collate_sensor_items(items):
+    if len(items) == 0:
+        raise RuntimeError("Empty sensor item list in _collate_sensor_items.")
+    x_dicts, labels, sensors, group_ids = zip(*items)
+    max_channels = max(x["imgs"].shape[0] for x in x_dicts)
+    max_h = max(x["imgs"].shape[1] for x in x_dicts)
+    max_w = max(x["imgs"].shape[2] for x in x_dicts)
+
+    padded_imgs = []
+    padded_chn_ids = []
+    for x_dict in x_dicts:
+        img = x_dict["imgs"]
+        chn_ids = x_dict["chn_ids"]
+        c, h, w = img.shape
+        pad_h = max_h - h
+        pad_w = max_w - w
+        img = F.pad(img, (0, pad_w, 0, pad_h))
+        pad_c = max_channels - c
+        if pad_c:
+            img = torch.cat([img, torch.zeros((pad_c, max_h, max_w), dtype=img.dtype)], dim=0)
+            chn_ids = torch.cat([chn_ids, torch.zeros((pad_c, *chn_ids.shape[1:]), dtype=chn_ids.dtype)], dim=0)
+        padded_imgs.append(img)
+        padded_chn_ids.append(chn_ids)
+
+    batched_x_dict = {
+        "imgs": torch.stack(padded_imgs),
+        "chn_ids": torch.stack(padded_chn_ids),
+    }
+    return batched_x_dict, torch.tensor(labels), list(sensors), list(group_ids)
 
 
 def _as_bool(value: Any) -> bool:
@@ -300,6 +343,43 @@ def _parse_csv_set(raw: str) -> set[str]:
     return {item.strip().lower() for item in str(raw).split(",") if item.strip()}
 
 
+def _valid_path_cell(value: Any) -> bool:
+    if value is None:
+        return False
+    if isinstance(value, float) and value != value:
+        return False
+    text = str(value).strip().lower()
+    return text not in {"", "nan", "none", "null", "<na>"}
+
+
+def _sensor_valid_row_count(ds: TriSensorTemporalCsvDatasetCompat, sensor_name: str) -> int:
+    df = ds.df
+    table_mode = getattr(ds, "_table_mode", "long")
+    if table_mode == "long":
+        if "sensor" not in df.columns:
+            return 0
+        vals = df["sensor"].astype("string").str.strip().str.lower()
+        return int((vals == sensor_name).sum())
+
+    wide_cols = getattr(ds, "_wide_sensor_columns", {})
+    if not isinstance(wide_cols, Mapping):
+        return 0
+    cols = wide_cols.get(sensor_name)
+    if cols is None or len(cols) == 0:
+        return 0
+    if sensor_name == "s5p":
+        return int(sum(1 for v in df[cols[0]].tolist() if _valid_path_cell(v)))
+    valid = np.ones(len(df), dtype=np.bool_)
+    for col in cols:
+        col_valid = np.asarray([_valid_path_cell(v) for v in df[col].tolist()], dtype=np.bool_)
+        valid &= col_valid
+    return int(valid.sum())
+
+
+def _sensor_has_any_valid_row(ds: TriSensorTemporalCsvDatasetCompat, sensor_name: str) -> bool:
+    return _sensor_valid_row_count(ds, sensor_name) > 0
+
+
 def _build_dataset(args) -> TriSensorTemporalCsvDatasetCompat:
     wv3_bands = [b.strip() for b in str(args.wv3_bands).split(",") if b.strip()]
     if not wv3_bands:
@@ -399,7 +479,7 @@ def parse_args():
     parser.add_argument(
         "--amp_dtype",
         choices=("none", "fp16", "bf16"),
-        default="fp16",
+        default="none",
         help="Autocast dtype for inference on CUDA.",
     )
     parser.add_argument("--alarm_threshold", type=float, default=0.5)
@@ -505,7 +585,7 @@ def main(args):
             shuffle=False,
             num_workers=args.num_workers,
             pin_memory=(device.type == "cuda"),
-            collate_fn=custom_collate_fn,
+            collate_fn=_flatten_collate_no_pad,
         )
 
         sensor_ckpts = {
@@ -514,6 +594,23 @@ def main(args):
             "s5p": args.s5p_ckpt,
             "wv3": args.wv3_ckpt,
         }
+        sensor_row_counts = {s: _sensor_valid_row_count(dataset, s) for s in SENSOR_ORDER}
+        print(f"[Infer] Rows with valid inputs per sensor: {sensor_row_counts}", flush=True)
+        active_sensors = [s for s in SENSOR_ORDER if _sensor_has_any_valid_row(dataset, s)]
+        skipped_sensors = [s for s in SENSOR_ORDER if s not in active_sensors]
+        if len(active_sensors) == 0:
+            raise RuntimeError("No active sensors found after filtering; cannot run inference.")
+        print(
+            f"[Infer] Active sensors: {active_sensors}" +
+            (f" | skipped: {skipped_sensors}" if skipped_sensors else ""),
+            flush=True,
+        )
+        for sensor_name in skipped_sensors:
+            print(
+                f"[Warn] Sensor '{sensor_name}' has 0 valid rows after filtering; "
+                f"checkpoint '{sensor_ckpts[sensor_name]}' will be ignored in this run.",
+                flush=True,
+            )
         results_by_id: Dict[str, Dict[str, Tuple[float, int]]] = {}
         sensor_sample_records: Dict[str, list[Tuple[str, int, int, float]]] = {
             sensor_name: [] for sensor_name in SENSOR_ORDER
@@ -522,20 +619,15 @@ def main(args):
 
         def infer_one_sensor(sensor_name: str, model: SensorModel) -> None:
             sub_batch_size = int(args.sensor_sub_batch_size)
-            for x_dict_cpu, labels_batch, sensors, group_ids in loader:
-                batch_size = len(sensors)
-                if len(group_ids) != batch_size:
-                    raise RuntimeError("group_ids size mismatch with batch size")
-
-                indices = [i for i, s in enumerate(sensors) if s == sensor_name]
-                if not indices:
+            for flat_batch in loader:
+                sensor_items = [item for item in flat_batch if str(item[2]) == sensor_name]
+                if not sensor_items:
                     continue
-                step = max(1, sub_batch_size) if sub_batch_size > 0 else len(indices)
+                step = max(1, sub_batch_size) if sub_batch_size > 0 else len(sensor_items)
 
-                for start in range(0, len(indices), step):
-                    sub_indices = indices[start:start + step]
-                    idx_tensor = torch.tensor(sub_indices, dtype=torch.long)
-                    x_sub_cpu = _slice_x_dict(x_dict_cpu, idx_tensor)
+                for start in range(0, len(sensor_items), step):
+                    sub_items = sensor_items[start:start + step]
+                    x_sub_cpu, labels_sub, _sensors_sub, group_ids_sub = _collate_sensor_items(sub_items)
                     x_sub = recursive_to_device(x_sub_cpu, device)
                     try:
                         with _autocast_context(device, args.amp_dtype):
@@ -559,15 +651,12 @@ def main(args):
                     prob1 = probs[:, 1].detach().to("cpu").tolist()
                     pred = [1 if p >= threshold else 0 for p in prob1]
 
-                    for local_i, global_i in enumerate(sub_indices):
-                        gid = str(group_ids[global_i])
+                    for local_i, gid in enumerate(group_ids_sub):
+                        gid = str(gid)
                         if gid not in results_by_id:
                             results_by_id[gid] = {}
                         results_by_id[gid][sensor_name] = (float(prob1[local_i]), int(pred[local_i]))
-                        if isinstance(labels_batch, torch.Tensor):
-                            y_true = int(labels_batch[global_i].item())
-                        else:
-                            y_true = int(labels_batch[global_i])
+                        y_true = int(labels_sub[local_i].item())
                         sensor_sample_records[sensor_name].append(
                             (gid, int(y_true), int(pred[local_i]), float(prob1[local_i]))
                         )
@@ -575,15 +664,13 @@ def main(args):
 
         if args.model_resident == "all":
             sensor_models = {
-                "s2": _load_sensor_model("s2", sensor_ckpts["s2"], device),
-                "l89": _load_sensor_model("l89", sensor_ckpts["l89"], device),
-                "s5p": _load_sensor_model("s5p", sensor_ckpts["s5p"], device),
-                "wv3": _load_sensor_model("wv3", sensor_ckpts["wv3"], device),
+                sensor_name: _load_sensor_model(sensor_name, sensor_ckpts[sensor_name], device)
+                for sensor_name in active_sensors
             }
-            for sensor_name in SENSOR_ORDER:
+            for sensor_name in active_sensors:
                 infer_one_sensor(sensor_name, sensor_models[sensor_name])
         else:
-            for sensor_name in SENSOR_ORDER:
+            for sensor_name in active_sensors:
                 print(f"[Infer] Loading sensor model: {sensor_name}", flush=True)
                 model = _load_sensor_model(sensor_name, sensor_ckpts[sensor_name], device)
                 infer_one_sensor(sensor_name, model)

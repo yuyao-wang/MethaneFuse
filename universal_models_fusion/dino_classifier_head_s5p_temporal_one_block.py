@@ -16,7 +16,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 
 # Make the repository root importable when running the script directly.
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -741,6 +741,53 @@ def compute_eval_split_panel(
     return panel
 
 
+def describe_binary_labels(labels: Sequence[int]) -> Tuple[int, int, int, float]:
+    arr = np.asarray(labels, dtype=np.int64)
+    total = int(arr.size)
+    pos = int((arr == 1).sum())
+    neg = int((arr == 0).sum())
+    pos_rate = (pos / total) if total > 0 else float("nan")
+    return total, neg, pos, pos_rate
+
+
+def build_balanced_sampler(labels: Sequence[int], *, num_samples: int) -> Optional[WeightedRandomSampler]:
+    arr = np.asarray(labels, dtype=np.int64)
+    if arr.size == 0:
+        return None
+    if np.any((arr != 0) & (arr != 1)):
+        raise ValueError("Weighted balancing currently expects binary labels encoded as 0/1.")
+    pos = int((arr == 1).sum())
+    neg = int((arr == 0).sum())
+    if pos == 0 or neg == 0:
+        return None
+    weights = np.where(arr == 1, 1.0 / pos, 1.0 / neg)
+    sample_weights = torch.as_tensor(weights, dtype=torch.double)
+    return WeightedRandomSampler(sample_weights, num_samples=num_samples, replacement=True)
+
+
+def select_threshold_youden(labels: torch.Tensor, probs: torch.Tensor) -> float:
+    if labels.numel() == 0 or probs.numel() == 0:
+        return 0.5
+    labels_np = labels.detach().cpu().numpy()
+    probs_np = probs.detach().cpu().numpy()
+    unique_labels = np.unique(labels_np)
+    if unique_labels.size < 2:
+        return 0.5
+    try:
+        from sklearn.metrics import roc_curve
+
+        fpr, tpr, thresholds = roc_curve(labels_np, probs_np)
+        j = tpr - fpr
+        best_idx = int(np.argmax(j))
+        thr = float(thresholds[best_idx])
+    except Exception:
+        thr = 0.5
+    if not np.isfinite(thr):
+        return 0.5
+    # sklearn may return +inf at index 0; clamp to a sensible range.
+    return float(np.clip(thr, 0.0, 1.0))
+
+
 def set_trainable(module: nn.Module, requires_grad: bool):
     if isinstance(module, nn.DataParallel):
         module = module.module
@@ -770,12 +817,34 @@ def init_wandb(args):
         return None
     import wandb
 
-    run = wandb.init(
-        project=args.wandb_project,
-        name=args.wandb_run_name,
-        config=vars(args),
-    )
-    return run
+    run_kwargs = {
+        "project": args.wandb_project,
+        "name": args.wandb_run_name,
+        "config": vars(args),
+    }
+    settings = wandb.Settings(init_timeout=300)
+
+    try:
+        return wandb.init(**run_kwargs, settings=settings)
+    except Exception as exc:
+        print(
+            f"[W&B] Online init failed ({type(exc).__name__}: {exc}). Falling back to offline mode.",
+            flush=True,
+        )
+
+    with suppress(Exception):
+        wandb.teardown()
+
+    try:
+        run = wandb.init(**run_kwargs, mode="offline", settings=settings)
+        print("[W&B] Running in offline mode. Use `wandb sync` to upload later.", flush=True)
+        return run
+    except Exception as exc:
+        print(
+            f"[W&B] Offline init failed ({type(exc).__name__}: {exc}). Continuing without W&B logging.",
+            flush=True,
+        )
+        return None
 
 
 def build_scheduler(args, optimizer):
@@ -884,9 +953,41 @@ def main(args):
             f"Overlap flags length mismatch: flags={len(test_overlap_flags)} vs test_ds={len(test_ds)}"
         )
 
+    train_labels = base_train_ds.df[base_train_ds.label_column].astype(int).to_numpy()
+    train_total, train_neg, train_pos, train_pos_rate = describe_binary_labels(train_labels)
+    print(
+        f"[TrainBalance] Raw labels: total={train_total}, neg={train_neg}, pos={train_pos}, pos_rate={train_pos_rate:.4f}",
+        flush=True,
+    )
+
     pin_memory = device.type == "cuda"
+    train_sampler = None
+    train_shuffle = True
+    if args.balance_mode == "sampler":
+        sampler_samples = int(args.sampler_num_samples) if args.sampler_num_samples is not None else len(train_ds)
+        if sampler_samples <= 0:
+            raise ValueError(f"sampler_num_samples must be > 0, got {sampler_samples}")
+        train_sampler = build_balanced_sampler(train_labels, num_samples=sampler_samples)
+        if train_sampler is None:
+            print(
+                "[TrainBalance] Sampler requested but train labels are degenerate; falling back to unbalanced shuffle.",
+                flush=True,
+            )
+        else:
+            train_shuffle = False
+            print(
+                f"[TrainBalance] Using WeightedRandomSampler with replacement=True, num_samples={sampler_samples}, "
+                "target_pos_rate≈0.5000 per epoch.",
+                flush=True,
+            )
+
     train_loader = DataLoader(
-        train_ds, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, pin_memory=pin_memory
+        train_ds,
+        batch_size=args.batch_size,
+        shuffle=train_shuffle,
+        sampler=train_sampler,
+        num_workers=args.num_workers,
+        pin_memory=pin_memory,
     )
     test_loader = DataLoader(
         test_ds, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, pin_memory=pin_memory
@@ -898,7 +999,8 @@ def main(args):
 
     print(
         f"Using device={device}, resize={args.resize_size}, train_samples={len(train_ds)}, test_samples={len(test_ds)}, "
-        f"norm_stats={stats_status}, nan_to_num={args.nan_to_num}, train_backbone={args.train_backbone}",
+        f"norm_stats={stats_status}, nan_to_num={args.nan_to_num}, train_backbone={args.train_backbone}, "
+        f"balance_mode={args.balance_mode}",
         flush=True,
     )
 
@@ -1010,7 +1112,6 @@ def main(args):
         test_loss_total = 0.0
         eval_offset = 0
         all_probs = []
-        all_preds = []
         all_targets = []
         all_overlap_flags = []
         with torch.no_grad():
@@ -1046,7 +1147,6 @@ def main(args):
                 total += labels.size(0)
                 probs = F.softmax(logits, dim=1)[:, 1]
                 all_probs.append(probs.detach().cpu())
-                all_preds.append(preds.detach().cpu())
                 all_targets.append(labels.detach().cpu())
                 all_overlap_flags.append(batch_overlap.clone())
 
@@ -1056,9 +1156,12 @@ def main(args):
         test_acc = correct / total if total > 0 else float("nan")
         test_loss = test_loss_total / total if total > 0 else float("nan")
         all_probs = torch.cat(all_probs) if len(all_probs) > 0 else torch.tensor([])
-        all_preds = torch.cat(all_preds) if len(all_preds) > 0 else torch.tensor([], dtype=torch.int64)
         all_targets = torch.cat(all_targets) if len(all_targets) > 0 else torch.tensor([])
         all_overlap_flags = torch.cat(all_overlap_flags) if len(all_overlap_flags) > 0 else torch.tensor([], dtype=torch.bool)
+        eval_threshold = float(args.decision_threshold)
+        if args.eval_threshold_mode == "youden":
+            eval_threshold = select_threshold_youden(all_targets, all_probs)
+        all_preds = (all_probs >= eval_threshold).to(torch.int64) if all_probs.numel() > 0 else torch.tensor([], dtype=torch.int64)
 
         if all_targets.numel() > 0:
             split_panel = compute_eval_split_panel(all_targets, all_preds, all_probs, all_overlap_flags)
@@ -1077,7 +1180,8 @@ def main(args):
         print(
             f"Epoch {epoch}: train_loss={train_loss:.4f} train_acc={train_acc:.4f} "
             f"test_loss={test_loss:.4f} test_acc={test_acc:.4f} "
-            f"test_fpr={fpr:.4f} test_recall={recall:.4f} test_auroc={test_auroc:.4f}",
+            f"test_fpr={fpr:.4f} test_recall={recall:.4f} test_auroc={test_auroc:.4f} "
+            f"eval_threshold={eval_threshold:.4f}",
             flush=True,
         )
         print(
@@ -1140,6 +1244,7 @@ def main(args):
                     "test_recall": recall,
                     "test_fpr": fpr,
                     "test_auroc": test_auroc,
+                    "eval_threshold": eval_threshold,
                     "test_overall_count": int(overall_metrics["count"]),
                     "test_single_count": int(single_metrics["count"]),
                     "test_single_acc": single_metrics["acc"],
@@ -1346,6 +1451,18 @@ if __name__ == "__main__":
     parser.add_argument("--wandb_project", default="panopticon", help="WandB project name.")
     parser.add_argument("--wandb_run_name", default=None, help="Optional WandB run name.")
     parser.add_argument(
+        "--balance_mode",
+        choices=["none", "sampler"],
+        default="none",
+        help="Training label balancing. 'sampler' enables 1:1 dynamic sampling via WeightedRandomSampler.",
+    )
+    parser.add_argument(
+        "--sampler_num_samples",
+        type=int,
+        default=None,
+        help="Samples drawn per epoch when balance_mode=sampler (default: size of training dataset).",
+    )
+    parser.add_argument(
         "--data_parallel",
         action="store_true",
         help="Wrap backbone and head with torch.nn.DataParallel when multiple CUDA GPUs are available.",
@@ -1389,6 +1506,18 @@ if __name__ == "__main__":
         choices=["max", "min"],
         default=None,
         help="Optimization direction for best_metric. Default is automatic (min for test_loss/test_fpr, else max).",
+    )
+    parser.add_argument(
+        "--eval_threshold_mode",
+        choices=["fixed", "youden"],
+        default="fixed",
+        help="How to convert probabilities to hard predictions for acc/fpr/recall (AUROC is threshold-free).",
+    )
+    parser.add_argument(
+        "--decision_threshold",
+        type=float,
+        default=0.5,
+        help="Probability threshold for positive class when eval_threshold_mode=fixed.",
     )
     args = parser.parse_args()
     if isinstance(args.best_ckpt_path, str):
