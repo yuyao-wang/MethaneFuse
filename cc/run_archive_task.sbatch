@@ -16,6 +16,7 @@ set -euo pipefail
 
 REPO=${REPO:-$HOME/panopticon_methane_detector}
 ARCHIVE=${ARCHIVE:-/scratch/yuyao16/panopticon_archives/${DATASET}.tar}
+ARCHIVE_PART_GLOB=${ARCHIVE_PART_GLOB:-/scratch/yuyao16/panopticon_archives/${DATASET}.part*.tar}
 OLD_ROOT=${OLD_ROOT:-/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/${DATASET}}
 RUN_LABEL=${RUN_LABEL:-query dataset ${DATASET#legacy_param_}}
 OUTPUT_BASE=${OUTPUT_BASE:-/scratch/yuyao16/panopticon_outputs}
@@ -30,15 +31,28 @@ fi
 
 cd "$REPO"
 
-[ -f "$ARCHIVE" ] || { echo "Missing archive: $ARCHIVE" >&2; exit 1; }
 [ -f "$WEIGHTS" ] || { echo "Missing weights: $WEIGHTS" >&2; exit 1; }
 
 WORK_ROOT="$SLURM_TMPDIR/panopticon_data"
 DATA_ROOT="$WORK_ROOT/$DATASET"
 mkdir -p "$DATA_ROOT" "$SLURM_TMPDIR/cache" "$SLURM_TMPDIR/tmp"
 
-echo "[extract] $ARCHIVE -> $DATA_ROOT"
-tar -C "$DATA_ROOT" -xf "$ARCHIVE"
+shopt -s nullglob
+archive_parts=($ARCHIVE_PART_GLOB)
+shopt -u nullglob
+if [ -f "$ARCHIVE" ]; then
+  echo "[extract] $ARCHIVE -> $DATA_ROOT"
+  tar -C "$DATA_ROOT" -xf "$ARCHIVE"
+elif [ "${#archive_parts[@]}" -gt 0 ]; then
+  printf "[extract] %d archive parts -> %s\n" "${#archive_parts[@]}" "$DATA_ROOT"
+  for part in "${archive_parts[@]}"; do
+    echo "[extract-part] $part"
+    tar -C "$DATA_ROOT" -xf "$part"
+  done
+else
+  echo "Missing archive: $ARCHIVE or parts matching $ARCHIVE_PART_GLOB" >&2
+  exit 1
+fi
 python cc/rewrite_manifest_paths.py --data-root "$DATA_ROOT" --old-root "$OLD_ROOT"
 
 export DATA_ROOT
