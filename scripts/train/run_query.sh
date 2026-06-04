@@ -5,8 +5,9 @@ PYTHON_BIN=${PYTHON_BIN:-python}
 TRAIN_CSV=${TRAIN_CSV:?Set TRAIN_CSV to your training manifest CSV}
 TEST_CSV=${TEST_CSV:?Set TEST_CSV to your validation/test manifest CSV}
 WEIGHTS=${WEIGHTS:-weights/panopticon_vitb14_teacher.pth}
-CHECKPOINT_DIR=${CHECKPOINT_DIR:-checkpoints/methanefuse_pretrain}
-RUN_NAME=${RUN_NAME:-methanefuse_pretrain}
+STAGE_A_CHECKPOINT=${STAGE_A_CHECKPOINT:-}
+CHECKPOINT_DIR=${CHECKPOINT_DIR:-checkpoints/methanefuse_loramoe}
+RUN_NAME=${RUN_NAME:-methanefuse_loramoe}
 DEVICE=${DEVICE:-cuda}
 CACHE_DIR=${CACHE_DIR:-}
 USE_WANDB=${USE_WANDB:-0}
@@ -24,15 +25,22 @@ if [[ -n "$CACHE_DIR" ]]; then
   fi
 fi
 
-"$PYTHON_BIN" src/models/pretrain_multisensor.py \
+STAGE_A_ARGS=()
+if [[ -n "$STAGE_A_CHECKPOINT" ]]; then
+  STAGE_A_ARGS+=(--stage_a_checkpoint "$STAGE_A_CHECKPOINT")
+fi
+
+"$PYTHON_BIN" src/models/finetune_loramoe_adapter.py \
+  --stage b \
   --train_csv "$TRAIN_CSV" \
   --test_csv "$TEST_CSV" \
   --weights "$WEIGHTS" \
+  "${STAGE_A_ARGS[@]}" \
   --checkpoint_dir "$CHECKPOINT_DIR" \
   --batch_size "${BATCH_SIZE:-12}" \
   --epochs "${EPOCHS:-30}" \
-  --train_backbone \
-  --freeze_backbone_epochs "${FREEZE_BACKBONE_EPOCHS:-1}" \
+  --lora_rank "${LORA_RANK:-8}" \
+  --lora_alpha "${LORA_ALPHA:-16.0}" \
   --backbone_lr "${BACKBONE_LR:-5e-5}" \
   --head_lr "${HEAD_LR:-1e-3}" \
   --weight_decay "${WEIGHT_DECAY:-5e-4}" \

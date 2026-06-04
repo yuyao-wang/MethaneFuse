@@ -4,9 +4,9 @@ set -euo pipefail
 PYTHON_BIN=${PYTHON_BIN:-python}
 TRAIN_CSV=${TRAIN_CSV:?Set TRAIN_CSV to your training manifest CSV}
 TEST_CSV=${TEST_CSV:?Set TEST_CSV to your validation/test manifest CSV}
-WEIGHTS=${WEIGHTS:-weights/methanefuse_pretrain.pth}
-CHECKPOINT_DIR=${CHECKPOINT_DIR:-checkpoints/methanefuse_finetune}
-RUN_NAME=${RUN_NAME:-methanefuse_finetune}
+WEIGHTS=${WEIGHTS:-weights/panopticon_vitb14_teacher.pth}
+CHECKPOINT_DIR=${CHECKPOINT_DIR:-checkpoints/methanefuse_pretrain}
+RUN_NAME=${RUN_NAME:-methanefuse_pretrain}
 DEVICE=${DEVICE:-cuda}
 CACHE_DIR=${CACHE_DIR:-}
 USE_WANDB=${USE_WANDB:-0}
@@ -24,7 +24,7 @@ if [[ -n "$CACHE_DIR" ]]; then
   fi
 fi
 
-"$PYTHON_BIN" src/models/finetune_loramoe_adapter.py \
+"$PYTHON_BIN" src/models/pretrain_multisensor.py \
   --train_csv "$TRAIN_CSV" \
   --test_csv "$TEST_CSV" \
   --weights "$WEIGHTS" \
