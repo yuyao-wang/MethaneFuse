@@ -35,7 +35,7 @@ import tifffile as tiff
 from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data import DataLoader, Dataset
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -758,11 +758,11 @@ def main(args: argparse.Namespace) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="AnySat-FT average-fusion 480m baseline.")
-    parser.add_argument("--train_csv", default="/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_480m_518/manifest_time_train.csv")
-    parser.add_argument("--test_csv", default="/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_480m_518/manifest_time_test.csv")
-    parser.add_argument("--anysat_repo", default="/home/yuyao/.cache/torch/hub/gastruc_anysat_main")
+    parser.add_argument("--train_csv", required=True)
+    parser.add_argument("--test_csv", required=True)
+    parser.add_argument("--anysat_repo", required=True)
     parser.add_argument("--no_pretrained", action="store_true")
-    parser.add_argument("--checkpoint_dir", default="/transferdiniu2/yuyao/checkpoints/anysat_ft_avg_480m")
+    parser.add_argument("--checkpoint_dir", default="checkpoints/anysat_ft_avg_480m")
     parser.add_argument("--run_name", default=None)
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--eval_batch_size", type=int, default=12)

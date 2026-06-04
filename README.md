@@ -11,11 +11,14 @@ This README is intentionally a short placeholder while the repository is being c
   - `models/finetune_loramoe_adapter.py`: fine-tuning model code.
   - `models/segmentation.py`: segmentation model code.
 - `baselines/per_vit/`: per-sensor ViT baseline code.
-- `baselines/unet/`: UNet baseline code.
-- `baselines/single_sensor/`: other single-sensor baselines.
+- `baselines/per_vit/`: per-sensor ViT baseline code.
+- `baselines/single_sensor/`: ResNet/ViT single-sensor baselines.
+- `baselines/anysat_ft_avg_fusion_480m.py`: AnySat average-fusion baseline.
+- `baselines/satmae_ft_avg_fusion_480m.py`: SatMAE average-fusion baseline.
+- `baselines/unet_multisensor_baseline_iou_plus.py`: UNet segmentation baseline.
 - `thirdparty/dinov2/`: inherited Panopticon/DINOv2 code kept as inherited third-party code. This will be reorganized in a later cleanup stage.
 - `configs/`: training, evaluation, data, and figure configs.
-- `scripts/`: runnable entry points for training, evaluation, data preparation, figures, release, and cluster jobs.
+- `scripts/train/`: placeholder training launchers with user-provided paths.
 - `figures/`: figures suitable for the official repository.
 - `docs/`: detailed documentation pages.
 - `environments/`: optional development or extra dependency files.
@@ -24,7 +27,7 @@ This README is intentionally a short placeholder while the repository is being c
 
 The dataset is not stored in this repository. It is maintained separately and hosted on Hugging Face.
 
-The following local directories are ignored by Git and should not be pushed to the official repository: `data/`, `data_csv/`, `datasets/`, `examples/`, `logs/`, `weights/`, `checkpoints/`, `results/reports/generated/`, and `experiments_tryout/`.
+The following local directories are ignored by Git and should not be pushed to the official repository: `data/`, `data_csv/`, `datasets/`, `examples/`, `logs/`, `weights/`, `checkpoints/`, `results/reports/generated/`, `experiments_tryout/`, `tools/`, and non-training `scripts/`.
 
 ## Baselines
 

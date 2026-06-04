@@ -50,3 +50,10 @@ experiments_tryout/
 universal_models_fusion/
 
 universal_models/
+
+# Local-only utilities. The official repository keeps only training entry points.
+tools/
+scripts/**
+!scripts/train/
+!scripts/train/*.sh
+figures/source/

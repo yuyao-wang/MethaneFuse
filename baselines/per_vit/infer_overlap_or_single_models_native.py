@@ -486,15 +486,15 @@ def parse_args():
 
     parser.add_argument(
         "--s2_ckpt",
-        default="/transferdiniu2/yuyao/checkpoints/s2/ckpt_best_test.pth",
+        required=True,
     )
     parser.add_argument(
         "--l89_ckpt",
-        default="/transferdiniu2/yuyao/checkpoints/l89/ckpt_best_test.pth",
+        required=True,
     )
     parser.add_argument(
         "--s5p_ckpt",
-        default="/transferdiniu2/yuyao/checkpoints/s5p",
+        required=True,
     )
     parser.add_argument(
         "--wv3_ckpt",
