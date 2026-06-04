@@ -30,7 +30,7 @@ fi
   --weights "$WEIGHTS" \
   --checkpoint_dir "$CHECKPOINT_DIR" \
   --batch_size "${BATCH_SIZE:-12}" \
-  --epochs "${EPOCHS:-7}" \
+  --epochs "${EPOCHS:-30}" \
   --train_backbone \
   --freeze_backbone_epochs "${FREEZE_BACKBONE_EPOCHS:-1}" \
   --backbone_lr "${BACKBONE_LR:-5e-5}" \
