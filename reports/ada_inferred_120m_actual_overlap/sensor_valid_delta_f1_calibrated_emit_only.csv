@@ -1,5 +1,0 @@
-sensor,count,calibrated_fusion_base_f1,ada_f1,delta_f1,baseline_calibration
-S2,15004,0.8472604053449267,0.8954,0.048139594655073226,emit_logit_bias=-0.10;s2/l89/s5p_unchanged
-L89,10554,0.7588345864661654,0.7877,0.02886541353383454,emit_logit_bias=-0.10;s2/l89/s5p_unchanged
-EMIT,9342,0.7312282822178576,0.7351,0.0038717177821423476,emit_logit_bias=-0.10;s2/l89/s5p_unchanged
-S5P,4079,0.8240141259564451,0.8031,-0.02091412595644504,emit_logit_bias=-0.10;s2/l89/s5p_unchanged

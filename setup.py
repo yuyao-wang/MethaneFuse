@@ -10,11 +10,11 @@ from typing import List, Tuple
 from setuptools import setup, find_packages
 
 
-NAME = "dinov2"
-DESCRIPTION = "PyTorch code and models for the DINOv2 self-supervised learning method."
+NAME = "methanefuse"
+DESCRIPTION = "Official code for MethaneFuse multi-sensor methane plume detection."
 
-URL = "https://github.com/facebookresearch/dinov2"
-AUTHOR = "FAIR"
+URL = "https://github.com/yuyao-wang/MethaneFuse"
+AUTHOR = "Yuyao Wang"
 REQUIRES_PYTHON = ">=3.9.0"
 HERE = Path(__file__).parent
 
@@ -40,7 +40,7 @@ def get_requirements(path: str = HERE / "requirements.txt") -> Tuple[List[str], 
 
 
 def get_package_version() -> str:
-    with open(HERE / "dinov2/__init__.py") as f:
+    with open(HERE / "src/methanefuse/__init__.py") as f:
         result = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", f.read(), re.M)
         if result:
             return result.group(1)

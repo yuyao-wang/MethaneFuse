@@ -24,3 +24,27 @@ weights/
 
 ./run.sh
 hf_dataset_release/file_manifest.csv
+
+external/datasets/hf_dataset_release/file_manifest.csv
+
+# Local data and experiment artifacts excluded from the official repository
+data/
+data_csv/
+datasets/
+external/datasets/
+examples/
+logs/
+wandb/
+weights/
+*.log
+*.pth
+*.pt
+*.ckpt
+
+results/logs/
+
+# Local-only generated reports and experimental tryouts
+results/reports/generated/
+scripts/root_legacy/
+experiments_tryout/
+universal_models_fusion/
