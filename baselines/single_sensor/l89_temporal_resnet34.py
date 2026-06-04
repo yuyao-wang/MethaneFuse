@@ -16,20 +16,20 @@ from torch.utils.data import DataLoader, Dataset
 from torchvision import models
 from tqdm import tqdm
 
-# 路径导入逻辑
-REPO_ROOT = Path(__file__).resolve().parents[1]
+# Import path setup
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 try:
-    from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
+    from thirdparty.dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
 except ImportError:
     class _SkipSample(Exception): pass
     S2TemporalCsvDataset = object
 
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
-# 默认统计值（作为回退方案）
+# Default statistics used as a fallback
 DEFAULT_STATS = (
     [10000.0] * 21,
     [2000.0] * 21,
@@ -68,14 +68,14 @@ class StaticAnchoredCache:
     def warm_up(self, paths: Sequence[str], max_workers: int = 8) -> None:
         unique_paths = sorted({os.path.abspath(p) for p in paths if isinstance(p, str)})
         if not unique_paths: return
-        print(f"[Cache] 预热中 (目标: {len(unique_paths)})...", flush=True)
+        print(f"[Cache] warming up (target: {len(unique_paths)})...", flush=True)
         def _copy_one(path: str):
             res = self.ensure_local(path)
             return res == path
         with ThreadPoolExecutor(max_workers=max_workers) as pool:
             futures = [pool.submit(_copy_one, p) for p in unique_paths]
             fallback_count = sum(1 for fut in as_completed(futures) if fut.result())
-            print(f"[Cache] 预热完成。已缓存: {len(unique_paths)-fallback_count}, 远程: {fallback_count}")
+            print(f"[Cache] warmup complete. cached: {len(unique_paths)-fallback_count}, remote: {fallback_count}")
 
 class CachedS2TemporalCsvDataset(S2TemporalCsvDataset):
     def __init__(self, *args, local_file_cache: Optional[StaticAnchoredCache] = None, **kwargs):
@@ -93,7 +93,7 @@ class ConcatTemporalDataset(Dataset):
         cache_warmup = kwargs.pop("cache_warmup", False)
         cache_workers = kwargs.pop("cache_workers", 8)
         
-        # 初始暂时不进行归一化（等计算完 Stats 后再手动更新）
+        # Defer normalization until statistics are computed
         kwargs["normalize_stats"] = None 
         
         dataset_cls = S2TemporalCsvDataset
@@ -115,11 +115,11 @@ class ConcatTemporalDataset(Dataset):
         self._std_tensor: Optional[torch.Tensor] = None
 
     def update_stats(self, mean: torch.Tensor, std: torch.Tensor):
-        """动态更新归一化参数（只做一次 mean/std 标准化）"""
+        """Update normalization parameters dynamically (single mean/std standardization)"""
         std = torch.clamp(std, min=1e-6)
         self._mean_tensor = mean.view(-1, 1, 1)
         self._std_tensor = std.view(-1, 1, 1)
-        # 仅记录，实际归一化在 __getitem__ 里完成
+        # Store values only; normalization happens in __getitem__
         # self._base.normalize_stats = (mean.tolist(), std.tolist())
 
     def __len__(self): return len(self._base)
@@ -128,34 +128,34 @@ class ConcatTemporalDataset(Dataset):
         x_list, label = self._base[idx]
         imgs = torch.cat([x["imgs"] for x in x_list], dim=0) # (21, H, W)
         if self._mean_tensor is not None and self._std_tensor is not None:
-            # 记录原始数据中为 0 (No-Data) 的位置
+            # Record zero-valued NoData locations
             mask = (imgs == 0)
             imgs = (imgs - self._mean_tensor) / self._std_tensor
-            # 将 No-Data 区域恢复为 0，避免填充值变成负数干扰模型
+            # Restore NoData regions to zero so fill values do not affect the model
             imgs[mask] = 0.0
         return imgs, int(label)
 
 def compute_dynamic_stats(dataset: Dataset, n_samples: int = 1000) -> Tuple[torch.Tensor, torch.Tensor]:
     """
-    随机采样并剔除 0 值（No-Data）后计算 21 通道的均值和标准差
+    Randomly sample pixels, exclude zero-valued NoData, and compute 21-channel mean/std
     """
-    print(f"[Stats] 正在随机采样 {n_samples} 个样本（剔除 0 值）计算 Mean/Std...", flush=True)
+    print(f"[Stats] randomly sampling {n_samples} samples (excluding zeros) to compute Mean/Std...", flush=True)
     indices = random.sample(range(len(dataset)), min(n_samples, len(dataset)))
     
-    # 用来存储每个通道的所有有效像素值
-    # 注意：由于每个样本的有效像素数量不同，我们不能简单堆叠张量
+    # Store valid pixel values for each channel
+    # Valid pixel counts differ across samples, so tensors cannot simply be stacked
     channel_sums = torch.zeros(21)
     channel_sq_sums = torch.zeros(21)
     channel_pixel_counts = torch.zeros(21)
 
-    for i in tqdm(indices, desc="采样中"):
+    for i in tqdm(indices, desc="sampling"):
         try:
             img, _ = dataset[i] # img shape: (21, H, W)
             img = img.float()
             
             for c in range(21):
                 channel_data = img[c]
-                valid_pixels = channel_data[channel_data != 0] # 剔除 0 值
+                valid_pixels = channel_data[channel_data != 0] # Exclude zero values
                 
                 if valid_pixels.numel() > 0:
                     channel_sums[c] += valid_pixels.sum()
@@ -165,20 +165,20 @@ def compute_dynamic_stats(dataset: Dataset, n_samples: int = 1000) -> Tuple[torc
         except Exception:
             continue
             
-    # 计算最终的均值和标准差
-    # 使用公式: Var(X) = E[X^2] - (E[X])^2
+    # Compute final mean and standard deviation
+    # Use Var(X) = E[X^2] - E[X]^2
     means = channel_sums / (channel_pixel_counts + 1e-6)
     variances = (channel_sq_sums / (channel_pixel_counts + 1e-6)) - (means ** 2)
     stds = torch.sqrt(torch.clamp(variances, min=1e-6))
     
-    # 检查是否有通道完全没有有效数据
+    # Check whether any channel has no valid pixels
     if channel_pixel_counts.min() == 0:
-        print("[Stats] 警告：某些通道未发现有效像素，已使用默认值填充")
+        print("[Stats] warning: some channels have no valid pixels; default values were used")
         for c in range(21):
             if channel_pixel_counts[c] == 0:
                 means[c], stds[c] = 10000.0, 2000.0
 
-    print(f"[Stats] 计算完成（已剔除 0 值）。")
+    print(f"[Stats] statistics computed (zero values excluded)。")
     print(f"Mean (first 3): {means[:3].tolist()}...")
     print(f"Std (first 3): {stds[:3].tolist()}...")
     
@@ -195,7 +195,7 @@ def build_resnet34(num_channels: int = 21, num_classes: int = 2) -> nn.Module:
     model.fc = nn.Linear(model.fc.in_features, num_classes)
     return model
 
-# ... train_one_epoch 和 evaluate 函数保持不变 ...
+# train_one_epoch and evaluate are unchanged
 def train_one_epoch(model, loader, criterion, optimizer, device, epoch, wandb_run=None, scheduler=None):
     model.train()
     total, correct, total_loss = 0, 0, 0.0
@@ -272,14 +272,14 @@ def main(args):
         "cache_workers": args.local_cache_workers,
     }
 
-    # 1. 初始化训练集并预热缓存（如果启用）
+    # 1. Initialize the training set and warm the cache if enabled
     train_ds = ConcatTemporalDataset(csv_path=args.train_csv, cache_warmup=args.local_cache_warmup, **ds_kwargs)
     
-    # 2. 动态计算统计值（此时数据已在本地缓存，读取速度快）
+    # 2. Compute statistics after data are cached locally
     mean, std = compute_dynamic_stats(train_ds, n_samples=args.stats_samples)
     train_ds.update_stats(mean, std)
     
-    # 3. 初始化测试集并同步 Stats
+    # 3. Initialize the test set and copy statistics
     test_ds = ConcatTemporalDataset(csv_path=args.test_csv, cache_warmup=False, **ds_kwargs)
     test_ds.update_stats(mean, std)
 
@@ -292,7 +292,7 @@ def main(args):
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     criterion = nn.CrossEntropyLoss()
     
-    # 暂停使用 Noam 学习率调度
+    # Disable Noam learning-rate scheduling
     scheduler = None
 
     for epoch in range(1, args.epochs + 1):
@@ -322,7 +322,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # ... 原有参数 ...
+    # Existing arguments
     parser.add_argument("--train_csv", default="data_csv/train.csv")
     parser.add_argument("--test_csv", default="data_csv/test.csv")
     parser.add_argument("--batch_size", type=int, default=128)
@@ -335,7 +335,7 @@ if __name__ == "__main__":
     parser.add_argument("--local_cache_dir", default=None)
     parser.add_argument("--local_cache_warmup", action="store_true")
     parser.add_argument("--local_cache_workers", type=int, default=12)
-    parser.add_argument("--stats_samples", type=int, default=1000, help="用于计算统计值的采样样本数")
+    parser.add_argument("--stats_samples", type=int, default=1000, help="number of samples used to compute statistics")
     parser.add_argument("--pad_to_multiple", type=int, default=14)
     parser.add_argument("--skip_invalid_samples", action="store_true")
     parser.add_argument("--use_wandb", action="store_true")

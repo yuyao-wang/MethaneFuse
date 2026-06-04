@@ -32,13 +32,13 @@ import torch.nn.functional as F
 from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data import DataLoader, Dataset
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
-from universal_models_fusion.multi_sensor_panopticon_4 import (  # noqa: E402
+from src.models.pretrain_multisensor import (  # noqa: E402
     DEFAULT_WV3_BANDS,
     StaticAnchoredCache,
     TriSensorTemporalCsvDataset,

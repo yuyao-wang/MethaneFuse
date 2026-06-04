@@ -23,11 +23,11 @@ import torch.nn.functional as F
 from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data import DataLoader
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from universal_models_fusion.multi_sensor_panopticon_4 import (  # noqa: E402
+from src.models.pretrain_multisensor import (  # noqa: E402
     DEFAULT_WV3_BANDS,
     StaticAnchoredCache,
     TriSensorTemporalCsvDataset,
@@ -35,7 +35,7 @@ from universal_models_fusion.multi_sensor_panopticon_4 import (  # noqa: E402
     load_wv3_channel_ids_from_srf,
     recursive_to_device,
 )
-from universal_models_fusion.multi_sensor_panopticon_4_segmentation import (  # noqa: E402
+from src.models.segmentation import (  # noqa: E402
     TASK_CONFIGS,
     SingleSensorSegmentationDataset,
     TaskConfig,

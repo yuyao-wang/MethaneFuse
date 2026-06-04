@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torchvision import models
 
 # Make the repository root importable when running the script directly.
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -67,7 +67,7 @@ class S2TemporalStackedDataset:
         normalize_stats: Tuple[Sequence[float], Sequence[float]] = PRECOMPUTED_STATS,
         pad_to_multiple: int = 14,
     ):
-        from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
+        from thirdparty.dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
 
         if normalize_stats is None:
             raise ValueError("normalize_stats must be provided to ensure consistent preprocessing.")

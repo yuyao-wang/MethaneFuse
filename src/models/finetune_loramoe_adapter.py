@@ -33,17 +33,17 @@ from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data import DataLoader, Dataset
 
 # Make the repository root importable so examples work when executed directly.
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 # Disable xFormers kernels to avoid CUDA init stalls on CPU-only hosts.
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
-from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
-from dinov2.utils.data import extract_wavemus, load_ds_cfg
-from dinov2.models.panopticon import PanopticonPE
-from dinov2.models.vision_transformer import DinoVisionTransformer
+from thirdparty.dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
+from thirdparty.dinov2.utils.data import extract_wavemus, load_ds_cfg
+from thirdparty.dinov2.models.panopticon import PanopticonPE
+from thirdparty.dinov2.models.vision_transformer import DinoVisionTransformer
 
 S2_PRECOMPUTED_STATS = (
     [
@@ -1283,9 +1283,9 @@ def collect_cache_paths_from_df(df, columns: Sequence[str]) -> list[str]:
 # --------------------------------------------------------------------------------------
 
 def _load_backbone(weights_path: Optional[str] = None, *, strict: bool = True) -> DinoVisionTransformer:
-    from hubconf import _panopticon_vitb14
+    from src.backbones import build_panopticon_vitb14
 
-    backbone = _panopticon_vitb14()
+    backbone = build_panopticon_vitb14()
     if weights_path in (None, "", "none", "scratch", "random"):
         return backbone
     ckpt_path = Path(weights_path)

@@ -14,7 +14,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
 # Make the repository root importable when running the script directly.
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -27,7 +27,7 @@ PRECOMPUTED_STATS = (
 )
 
 try:
-    from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
+    from thirdparty.dinov2.data.datasets.s2_csv import S2TemporalCsvDataset
 except ImportError:
     S2TemporalCsvDataset = object
 
@@ -133,12 +133,12 @@ def load_backbone(weights_path: str, device: torch.device, debug: bool = False):
     ``--weights none`` on the command line.
     """
 
-    from hubconf import _panopticon_vitb14
+    from src.backbones import build_panopticon_vitb14
 
     if weights_path in (None, "", "none", "scratch", "random"):
         if debug:
             print("Building backbone from scratch (no pretrained weights)", flush=True)
-        return _panopticon_vitb14()
+        return build_panopticon_vitb14()
 
     weights_path = Path(weights_path)
     # if not weights_path.is_file():
@@ -151,7 +151,7 @@ def load_backbone(weights_path: str, device: torch.device, debug: bool = False):
     print(f"Loading checkpoint from {weights_path}", flush=True)
     if debug:
         print("Building backbone...", flush=True)
-    model = _panopticon_vitb14()
+    model = build_panopticon_vitb14()
     if debug:
         print("Loading state dict to CPU...", flush=True)
     state = torch.load(weights_path, map_location="cpu")

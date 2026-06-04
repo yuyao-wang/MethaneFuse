@@ -17,7 +17,7 @@ from torch.utils.data import DataLoader, Dataset
 from torchvision import models
 
 # Make the repository root importable when running the script directly.
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -89,7 +89,7 @@ class StaticAnchoredCache:
             )
 
 
-from dinov2.data.datasets.s5p_npz import S5pNpzDataset
+from thirdparty.dinov2.data.datasets.s5p_npz import S5pNpzDataset
 
 
 class CachedS5pNpzDataset(S5pNpzDataset):

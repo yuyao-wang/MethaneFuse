@@ -1,4 +1,4 @@
-name: dinov2
+name: methanefuse
 channels:
   - defaults
   - pytorch

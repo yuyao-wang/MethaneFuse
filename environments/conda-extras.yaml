@@ -1,4 +1,4 @@
-name: dinov2-extras
+name: methanefuse-extras
 channels:
   - defaults
   - pytorch

@@ -13,7 +13,7 @@ This README is intentionally a short placeholder while the repository is being c
 - `baselines/per_vit/`: per-sensor ViT baseline code.
 - `baselines/unet/`: UNet baseline code.
 - `baselines/single_sensor/`: other single-sensor baselines.
-- `dinov2/`: inherited Panopticon/DINOv2 code retained for compatibility. This will be reorganized in a later cleanup stage.
+- `thirdparty/dinov2/`: inherited Panopticon/DINOv2 code kept as inherited third-party code. This will be reorganized in a later cleanup stage.
 - `configs/`: training, evaluation, data, and figure configs.
 - `scripts/`: runnable entry points for training, evaluation, data preparation, figures, release, and cluster jobs.
 - `figures/`: figures suitable for the official repository.

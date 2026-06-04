@@ -17,7 +17,7 @@ from torchvision import models
 from tqdm import tqdm
 
 # Make the repository root importable when running the script directly.
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
@@ -25,7 +25,7 @@ if str(REPO_ROOT) not in sys.path:
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
 try:
-    from dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
+    from thirdparty.dinov2.data.datasets.s2_csv import S2TemporalCsvDataset, _SkipSample
 except ImportError:  # Fallback stubs to keep the script importable
     class _SkipSample(Exception):
         pass

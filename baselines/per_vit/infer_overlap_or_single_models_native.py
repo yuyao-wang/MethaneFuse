@@ -25,12 +25,12 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
 # Make repository root importable when executed as a script.
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from hubconf import _panopticon_vitb14
-from universal_models_fusion.multi_sensor_panopticon_4_nonlinear_loraadapter_sensor_specific_earlystopping import (
+from src.backbones import build_panopticon_vitb14
+from src.models.pretrain_multisensor import (
     DEFAULT_WV3_BANDS,
     ConcatTemporalDataset,
     StaticAnchoredCache,
@@ -170,7 +170,7 @@ def _load_sensor_model(sensor: str, ckpt_path: str, device: torch.device) -> Sen
         raise ValueError(f"Checkpoint must be a mapping/dict: {resolved}")
 
     backbone_state, head_state = _extract_backbone_head_state(payload, resolved)
-    backbone = _panopticon_vitb14()
+    backbone = build_panopticon_vitb14()
     backbone.load_state_dict(backbone_state, strict=True)
     num_classes = _infer_num_classes(head_state)
     head = CLSHead(embed_dim=int(getattr(backbone, "embed_dim", 768)), num_classes=num_classes)

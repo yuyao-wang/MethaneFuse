@@ -14,7 +14,7 @@ import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 
-import universal_models_fusion.dino_classifier_head_s5p_temporal_one_block as s5p_mod
+import baselines.per_vit.s5p_temporal as s5p_mod
 
 
 def parse_args() -> argparse.Namespace:
