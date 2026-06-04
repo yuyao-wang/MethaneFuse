@@ -37,7 +37,7 @@ fi
   --weights "$WEIGHTS" \
   "${STAGE_A_ARGS[@]}" \
   --checkpoint_dir "$CHECKPOINT_DIR" \
-  --batch_size "${BATCH_SIZE:-12}" \
+  --batch_size "${BATCH_SIZE:-16}" \
   --epochs "${EPOCHS:-30}" \
   --lora_rank "${LORA_RANK:-8}" \
   --lora_alpha "${LORA_ALPHA:-16.0}" \
