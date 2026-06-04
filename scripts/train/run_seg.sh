@@ -4,14 +4,41 @@ set -euo pipefail
 PYTHON_BIN=${PYTHON_BIN:-python}
 TRAIN_CSV=${TRAIN_CSV:?Set TRAIN_CSV to your training manifest CSV}
 TEST_CSV=${TEST_CSV:?Set TEST_CSV to your validation/test manifest CSV}
-WEIGHTS=${WEIGHTS:?Set WEIGHTS to the backbone checkpoint}
-CHECKPOINT_DIR=${CHECKPOINT_DIR:-checkpoints/methanefuse_unet}
-RUN_NAME=${RUN_NAME:-methanefuse_unet}
+WEIGHTS=${WEIGHTS:-weights/methanefuse_pretrain.pth}
+CHECKPOINT_DIR=${CHECKPOINT_DIR:-checkpoints/methanefuse_segmentation}
+RUN_NAME=${RUN_NAME:-methanefuse_segmentation}
+DEVICE=${DEVICE:-cuda}
+TASKS=${TASKS:-s2,l89,emit}
+CACHE_DIR=${CACHE_DIR:-}
+USE_WANDB=${USE_WANDB:-0}
 
-"$PYTHON_BIN" baselines/unet_multisensor_baseline_iou_plus.py \
+WANDB_ARGS=()
+if [[ "$USE_WANDB" == "1" ]]; then
+  WANDB_ARGS+=(--use_wandb --wandb_project "${WANDB_PROJECT:-methanefuse}" --wandb_run_name "$RUN_NAME")
+fi
+
+CACHE_ARGS=()
+if [[ -n "$CACHE_DIR" ]]; then
+  CACHE_ARGS+=(--local_cache_dir "$CACHE_DIR" --local_cache_min_free_gb "${LOCAL_CACHE_MIN_FREE_GB:-20}")
+  if [[ "${LOCAL_CACHE_WARMUP:-0}" == "1" ]]; then
+    CACHE_ARGS+=(--local_cache_warmup --local_cache_workers "${LOCAL_CACHE_WORKERS:-8}")
+  fi
+fi
+
+"$PYTHON_BIN" src/models/segmentation.py \
   --train_csv "$TRAIN_CSV" \
   --test_csv "$TEST_CSV" \
+  --tasks "$TASKS" \
   --weights "$WEIGHTS" \
   --checkpoint_dir "$CHECKPOINT_DIR" \
-  --wandb_run_name "$RUN_NAME" \
+  --batch_size "${BATCH_SIZE:-12}" \
+  --epochs "${EPOCHS:-7}" \
+  --freeze_backbone_epochs "${FREEZE_BACKBONE_EPOCHS:-2}" \
+  --backbone_lr "${BACKBONE_LR:-5e-5}" \
+  --head_lr "${HEAD_LR:-1e-3}" \
+  --weight_decay "${WEIGHT_DECAY:-5e-4}" \
+  --num_workers "${NUM_WORKERS:-8}" \
+  --device "$DEVICE" \
+  "${WANDB_ARGS[@]}" \
+  "${CACHE_ARGS[@]}" \
   "$@"
