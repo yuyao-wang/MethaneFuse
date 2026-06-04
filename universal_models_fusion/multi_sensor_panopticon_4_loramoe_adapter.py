@@ -1333,7 +1333,9 @@ def install_lora_moe_qv_adapters(
         if isinstance(qkv, LoRAMoEQKV):
             continue
         if isinstance(qkv, nn.Linear) and qkv.out_features == qkv.in_features * 3:
-            module.qkv = LoRAMoEQKV(qkv, num_experts=num_experts, rank=rank, alpha=alpha)
+            qkv_weight = qkv.weight
+            wrapper = LoRAMoEQKV(qkv, num_experts=num_experts, rank=rank, alpha=alpha)
+            module.qkv = wrapper.to(device=qkv_weight.device, dtype=qkv_weight.dtype)
             installed += 1
     if installed == 0:
         raise RuntimeError("No fused qkv Linear modules found for LoRA-MoE injection.")

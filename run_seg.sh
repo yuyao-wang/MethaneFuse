@@ -12,12 +12,12 @@ export TMPDIR="$TMP_BASE"
 export TMP="$TMP_BASE"
 export TEMP="$TMP_BASE"
 
-DATA_ROOT=${DATA_ROOT:-/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_480m}
+DATA_ROOT=${DATA_ROOT:-/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_480m_518}
 TRAIN_CSV=${TRAIN_CSV:-$DATA_ROOT/manifest_time_train.csv}
 TEST_CSV=${TEST_CSV:-$DATA_ROOT/manifest_time_test.csv}
 OUT_ROOT=${OUT_ROOT:-/transferdiniu2/yuyao/checkpoints/unet_multisensor_baseline_iou_plus}
-CACHE_DIR=${CACHE_DIR:-/diniuvol/yuyao/local_train_temp_cache_480m}
-RUN_LABEL=${RUN_LABEL:-480m_unet_baseline_iou_plus_full}
+CACHE_DIR=${CACHE_DIR:-/diniuvol/yuyao/local_train_temp_cache_480m_518}
+RUN_LABEL=${RUN_LABEL:-480m_518_unet_baseline_iou_plus_full}
 PYTHON_BIN=${PYTHON_BIN:-python}
 
 [ -f "$TRAIN_CSV" ] || { echo "Missing TRAIN_CSV: $TRAIN_CSV" >&2; exit 1; }
@@ -28,7 +28,7 @@ PYTHON_BIN=${PYTHON_BIN:-python}
   --test_csv "$TEST_CSV" \
   --tasks s2,l89,emit \
   --epochs 7 \
-  --batch_size 32 \
+  --batch_size 10 \
   --lr 1e-3 \
   --num_workers 8 \
   --device cuda \

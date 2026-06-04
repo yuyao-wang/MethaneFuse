@@ -1,0 +1,27 @@
+{
+  "align_mode_counts": {
+    "resize_no_crs": 180
+  },
+  "count": 60,
+  "fusion": "mean",
+  "fusion_iou_plus": 0.45,
+  "min_sensors": 3,
+  "model_type": "panopticon",
+  "own_iou_plus": {
+    "emit": 0.35208333333333336,
+    "l89": 0.3846889620203598,
+    "s2": 0.45
+  },
+  "own_iou_plus_counts": {
+    "emit": 60,
+    "l89": 60,
+    "s2": 60
+  },
+  "reference": "anchor",
+  "tasks": [
+    "s2",
+    "l89",
+    "emit"
+  ],
+  "threshold": 0.5
+}

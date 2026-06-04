@@ -2204,6 +2204,39 @@ def try_resume(path: Path, model: nn.Module, optimizer, scheduler, scaler, devic
     return start_epoch, global_step, best_train_acc, best_test_acc, dict(extra_state)
 
 
+def load_model_checkpoint_flexible(path: Path, model: nn.Module, device: torch.device) -> None:
+    if not path.is_file():
+        raise FileNotFoundError(f"Checkpoint not found: {path}")
+    ckpt = torch.load(path, map_location=device)
+    state = ckpt["model"] if isinstance(ckpt, Mapping) and "model" in ckpt else ckpt
+    if not isinstance(state, Mapping):
+        raise TypeError(f"Checkpoint does not contain a state dict: {path}")
+
+    model_keys = set(model.state_dict().keys())
+    mapped_state: Dict[str, torch.Tensor] = {}
+    for key, value in state.items():
+        mapped_key = str(key)
+        if mapped_key.startswith("backbone.blocks."):
+            parts = mapped_key.split(".")
+            if len(parts) >= 4 and parts[3] != "block":
+                candidate = ".".join(parts[:3] + ["block"] + parts[3:])
+                if candidate in model_keys:
+                    mapped_key = candidate
+        mapped_state[mapped_key] = value
+
+    incompatible = model.load_state_dict(mapped_state, strict=False)
+    missing = [
+        key
+        for key in incompatible.missing_keys
+        if "private_adapters" not in key and "moe_router" not in key
+    ]
+    if missing:
+        print(f"[Checkpoint][Warn] Missing non-MOE keys while loading {path}: {missing[:20]}", flush=True)
+    if incompatible.unexpected_keys:
+        print(f"[Checkpoint][Warn] Unexpected keys while loading {path}: {incompatible.unexpected_keys[:20]}", flush=True)
+    print(f"Loaded Stage A model weights from {path}", flush=True)
+
+
 def build_scheduler(args, optimizer):
     if args.lr_scheduler == "none":
         return None
@@ -2693,6 +2726,12 @@ def parse_args():
         help="Stage B adapter LR override. If unset, reuses adapter_lr.",
     )
     parser.add_argument(
+        "--stage_a_checkpoint",
+        type=str,
+        default="",
+        help="Optional baseline checkpoint used to initialize Stage B directly.",
+    )
+    parser.add_argument(
         "--sensor_aux_loss_weight",
         type=float,
         default=0.3,
@@ -2943,6 +2982,8 @@ def main(args):
         start_epoch, global_step, best_train_acc, best_test_acc, resume_state = try_resume(
             latest_path, core_model, optimizer, scheduler, scaler, device
         )
+    elif args.stage_a_checkpoint and args.stage_a_checkpoint.strip():
+        load_model_checkpoint_flexible(Path(args.stage_a_checkpoint).expanduser(), core_model, device)
 
     wandb_run = init_wandb(args)
 
@@ -3069,18 +3110,8 @@ def main(args):
     )
     for epoch in range(start_epoch, args.epochs + 1):
         in_phase1 = epoch <= phase1_epochs
-        if in_phase1 and phase1_dynamic_loader:
-            train_loader, train_steps = build_balanced_mixed_dataloader(
-                train_ds,
-                sensors_list,
-                batch_size=args.batch_size,
-                num_workers=args.num_workers,
-                pin_memory=pin_memory,
-                shuffle=True,
-                oversample_to_max=args.oversample_minority,
-                epoch_coverage=phase1_train_coverage,
-                sensor_coverages=phase1_sensor_coverages,
-            )
+        if in_phase1:
+            train_loader, train_steps = row_train_loader, row_train_steps
         else:
             train_loader, train_steps = train_loader_default, train_steps_default
         model.train()
@@ -3096,7 +3127,7 @@ def main(args):
             set_trainable(sensor, True)
             sensor.train()
 
-        if training_schedule == "adapter_then_joint":
+        if training_schedule == "vit_then_moe":
             if in_phase1:
                 # Stage A: train ViT blocks while keeping MOE adapters frozen.
                 set_optimizer_group_lrs(
@@ -3212,8 +3243,9 @@ def main(args):
         num_classes = core_model.heads[sensors_list[0]].out_features
 
         step_idx = 0
-        for x_dict, labels, sensors, group_ids in train_loader:
+        for batch_data in train_loader:
             step_idx += 1
+            x_dict, labels, sensors, row_or_group_ids = batch_data
             labels = labels.to(device)
             x_dict = recursive_to_device(x_dict, device)
             sensor_arg: Union[Sequence[str], torch.Tensor]
@@ -3223,66 +3255,56 @@ def main(args):
                 sensor_arg = sensors
             with autocast(enabled=use_amp):
                 outputs = model(x_dict, sensors=sensor_arg)
-                _, per_sensor_losses = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
-                batch = labels.size(0)
-                base_logits = _select_batch_logits(
-                    outputs,
-                    batch_size=batch,
-                    num_classes=num_classes,
-                    device=device,
-                )
-                fused_loss = criterion(base_logits, labels)
-                weighted_sensor_aux_sum: Optional[torch.Tensor] = None
-                weighted_sensor_aux_norm = 0.0
-                for sensor_name in sensors_list:
-                    sensor_loss = per_sensor_losses.get(sensor_name)
-                    if not isinstance(sensor_loss, torch.Tensor):
-                        continue
-                    sensor_weight = float(sensor_aux_weights.get(sensor_name, 1.0))
-                    weighted_sensor_aux_sum = (
-                        sensor_loss * sensor_weight
-                        if weighted_sensor_aux_sum is None
-                        else (weighted_sensor_aux_sum + (sensor_loss * sensor_weight))
-                    )
-                    weighted_sensor_aux_norm += sensor_weight
-                if weighted_sensor_aux_sum is None or weighted_sensor_aux_norm <= 0.0:
-                    sensor_aux_loss = fused_loss.new_zeros(())
-                else:
-                    sensor_aux_loss = weighted_sensor_aux_sum / weighted_sensor_aux_norm
-
-                student_logits = _select_student_sensor_logits(
-                    outputs,
-                    batch_size=batch,
-                    num_classes=num_classes,
-                    device=device,
-                )
-                consistency_loss = _compute_fused_sensor_consistency_kl(
-                    fused_logits=base_logits,
-                    student_logits=student_logits,
-                    temperature=args.consistency_temperature,
-                )
-                loss = (
-                    fused_loss
-                    + (args.sensor_aux_loss_weight * sensor_aux_loss)
-                    + (args.consistency_loss_weight * consistency_loss)
-                )
-                overlap_head_logits: Optional[torch.Tensor] = None
-                need_overlap_head = (
-                    core_model.overlap_head is not None
-                    and (args.overlap_fusion == "overall_head" or args.overlap_loss_weight > 0.0)
-                )
-                if need_overlap_head:
-                    overlap_head_logits = _compute_overlap_head_logits(
-                        core_model,
-                        base_logits,
+                if in_phase1:
+                    sample_to_row = row_or_group_ids.to(device=device, dtype=torch.long)
+                    flat_labels = labels.index_select(0, sample_to_row)
+                    sensor_aux_loss, per_sensor_losses = core_model.loss_from_outputs(
+                        outputs,
+                        flat_labels,
                         sensors,
-                        group_ids,
-                        sensor_weights=overlap_sensor_weights if overlap_sensor_weights else None,
+                        criterion,
                     )
-                if overlap_head_logits is not None and args.overlap_loss_weight > 0.0:
-                    overlap_loss = criterion(overlap_head_logits, labels)
-                    per_sensor_losses["overlap"] = overlap_loss
-                    loss = loss + (core_model.overlap_loss_weight * overlap_loss)
+                    batch = labels.size(0)
+                    base_logits = core_model.compute_row_fused_logits(
+                        outputs,
+                        sample_to_row=sample_to_row,
+                        num_rows=batch,
+                        device=device,
+                    )
+                    fused_loss = criterion(base_logits, labels)
+                    consistency_loss = fused_loss.new_zeros(())
+                    overlap_head_logits = None
+                    loss = fused_loss + (args.sensor_aux_loss_weight * sensor_aux_loss)
+                else:
+                    _, per_sensor_losses = core_model.loss_from_outputs(outputs, labels, sensors, criterion)
+                    batch = labels.size(0)
+                    base_logits = _select_batch_logits(
+                        outputs,
+                        batch_size=batch,
+                        num_classes=num_classes,
+                        device=device,
+                    )
+                    fused_loss = criterion(base_logits, labels)
+                    weighted_sensor_aux_sum: Optional[torch.Tensor] = None
+                    weighted_sensor_aux_norm = 0.0
+                    for sensor_name in sensors_list:
+                        sensor_loss = per_sensor_losses.get(sensor_name)
+                        if not isinstance(sensor_loss, torch.Tensor):
+                            continue
+                        sensor_weight = float(sensor_aux_weights.get(sensor_name, 1.0))
+                        weighted_sensor_aux_sum = (
+                            sensor_loss * sensor_weight
+                            if weighted_sensor_aux_sum is None
+                            else (weighted_sensor_aux_sum + (sensor_loss * sensor_weight))
+                        )
+                        weighted_sensor_aux_norm += sensor_weight
+                    if weighted_sensor_aux_sum is None or weighted_sensor_aux_norm <= 0.0:
+                        sensor_aux_loss = fused_loss.new_zeros(())
+                    else:
+                        sensor_aux_loss = weighted_sensor_aux_sum / weighted_sensor_aux_norm
+                    consistency_loss = fused_loss.new_zeros(())
+                    overlap_head_logits = None
+                    loss = fused_loss + (args.sensor_aux_loss_weight * sensor_aux_loss)
             optimizer.zero_grad()
             scaler.scale(loss).backward()
             if args.max_grad_norm and args.max_grad_norm > 0:
@@ -3306,21 +3328,22 @@ def main(args):
             consistency_loss_count += 1
             total += batch
             pred_logits = base_logits
-            if args.overlap_fusion_train and args.overlap_fusion != "none":
+            if (not in_phase1) and args.overlap_fusion_train and args.overlap_fusion != "none":
                 pred_logits = _fuse_logits_by_overlap(
                     pred_logits,
                     sensors,
-                    group_ids,
+                    row_or_group_ids,
                     method=args.overlap_fusion,
                     sensor_weights=overlap_sensor_weights if overlap_sensor_weights else None,
                     overall_head_logits=overlap_head_logits,
                 )
             preds = pred_logits.argmax(dim=1)
             correct += (preds == labels).sum().item()
-            for i, sensor_type in enumerate(sensors):
-                train_sensor_total[sensor_type] += 1
-                if preds[i] == labels[i]:
-                    train_sensor_correct[sensor_type] += 1
+            if not in_phase1:
+                for i, sensor_type in enumerate(sensors):
+                    train_sensor_total[sensor_type] += 1
+                    if preds[i] == labels[i]:
+                        train_sensor_correct[sensor_type] += 1
             for sensor_name, sensor_loss in per_sensor_losses.items():
                 if sensor_name == "summary":
                     summary_loss_accum += sensor_loss.item()

@@ -1486,6 +1486,37 @@ def try_resume(path: Path, model: nn.Module, optimizer, scheduler, scaler, devic
     return start_epoch, global_step, best_train_acc, best_test_acc
 
 
+def load_model_checkpoint_flexible(path: Path, model: nn.Module, device: torch.device) -> None:
+    if not path.is_file():
+        raise FileNotFoundError(f"Checkpoint not found: {path}")
+    ckpt = torch.load(path, map_location=device)
+    state = ckpt["model"] if isinstance(ckpt, Mapping) and "model" in ckpt else ckpt
+    if not isinstance(state, Mapping):
+        raise TypeError(f"Checkpoint does not contain a state dict: {path}")
+
+    model_keys = set(model.state_dict().keys())
+    mapped_state: Dict[str, torch.Tensor] = {}
+    for key, value in state.items():
+        mapped_key = str(key)
+        if ".qkv." in mapped_key:
+            candidate = mapped_key.replace(".qkv.", ".qkv.base_qkv.")
+            if candidate in model_keys:
+                mapped_key = candidate
+        mapped_state[mapped_key] = value
+
+    incompatible = model.load_state_dict(mapped_state, strict=False)
+    missing = [
+        key
+        for key in incompatible.missing_keys
+        if "q_adapter" not in key and "v_adapter" not in key and "private" not in key and "shared" not in key
+    ]
+    if missing:
+        print(f"[Checkpoint][Warn] Missing non-adapter keys while loading {path}: {missing[:20]}", flush=True)
+    if incompatible.unexpected_keys:
+        print(f"[Checkpoint][Warn] Unexpected keys while loading {path}: {incompatible.unexpected_keys[:20]}", flush=True)
+    print(f"Loaded Stage A model weights from {path}", flush=True)
+
+
 def build_scheduler(args, optimizer):
     if args.lr_scheduler == "none":
         return None
@@ -1734,6 +1765,12 @@ def parse_args():
         help="Stage A epochs using the existing training behavior with the added Q/V LoRA branches frozen.",
     )
     parser.add_argument(
+        "--stage_a_checkpoint",
+        type=str,
+        default="",
+        help="Optional baseline checkpoint used to initialize Stage B directly.",
+    )
+    parser.add_argument(
         "--adapter_blocks",
         type=int,
         default=12,
@@ -1906,6 +1943,8 @@ def main(args):
         start_epoch, global_step, best_train_acc, best_test_acc = try_resume(
             latest_path, core_model, optimizer, scheduler, scaler, device
         )
+    elif args.stage_a_checkpoint and args.stage_a_checkpoint.strip():
+        load_model_checkpoint_flexible(Path(args.stage_a_checkpoint).expanduser(), core_model, device)
 
     wandb_run = init_wandb(args)
 

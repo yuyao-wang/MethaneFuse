@@ -384,6 +384,7 @@ def run_train_epoch(
     log_interval: int,
     epoch: int,
     task_name: str,
+    max_steps: Optional[int] = None,
 ) -> Dict[str, float]:
     total_loss = 0.0
     total_bce = 0.0
@@ -427,6 +428,9 @@ def run_train_epoch(
                 flush=True,
             )
 
+        if max_steps is not None and step_idx >= max_steps:
+            break
+
     return {
         "loss": total_loss / max(1, total_samples),
         "bce": total_bce / max(1, total_samples),
@@ -445,6 +449,7 @@ def run_eval_epoch(
     bce_weight: float,
     dice_weight: float,
     eval_threshold: float,
+    max_steps: Optional[int] = None,
 ) -> Dict[str, float]:
     model.eval()
     total_loss = 0.0
@@ -453,7 +458,7 @@ def run_eval_epoch(
     total_iou_plus = 0.0
     total_samples = 0
 
-    for x_dict, masks, _ in loader:
+    for step_idx, (x_dict, masks, _) in enumerate(loader, 1):
         x_dict = recursive_to_device(x_dict, device)
         masks = masks.to(device=device, dtype=torch.float32)
         batch_size = masks.shape[0]
@@ -470,6 +475,9 @@ def run_eval_epoch(
         total_dice += float(dice.item()) * batch_size
         total_iou_plus += float(iou_plus_batch.sum().item())
         total_samples += batch_size
+
+        if max_steps is not None and step_idx >= max_steps:
+            break
 
     return {
         "loss": total_loss / max(1, total_samples),
@@ -578,6 +586,7 @@ def train_single_task(
             log_interval=args.log_interval,
             epoch=epoch,
             task_name=task.name,
+            max_steps=args.max_train_steps,
         )
         val_metrics = run_eval_epoch(
             model=model,
@@ -587,6 +596,7 @@ def train_single_task(
             bce_weight=args.bce_weight,
             dice_weight=args.dice_weight,
             eval_threshold=args.eval_threshold,
+            max_steps=args.max_eval_steps,
         )
         global_step += len(train_loader)
 
@@ -673,6 +683,8 @@ def parse_args():
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--max_grad_norm", type=float, default=1.0)
     parser.add_argument("--log_interval", type=int, default=50)
+    parser.add_argument("--max_train_steps", type=int, default=None)
+    parser.add_argument("--max_eval_steps", type=int, default=None)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--checkpoint_dir", default="checkpoints/multi_sensor_seg")
