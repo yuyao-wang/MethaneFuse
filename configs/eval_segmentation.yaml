@@ -1,0 +1,10 @@
+# Copy this file and fill in local dataset/checkpoint paths before running evaluation.
+eval_csv: /path/to/manifest_time_test.csv
+checkpoint_dir: checkpoints/segmentation
+run_name: stage2_segmentation
+weights: weights/panopticon_vitb14_teacher.pth
+tasks: s2,l89,emit
+batch_size: 12
+num_workers: 8
+eval_threshold: 0.5
+output_json: results/eval/segmentation.json

@@ -1,0 +1,9 @@
+# Copy this file and fill in local dataset/checkpoint paths before running evaluation.
+eval_csv: /path/to/manifest_time_test.csv
+checkpoint: checkpoints/stage2_classification_480m.pt
+weights: weights/panopticon_vitb14_teacher.pth
+stage: b
+batch_size: 16
+num_workers: 8
+row_fusion_mode: max
+output_json: results/eval/classification_480m.json
