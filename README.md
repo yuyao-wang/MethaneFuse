@@ -212,7 +212,7 @@ MethaneUnion includes observations from:
 
 ## License
 
-This repository is released for research use. Please see the license file for details.
+MethaneFuse is released under the Apache License, Version 2.0; see `LICENSE`. Vendored third-party code under `thirdparty/dinov2/` keeps its upstream license notices; see `thirdparty/dinov2/LICENSE`.
 
 ---
 
