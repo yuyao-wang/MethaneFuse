@@ -64,10 +64,81 @@ MethaneFuse/
 ├── scripts/
 │   ├── train/               # Training launchers
 │   └── eval/                # Evaluation launchers
+├── examples/                # Copy-pasteable inference, visualization, and data-loading examples
 ├── figures/                 # Paper and README figures
 ├── docs/                    # Additional documentation
 ├── environments/            # Environment files
 └── README.md
+```
+
+## Quick Start
+
+The commands below assume a fresh machine with `conda`, `git`, and `huggingface_hub` available. They are written so they can be copied as one block.
+
+```bash
+# 1. Clone the repository.
+git clone https://github.com/yuyao-wang/MethaneFuse.git
+cd MethaneFuse
+
+# 2. Create the Python environment.
+conda create -n methanefuse python=3.10 -y
+conda activate methanefuse
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pip install -U "huggingface_hub[cli]"
+
+# 3. Download MethaneUnion.
+mkdir -p data/MethaneUnion
+huggingface-cli download yuyao42/MethaneUnion \
+  --repo-type dataset \
+  --local-dir data/MethaneUnion
+
+# 4. Download released MethaneFuse checkpoints and backbone weights.
+mkdir -p checkpoints weights
+huggingface-cli download yuyao42/MethaneFuse \
+  --repo-type model \
+  --local-dir checkpoints
+
+# If the backbone is distributed separately, place it here:
+# weights/panopticon_vitb14_teacher.pth
+
+# 5. Run 480 m inference/evaluation on the temporal split.
+python examples/inference_480m.py \
+  --eval_csv data/MethaneUnion/datasets/temporal_split/480m_GSD/test.csv \
+  --checkpoint checkpoints/stage2_classification_480m.pt \
+  --weights weights/panopticon_vitb14_teacher.pth \
+  --output_json results/examples/inference_480m.json
+
+# 6. Run the full classification evaluation entry point.
+python scripts/eval/evaluate_classification.py \
+  --eval_csv data/MethaneUnion/datasets/temporal_split/480m_GSD/test.csv \
+  --checkpoint checkpoints/stage2_classification_480m.pt \
+  --weights weights/panopticon_vitb14_teacher.pth \
+  --wv3_srf_csv data/manifests/WV3_VNIR_SWIR_response.csv \
+  --stage b \
+  --batch_size 16 \
+  --num_workers 8 \
+  --row_fusion_mode max \
+  --output_json results/eval/classification_480m.json
+
+# 7. Inspect a MethaneUnion sample and visualize a prediction row.
+python examples/load_methaneunion_sample.py \
+  --csv data/MethaneUnion/datasets/temporal_split/480m_GSD/test.csv \
+  --index 0
+
+python examples/visualize_prediction.py \
+  --csv data/manifests/manifest_time_test_480m_all_samples_with_pred_metrics.csv \
+  --index 0 \
+  --output results/examples/prediction_row0.png
+```
+
+The example scripts are:
+
+```text
+examples/
+├── inference_480m.py
+├── visualize_prediction.py
+└── load_methaneunion_sample.py
 ```
 
 ## Installation

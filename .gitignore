@@ -9,6 +9,7 @@ dist/
 *.swp
 
 .vscode/
+.idea/
 **/lightning_logs/**
 
 .env
@@ -32,7 +33,10 @@ data/
 data_csv/
 datasets/
 external/datasets/
-examples/
+examples/*
+!examples/inference_480m.py
+!examples/load_methaneunion_sample.py
+!examples/visualize_prediction.py
 logs/
 wandb/
 weights/
