@@ -8,10 +8,12 @@ MethaneFuse is built for real methane monitoring settings where satellite covera
 
 <p align="center">
   <a href="#quick-start">Quick Start</a> •
+  <a href="#repository-structure">Repository Structure</a> •
+  <a href="#training-and-evaluation">Training & Evaluation</a> •
+  <a href="#data-and-checkpoints">Data & Checkpoints</a> •
   <a href="#method-overview">Method</a> •
   <a href="#main-results">Results</a> •
-  <a href="#methaneunion-dataset">Dataset</a> •
-  <a href="#training-and-evaluation">Training & Evaluation</a>
+  <a href="#methaneunion-dataset">Dataset</a>
 </p>
 
 <p align="center">
@@ -32,58 +34,6 @@ MethaneFuse is built for real methane monitoring settings where satellite covera
 * **Multi-sensor satellite inputs:** Sentinel-2, Landsat 8/9, EMIT, and Sentinel-5P.
 * **Classification and segmentation:** supports query-level methane plume detection and plume mask prediction.
 * **Reproducible evaluation:** includes training, evaluation, baseline, and dataset preparation code.
-
----
-
-## Method Overview
-
-MethaneFuse contains two stages.
-
-**Stage 1: Sensor-native pretraining.**
-The model learns methane-aware representations from sensor-native temporal observations. Each available sensor is tokenized and encoded independently, and available sensor representations are aggregated through masked sensor-set fusion.
-
-**Stage 2: Query-level adaptation.**
-The pretrained representation is adapted to scale-controlled plume classification and segmentation. The encoder is frozen, while lightweight sensor-aware LoRA experts and task heads are trained for downstream prediction.
-
-<p align="center">
-  <img src="assets/methanefuse_model.png" alt="MethaneFuse model" width="100%">
-</p>
-
----
-
-## Main Results
-
-At the 480 m query footprint, MethaneFuse improves over independently trained per-sensor predictors, heuristic score fusion, and generic Earth observation representation transfer.
-
-| Method          |      F1 ↑ |     Acc ↑ |     FPR ↓ |  Recall ↑ |   AUROC ↑ |
-| --------------- | --------: | --------: | --------: | --------: | --------: |
-| Per-sensor ViT  |     79.22 |     78.00 |     23.06 |     78.94 |     85.32 |
-| SatMAE-FT       |     67.60 |     63.33 |     48.41 |     74.44 |     67.61 |
-| AnySat-FT       |     58.90 |     58.96 |     37.53 |     55.82 |     62.48 |
-| Panopticon-FT   |     77.65 |     75.61 |     29.13 |     79.80 |     83.28 |
-| **MethaneFuse** | **84.87** | **84.21** | **14.87** | **83.40** | **93.62** |
-
----
-
-## MethaneUnion Dataset
-
-MethaneFuse is trained and evaluated on **MethaneUnion**, an event-centered partial multi-sensor dataset constructed from Carbon Mapper plume reports and matched satellite observations.
-
-MethaneUnion includes observations from:
-
-* Sentinel-2 Level-2A surface reflectance
-* Landsat 8/9 Collection 2 Level-2 surface reflectance
-* EMIT Level-2A hyperspectral surface reflectance
-* Sentinel-5P Level-2 methane products
-
-<p align="center">
-  <img src="assets/methaneunion_pipeline.png" alt="MethaneUnion dataset pipeline" width="85%">
-</p>
-
-Dataset and preprocessing resources:
-
-* Dataset: https://huggingface.co/datasets/yuyao42/MethaneUnion
-* Dataset construction pipeline: https://github.com/yuyao-wang/MethaneUnion
 
 ---
 
@@ -208,9 +158,58 @@ python scripts/eval/evaluate_segmentation.py \
 
 ## Data and Checkpoints
 
-* MethaneUnion dataset: https://huggingface.co/datasets/yuyao42/MethaneUnion
-* MethaneUnion construction pipeline: https://github.com/yuyao-wang/MethaneUnion
-* MethaneFuse checkpoints: https://huggingface.co/yuyao42/MethaneFuse-checkpoints
+| Resource                           | Link                                                   |
+| ---------------------------------- | ------------------------------------------------------ |
+| MethaneUnion dataset               | https://huggingface.co/datasets/yuyao42/MethaneUnion   |
+| MethaneUnion construction pipeline | https://github.com/yuyao-wang/MethaneUnion             |
+| MethaneFuse checkpoints            | https://huggingface.co/yuyao42/MethaneFuse-checkpoints |
+
+---
+
+## Method Overview
+
+MethaneFuse contains two stages.
+
+**Stage 1: Sensor-native pretraining.**
+The model learns methane-aware representations from sensor-native temporal observations. Each available sensor is tokenized and encoded independently, and available sensor representations are aggregated through masked sensor-set fusion.
+
+**Stage 2: Query-level adaptation.**
+The pretrained representation is adapted to scale-controlled plume classification and segmentation. The encoder is frozen, while lightweight sensor-aware LoRA experts and task heads are trained for downstream prediction.
+
+<p align="center">
+  <img src="assets/methanefuse_model.png" alt="MethaneFuse model" width="100%">
+</p>
+
+---
+
+## Main Results
+
+At the 480 m query footprint, MethaneFuse improves over independently trained per-sensor predictors, heuristic score fusion, and generic Earth observation representation transfer.
+
+| Method          |      F1 ↑ |     Acc ↑ |     FPR ↓ |  Recall ↑ |   AUROC ↑ |
+| --------------- | --------: | --------: | --------: | --------: | --------: |
+| Per-sensor ViT  |     79.22 |     78.00 |     23.06 |     78.94 |     85.32 |
+| SatMAE-FT       |     67.60 |     63.33 |     48.41 |     74.44 |     67.61 |
+| AnySat-FT       |     58.90 |     58.96 |     37.53 |     55.82 |     62.48 |
+| Panopticon-FT   |     77.65 |     75.61 |     29.13 |     79.80 |     83.28 |
+| **MethaneFuse** | **84.87** | **84.21** | **14.87** | **83.40** | **93.62** |
+
+---
+
+## MethaneUnion Dataset
+
+MethaneFuse is trained and evaluated on **MethaneUnion**, an event-centered partial multi-sensor dataset constructed from Carbon Mapper plume reports and matched satellite observations.
+
+MethaneUnion includes observations from:
+
+* Sentinel-2 Level-2A surface reflectance
+* Landsat 8/9 Collection 2 Level-2 surface reflectance
+* EMIT Level-2A hyperspectral surface reflectance
+* Sentinel-5P Level-2 methane products
+
+<p align="center">
+  <img src="assets/methaneunion_pipeline.png" alt="MethaneUnion dataset pipeline" width="85%">
+</p>
 
 ---
 
