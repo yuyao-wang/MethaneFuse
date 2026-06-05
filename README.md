@@ -1,12 +1,8 @@
-# MethaneFuse
-
-**MethaneFuse** is a two-stage learning framework for methane plume detection from naturally available multi-sensor satellite observations.
-
 <p align="center">
-  <img src="assets/methanefuse_overview.png" alt="MethaneFuse overview" width="95%">
+  <img src="assets/methanefuse_overview.png" alt="MethaneFuse overview" width="100%">
 </p>
 
-MethaneFuse is designed for partial multi-sensor observation settings, where each plume event may only have a subset of Sentinel-2, Landsat 8/9, EMIT, and Sentinel-5P observations available at the target location and time. The repository contains the implementation of MethaneFuse, dataset preparation scripts for MethaneUnion, training and evaluation code, baseline implementations, and released checkpoints.
+**MethaneFuse** is a two-stage learning framework for methane plume detection from naturally available multi-sensor satellite observations. MethaneFuse is designed for partial multi-sensor observation settings, where each plume event may only have a subset of Sentinel-2, Landsat 8/9, EMIT, and Sentinel-5P observations available at the target location and time. The repository contains the implementation of MethaneFuse, dataset preparation scripts for MethaneUnion, training and evaluation code, baseline implementations, and released checkpoints.
 
 ## Overview
 
@@ -25,7 +21,7 @@ MethaneFuse consists of two stages:
   The pretrained representation is adapted to scale-controlled plume classification and segmentation. The encoder is frozen, while lightweight sensor-aware LoRA experts and task heads are trained for downstream prediction.
 
 <p align="center">
-  <img src="assets/methanefuse_model.png" alt="MethaneFuse model" width="95%">
+  <img src="assets/methanefuse_model.png" alt="MethaneFuse model" width="100%">
 </p>
 
 ## MethaneUnion Dataset
@@ -40,20 +36,20 @@ MethaneUnion is an event-centered partial multi-sensor dataset constructed from 
 Datasets are available at https://huggingface.co/datasets/yuyao42/MethaneUnion.
 
 <p align="center">
-  <img src="assets/methaneunion_pipeline.png" alt="MethaneUnion dataset pipeline" width="95%">
+  <img src="assets/methaneunion_pipeline.png" alt="MethaneUnion dataset pipeline" width="85%">
 </p>
 
 ## Main Results
 
 At the 480 m query footprint, MethaneFuse improves over independently trained per-sensor predictors, heuristic score fusion, and generic Earth observation representation transfer.
 
-| Method          | Fusion      |      F1 ↑ | Accuracy ↑ |     FPR ↓ |  Recall ↑ |   AUROC ↑ |
-| --------------- | ----------- | --------: | ---------: | --------: | --------: | --------: |
-| Per-sensor ViT  | Average     |     79.22 |      78.00 |     23.06 |     78.94 |     85.32 |
-| SatMAE-FT       | Average     |     67.60 |      63.33 |     48.41 |     74.44 |     67.61 |
-| AnySat-FT       | Average     |     58.90 |      58.96 |     37.53 |     55.82 |     62.48 |
-| Panopticon-FT   | Average     |     77.65 |      75.61 |     29.13 |     79.80 |     83.28 |
-| **MethaneFuse** | **Learned** | **84.87** |  **84.21** | **14.87** | **83.40** | **93.62** |
+| Method          |      F1 ↑ | Acc ↑ |     FPR ↓ |  Recall ↑ |   AUROC ↑ |
+| --------------- | --------: | -------: | --------: | --------: | --------: |
+| Per-sensor ViT  |     79.22 |      78.00 |     23.06 |     78.94 |     85.32 |
+| SatMAE-FT       |     67.60 |      63.33 |     48.41 |     74.44 |     67.61 |
+| AnySat-FT       |     58.90 |      58.96 |     37.53 |     55.82 |     62.48 |
+| Panopticon-FT   |     77.65 |      75.61 |     29.13 |     79.80 |     83.28 |
+| **MethaneFuse** | **84.87** |  **84.21** | **14.87** | **83.40** | **93.62** |
 
 ## Repository Structure
 
