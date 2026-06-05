@@ -27,16 +27,6 @@ MethaneFuse is built for real methane monitoring settings where satellite covera
 
 ---
 
-## Highlights
-
-* **Partial multi-sensor learning:** supports plume events with different available sensor sets.
-* **Two-stage training framework:** combines sensor-native pretraining and query-level adaptation.
-* **Multi-sensor satellite inputs:** Sentinel-2, Landsat 8/9, EMIT, and Sentinel-5P.
-* **Classification and segmentation:** supports query-level methane plume detection and plume mask prediction.
-* **Reproducible evaluation:** includes training, evaluation, baseline, and dataset preparation code.
-
----
-
 ## Quick Start
 
 The commands below assume a fresh machine with `conda`, `git`, and `huggingface_hub` installed.
