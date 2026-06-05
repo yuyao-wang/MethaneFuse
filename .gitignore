@@ -30,6 +30,10 @@ external/datasets/hf_dataset_release/file_manifest.csv
 
 # Local data and experiment artifacts excluded from the official repository
 data/
+!src/data/
+!src/data/**
+src/data/**/__pycache__/
+src/data/**/__pycache__/**
 data_csv/
 datasets/
 external/datasets/

@@ -24,19 +24,14 @@ if str(REPO_ROOT) not in sys.path:
 
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
+from src.data.multisensor import StaticAnchoredCache, TriSensorTemporalCsvDataset, custom_collate_fn  # noqa: E402
+from src.data.sensor_transforms import DEFAULT_WV3_BANDS, load_wv3_channel_ids_from_srf  # noqa: E402
+from src.evaluation.metrics import compute_split_metrics  # noqa: E402
 from src.models.finetune_loramoe_adapter import (  # noqa: E402
-    DEFAULT_WV3_BANDS,
     MultiSensorPanopticonClassifier,
-    StaticAnchoredCache,
-    TriSensorTemporalCsvDataset,
-    _load_backbone,
-    compute_split_metrics,
-    custom_collate_fn,
     install_lora_moe_qv_adapters,
-    load_model_checkpoint_flexible,
-    load_wv3_channel_ids_from_srf,
-    recursive_to_device,
 )
+from src.utils.training import _load_backbone, load_model_checkpoint_flexible, recursive_to_device  # noqa: E402
 
 
 

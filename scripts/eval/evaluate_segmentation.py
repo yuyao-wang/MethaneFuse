@@ -21,18 +21,11 @@ if str(REPO_ROOT) not in sys.path:
 
 os.environ.setdefault("XFORMERS_DISABLED", "1")
 
-from src.models.segmentation import (  # noqa: E402
-    DEFAULT_WV3_BANDS,
-    PanopticonSegmentationModel,
-    SingleSensorSegmentationDataset,
-    StaticAnchoredCache,
-    TriSensorTemporalCsvDataset,
-    _load_backbone,
-    load_wv3_channel_ids_from_srf,
-    parse_tasks,
-    run_eval_epoch,
-    segmentation_collate_fn,
-)
+from src.data.multisensor import StaticAnchoredCache, TriSensorTemporalCsvDataset  # noqa: E402
+from src.data.segmentation import SingleSensorSegmentationDataset, parse_tasks, segmentation_collate_fn  # noqa: E402
+from src.data.sensor_transforms import DEFAULT_WV3_BANDS, load_wv3_channel_ids_from_srf  # noqa: E402
+from src.models.segmentation import PanopticonSegmentationModel, run_eval_epoch  # noqa: E402
+from src.utils.training import _load_backbone  # noqa: E402
 
 
 

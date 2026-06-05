@@ -93,18 +93,26 @@ python examples/visualize_prediction.py \
 ```text
 MethaneFuse/
 ├── src/
-│   ├── models/              # MethaneFuse model components
-│   ├── data/                # Dataset loading and preprocessing utilities
-│   └── utils/               # Shared utilities
-├── baselines/               # Per-sensor ViT, U-Net, SatMAE, AnySat, and Panopticon baselines
-├── configs/                 # Training and evaluation configs
+│   ├── models/              # MethaneFuse model definitions and training entry points
+│   ├── data/                # Multi-sensor CSV datasets, segmentation datasets, and sensor transforms
+│   ├── evaluation/          # Classification and segmentation metrics
+│   ├── utils/               # Shared checkpoint, device, and training helpers
+│   └── backbones.py         # Panopticon backbone construction and weight loading
+├── baselines/               # Per-sensor ViT/ResNet, U-Net, SatMAE, AnySat, and Panopticon baselines
+├── configs/                 # Evaluation configs and experiment settings
 ├── scripts/
 │   ├── train/               # Training launchers
-│   └── eval/                # Evaluation launchers
+│   ├── eval/                # Evaluation CLI wrappers
+│   ├── prepare_data/        # Split and manifest preparation utilities
+│   ├── analysis/            # Analysis helpers
+│   ├── figures/             # Figure-generation scripts
+│   └── release/             # Hugging Face packaging utilities
 ├── examples/                # Inference, visualization, and data-loading examples
 ├── assets/                  # README figures
+├── figures/                 # Paper figures and result plots
 ├── docs/                    # Additional documentation
-├── environments/            # Environment files
+├── environments/            # Conda/pip environment files
+├── thirdparty/              # Vendored Panopticon/DINOv2 components
 └── README.md
 ```
 
