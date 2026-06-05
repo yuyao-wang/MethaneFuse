@@ -34,7 +34,7 @@ MethaneUnion is an event-centered partial multi-sensor dataset constructed from 
 * Sentinel-5P Level-2 methane products
 
 Datasets are available at https://huggingface.co/datasets/yuyao42/MethaneUnion.
-
+Datasets construction pipeline is available at https://github.com/yuyao-wang/MethaneUnion
 <p align="center">
   <img src="assets/methaneunion_pipeline.png" alt="MethaneUnion dataset pipeline" width="85%">
 </p>
