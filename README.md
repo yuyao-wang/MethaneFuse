@@ -119,16 +119,4 @@ python scripts/eval/evaluate_segmentation.py \
 
 ## Data and Checkpoints
 
-The processed MethaneUnion dataset is maintained separately because the repository does not store raw satellite products or local experiment files. Dataset preparation scripts, processed manifests, and trained checkpoints will be released after cleanup, subject to the redistribution policies of the original data providers.
-
-Expected checkpoint structure:
-
-```text
-checkpoints/
-├── stage1_pretrained.pt
-├── stage2_classification_120m.pt
-├── stage2_classification_360m.pt
-├── stage2_classification_480m.pt
-├── stage2_classification_960m.pt
-└── segmentation/
-```
+Dataset preparation scripts and processed manifests are released at https://github.com/yuyao-wang/MethaneUnion. Trained checkpoints are released at https://huggingface.co/yuyao42/MethaneFuse-checkpoints.
