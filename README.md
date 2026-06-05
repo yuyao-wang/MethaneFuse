@@ -2,8 +2,6 @@
   <img src="assets/methanefuse_overview.png" alt="MethaneFuse overview" width="100%">
 </p>
 
-# MethaneFuse
-
 **MethaneFuse** is a two-stage learning framework for methane plume detection from partial multi-sensor satellite observations. It learns from whichever satellite observations are available for a plume event, including Sentinel-2, Landsat 8/9, EMIT, and Sentinel-5P.
 
 MethaneFuse is built for real methane monitoring settings where satellite coverage is incomplete because of revisit timing, cloud coverage, acquisition quality, mission coverage, and the transient lifetime of methane emissions.
@@ -14,6 +12,15 @@ MethaneFuse is built for real methane monitoring settings where satellite covera
   <a href="#main-results">Results</a> •
   <a href="#methaneunion-dataset">Dataset</a> •
   <a href="#training-and-evaluation">Training & Evaluation</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/PyTorch-Deep%20Learning-ee4c2c?logo=pytorch&logoColor=white" alt="PyTorch">
+  <img src="https://img.shields.io/badge/Task-Methane%20Plume%20Detection-2e8b57" alt="Task">
+  <img src="https://img.shields.io/badge/Dataset-MethaneUnion-0f766e" alt="Dataset">
+  <img src="https://img.shields.io/badge/Checkpoints-Released-7c3aed" alt="Checkpoints">
+  <img src="https://img.shields.io/badge/License-Apache--2.0-lightgrey" alt="License">
 </p>
 
 ---
