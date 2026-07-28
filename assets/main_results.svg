@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="620" viewBox="0 0 1280 620" role="img" aria-labelledby="title desc">
+  <title id="title">Main results at the 480 m query footprint</title>
+  <desc id="desc">Classification results comparing per-sensor ViT, SatMAE-FT, AnySat-FT, Panopticon-FT, and MethaneFuse on F1, accuracy, false positive rate, recall, and AUROC.</desc>
+  <defs>
+    <style>
+      .title { font: 700 34px Arial, Helvetica, sans-serif; fill: #102a43; }
+      .subtitle { font: 400 19px Arial, Helvetica, sans-serif; fill: #52606d; }
+      .header { font: 700 20px Arial, Helvetica, sans-serif; fill: #243b53; }
+      .method { font: 600 21px Arial, Helvetica, sans-serif; fill: #243b53; }
+      .metric { font: 500 21px Arial, Helvetica, sans-serif; fill: #334e68; }
+      .metric-bold { font: 700 22px Arial, Helvetica, sans-serif; fill: #102a43; }
+      .note { font: 400 16px Arial, Helvetica, sans-serif; fill: #627d98; }
+    </style>
+    <filter id="shadow" x="-8%" y="-8%" width="116%" height="116%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#102a43" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="620" fill="#f6f9fb"/>
+
+  <text x="640" y="70" text-anchor="middle" class="title">Main Results</text>
+  <text x="640" y="104" text-anchor="middle" class="subtitle">480 m query footprint classification</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="138" width="1140" height="398" rx="24" fill="#ffffff"/>
+    <rect x="70" y="138" width="1140" height="74" rx="24" fill="#e8f4f2"/>
+    <path d="M70 188 H1210 V212 H70 Z" fill="#e8f4f2"/>
+
+    <line x1="70" y1="212" x2="1210" y2="212" stroke="#bcccdc" stroke-width="1.5"/>
+    <line x1="70" y1="276" x2="1210" y2="276" stroke="#d9e2ec" stroke-width="1"/>
+    <line x1="70" y1="340" x2="1210" y2="340" stroke="#d9e2ec" stroke-width="1"/>
+    <line x1="70" y1="404" x2="1210" y2="404" stroke="#d9e2ec" stroke-width="1"/>
+    <line x1="70" y1="468" x2="1210" y2="468" stroke="#d9e2ec" stroke-width="1"/>
+
+    <rect x="88" y="478" width="1104" height="44" rx="18" fill="#dff4ed"/>
+    <rect x="88" y="478" width="7" height="44" rx="3.5" fill="#0f766e"/>
+
+    <text x="110" y="185" class="header">Method</text>
+    <text x="470" y="185" text-anchor="middle" class="header">F1</text>
+    <text x="625" y="185" text-anchor="middle" class="header">Acc</text>
+    <text x="780" y="185" text-anchor="middle" class="header">FPR</text>
+    <text x="935" y="185" text-anchor="middle" class="header">Recall</text>
+    <text x="1090" y="185" text-anchor="middle" class="header">AUROC</text>
+
+    <text x="110" y="252" class="method">Per-sensor ViT</text>
+    <text x="470" y="252" text-anchor="middle" class="metric">79.22</text>
+    <text x="625" y="252" text-anchor="middle" class="metric">78.00</text>
+    <text x="780" y="252" text-anchor="middle" class="metric">23.06</text>
+    <text x="935" y="252" text-anchor="middle" class="metric">78.94</text>
+    <text x="1090" y="252" text-anchor="middle" class="metric">85.32</text>
+
+    <text x="110" y="316" class="method">SatMAE-FT</text>
+    <text x="470" y="316" text-anchor="middle" class="metric">67.60</text>
+    <text x="625" y="316" text-anchor="middle" class="metric">63.33</text>
+    <text x="780" y="316" text-anchor="middle" class="metric">48.41</text>
+    <text x="935" y="316" text-anchor="middle" class="metric">74.44</text>
+    <text x="1090" y="316" text-anchor="middle" class="metric">67.61</text>
+
+    <text x="110" y="380" class="method">AnySat-FT</text>
+    <text x="470" y="380" text-anchor="middle" class="metric">58.90</text>
+    <text x="625" y="380" text-anchor="middle" class="metric">58.96</text>
+    <text x="780" y="380" text-anchor="middle" class="metric">37.53</text>
+    <text x="935" y="380" text-anchor="middle" class="metric">55.82</text>
+    <text x="1090" y="380" text-anchor="middle" class="metric">62.48</text>
+
+    <text x="110" y="444" class="method">Panopticon-FT</text>
+    <text x="470" y="444" text-anchor="middle" class="metric">77.65</text>
+    <text x="625" y="444" text-anchor="middle" class="metric">75.61</text>
+    <text x="780" y="444" text-anchor="middle" class="metric">29.13</text>
+    <text x="935" y="444" text-anchor="middle" class="metric">79.80</text>
+    <text x="1090" y="444" text-anchor="middle" class="metric">83.28</text>
+
+    <text x="110" y="508" class="method" fill="#0f513f">MethaneFuse</text>
+    <text x="470" y="508" text-anchor="middle" class="metric-bold">84.87</text>
+    <text x="625" y="508" text-anchor="middle" class="metric-bold">84.21</text>
+    <text x="780" y="508" text-anchor="middle" class="metric-bold">14.87</text>
+    <text x="935" y="508" text-anchor="middle" class="metric-bold">83.40</text>
+    <text x="1090" y="508" text-anchor="middle" class="metric-bold">93.62</text>
+  </g>
+
+  <text x="640" y="576" text-anchor="middle" class="note">Higher is better for F1, Acc, Recall, and AUROC. Lower is better for FPR.</text>
+</svg>

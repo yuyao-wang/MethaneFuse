@@ -183,13 +183,9 @@ The pretrained representation is adapted to scale-controlled plume classificatio
 
 At the 480 m query footprint, MethaneFuse improves over independently trained per-sensor predictors, heuristic score fusion, and generic Earth observation representation transfer.
 
-| Method          |      F1 ↑ |     Acc ↑ |     FPR ↓ |  Recall ↑ |   AUROC ↑ |
-| --------------- | --------: | --------: | --------: | --------: | --------: |
-| Per-sensor ViT  |     79.22 |     78.00 |     23.06 |     78.94 |     85.32 |
-| SatMAE-FT       |     67.60 |     63.33 |     48.41 |     74.44 |     67.61 |
-| AnySat-FT       |     58.90 |     58.96 |     37.53 |     55.82 |     62.48 |
-| Panopticon-FT   |     77.65 |     75.61 |     29.13 |     79.80 |     83.28 |
-| **MethaneFuse** | **84.87** | **84.21** | **14.87** | **83.40** | **93.62** |
+<p align="center">
+  <img src="assets/main_results.svg" alt="Main results at the 480 m query footprint" width="100%">
+</p>
 
 ---
 
