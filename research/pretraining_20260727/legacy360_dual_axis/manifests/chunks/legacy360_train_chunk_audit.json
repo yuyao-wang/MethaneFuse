@@ -1,0 +1,172 @@
+{
+  "schema_version": "legacy360-event-safe-chunks-v1",
+  "sources": [
+    {
+      "chunks": [
+        {
+          "chunk": 0,
+          "events": 143,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk00.csv",
+          "plumes": 293,
+          "query_max": 113557,
+          "query_min": 160,
+          "rows": 7997,
+          "sha256": "d06a4437ea1cf418a9764541ed4450bdf876a349ca716a2f5c8a7d3cbe182221"
+        },
+        {
+          "chunk": 1,
+          "events": 125,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk01.csv",
+          "plumes": 299,
+          "query_max": 113588,
+          "query_min": 15889,
+          "rows": 7989,
+          "sha256": "81661dbb4182f8e023703536b67d5020d2b7fdc4e2148a97f52f880703de1477"
+        },
+        {
+          "chunk": 2,
+          "events": 119,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk02.csv",
+          "plumes": 293,
+          "query_max": 112726,
+          "query_min": 31580,
+          "rows": 7971,
+          "sha256": "e642feb301e473c4ebeff2ae8421162cc89b2c3fa62d74c71bcb8c4ac1bf7185"
+        },
+        {
+          "chunk": 3,
+          "events": 208,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk03.csv",
+          "plumes": 359,
+          "query_max": 113664,
+          "query_min": 46480,
+          "rows": 7970,
+          "sha256": "65d4559c749636d51d40b09763e68dd9fa129e3c645c9fd70c9abde17edace5d"
+        },
+        {
+          "chunk": 4,
+          "events": 244,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk04.csv",
+          "plumes": 378,
+          "query_max": 113830,
+          "query_min": 60958,
+          "rows": 7988,
+          "sha256": "c820000c6f0ef905337d5dc7f58edd4dc4b90a7aad6d9ac3943d524068493b6f"
+        },
+        {
+          "chunk": 5,
+          "events": 116,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk05.csv",
+          "plumes": 323,
+          "query_max": 113842,
+          "query_min": 76490,
+          "rows": 7923,
+          "sha256": "9960d7e30796844986ed43ff2397b150ad644227c376fb1ada53bfb575659965"
+        },
+        {
+          "chunk": 6,
+          "events": 75,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk06.csv",
+          "plumes": 266,
+          "query_max": 102034,
+          "query_min": 90962,
+          "rows": 7617,
+          "sha256": "0eb9be113126735353fddf49d970f7f353b4113bef077e3b205a2014910e19eb"
+        },
+        {
+          "chunk": 7,
+          "events": 259,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk07.csv",
+          "plumes": 741,
+          "query_max": 113837,
+          "query_min": 102035,
+          "rows": 6795,
+          "sha256": "0e013ac563119fa527855747dfe5b4d22b251985a7450a86e2836dbf1a5295cb"
+        }
+      ],
+      "gpu": 0,
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/shards/legacy360_train_core_gpu0.csv",
+      "rows": 62250,
+      "sha256": "2d50f5f279447bf3de3cb65a3a03cc8e111c34ca74f2fda409b3e4b8c97991e5"
+    },
+    {
+      "chunks": [
+        {
+          "chunk": 0,
+          "events": 141,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk00.csv",
+          "plumes": 285,
+          "query_max": 113556,
+          "query_min": 0,
+          "rows": 7976,
+          "sha256": "246e8659c2cbc3c7afc1419137319de1f6d26861f7419c33a021be3b0f7a78c4"
+        },
+        {
+          "chunk": 1,
+          "events": 129,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk01.csv",
+          "plumes": 285,
+          "query_max": 113587,
+          "query_min": 15975,
+          "rows": 7682,
+          "sha256": "af1d1af9365efe58211bd727658df98c465c8122a739e50c6d6dc83334a8922a"
+        },
+        {
+          "chunk": 2,
+          "events": 152,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk02.csv",
+          "plumes": 296,
+          "query_max": 113239,
+          "query_min": 31708,
+          "rows": 7999,
+          "sha256": "c0f5c8bb94a8af9b6720642ff2f0d651611c5443314e5b0336d93513b8a5e9f5"
+        },
+        {
+          "chunk": 3,
+          "events": 232,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk03.csv",
+          "plumes": 362,
+          "query_max": 113701,
+          "query_min": 49687,
+          "rows": 7997,
+          "sha256": "f1672288f1ddaadc74bf6a7099ad412d6c7e8ea4414f3e0d985c28c732133f65"
+        },
+        {
+          "chunk": 4,
+          "events": 245,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk04.csv",
+          "plumes": 377,
+          "query_max": 113831,
+          "query_min": 65387,
+          "rows": 7923,
+          "sha256": "bcbb43698e52167ebad60d60b79982cc9c8faba490be1745aaca39dcaa901a2b"
+        },
+        {
+          "chunk": 5,
+          "events": 115,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk05.csv",
+          "plumes": 310,
+          "query_max": 113439,
+          "query_min": 82565,
+          "rows": 7978,
+          "sha256": "c3b708ede940104a19f7378c4c09f966c9c30a36740dbb51b7f9e08f6fc5a23c"
+        },
+        {
+          "chunk": 6,
+          "events": 251,
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk06.csv",
+          "plumes": 622,
+          "query_max": 113839,
+          "query_min": 104171,
+          "rows": 4038,
+          "sha256": "6b2d8a91fa73443c043c9b6d739364adec2f74edbb26cc106fefe6f58d14a332"
+        }
+      ],
+      "gpu": 1,
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/shards/legacy360_train_core_gpu1.csv",
+      "rows": 51593,
+      "sha256": "df4179d655d14302523293a93f9aa300f8174be234954130b3b9e4d0c26fbebd"
+    }
+  ],
+  "target_rows": 8000
+}

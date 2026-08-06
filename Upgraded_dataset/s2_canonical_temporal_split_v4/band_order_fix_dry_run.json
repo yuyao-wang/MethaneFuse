@@ -1,0 +1,514 @@
+{
+  "elapsed_seconds": 41.09,
+  "failures": [
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t151740p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t151740p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t151740p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t151740p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t151740p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t151740p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-B/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-B/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-B/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-B/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-B/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-B/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-C/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-C/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-C/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-C/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-C/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-C/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-D/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-D/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-D/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-D/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-D/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t153619p0000-D/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t155133p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t155133p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t155133p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t155133p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t155133p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t155133p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-B/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-B/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-B/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-B/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-B/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t161013p0000-B/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-B/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-B/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-B/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-B/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-B/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-B/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-C/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-C/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-C/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-C/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-C/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-C/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-D/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-D/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-D/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-D/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-D/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t163829p0000-D/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-B/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-B/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-B/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-B/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-B/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-B/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-C/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-C/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-C/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-C/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-C/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-C/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-D/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-D/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-D/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-D/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-D/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-D/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-E/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-E/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-E/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-E/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-E/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-E/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-F/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-F/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-F/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-F/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-F/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t165717p0000-F/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-B/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-B/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-B/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-B/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-B/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-B/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-D/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-D/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-D/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-D/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-D/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-D/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-E/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-E/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-E/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-E/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-E/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-E/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-F/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-F/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-F/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-F/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-F/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-F/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-B/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-B/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-B/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-B/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-B/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-B/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-C/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-C/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-C/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-C/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-C/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-C/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-D/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-D/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-D/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-D/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-D/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-D/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-E/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-E/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-E/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-E/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-E/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-E/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-F/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-F/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-F/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-F/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-F/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t173137p0000-F/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-A/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-A/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-A/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-A/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-A/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-A/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-B/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-B/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-B/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-B/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-B/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-B/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-C/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-C/s2_360_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-C/s2_90_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-C/s2_90_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-C/s2_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-C/s2_std_512.tif",
+      "status": "failed"
+    },
+    {
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-D/s2_360_std_512.tif.georef.json'",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191023t145412p0000-D/s2_360_std_512.tif",
+      "status": "failed"
+    }
+  ],
+  "needs_refetch": [
+    "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/tan20251124t013305c74s4001-A/s2.tif"
+  ],
+  "status_counts": {
+    "failed": 3220,
+    "needs_refetch": 1,
+    "would_fix": 29233
+  },
+  "targets": 32454
+}

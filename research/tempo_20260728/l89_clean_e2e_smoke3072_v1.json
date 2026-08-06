@@ -1,0 +1,49 @@
+{
+  "schema_version": "l89-clean-e2e-cache-smoke3072-v1",
+  "timestamp_utc": "2026-07-28T10:57:04Z",
+  "purpose": "Formal-run prerequisite: concurrent six-visit base extraction on the same physical GPU and frozen batch.",
+  "data_scope": {
+    "source": "train-only inner split and its development partition",
+    "rows_per_split": 3072,
+    "canonical_event_overlap": 0,
+    "test_or_sealed_or_holdout_or_outer_access": false
+  },
+  "runtime": {
+    "physical_gpu": 0,
+    "gpu_model": "NVIDIA A100-SXM4-80GB",
+    "both_processes_concurrent": true,
+    "observed_combined_gpu_memory_mib": 44671,
+    "observed_remaining_gpu_memory_mib": 36482,
+    "batch_size_per_process": 64,
+    "num_workers_per_process": 6,
+    "prefetch_factor": 1,
+    "amp_dtype": "bfloat16",
+    "storage_dtype": "float16"
+  },
+  "train": {
+    "manifest_path": "/diniuvol/yuyao/methanefuse_research_20260728/l89_clean_prep_v1/smoke3072/manifests/train.csv",
+    "manifest_sha256": "eae72baa9d16485e3dd3ff9d9eb2edba32271f12c2df54a4af4cd9d44c2aa73c",
+    "cache_path": "/diniuvol/yuyao/methanefuse_research_20260728/l89_clean_prep_v1/smoke3072/base_train.pt",
+    "cache_sha256": "0a5ce87b631da3ac8911a768e8dcf0378e3c1d2c96a45bbd0279990ae33d9d4a",
+    "feature_sha256": "a56f5c1286557c7ea105d49b3fc192241eb60fdd718538b8d1a4c94a210fa30c",
+    "input_contract_sha256": "b7358ed3351df00ab438d9bf392ac3727acfa4111fbb83aaedb9c417de37ee40",
+    "elapsed_seconds": 244.3,
+    "rows": 3072,
+    "read_errors": 0,
+    "invalid_t0_rows": 0
+  },
+  "development": {
+    "manifest_path": "/diniuvol/yuyao/methanefuse_research_20260728/l89_clean_prep_v1/smoke3072/manifests/dev.csv",
+    "manifest_sha256": "b83f2160c81505db7552acd962bf3268f4d26413aa54e740117ed992ad5d4d53",
+    "cache_path": "/diniuvol/yuyao/methanefuse_research_20260728/l89_clean_prep_v1/smoke3072/base_val.pt",
+    "cache_sha256": "6bf5323155994244a6a95edf09494401b001cdff287adcd3a15845ea886f7c4d",
+    "feature_sha256": "d48ce924a191f9c612b2d174538a0f995c47a27d434b1d4ba6c4871b9e33deed",
+    "input_contract_sha256": "da407dbe2d0c661efb71f01d9b29c9b0f881f0a9c36c39829caf28c27501b02d",
+    "elapsed_seconds": 253.2,
+    "rows": 3072,
+    "read_errors": 0,
+    "invalid_t0_rows": 0
+  },
+  "weights_sha256": "55024f411a7f383ed1a646d9b833b65683a4443846603fc7d37591d5afe9d26e",
+  "decision": "The same-GPU concurrent batch-64 extraction path is accepted for the formal full cohort."
+}

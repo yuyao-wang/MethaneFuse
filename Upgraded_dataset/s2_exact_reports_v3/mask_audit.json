@@ -1,0 +1,10 @@
+{
+  "failures": [],
+  "kind": "masks",
+  "masks_without_center_signal": 0,
+  "positive_pixels_median": 522.0,
+  "positive_pixels_min": 3,
+  "read_errors": [],
+  "rows": 4332,
+  "zero_masks": 0
+}

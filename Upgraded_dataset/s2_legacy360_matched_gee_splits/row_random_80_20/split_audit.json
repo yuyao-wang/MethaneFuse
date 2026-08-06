@@ -1,0 +1,40 @@
+{
+  "name": "row_random_80_20",
+  "train_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/row_random_80_20/train.csv",
+  "test_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/row_random_80_20/test.csv",
+  "train": {
+    "rows": 59671,
+    "labels": {
+      "0": 29389,
+      "1": 30282
+    },
+    "positive_fraction": 0.5074826967873841,
+    "plumes": 2589,
+    "events": 957,
+    "date_min": "2016-09-16T22:15:43+00:00",
+    "date_max": "2025-10-03T18:40:27+00:00",
+    "row_sha256": "fbc6b4dbd19a75dc72d180c595317e6875414be649ede1ed5aed8a3c2e95555d"
+  },
+  "test": {
+    "rows": 14918,
+    "labels": {
+      "0": 7347,
+      "1": 7571
+    },
+    "positive_fraction": 0.5075077088081512,
+    "plumes": 2486,
+    "events": 920,
+    "date_min": "2016-09-16T22:15:43+00:00",
+    "date_max": "2025-10-03T18:40:27+00:00",
+    "row_sha256": "9b032fbf52d6647e5d2675d8fa1de820868cc86bfe981af50066de16e616a7ac"
+  },
+  "overlap": {
+    "ids": 0,
+    "plumes": 2478,
+    "events": 917
+  },
+  "diagnostics": {
+    "seed": 20260728,
+    "stratified_by": "label"
+  }
+}

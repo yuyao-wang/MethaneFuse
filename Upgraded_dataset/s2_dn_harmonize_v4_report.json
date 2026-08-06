@@ -1,0 +1,18 @@
+{
+  "cache_dir": "/diniuvol/yuyao/s2_dn_harmonize_cache_v4",
+  "completed": 7401,
+  "corrected_bytes": 46578474738,
+  "desired_dn_add": -1000,
+  "discovery": {
+    "already_harmonized": 0,
+    "missing_tif": 0,
+    "stac_candidates": 7401,
+    "table_rows": 4332,
+    "unexpected_dn_add": 0
+  },
+  "elapsed_seconds": 995.45,
+  "failures": [],
+  "finished_at": "2026-07-23T17:31:45Z",
+  "root": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3",
+  "tasks": 7401
+}

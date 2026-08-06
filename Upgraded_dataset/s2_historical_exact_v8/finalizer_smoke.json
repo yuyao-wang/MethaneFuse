@@ -1,0 +1,74 @@
+[
+  {
+    "row_index": "0",
+    "plume_id": "GAO20191010t145854p0000-A",
+    "timepoint": "t0",
+    "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/GAO20191010t145854p0000-A/s2.tif",
+    "status": "restored",
+    "target_path": "/tmp/s2_v8_restore_smoke/t0/GAO20191010t145854p0000-A/s2.tif",
+    "source_class": "stac_cog",
+    "bytes": 6293538,
+    "zero_8": true,
+    "zero_9": true,
+    "nonzero_model": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      10,
+      11
+    ]
+  },
+  {
+    "row_index": "1",
+    "plume_id": "ang20161008t205502-H",
+    "timepoint": "t0",
+    "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/ang20161008t205502-H/s2.tif",
+    "status": "restored",
+    "target_path": "/tmp/s2_v8_restore_smoke/t0/ang20161008t205502-H/s2.tif",
+    "source_class": "cdse_nodes_exact",
+    "bytes": 6293538,
+    "zero_8": true,
+    "zero_9": true,
+    "nonzero_model": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      10,
+      11
+    ]
+  },
+  {
+    "row_index": "2",
+    "plume_id": "ang20181010t211201-G",
+    "timepoint": "t0",
+    "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/ang20181010t211201-G/s2.tif",
+    "status": "restored",
+    "target_path": "/tmp/s2_v8_restore_smoke/t0/ang20181010t211201-G/s2.tif",
+    "source_class": "stac_cog",
+    "bytes": 6293538,
+    "zero_8": true,
+    "zero_9": true,
+    "nonzero_model": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      10,
+      11
+    ]
+  }
+]

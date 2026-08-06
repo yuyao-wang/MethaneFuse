@@ -1,0 +1,248 @@
+{
+  "cache_dir": "/diniuvol/yuyao/methanefuse_research_20260727/legacy360_dual_axis/raw_cache",
+  "elapsed_payload_scan_seconds": 154.12146716192365,
+  "minimum_bytes": {
+    "optical": 1024,
+    "s5p": 128
+  },
+  "outputs": {
+    "dev": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_dev_sanitized.csv",
+    "test": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_test_sanitized.csv",
+    "train_core": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_train_core_sanitized.csv"
+  },
+  "path_status": {
+    "cache": 35305,
+    "cache_missing__source_missing": 3,
+    "cache_missing__source_too_small": 1,
+    "cache_too_small__source_too_small": 1,
+    "source": 486962
+  },
+  "query360_index": {
+    "max": 158027,
+    "min": 0,
+    "rows": 158028,
+    "rule": "global contiguous train_core/dev/test after sanitization"
+  },
+  "s5p_validation": "regular .npz, minimum size, ZIP magic; no array decode",
+  "schema_version": "legacy360-payload-sanitize-v1",
+  "splits": {
+    "dev": {
+      "availability_after": {
+        "emit": 2193,
+        "emit+s5p": 593,
+        "l89": 3032,
+        "l89+emit": 265,
+        "l89+emit+s5p": 112,
+        "l89+s5p": 96,
+        "s2": 4721,
+        "s2+emit": 353,
+        "s2+emit+s5p": 64,
+        "s2+l89": 467,
+        "s2+l89+emit": 32,
+        "s2+l89+emit+s5p": 32,
+        "s2+l89+s5p": 32,
+        "s2+s5p": 356,
+        "s5p": 273
+      },
+      "dropped_rows": 0,
+      "events": {
+        "unique_after": 291,
+        "unique_before": 291,
+        "unique_in_dropped_rows": 0
+      },
+      "labels_after": {
+        "0": 5938,
+        "1": 6683
+      },
+      "labels_before": {
+        "0": 5938,
+        "1": 6683
+      },
+      "labels_dropped": {},
+      "output": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_dev_sanitized.csv",
+      "output_sha256": "4f6fa26292461feb3def0213d97782c4968c4ad096394b5d94448ab23e7ed924",
+      "rows_after": 12621,
+      "rows_before": 12621,
+      "sensors": {
+        "emit": {
+          "complete_declared_rows": 3644,
+          "declared_rows": 3644,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 3644
+        },
+        "l89": {
+          "complete_declared_rows": 4068,
+          "declared_rows": 4068,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 4068
+        },
+        "s2": {
+          "complete_declared_rows": 6057,
+          "declared_rows": 6057,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 6057
+        },
+        "s5p": {
+          "complete_declared_rows": 1558,
+          "declared_rows": 1558,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 1558
+        }
+      },
+      "source": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_dev.csv",
+      "source_sha256": "d1c8084914e1f6a94047e296c5f6da6a12394e72f35c169b250f36483315597f"
+    },
+    "test": {
+      "availability_after": {
+        "emit": 5888,
+        "emit+s5p": 1409,
+        "l89": 7275,
+        "l89+emit": 705,
+        "l89+emit+s5p": 236,
+        "l89+s5p": 489,
+        "s2": 11442,
+        "s2+emit": 650,
+        "s2+emit+s5p": 287,
+        "s2+l89": 1516,
+        "s2+l89+emit": 32,
+        "s2+l89+s5p": 160,
+        "s2+s5p": 867,
+        "s5p": 608
+      },
+      "dropped_rows": 0,
+      "events": {
+        "unique_after": 1098,
+        "unique_before": 1098,
+        "unique_in_dropped_rows": 0
+      },
+      "labels_after": {
+        "0": 14882,
+        "1": 16682
+      },
+      "labels_before": {
+        "0": 14882,
+        "1": 16682
+      },
+      "labels_dropped": {},
+      "output": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_test_sanitized.csv",
+      "output_sha256": "6d7f5b401709da6878bf83aefc2b6c06d3f759c431a0b154447dacc9d1ef608b",
+      "rows_after": 31564,
+      "rows_before": 31564,
+      "sensors": {
+        "emit": {
+          "complete_declared_rows": 9207,
+          "declared_rows": 9207,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 9207
+        },
+        "l89": {
+          "complete_declared_rows": 10413,
+          "declared_rows": 10413,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 10413
+        },
+        "s2": {
+          "complete_declared_rows": 14954,
+          "declared_rows": 14954,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 14954
+        },
+        "s5p": {
+          "complete_declared_rows": 4056,
+          "declared_rows": 4056,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 4056
+        }
+      },
+      "source": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_test.csv",
+      "source_sha256": "a547e6d2f76db884b47f6fbaca3df6a1fb4c164ab3dcf332b861d40778117920"
+    },
+    "train_core": {
+      "availability_after": {
+        "emit": 20180,
+        "emit+s5p": 5471,
+        "l89": 27004,
+        "l89+emit": 2730,
+        "l89+emit+s5p": 1007,
+        "l89+s5p": 1698,
+        "s2": 42389,
+        "s2+emit": 2214,
+        "s2+emit+s5p": 634,
+        "s2+l89": 4245,
+        "s2+l89+emit": 470,
+        "s2+l89+emit+s5p": 4,
+        "s2+l89+s5p": 849,
+        "s2+s5p": 2770,
+        "s5p": 2178
+      },
+      "dropped_rows": 3,
+      "events": {
+        "unique_after": 2554,
+        "unique_before": 2554,
+        "unique_in_dropped_rows": 2
+      },
+      "labels_after": {
+        "0": 53476,
+        "1": 60367
+      },
+      "labels_before": {
+        "0": 53479,
+        "1": 60367
+      },
+      "labels_dropped": {
+        "0": 3
+      },
+      "output": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_train_core_sanitized.csv",
+      "output_sha256": "bdfec2f6dcc1d775c03c93ff2c276fd4974c45669deb1b725b608c80e935ddb9",
+      "rows_after": 113843,
+      "rows_before": 113846,
+      "sensors": {
+        "emit": {
+          "complete_declared_rows": 32710,
+          "declared_rows": 32710,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 32710
+        },
+        "l89": {
+          "complete_declared_rows": 38007,
+          "declared_rows": 38007,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 38007
+        },
+        "s2": {
+          "complete_declared_rows": 53578,
+          "declared_rows": 53578,
+          "failed_path_references_by_status": {
+            "cache": 4,
+            "cache_missing__source_missing": 3,
+            "cache_missing__source_too_small": 1,
+            "cache_too_small__source_too_small": 1
+          },
+          "removed_sensor_rows": 3,
+          "retained_rows": 53575
+        },
+        "s5p": {
+          "complete_declared_rows": 14611,
+          "declared_rows": 14611,
+          "failed_path_references_by_status": {},
+          "removed_sensor_rows": 0,
+          "retained_rows": 14611
+        }
+      },
+      "source": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_train_core.csv",
+      "source_sha256": "99b27f20ea7d2fd865a8936929328f2520dcc3842d3c014b5e504b9f98e36d40"
+    }
+  },
+  "unique_paths": 522272,
+  "workers": 64
+}

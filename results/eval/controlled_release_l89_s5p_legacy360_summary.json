@@ -1,0 +1,67 @@
+{
+  "decision_rule": "checkpoint-native two-class argmax (positive iff p(class 1) > 0.5)",
+  "label_scope": "All available rows carry source label 1. Prediction rate equals recall only if the source positive label is accepted for the sensor acquisition time.",
+  "metric_limitations": "No negative examples are present, so FPR, specificity, AUROC, AP, balanced accuracy, and F1 are not identifiable from this evaluation.",
+  "overall": {
+    "L89": {
+      "all_available": {
+        "max_positive_probability": 0.9111328125,
+        "mean_positive_probability": 0.38958311080932617,
+        "median_positive_probability": 0.2813720703125,
+        "min_positive_probability": 0.035919189453125,
+        "predicted_positive": 20,
+        "prediction_rate": 0.3125,
+        "rows": 64
+      },
+      "trusted9_overlap": {
+        "max_positive_probability": 0.501953125,
+        "mean_positive_probability": 0.19890117645263672,
+        "median_positive_probability": 0.1669921875,
+        "min_positive_probability": 0.035919189453125,
+        "predicted_positive": 1,
+        "prediction_rate": 0.03125,
+        "rows": 32
+      }
+    },
+    "L89+S5P": {
+      "all_available": {
+        "max_positive_probability": 0.703125,
+        "mean_positive_probability": 0.29077402750651044,
+        "median_positive_probability": 0.28125,
+        "min_positive_probability": 0.083740234375,
+        "predicted_positive": 5,
+        "prediction_rate": 0.10416666666666667,
+        "rows": 48
+      },
+      "trusted9_overlap": {
+        "max_positive_probability": 0.556640625,
+        "mean_positive_probability": 0.2538337707519531,
+        "median_positive_probability": 0.25457763671875,
+        "min_positive_probability": 0.083740234375,
+        "predicted_positive": 2,
+        "prediction_rate": 0.0625,
+        "rows": 32
+      }
+    },
+    "S5P": {
+      "all_available": {
+        "max_positive_probability": 0.265625,
+        "mean_positive_probability": 0.13848876953125,
+        "median_positive_probability": 0.10797119140625,
+        "min_positive_probability": 0.06561279296875,
+        "predicted_positive": 0,
+        "prediction_rate": 0.0,
+        "rows": 5
+      },
+      "trusted9_overlap": {
+        "max_positive_probability": 0.265625,
+        "mean_positive_probability": 0.154937744140625,
+        "median_positive_probability": 0.144256591796875,
+        "min_positive_probability": 0.06561279296875,
+        "predicted_positive": 0,
+        "prediction_rate": 0.0,
+        "rows": 4
+      }
+    }
+  }
+}

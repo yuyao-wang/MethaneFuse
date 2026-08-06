@@ -1,0 +1,23 @@
+{
+  "bad_plume_ids_by_split": {
+    "test": [],
+    "train": []
+  },
+  "bad_rows": 0,
+  "bad_sampled_rows": [],
+  "event_overlap": 0,
+  "failures": [],
+  "kind": "patches",
+  "plume_overlap": 0,
+  "sampled_rows": 10000,
+  "test_labels": {
+    "0": 10288,
+    "1": 10288
+  },
+  "test_rows": 20576,
+  "train_labels": {
+    "0": 58496,
+    "1": 58496
+  },
+  "train_rows": 116992
+}

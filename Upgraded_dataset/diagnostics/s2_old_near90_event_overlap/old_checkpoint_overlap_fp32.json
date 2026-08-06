@@ -1,0 +1,44 @@
+{
+  "csv": "/home/yuyao/panopticon/Upgraded_dataset/diagnostics/s2_old_near90_event_overlap/old_test_overlap_events.csv",
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/360m_single4_retrain_20260422_185153/s2/ckpt_best_test.pth",
+  "checkpoint_epoch": 2,
+  "rows": 12319,
+  "labels": {
+    "0": 6055,
+    "1": 6264
+  },
+  "path_columns": [
+    "s2_0_path",
+    "s2_90_path",
+    "s2_360_path"
+  ],
+  "band_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "mask_band_indices": [],
+  "raw_dn_add": 0,
+  "raw_dn_add_columns": [],
+  "raw_dn_add_bands": [],
+  "metrics": {
+    "accuracy": 0.8913061125091323,
+    "f1": 0.8942922554669614,
+    "auroc": 0.9561534565545927,
+    "recall": 0.9042145593869731,
+    "fpr": 0.12204789430222956,
+    "tp": 5664,
+    "tn": 5316,
+    "fp": 739,
+    "fn": 600
+  }
+}

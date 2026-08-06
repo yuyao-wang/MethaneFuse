@@ -1,0 +1,98 @@
+{
+  "args": {
+    "train_csv": "/transferdiniu2/yuyao/final_crop/s2_historical_bounds_native_32_v9/train_patches_32.csv",
+    "test_csv": "/transferdiniu2/yuyao/final_crop/s2_historical_bounds_native_32_v9/test_patches_32.csv",
+    "mode": "current",
+    "timepoints": "t0,prev1,prev2,prev3,seasonal,year",
+    "band_indices": "0,1,2,3,4,5,6,7,10,11",
+    "center_box": 256,
+    "max_train_samples": 20000,
+    "max_test_samples": 10000,
+    "batch_size": 512,
+    "epochs": 3,
+    "num_workers": 16,
+    "local_cache_dir": "/diniuvol/yuyao/s2_v9_vit_cache",
+    "cache_workers": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "seed": 20260723,
+    "device": "cuda:0",
+    "output": "Upgraded_dataset/s2_historical_bounds_native_v9/resnet_gate_all6.json"
+  },
+  "train_rows": 20000,
+  "test_rows": 8357,
+  "history": [
+    {
+      "epoch": 1,
+      "seconds": 255.05,
+      "train": {
+        "accuracy": 0.5885,
+        "f1": 0.577732170343766,
+        "auroc": 0.6204064650000001,
+        "tp": 5630,
+        "tn": 6140,
+        "fp": 3860,
+        "fn": 4370,
+        "loss": 0.7234494323730469
+      },
+      "test": {
+        "accuracy": 0.5371544812731841,
+        "f1": 0.6069904490957122,
+        "auroc": 0.5276058087578195,
+        "tp": 2987,
+        "tn": 1502,
+        "fp": 1855,
+        "fn": 2013,
+        "loss": 0.7370831858274454
+      }
+    },
+    {
+      "epoch": 2,
+      "seconds": 103.45,
+      "train": {
+        "accuracy": 0.6181,
+        "f1": 0.6209805478364431,
+        "auroc": 0.66942009,
+        "tp": 6257,
+        "tn": 6105,
+        "fp": 3895,
+        "fn": 3743,
+        "loss": 0.646175210571289
+      },
+      "test": {
+        "accuracy": 0.43400741893023814,
+        "f1": 0.22306176084099869,
+        "auroc": 0.5067096812630325,
+        "tp": 679,
+        "tn": 2948,
+        "fp": 409,
+        "fn": 4321,
+        "loss": 0.8911283486223511
+      }
+    },
+    {
+      "epoch": 3,
+      "seconds": 104.67,
+      "train": {
+        "accuracy": 0.6638,
+        "f1": 0.6544351937506424,
+        "auroc": 0.726913125,
+        "tp": 6367,
+        "tn": 6909,
+        "fp": 3091,
+        "fn": 3633,
+        "loss": 0.6098181594848633
+      },
+      "test": {
+        "accuracy": 0.5214789996410195,
+        "f1": 0.5979692369558661,
+        "auroc": 0.5173935358951445,
+        "tp": 2974,
+        "tn": 1384,
+        "fp": 1973,
+        "fn": 2026,
+        "loss": 0.7482264637804437
+      }
+    }
+  ]
+}

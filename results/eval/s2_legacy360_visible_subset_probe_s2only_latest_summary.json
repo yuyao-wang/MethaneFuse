@@ -1,0 +1,145 @@
+{
+  "groups": {
+    "all": {
+      "all_visible_removed_mean": 0.129028116,
+      "bands_ranked_by_shapley": [
+        {
+          "band": "B02",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.8448224595652174,
+          "mean_shapley_score_drop": 0.6734100094094203,
+          "mean_single_removal_delta": -0.6143450236521739,
+          "mean_single_removal_score": 0.3232904754782609,
+          "median_shapley_score_drop": 0.7478802788333334
+        },
+        {
+          "band": "B03",
+          "fraction_positive_shapley": 0.9565217391304348,
+          "mean_only_texture_remaining_score": 0.1764129531304348,
+          "mean_shapley_score_drop": 0.05668202367028985,
+          "mean_single_removal_delta": -0.04886483260869564,
+          "mean_single_removal_score": 0.888770666521739,
+          "median_shapley_score_drop": 0.049506078749999995
+        },
+        {
+          "band": "B01",
+          "fraction_positive_shapley": 0.8695652173913043,
+          "mean_only_texture_remaining_score": 0.2008124127391304,
+          "mean_shapley_score_drop": 0.052169045677536226,
+          "mean_single_removal_delta": -0.01669415782608695,
+          "mean_single_removal_score": 0.9209413413043478,
+          "median_shapley_score_drop": 0.02070488625
+        },
+        {
+          "band": "B04",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.1544807305217391,
+          "mean_shapley_score_drop": 0.026346304373188408,
+          "mean_single_removal_delta": -0.01913209999999999,
+          "mean_single_removal_score": 0.9185033991304349,
+          "median_shapley_score_drop": 0.0074747443333332934
+        }
+      ],
+      "baseline_mean": 0.9376354991304349,
+      "count": 23,
+      "shapley_sum_mean": 0.8086073831304347,
+      "total_score_drop_mean": 0.8086073831304347
+    },
+    "label_0": {
+      "all_visible_removed_mean": 0.11229048085714288,
+      "bands_ranked_by_shapley": [
+        {
+          "band": "B02",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.9124082914285713,
+          "mean_shapley_score_drop": 0.7424381463988095,
+          "mean_single_removal_delta": -0.6681230263571427,
+          "mean_single_removal_score": 0.2731009179285714,
+          "median_shapley_score_drop": 0.7496888740000001
+        },
+        {
+          "band": "B03",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.16556991371428567,
+          "mean_shapley_score_drop": 0.048827812565476185,
+          "mean_single_removal_delta": -0.026339432142857118,
+          "mean_single_removal_score": 0.9148845121428572,
+          "median_shapley_score_drop": 0.042577574791666656
+        },
+        {
+          "band": "B01",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.15662911792857143,
+          "mean_shapley_score_drop": 0.0278746742202381,
+          "mean_single_removal_delta": 0.0018464128571428762,
+          "mean_single_removal_score": 0.9430703571428571,
+          "median_shapley_score_drop": 0.02051325970833335
+        },
+        {
+          "band": "B04",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.12843192092857145,
+          "mean_shapley_score_drop": 0.009792830244047616,
+          "mean_single_removal_delta": -0.0028991964285714094,
+          "mean_single_removal_score": 0.9383247478571428,
+          "median_shapley_score_drop": 0.0069914469583333095
+        }
+      ],
+      "baseline_mean": 0.9412239442857144,
+      "count": 14,
+      "shapley_sum_mean": 0.8289334634285714,
+      "total_score_drop_mean": 0.8289334634285714
+    },
+    "label_1": {
+      "all_visible_removed_mean": 0.15506443733333333,
+      "bands_ranked_by_shapley": [
+        {
+          "band": "B02",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.7396889433333333,
+          "mean_shapley_score_drop": 0.5660329074259259,
+          "mean_single_removal_delta": -0.5306903527777778,
+          "mean_single_removal_score": 0.4013631205555555,
+          "median_shapley_score_drop": 0.7466917191666667
+        },
+        {
+          "band": "B01",
+          "fraction_positive_shapley": 0.6666666666666666,
+          "mean_only_texture_remaining_score": 0.26954198244444444,
+          "mean_shapley_score_drop": 0.08996029016666668,
+          "mean_single_removal_delta": -0.04553504555555557,
+          "mean_single_removal_score": 0.8865184277777778,
+          "median_shapley_score_drop": 0.02902158949999998
+        },
+        {
+          "band": "B03",
+          "fraction_positive_shapley": 0.8888888888888888,
+          "mean_only_texture_remaining_score": 0.19327990333333334,
+          "mean_shapley_score_drop": 0.06889968538888888,
+          "mean_single_removal_delta": -0.08390434444444445,
+          "mean_single_removal_score": 0.8481491288888888,
+          "median_shapley_score_drop": 0.07376400716666667
+        },
+        {
+          "band": "B04",
+          "fraction_positive_shapley": 1.0,
+          "mean_only_texture_remaining_score": 0.195001101,
+          "mean_shapley_score_drop": 0.052096153018518526,
+          "mean_single_removal_delta": -0.044383283333333336,
+          "mean_single_removal_score": 0.8876701899999999,
+          "median_shapley_score_drop": 0.01704878283333333
+        }
+      ],
+      "baseline_mean": 0.9320534733333334,
+      "count": 9,
+      "shapley_sum_mean": 0.776989036,
+      "total_score_drop_mean": 0.776989036
+    }
+  },
+  "intervention": "selected t0 visible band spatial texture replaced by its own spatial mean",
+  "predictions": "/home/yuyao/panopticon/results/eval/s2_legacy360_visible_subset_probe_s2only_latest_predictions.csv",
+  "probe_manifest": "/home/yuyao/panopticon/data/controlled_release_test/visible_subset_probe_legacy360_v1/manifest_all_subsets.csv",
+  "rows": 23,
+  "score_column": "s2_only_probability",
+  "shapley_value": "exact contribution to positive-score drop across all 16 removal subsets"
+}

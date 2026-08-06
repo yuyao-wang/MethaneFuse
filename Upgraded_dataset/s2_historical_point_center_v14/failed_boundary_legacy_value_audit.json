@@ -1,0 +1,35 @@
+{
+  "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200718t184740p0000-A/s2_-360.tif",
+  "shape": [
+    12,
+    512,
+    512
+  ],
+  "dtype": "uint16",
+  "muted_nonzero": 0,
+  "center_nonzero_fraction": 0.3779296875,
+  "center_band_means": [
+    697.08,
+    784.64,
+    961.62,
+    1206.21,
+    1388.12,
+    1502.0,
+    1598.18,
+    1704.63,
+    2116.73,
+    1911.02
+  ],
+  "full_nonzero_band_means": [
+    1690.05,
+    1906.81,
+    2283.79,
+    2775.59,
+    3231.45,
+    3667.78,
+    3911.91,
+    4154.62,
+    4883.4,
+    4189.97
+  ]
+}

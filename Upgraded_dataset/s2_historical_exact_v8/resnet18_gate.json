@@ -1,0 +1,98 @@
+{
+  "args": {
+    "train_csv": "/transferdiniu2/yuyao/final_crop/s2_historical_exact_32_v8/train_patches_32.csv",
+    "test_csv": "/transferdiniu2/yuyao/final_crop/s2_historical_exact_32_v8/test_patches_32.csv",
+    "mode": "current",
+    "timepoints": "t0,prev1,prev2,prev3,seasonal,year",
+    "band_indices": "0,1,2,3,4,5,6,7,10,11",
+    "center_box": 0,
+    "max_train_samples": 20000,
+    "max_test_samples": 10000,
+    "batch_size": 512,
+    "epochs": 3,
+    "num_workers": 16,
+    "local_cache_dir": "/diniuvol/yuyao/s2_v8_resnet_gate_cache",
+    "cache_workers": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "seed": 20260723,
+    "device": "cuda:0",
+    "output": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/resnet18_gate.json"
+  },
+  "train_rows": 20000,
+  "test_rows": 10000,
+  "history": [
+    {
+      "epoch": 1,
+      "seconds": 129.18,
+      "train": {
+        "accuracy": 0.62085,
+        "f1": 0.6121426014014628,
+        "auroc": 0.6641222849999999,
+        "tp": 5984,
+        "tn": 6433,
+        "fp": 3567,
+        "fn": 4016,
+        "loss": 0.71019970703125
+      },
+      "test": {
+        "accuracy": 0.4983,
+        "f1": 0.183298062835748,
+        "auroc": 0.5173975399999999,
+        "tp": 563,
+        "tn": 4420,
+        "fp": 580,
+        "fn": 4437,
+        "loss": 0.8248688623428345
+      }
+    },
+    {
+      "epoch": 2,
+      "seconds": 117.91,
+      "train": {
+        "accuracy": 0.70655,
+        "f1": 0.7080825665257399,
+        "auroc": 0.77807903,
+        "tp": 7118,
+        "tn": 7013,
+        "fp": 2987,
+        "fn": 2882,
+        "loss": 0.567141697692871
+      },
+      "test": {
+        "accuracy": 0.5077,
+        "f1": 0.6611604377451993,
+        "auroc": 0.54860628,
+        "tp": 4803,
+        "tn": 274,
+        "fp": 4726,
+        "fn": 197,
+        "loss": 0.9541480113983154
+      }
+    },
+    {
+      "epoch": 3,
+      "seconds": 124.91,
+      "train": {
+        "accuracy": 0.7097,
+        "f1": 0.7190282617111885,
+        "auroc": 0.7834258199999999,
+        "tp": 7429,
+        "tn": 6765,
+        "fp": 3235,
+        "fn": 2571,
+        "loss": 0.5600156799316406
+      },
+      "test": {
+        "accuracy": 0.5159,
+        "f1": 0.6433885819521179,
+        "auroc": 0.52642942,
+        "tp": 4367,
+        "tn": 792,
+        "fp": 4208,
+        "fn": 633,
+        "loss": 0.7146640501022339
+      }
+    }
+  ]
+}

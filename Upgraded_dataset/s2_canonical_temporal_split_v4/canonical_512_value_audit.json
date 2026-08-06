@@ -1,0 +1,15 @@
+{
+  "all_zero_sampled_images": 5,
+  "bad_metadata": 0,
+  "bad_metadata_examples": [],
+  "bad_sampled_image_examples": [],
+  "bad_sampled_images": 0,
+  "candidate_targets": 29310,
+  "canonical_markers": 29234,
+  "explicit_skips": 76,
+  "marker_missing": 0,
+  "marker_missing_examples": [],
+  "rows": 5409,
+  "sampled_images": 2000,
+  "unique_512_paths": 32454
+}

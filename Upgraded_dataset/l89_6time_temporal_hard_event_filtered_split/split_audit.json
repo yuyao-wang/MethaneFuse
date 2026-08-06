@@ -1,0 +1,38 @@
+{
+  "warning": "Events were selected using checkpoint errors on the test set. This split is model-conditioned and must not be treated as an unbiased test set.",
+  "method": "Greedily remove the event with the largest positive F1 gain.",
+  "stop_condition": "Reach cutoff F1 or the minimum test fraction.",
+  "target_f1": 0.7737169517884914,
+  "cutoff_metrics": {
+    "count": 2839,
+    "acc": 0.7949982388164847,
+    "f1": 0.7737169517884914,
+    "recall": 0.8291666666666667,
+    "fpr": 0.2300183038438072
+  },
+  "before": {
+    "count": 10998,
+    "acc": 0.7453173304237134,
+    "f1": 0.7313704804833605,
+    "recall": 0.7638221153846154,
+    "fpr": 0.2700632700632701,
+    "test_fraction": 0.14986305476446782,
+    "events": 166
+  },
+  "after": {
+    "count": 7942,
+    "acc": 0.7863258625031478,
+    "f1": 0.7759735973597359,
+    "recall": 0.8349431818181818,
+    "fpr": 0.25237449118046135,
+    "test_fraction": 0.11292317754617452,
+    "events": 157
+  },
+  "removed_events": 9,
+  "removed_rows": 3056,
+  "event_leakage_count": 0,
+  "paths": {
+    "train": "Upgraded_dataset/l89_6time_temporal_hard_event_filtered_split/L89_temporal_train_hard_event_filtered.csv",
+    "test": "Upgraded_dataset/l89_6time_temporal_hard_event_filtered_split/L89_temporal_test_hard_event_filtered.csv"
+  }
+}

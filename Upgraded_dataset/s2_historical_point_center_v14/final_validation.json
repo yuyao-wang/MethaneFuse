@@ -1,0 +1,58 @@
+{
+  "dataset_version": "s2_6time_legacy_notebook_point_v14",
+  "correct_512_root": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14",
+  "correct_local_32_root": "/diniuvol/yuyao/s2_6time_legacy_notebook_point_v14_32",
+  "correct_remote_32_root": "/mnt/engg-niulab/yuyao/final_crop/s2_6time_legacy_notebook_point_v14_32",
+  "crop_seconds": 3851.77,
+  "crop_under_two_hours": true,
+  "source_plumes": {
+    "all": 5087,
+    "train_input": 4346,
+    "test_input": 741,
+    "train_retained": 4313,
+    "test_retained": 741,
+    "train_all_crops_rejected_by_legacy_band11_rule": 33
+  },
+  "patches": {
+    "all": 157084,
+    "train": 133451,
+    "test": 23633,
+    "label_0": 77922,
+    "label_1": 79162
+  },
+  "split": {
+    "train_events": 1679,
+    "test_events": 213,
+    "event_overlap": 0
+  },
+  "file_audit": {
+    "passed": true,
+    "paths_checked": 1099588,
+    "missing": 0,
+    "sample_rows_inspected": 5000,
+    "invalid_samples": 0,
+    "muted_bands_with_nonzero_values": 0,
+    "valid_bands_empty": 0
+  },
+  "mask_audit": {
+    "positive_patches": 79162,
+    "positive_zero_masks": 0,
+    "negative_nonzero_masks": 0
+  },
+  "vit_gate": {
+    "mode": "full_backbone_finetune",
+    "temporal_fusion": "concat_channels",
+    "timepoints": 6,
+    "channel_indices": [0, 1, 2, 3, 4, 5, 6, 7, 10, 11],
+    "checkpoint_dir": "/transferdiniu2/yuyao/checkpoints/s2_point_center_v14/s2_6time_point_center_v14_concat_gate3",
+    "best_checkpoint": "/transferdiniu2/yuyao/checkpoints/s2_point_center_v14/s2_6time_point_center_v14_concat_gate3/ckpt_best_test.pth",
+    "best_epoch": 2,
+    "best_test_f1": 0.8088619788083116,
+    "best_test_auroc": 0.9122215036320437,
+    "best_train_f1": 0.9223034935295537,
+    "epoch_3_test_f1": 0.7748158200853044,
+    "decision": "stop_after_epoch_3_and_keep_epoch_2_due_to_overfitting"
+  },
+  "crop_audit_report": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_point_center_v14/crop32_audit.json",
+  "cleanup_script": "/home/yuyao/panopticon/Upgraded_dataset/cleanup_wrong_s2_datasets.sh"
+}

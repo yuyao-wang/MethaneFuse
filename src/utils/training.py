@@ -50,7 +50,10 @@ def set_trainable(module: nn.Module, requires_grad: bool):
 def load_model_checkpoint_flexible(path: Path, model: nn.Module, device: torch.device) -> None:
     if not path.is_file():
         raise FileNotFoundError(f"Checkpoint not found: {path}")
-    ckpt = torch.load(path, map_location=device)
+    # Load the container on CPU: training checkpoints also contain optimizer
+    # state, which is not used here and can otherwise exhaust a nearly-full GPU
+    # before the model state is copied into the already-placed module.
+    ckpt = torch.load(path, map_location="cpu")
     state = ckpt["model"] if isinstance(ckpt, Mapping) and "model" in ckpt else ckpt
     if not isinstance(state, Mapping):
         raise TypeError(f"Checkpoint does not contain a state dict: {path}")
@@ -75,4 +78,3 @@ def load_model_checkpoint_flexible(path: Path, model: nn.Module, device: torch.d
             flush=True,
         )
     print(f"Loaded model weights from {path}", flush=True)
-

@@ -1,0 +1,11 @@
+{
+  "bad_sampled_images": [],
+  "failures": [],
+  "files": 25992,
+  "kind": "recrop",
+  "max_center_offset_pixels": 1.0016937631298788,
+  "missing_files": 0,
+  "rows": 4332,
+  "sampled_images": 3000,
+  "t0_sidecars_missing": 0
+}

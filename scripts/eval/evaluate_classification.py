@@ -70,6 +70,7 @@ def build_parser(defaults: Optional[Mapping[str, Any]] = None) -> argparse.Argum
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--max_eval_steps", type=int, default=None)
     parser.add_argument("--output_json", default=None)
+    parser.add_argument("--output_predictions_csv", default=None)
     parser.add_argument("--row_fusion_mode", choices=("map", "max"), default="max")
     parser.add_argument("--sensor_aux_loss_weight", type=float, default=0.3)
     parser.add_argument("--s5p_data_key", default="ch4")
@@ -196,6 +197,25 @@ def main(args: argparse.Namespace) -> dict[str, Any]:
         out = Path(args.output_json)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
+    if args.output_predictions_csv:
+        if total_rows != len(labels_all) or total_rows != len(preds_all) or total_rows != len(scores_all):
+            raise RuntimeError(
+                "Cannot write row predictions because labels, predictions, and positive scores "
+                f"are not aligned: rows={total_rows}, labels={len(labels_all)}, "
+                f"predictions={len(preds_all)}, scores={len(scores_all)}."
+            )
+        metadata_columns = [
+            column
+            for column in ("id", "plume_id", "label", "latitude", "longitude", "datetime")
+            if column in eval_ds.df.columns
+        ]
+        prediction_df = eval_ds.df.iloc[:total_rows][metadata_columns].copy()
+        prediction_df["prediction"] = preds_all
+        prediction_df["positive_probability"] = scores_all
+        prediction_df["correct"] = np.asarray(labels_all) == np.asarray(preds_all)
+        prediction_out = Path(args.output_predictions_csv)
+        prediction_out.parent.mkdir(parents=True, exist_ok=True)
+        prediction_df.to_csv(prediction_out, index=False)
     return result
 
 

@@ -1,0 +1,45 @@
+{
+  "name": "event_disjoint_80_20",
+  "train_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/event_disjoint_80_20/train.csv",
+  "test_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/event_disjoint_80_20/test.csv",
+  "train": {
+    "rows": 59671,
+    "labels": {
+      "0": 29425,
+      "1": 30246
+    },
+    "positive_fraction": 0.5068793886477518,
+    "plumes": 2069,
+    "events": 768,
+    "date_min": "2016-09-16T22:15:43+00:00",
+    "date_max": "2025-10-03T18:40:27+00:00",
+    "row_sha256": "b75fdf42e7eab0fe059dced9f5e5557c39c03bdd68885b781cc286c5200dcc47"
+  },
+  "test": {
+    "rows": 14918,
+    "labels": {
+      "0": 7311,
+      "1": 7607
+    },
+    "positive_fraction": 0.5099209009250569,
+    "plumes": 528,
+    "events": 192,
+    "date_min": "2016-09-19T21:13:11+00:00",
+    "date_max": "2025-10-02T17:45:22+00:00",
+    "row_sha256": "02d8ebd5405ef2d79ad2e0279df29005bbcad6b15d3f40e73dbdf9f7757ad478"
+  },
+  "overlap": {
+    "ids": 0,
+    "plumes": 0,
+    "events": 0
+  },
+  "diagnostics": {
+    "trials": 5000,
+    "target_test_fraction": 0.2,
+    "achieved_test_fraction": 0.20000268136052232,
+    "target_positive_fraction": 0.5074876992586038,
+    "test_positive_fraction": 0.5099209009250569,
+    "score_row_fraction": 1.3406802611571986e-05,
+    "score_positive_fraction": 0.002433201666453111
+  }
+}

@@ -1,0 +1,592 @@
+{
+  "scanned_direct_files": 3073,
+  "bad_files": 28,
+  "dropped_event_groups": [
+    "GAO20191020t171158p0000",
+    "GAO20200714t160234p0000",
+    "GAO20200719t160007p0000",
+    "GAO20200719t170604p0000",
+    "GAO20200719t171956p0000",
+    "GAO20230618t183446p0000",
+    "ang20180919t182318",
+    "ang20180919t183420",
+    "ang20180919t184533",
+    "ang20200715t182251"
+  ],
+  "dropped_rows": 38,
+  "dropped_plumes": [
+    "GAO20191020t171158p0000-A",
+    "GAO20191020t171158p0000-B",
+    "GAO20191020t171158p0000-C",
+    "GAO20191020t171158p0000-D",
+    "GAO20191020t171158p0000-E",
+    "GAO20191020t171158p0000-F",
+    "GAO20200714t160234p0000-A",
+    "GAO20200714t160234p0000-B",
+    "GAO20200714t160234p0000-C",
+    "GAO20200714t160234p0000-D",
+    "GAO20200714t160234p0000-E",
+    "GAO20200714t160234p0000-F",
+    "GAO20200714t160234p0000-G",
+    "GAO20200719t160007p0000-A",
+    "GAO20200719t160007p0000-B",
+    "GAO20200719t160007p0000-C",
+    "GAO20200719t170604p0000-A",
+    "GAO20200719t170604p0000-B",
+    "GAO20200719t170604p0000-C",
+    "GAO20200719t170604p0000-D",
+    "GAO20200719t170604p0000-E",
+    "GAO20200719t171956p0000-A",
+    "GAO20200719t171956p0000-B",
+    "GAO20200719t171956p0000-C",
+    "GAO20230618t183446p0000-A",
+    "ang20180919t182318-A",
+    "ang20180919t182318-B",
+    "ang20180919t183420-A",
+    "ang20180919t183420-B",
+    "ang20180919t184533-A",
+    "ang20180919t184533-B",
+    "ang20200715t182251-1",
+    "ang20200715t182251-2",
+    "ang20200715t182251-A",
+    "ang20200715t182251-B",
+    "ang20200715t182251-C",
+    "ang20200715t182251-D",
+    "ang20200715t182251-E"
+  ],
+  "elapsed_seconds": 227.12,
+  "bad_files_detail": [
+    {
+      "plume_id": "GAO20191020t171158p0000-C",
+      "event_group_id": "GAO20191020t171158p0000",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20191020t171158p0000-C",
+      "event_group_id": "GAO20191020t171158p0000",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20191020t171158p0000-C/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200714t160234p0000-C",
+      "event_group_id": "GAO20200714t160234p0000",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200714t160234p0000-C/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200714t160234p0000-C",
+      "event_group_id": "GAO20200714t160234p0000",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200714t160234p0000-C/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200719t160007p0000-B",
+      "event_group_id": "GAO20200719t160007p0000",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200719t160007p0000-B/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200719t160007p0000-B",
+      "event_group_id": "GAO20200719t160007p0000",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200719t160007p0000-B/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200719t170604p0000-B",
+      "event_group_id": "GAO20200719t170604p0000",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200719t170604p0000-B/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200719t170604p0000-B",
+      "event_group_id": "GAO20200719t170604p0000",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200719t170604p0000-B/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200719t171956p0000-B",
+      "event_group_id": "GAO20200719t171956p0000",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200719t171956p0000-B/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200719t171956p0000-B",
+      "event_group_id": "GAO20200719t171956p0000",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200719t171956p0000-B/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20230618t183446p0000-A",
+      "event_group_id": "GAO20230618t183446p0000",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20230618t183446p0000-A/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20230618t183446p0000-A",
+      "event_group_id": "GAO20230618t183446p0000",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20230618t183446p0000-A/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t182318-A",
+      "event_group_id": "ang20180919t182318",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t182318-A/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t182318-A",
+      "event_group_id": "ang20180919t182318",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t182318-A/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t182318-B",
+      "event_group_id": "ang20180919t182318",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t182318-B/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t182318-B",
+      "event_group_id": "ang20180919t182318",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t182318-B/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t183420-A",
+      "event_group_id": "ang20180919t183420",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t183420-A/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t183420-A",
+      "event_group_id": "ang20180919t183420",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t183420-A/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t183420-B",
+      "event_group_id": "ang20180919t183420",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t183420-B/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t183420-B",
+      "event_group_id": "ang20180919t183420",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t183420-B/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t184533-A",
+      "event_group_id": "ang20180919t184533",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t184533-A/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t184533-A",
+      "event_group_id": "ang20180919t184533",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t184533-A/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t184533-B",
+      "event_group_id": "ang20180919t184533",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t184533-B/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20180919t184533-B",
+      "event_group_id": "ang20180919t184533",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t184533-B/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20200715t182251-2",
+      "event_group_id": "ang20200715t182251",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20200715t182251-2/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20200715t182251-2",
+      "event_group_id": "ang20200715t182251",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20200715t182251-2/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20200715t182251-A",
+      "event_group_id": "ang20200715t182251",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20200715t182251-A/s2_90_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    },
+    {
+      "plume_id": "ang20200715t182251-A",
+      "event_group_id": "ang20200715t182251",
+      "timepoint": "year",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20200715t182251-A/s2_360_std_512.tif",
+      "empty_bands": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "error": ""
+    }
+  ]
+}

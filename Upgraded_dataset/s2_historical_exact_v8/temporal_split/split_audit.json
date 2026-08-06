@@ -1,0 +1,16 @@
+{
+  "all_rows": 5313,
+  "created_at": "2026-07-24T07:13:42Z",
+  "event_group_overlap": 0,
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/temporal_split/s2_v8_test.csv",
+  "test_event_groups": 219,
+  "test_rows": 806,
+  "test_time_max": "2026-05-24T08:21:05+00:00",
+  "test_time_min": "2025-11-24T01:33:05+00:00",
+  "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/temporal_split/s2_v8_train.csv",
+  "train_event_groups": 1726,
+  "train_ratio": 0.8482966309053266,
+  "train_rows": 4507,
+  "train_time_max": "2025-11-23T17:33:05+00:00",
+  "train_time_min": "2016-09-19T18:28:30+00:00"
+}

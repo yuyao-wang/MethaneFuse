@@ -1,0 +1,33 @@
+{
+  "band_changes": {
+    "7": {
+      "changed_files": 10914,
+      "new_nonzero_files": 11983,
+      "old_nonzero_files": 11985
+    },
+    "8": {
+      "changed_files": 10903,
+      "new_nonzero_files": 11980,
+      "old_nonzero_files": 11977
+    },
+    "9": {
+      "changed_files": 10895,
+      "new_nonzero_files": 11978,
+      "old_nonzero_files": 11978
+    }
+  },
+  "changed_bands": [
+    7,
+    8,
+    9
+  ],
+  "comparison_error_examples": [],
+  "comparison_errors": 0,
+  "metadata_differences": 0,
+  "new_only_keys": 0,
+  "new_rows": 154045,
+  "old_only_keys": 0,
+  "old_rows": 154045,
+  "sampled_image_pairs": 12000,
+  "sampled_rows": 2000
+}

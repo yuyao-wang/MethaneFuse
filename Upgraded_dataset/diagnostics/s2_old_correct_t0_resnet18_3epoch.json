@@ -1,0 +1,98 @@
+{
+  "args": {
+    "train_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2025_16/train.csv",
+    "test_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/s2_90360_temporal_CDSE0_gee90360_2025_16/test.csv",
+    "mode": "current",
+    "timepoints": "t0",
+    "band_indices": "0,1,2,3,4,5,6,7,10,11",
+    "center_box": 0,
+    "max_train_samples": 12000,
+    "max_test_samples": 5000,
+    "batch_size": 512,
+    "epochs": 3,
+    "num_workers": 16,
+    "local_cache_dir": "/tmp/s2_old_correct_resnet_cache",
+    "cache_workers": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "seed": 20260723,
+    "device": "cuda:0",
+    "output": "Upgraded_dataset/diagnostics/s2_old_correct_t0_resnet18_3epoch.json"
+  },
+  "train_rows": 12000,
+  "test_rows": 5000,
+  "history": [
+    {
+      "epoch": 1,
+      "seconds": 6.92,
+      "train": {
+        "accuracy": 0.6701666666666667,
+        "f1": 0.6835119142811451,
+        "auroc": 0.7108014861111112,
+        "tp": 4274,
+        "tn": 3768,
+        "fp": 2232,
+        "fn": 1726,
+        "loss": 0.7058235831260681
+      },
+      "test": {
+        "accuracy": 0.4984,
+        "f1": 0.027152831652443754,
+        "auroc": 0.5467464,
+        "tp": 35,
+        "tn": 2457,
+        "fp": 43,
+        "fn": 2465,
+        "loss": 2.40306759262085
+      }
+    },
+    {
+      "epoch": 2,
+      "seconds": 1.95,
+      "train": {
+        "accuracy": 0.7305,
+        "f1": 0.7433333333333333,
+        "auroc": 0.8030319305555556,
+        "tp": 4683,
+        "tn": 4083,
+        "fp": 1917,
+        "fn": 1317,
+        "loss": 0.5389221188227336
+      },
+      "test": {
+        "accuracy": 0.5684,
+        "f1": 0.49767225325884545,
+        "auroc": 0.59547072,
+        "tp": 1069,
+        "tn": 1773,
+        "fp": 727,
+        "fn": 1431,
+        "loss": 0.9094095281600952
+      }
+    },
+    {
+      "epoch": 3,
+      "seconds": 1.89,
+      "train": {
+        "accuracy": 0.74275,
+        "f1": 0.7537688442211056,
+        "auroc": 0.8208356388888889,
+        "tp": 4725,
+        "tn": 4188,
+        "fp": 1812,
+        "fn": 1275,
+        "loss": 0.5182020098368327
+      },
+      "test": {
+        "accuracy": 0.5962,
+        "f1": 0.49436513899323814,
+        "auroc": 0.6554636,
+        "tp": 987,
+        "tn": 1994,
+        "fp": 506,
+        "fn": 1513,
+        "loss": 0.8770677484512329
+      }
+    }
+  ]
+}

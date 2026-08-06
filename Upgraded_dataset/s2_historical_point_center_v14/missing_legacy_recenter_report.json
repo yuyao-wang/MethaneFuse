@@ -1,0 +1,768 @@
+{
+  "tasks": 76,
+  "successful": 76,
+  "failed": 0,
+  "records": [
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200714t172448p0000-H/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200714t172448p0000-H/s2_-90.tif",
+      "shift_x": -8,
+      "shift_y": -3,
+      "offset_km": 0.17581772755992894,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200714t172448p0000-H/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200714t172448p0000-H/s2_-360.tif",
+      "shift_x": -8,
+      "shift_y": -3,
+      "offset_km": 0.17581772755992894,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t155931p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t155931p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200724t155931p0000-A/s2_-90.tif",
+      "shift_x": 8,
+      "shift_y": 6,
+      "offset_km": 0.19750509994602206,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t155931p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t155931p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200724t155931p0000-A/s2_-360.tif",
+      "shift_x": 8,
+      "shift_y": 6,
+      "offset_km": 0.19750509994602206,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t161329p0000-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200724t161329p0000-B/s2_-90.tif",
+      "shift_x": 4,
+      "shift_y": -3,
+      "offset_km": 0.09735085641458098,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t161329p0000-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200724t161329p0000-B/s2_-360.tif",
+      "shift_x": 4,
+      "shift_y": -3,
+      "offset_km": 0.09735085641458098,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-C",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t161329p0000-C/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200724t161329p0000-C/s2_-90.tif",
+      "shift_x": -3,
+      "shift_y": 0,
+      "offset_km": 0.05923054560494862,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-C",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t161329p0000-C/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200724t161329p0000-C/s2_-360.tif",
+      "shift_x": -3,
+      "shift_y": 0,
+      "offset_km": 0.05923054560494862,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t165348p0000-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t165348p0000-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200724t165348p0000-B/s2_-90.tif",
+      "shift_x": 2,
+      "shift_y": 3,
+      "offset_km": 0.06430262308340945,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200724t165348p0000-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200724t165348p0000-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200724t165348p0000-B/s2_-360.tif",
+      "shift_x": 2,
+      "shift_y": 3,
+      "offset_km": 0.06430262308340945,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200728t174227p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200728t174227p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200728t174227p0000-A/s2_-90.tif",
+      "shift_x": 2,
+      "shift_y": 2,
+      "offset_km": 0.04979139804405892,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200728t174227p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200728t174227p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200728t174227p0000-A/s2_-360.tif",
+      "shift_x": 2,
+      "shift_y": 2,
+      "offset_km": 0.04979139804405892,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200807t163414p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200807t163414p0000-A/s2_-90.tif",
+      "shift_x": 2,
+      "shift_y": -1,
+      "offset_km": 0.054662574807569586,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200807t163414p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200807t163414p0000-A/s2_-360.tif",
+      "shift_x": 2,
+      "shift_y": -1,
+      "offset_km": 0.054662574807569586,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20201120t182953p0000-2",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20201120t182953p0000-2/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20201120t182953p0000-2/s2_-90.tif",
+      "shift_x": -3,
+      "shift_y": 7,
+      "offset_km": 0.15568403342652035,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20201120t182953p0000-2",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20201120t182953p0000-2/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20201120t182953p0000-2/s2_-360.tif",
+      "shift_x": -3,
+      "shift_y": 7,
+      "offset_km": 0.15568403342652035,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20210720t174343p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20210720t174343p0000-A/s2_-90.tif",
+      "shift_x": 5,
+      "shift_y": 7,
+      "offset_km": 0.1701434551733663,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20210720t174343p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20210720t174343p0000-A/s2_-360.tif",
+      "shift_x": 5,
+      "shift_y": 7,
+      "offset_km": 0.1701434551733663,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20211007t161356p0000-D/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20211007t161356p0000-D/s2_-90.tif",
+      "shift_x": -1,
+      "shift_y": 3,
+      "offset_km": 0.055874537833550265,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20211007t161356p0000-D/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20211007t161356p0000-D/s2_-360.tif",
+      "shift_x": -1,
+      "shift_y": 3,
+      "offset_km": 0.055874537833550265,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20230612t170617p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20230612t170617p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20230612t170617p0000-A/s2_-90.tif",
+      "shift_x": -2,
+      "shift_y": 0,
+      "offset_km": 0.03152901557925128,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20230612t170617p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20230612t170617p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20230612t170617p0000-A/s2_-360.tif",
+      "shift_x": -2,
+      "shift_y": 0,
+      "offset_km": 0.03152901557925128,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t172403p0000-A/s2_-90.tif",
+      "shift_x": 0,
+      "shift_y": 0,
+      "offset_km": 0.008301806307817131,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t172403p0000-A/s2_-360.tif",
+      "shift_x": 0,
+      "shift_y": 0,
+      "offset_km": 0.008301806307817131,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t172403p0000-B/s2_-90.tif",
+      "shift_x": 0,
+      "shift_y": 0,
+      "offset_km": 0.009714009468873176,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t172403p0000-B/s2_-360.tif",
+      "shift_x": 0,
+      "shift_y": 0,
+      "offset_km": 0.009714009468873176,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-C",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-C/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t172403p0000-C/s2_-90.tif",
+      "shift_x": -4,
+      "shift_y": 1,
+      "offset_km": 0.07377833004401112,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-C",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-C/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t172403p0000-C/s2_-360.tif",
+      "shift_x": -4,
+      "shift_y": 1,
+      "offset_km": 0.07377833004401112,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-D",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-D/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t172403p0000-D/s2_-90.tif",
+      "shift_x": 3,
+      "shift_y": 3,
+      "offset_km": 0.07777546097793891,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-D",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t172403p0000-D/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t172403p0000-D/s2_-360.tif",
+      "shift_x": 3,
+      "shift_y": 3,
+      "offset_km": 0.07777546097793891,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t175128p0000-A/s2_-90.tif",
+      "shift_x": -1,
+      "shift_y": 1,
+      "offset_km": 0.03348706988570957,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t175128p0000-A/s2_-360.tif",
+      "shift_x": -1,
+      "shift_y": 1,
+      "offset_km": 0.03348706988570957,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-C",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-C/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t175128p0000-C/s2_-90.tif",
+      "shift_x": -6,
+      "shift_y": 3,
+      "offset_km": 0.12595752668524685,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-C",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-C/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t175128p0000-C/s2_-360.tif",
+      "shift_x": -6,
+      "shift_y": 3,
+      "offset_km": 0.12595752668524685,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-D",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-D/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t175128p0000-D/s2_-90.tif",
+      "shift_x": 3,
+      "shift_y": 4,
+      "offset_km": 0.10689179912791953,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-D",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-D/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t175128p0000-D/s2_-360.tif",
+      "shift_x": 3,
+      "shift_y": 4,
+      "offset_km": 0.10689179912791953,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-E",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-E/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t175128p0000-E/s2_-90.tif",
+      "shift_x": 1,
+      "shift_y": -2,
+      "offset_km": 0.03636620995204927,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-E",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t175128p0000-E/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t175128p0000-E/s2_-360.tif",
+      "shift_x": 1,
+      "shift_y": -2,
+      "offset_km": 0.03636620995204927,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t181759p0000-A/s2_-90.tif",
+      "shift_x": -2,
+      "shift_y": 8,
+      "offset_km": 0.1714079687484351,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t181759p0000-A/s2_-360.tif",
+      "shift_x": -2,
+      "shift_y": 8,
+      "offset_km": 0.1714079687484351,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t181759p0000-B/s2_-90.tif",
+      "shift_x": 1,
+      "shift_y": 1,
+      "offset_km": 0.024614820263796106,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t181759p0000-B/s2_-360.tif",
+      "shift_x": 1,
+      "shift_y": 1,
+      "offset_km": 0.024614820263796106,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-C",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-C/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t181759p0000-C/s2_-90.tif",
+      "shift_x": -1,
+      "shift_y": 4,
+      "offset_km": 0.07222063657775563,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-C",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-C/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t181759p0000-C/s2_-360.tif",
+      "shift_x": -1,
+      "shift_y": 4,
+      "offset_km": 0.07222063657775563,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-D",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-D/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240415t181759p0000-D/s2_-90.tif",
+      "shift_x": -1,
+      "shift_y": 1,
+      "offset_km": 0.034379440085390345,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-D",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240415t181759p0000-D/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240415t181759p0000-D/s2_-360.tif",
+      "shift_x": -1,
+      "shift_y": 1,
+      "offset_km": 0.034379440085390345,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240420t182155p0000-C",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240420t182155p0000-C/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240420t182155p0000-C/s2_-90.tif",
+      "shift_x": 1,
+      "shift_y": 1,
+      "offset_km": 0.01614381143388261,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240420t182155p0000-C",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240420t182155p0000-C/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240420t182155p0000-C/s2_-360.tif",
+      "shift_x": 1,
+      "shift_y": 1,
+      "offset_km": 0.01614381143388261,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240420t183810p0000-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240420t183810p0000-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20240420t183810p0000-B/s2_-90.tif",
+      "shift_x": 0,
+      "shift_y": -5,
+      "offset_km": 0.09786649341444488,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "GAO20240420t183810p0000-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20240420t183810p0000-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240420t183810p0000-B/s2_-360.tif",
+      "shift_x": 0,
+      "shift_y": -5,
+      "offset_km": 0.09786649341444488,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20200715t172416-2/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/ang20200715t172416-2/s2_-90.tif",
+      "shift_x": 0,
+      "shift_y": -3,
+      "offset_km": 0.05292713850143542,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20200715t172416-2/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/ang20200715t172416-2/s2_-360.tif",
+      "shift_x": 0,
+      "shift_y": -3,
+      "offset_km": 0.05292713850143542,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20220901t034652p03009-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20220901t034652p03009-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20220901t034652p03009-B/s2_-90.tif",
+      "shift_x": -27,
+      "shift_y": -8,
+      "offset_km": 0.5549857118912724,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20220901t034652p03009-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20220901t034652p03009-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20220901t034652p03009-B/s2_-360.tif",
+      "shift_x": -27,
+      "shift_y": -8,
+      "offset_km": 0.5549857118912724,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20230629t013516p01007-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20230629t013516p01007-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20230629t013516p01007-A/s2_-90.tif",
+      "shift_x": -7,
+      "shift_y": 0,
+      "offset_km": 0.14361333700548484,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20230629t013516p01007-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20230629t013516p01007-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20230629t013516p01007-A/s2_-360.tif",
+      "shift_x": -7,
+      "shift_y": 0,
+      "offset_km": 0.14361333700548484,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20230629t044101p03007-C/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20230629t044101p03007-C/s2_-90.tif",
+      "shift_x": 40,
+      "shift_y": 18,
+      "offset_km": 0.877119712263944,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20230629t044101p03007-C/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20230629t044101p03007-C/s2_-360.tif",
+      "shift_x": 40,
+      "shift_y": 18,
+      "offset_km": 0.877119712263944,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20231010t052236p04020-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20231010t052236p04020-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20231010t052236p04020-A/s2_-90.tif",
+      "shift_x": -26,
+      "shift_y": -42,
+      "offset_km": 1.0004842913950476,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20231010t052236p04020-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20231010t052236p04020-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20231010t052236p04020-A/s2_-360.tif",
+      "shift_x": -26,
+      "shift_y": -42,
+      "offset_km": 1.0004842913950476,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20231224t174522p12005-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20231224t174522p12005-A/s2_-90.tif",
+      "shift_x": -7,
+      "shift_y": 3,
+      "offset_km": 0.14760240794432194,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20231224t174522p12005-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20231224t174522p12005-A/s2_-360.tif",
+      "shift_x": -7,
+      "shift_y": 3,
+      "offset_km": 0.14760240794432194,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20241005t160604p11012-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20241005t160604p11012-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20241005t160604p11012-A/s2_-90.tif",
+      "shift_x": 31,
+      "shift_y": 20,
+      "offset_km": 0.7365920678781007,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20241005t160604p11012-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20241005t160604p11012-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20241005t160604p11012-A/s2_-360.tif",
+      "shift_x": 31,
+      "shift_y": 20,
+      "offset_km": 0.7365920678781007,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20250608t011656p01007-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20250608t011656p01007-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20250608t011656p01007-A/s2_-90.tif",
+      "shift_x": 14,
+      "shift_y": 66,
+      "offset_km": 1.3539389024349393,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20250608t011656p01007-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20250608t011656p01007-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20250608t011656p01007-A/s2_-360.tif",
+      "shift_x": 14,
+      "shift_y": 66,
+      "offset_km": 1.3539389024349393,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20250608t011708p01008-L",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20250608t011708p01008-L/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20250608t011708p01008-L/s2_-90.tif",
+      "shift_x": 17,
+      "shift_y": -17,
+      "offset_km": 0.4697446706306817,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "emi20250608t011708p01008-L",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/emi20250608t011708p01008-L/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20250608t011708p01008-L/s2_-360.tif",
+      "shift_x": 17,
+      "shift_y": -17,
+      "offset_km": 0.4697446706306817,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250812t075729c11s4001-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250812t075729c11s4001-B/s2_-90.tif",
+      "shift_x": 14,
+      "shift_y": -9,
+      "offset_km": 0.33038680582147995,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250812t075729c11s4001-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/tan20250812t075729c11s4001-B/s2_-360.tif",
+      "shift_x": 14,
+      "shift_y": -9,
+      "offset_km": 0.33038680582147995,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-C",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250812t075729c11s4001-C/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250812t075729c11s4001-C/s2_-90.tif",
+      "shift_x": -4,
+      "shift_y": 7,
+      "offset_km": 0.1578372287196049,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-C",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250812t075729c11s4001-C/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/tan20250812t075729c11s4001-C/s2_-360.tif",
+      "shift_x": -4,
+      "shift_y": 7,
+      "offset_km": 0.1578372287196049,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250821t112530c67s4001-A",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250821t112530c67s4001-A/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250821t112530c67s4001-A/s2_-90.tif",
+      "shift_x": -25,
+      "shift_y": 1,
+      "offset_km": 0.5026162765636834,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250821t112530c67s4001-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250821t112530c67s4001-A/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/tan20250821t112530c67s4001-A/s2_-360.tif",
+      "shift_x": -25,
+      "shift_y": 1,
+      "offset_km": 0.5026162765636834,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250821t112530c67s4001-B",
+      "timepoint": "seasonal",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250821t112530c67s4001-B/s2_90_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250821t112530c67s4001-B/s2_-90.tif",
+      "shift_x": -7,
+      "shift_y": 0,
+      "offset_km": 0.13671683761685854,
+      "status": "legacy_512_recentered"
+    },
+    {
+      "plume_id": "tan20250821t112530c67s4001-B",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/tan20250821t112530c67s4001-B/s2_360_std_512.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/tan20250821t112530c67s4001-B/s2_-360.tif",
+      "shift_x": -7,
+      "shift_y": 0,
+      "offset_km": 0.13671683761685854,
+      "status": "legacy_512_recentered"
+    }
+  ],
+  "failures": []
+}

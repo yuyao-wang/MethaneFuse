@@ -1,0 +1,15 @@
+{
+  "count": 10998,
+  "acc": 0.7453173304237134,
+  "f1": 0.7313704804833605,
+  "recall": 0.7638221153846154,
+  "fpr": 0.2700632700632701,
+  "auroc": 0.8297392044387236,
+  "tp": 3813,
+  "fp": 1622,
+  "fn": 1179,
+  "tn": 4384,
+  "loss": 0.5326358318588997,
+  "checkpoint": "/home/yuyao/panopticon/checkpoints/L89_temporal_train__L89_temporal_test__satmae_time__temporal_head/ckpt_best_test.pth",
+  "test_csv": "/mnt/engg-niulab/Yuyao/preprocessed_512/L89/l89_6time_temporal_16_resized_to_224/L89_temporal_test.csv"
+}

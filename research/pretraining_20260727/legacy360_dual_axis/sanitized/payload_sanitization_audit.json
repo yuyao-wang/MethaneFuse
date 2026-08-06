@@ -1,0 +1,542 @@
+{
+  "configuration": {
+    "future_batch_size": 8192,
+    "raw_cache_dir": "/diniuvol/yuyao/methanefuse_research_20260727/legacy360_dual_axis/raw_cache",
+    "raw_cache_exists": true,
+    "workers": 64
+  },
+  "created_utc": "2026-07-27T22:28:07.368382+00:00",
+  "elapsed_seconds": 197.1835956359282,
+  "inputs": {
+    "dev": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_dev.csv",
+      "rows": 12621,
+      "sha256": "d1c8084914e1f6a94047e296c5f6da6a12394e72f35c169b250f36483315597f"
+    },
+    "test": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_test.csv",
+      "rows": 31564,
+      "sha256": "a547e6d2f76db884b47f6fbaca3df6a1fb4c164ab3dcf332b861d40778117920"
+    },
+    "train_core": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_train_core.csv",
+      "rows": 113846,
+      "sha256": "99b27f20ea7d2fd865a8936929328f2520dcc3842d3c014b5e504b9f98e36d40"
+    }
+  },
+  "outputs": {
+    "dev": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized/legacy360_dev_sanitized.csv",
+      "query360_index_max": 126464,
+      "query360_index_min": 113844,
+      "rows": 12621,
+      "sha256": "9d8651b10374fe8f4c2681118af1a7e5fa2a472ffbf60d42652b531f4af337d9",
+      "sha256_recomputed": "9d8651b10374fe8f4c2681118af1a7e5fa2a472ffbf60d42652b531f4af337d9"
+    },
+    "test": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized/legacy360_test_sanitized.csv",
+      "query360_index_max": 158028,
+      "query360_index_min": 126465,
+      "rows": 31564,
+      "sha256": "525613ca726cbf12aadfe0853fc18f626340a61df695e6875f8d4faa037b0b79",
+      "sha256_recomputed": "525613ca726cbf12aadfe0853fc18f626340a61df695e6875f8d4faa037b0b79"
+    },
+    "train_core": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized/legacy360_train_core_sanitized.csv",
+      "query360_index_max": 113843,
+      "query360_index_min": 0,
+      "rows": 113844,
+      "sha256": "e85e26d909dd95ea150acf35e1ce118fef38f200805380c6c26d0a222bb3be00",
+      "sha256_recomputed": "e85e26d909dd95ea150acf35e1ce118fef38f200805380c6c26d0a222bb3be00"
+    }
+  },
+  "pairwise_retained_overlap": {
+    "dev__test": {
+      "event_id": 78,
+      "id": 0,
+      "plume_id": 0
+    },
+    "train_core__dev": {
+      "event_id": 0,
+      "id": 0,
+      "plume_id": 0
+    },
+    "train_core__test": {
+      "event_id": 628,
+      "id": 0,
+      "plume_id": 0
+    }
+  },
+  "payloads": {
+    "by_kind": {
+      "optical": {
+        "accepted_from_hashed_raw_cache": 30955,
+        "accepted_from_source": 486955,
+        "invalid": 4,
+        "unique_declared": 517914,
+        "valid": 517910
+      },
+      "s5p": {
+        "accepted_from_hashed_raw_cache": 4351,
+        "accepted_from_source": 7,
+        "invalid": 0,
+        "unique_declared": 4358,
+        "valid": 4358
+      }
+    },
+    "cache_issue_counts": {
+      "missing_or_not_regular": 486966
+    },
+    "invalid_examples_first_100": [
+      {
+        "accepted_from": null,
+        "accepted_path": null,
+        "cache_issue": "missing_or_not_regular",
+        "cache_path": "/diniuvol/yuyao/methanefuse_research_20260727/legacy360_dual_axis/raw_cache/a4/a4e2f2a87a0650395b3a7e7c192e1e419f468d3322589b8534a157d1df7d4c8b.tif",
+        "kind": "optical",
+        "reason": "missing_or_not_regular",
+        "size_bytes": 0,
+        "source": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_0.tif",
+        "valid": false
+      },
+      {
+        "accepted_from": null,
+        "accepted_path": null,
+        "cache_issue": "missing_or_not_regular",
+        "cache_path": "/diniuvol/yuyao/methanefuse_research_20260727/legacy360_dual_axis/raw_cache/aa/aa27d92dd00708be515cfc17f11372126c9830c1ff5956de1d23ba35b154b06c.tif",
+        "kind": "optical",
+        "reason": "missing_or_not_regular",
+        "size_bytes": 0,
+        "source": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_360.tif",
+        "valid": false
+      },
+      {
+        "accepted_from": null,
+        "accepted_path": null,
+        "cache_issue": "missing_or_not_regular",
+        "cache_path": "/diniuvol/yuyao/methanefuse_research_20260727/legacy360_dual_axis/raw_cache/86/86ced94989766a021efd86906ee278bed2face07606536f8315f1ceb48e6eb2c.tif",
+        "kind": "optical",
+        "reason": "missing_or_not_regular",
+        "size_bytes": 0,
+        "source": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_90.tif",
+        "valid": false
+      },
+      {
+        "accepted_from": null,
+        "accepted_path": null,
+        "cache_issue": "missing_or_not_regular",
+        "cache_path": "/diniuvol/yuyao/methanefuse_research_20260727/legacy360_dual_axis/raw_cache/4b/4b8d95f1b066a8c655eb04aa3e1638fdc4773c59f76e3df7bc6a9db36734fec6.tif",
+        "kind": "optical",
+        "reason": "zero_size",
+        "size_bytes": 0,
+        "source": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000450/s2_360.tif",
+        "valid": false
+      }
+    ],
+    "invalid_reason_counts": {
+      "missing_or_not_regular": 3,
+      "zero_size": 1
+    },
+    "status_counts": {
+      "hashed_raw_cache": 35306,
+      "invalid": 4,
+      "source": 486962
+    },
+    "unique_declared": 522272
+  },
+  "policy": {
+    "cache_precedence": "accept non-empty valid hashed raw-cache entry; otherwise check source regular-file existence and size",
+    "decode": "no TIFF or NPZ array was decoded",
+    "drop": "drop row only when every sensor is unavailable after sanitization",
+    "optical": "if any declared t0/t90/t360 payload fails, clear all three classification columns for that sensor",
+    "query360_index": "preserve old value in source_query360_index, then assign one global contiguous index in train_core/dev/test order",
+    "s5p": "require non-empty regular .npz with ZIP magic; clear S5P classification columns on failure"
+  },
+  "query360_index": {
+    "contiguous_zero_based": true,
+    "globally_unique": true,
+    "max": 158028,
+    "min": 0,
+    "rows": 158029
+  },
+  "schema_version": "legacy360-payload-sanitization-audit-v1",
+  "script_version": "legacy360-payload-sanitizer-v1",
+  "splits": {
+    "dev": {
+      "availability_signatures": {
+        "after_recomputed": {
+          "emit": 2193,
+          "emit+s5p": 593,
+          "l89": 3032,
+          "l89+emit": 265,
+          "l89+emit+s5p": 112,
+          "l89+s5p": 96,
+          "s2": 4721,
+          "s2+emit": 353,
+          "s2+emit+s5p": 64,
+          "s2+l89": 467,
+          "s2+l89+emit": 32,
+          "s2+l89+emit+s5p": 32,
+          "s2+l89+s5p": 32,
+          "s2+s5p": 356,
+          "s5p": 273
+        },
+        "before_declared": {
+          "emit": 2193,
+          "emit+s5p": 593,
+          "l89": 3032,
+          "l89+emit": 265,
+          "l89+emit+s5p": 112,
+          "l89+s5p": 96,
+          "s2": 4721,
+          "s2+emit": 353,
+          "s2+emit+s5p": 64,
+          "s2+l89": 467,
+          "s2+l89+emit": 32,
+          "s2+l89+emit+s5p": 32,
+          "s2+l89+s5p": 32,
+          "s2+s5p": 356,
+          "s5p": 273
+        }
+      },
+      "dropped_examples_first_25": [],
+      "events": {
+        "retained_event_id_sha256": "0949e37ff9feab39d8ed632a3fb43dd93893947d9a47d433d2b9cfd803e81c4a",
+        "unique_after": 291,
+        "unique_before": 291,
+        "unique_in_dropped_rows": 0
+      },
+      "labels": {
+        "after": {
+          "0": 5938,
+          "1": 6683
+        },
+        "before": {
+          "0": 5938,
+          "1": 6683
+        },
+        "dropped": {}
+      },
+      "rows": {
+        "after": 12621,
+        "before": 12621,
+        "dropped_all_sensors_invalid": 0
+      },
+      "sensors": {
+        "emit": {
+          "accepted_payload_occurrences_by_location": {
+            "source": 10932
+          },
+          "complete_triplet_rows_before": 3644,
+          "declared_rows_before": 3644,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 3644
+        },
+        "l89": {
+          "accepted_payload_occurrences_by_location": {
+            "hashed_raw_cache": 687,
+            "source": 11517
+          },
+          "complete_triplet_rows_before": 4068,
+          "declared_rows_before": 4068,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 4068
+        },
+        "s2": {
+          "accepted_payload_occurrences_by_location": {
+            "hashed_raw_cache": 1452,
+            "source": 16719
+          },
+          "complete_triplet_rows_before": 6057,
+          "declared_rows_before": 6057,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 6057
+        },
+        "s5p": {
+          "accepted_payload_occurrences_by_location": {
+            "hashed_raw_cache": 1558
+          },
+          "declared_rows_before": 1558,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 1558,
+          "validation": "non-zero regular .npz with ZIP magic; no array decode"
+        }
+      },
+      "split": "dev"
+    },
+    "test": {
+      "availability_signatures": {
+        "after_recomputed": {
+          "emit": 5888,
+          "emit+s5p": 1409,
+          "l89": 7275,
+          "l89+emit": 705,
+          "l89+emit+s5p": 236,
+          "l89+s5p": 489,
+          "s2": 11442,
+          "s2+emit": 650,
+          "s2+emit+s5p": 287,
+          "s2+l89": 1516,
+          "s2+l89+emit": 32,
+          "s2+l89+s5p": 160,
+          "s2+s5p": 867,
+          "s5p": 608
+        },
+        "before_declared": {
+          "emit": 5888,
+          "emit+s5p": 1409,
+          "l89": 7275,
+          "l89+emit": 705,
+          "l89+emit+s5p": 236,
+          "l89+s5p": 489,
+          "s2": 11442,
+          "s2+emit": 650,
+          "s2+emit+s5p": 287,
+          "s2+l89": 1516,
+          "s2+l89+emit": 32,
+          "s2+l89+s5p": 160,
+          "s2+s5p": 867,
+          "s5p": 608
+        }
+      },
+      "dropped_examples_first_25": [],
+      "events": {
+        "retained_event_id_sha256": "9fd3a32c3aba783ed459392a2c9584433e793cb1c2b28b53a610f0da7c8f12ca",
+        "unique_after": 1098,
+        "unique_before": 1098,
+        "unique_in_dropped_rows": 0
+      },
+      "labels": {
+        "after": {
+          "0": 14882,
+          "1": 16682
+        },
+        "before": {
+          "0": 14882,
+          "1": 16682
+        },
+        "dropped": {}
+      },
+      "rows": {
+        "after": 31564,
+        "before": 31564,
+        "dropped_all_sensors_invalid": 0
+      },
+      "sensors": {
+        "emit": {
+          "accepted_payload_occurrences_by_location": {
+            "source": 27621
+          },
+          "complete_triplet_rows_before": 9207,
+          "declared_rows_before": 9207,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 9207
+        },
+        "l89": {
+          "accepted_payload_occurrences_by_location": {
+            "source": 31239
+          },
+          "complete_triplet_rows_before": 10413,
+          "declared_rows_before": 10413,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 10413
+        },
+        "s2": {
+          "accepted_payload_occurrences_by_location": {
+            "source": 44862
+          },
+          "complete_triplet_rows_before": 14954,
+          "declared_rows_before": 14954,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 14954
+        },
+        "s5p": {
+          "accepted_payload_occurrences_by_location": {
+            "hashed_raw_cache": 3989,
+            "source": 67
+          },
+          "declared_rows_before": 4056,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 4056,
+          "validation": "non-zero regular .npz with ZIP magic; no array decode"
+        }
+      },
+      "split": "test"
+    },
+    "train_core": {
+      "availability_signatures": {
+        "after_recomputed": {
+          "emit": 20180,
+          "emit+s5p": 5471,
+          "l89": 27004,
+          "l89+emit": 2730,
+          "l89+emit+s5p": 1007,
+          "l89+s5p": 1698,
+          "s2": 42390,
+          "s2+emit": 2214,
+          "s2+emit+s5p": 634,
+          "s2+l89": 4245,
+          "s2+l89+emit": 470,
+          "s2+l89+emit+s5p": 4,
+          "s2+l89+s5p": 849,
+          "s2+s5p": 2770,
+          "s5p": 2178
+        },
+        "before_declared": {
+          "emit": 20180,
+          "emit+s5p": 5471,
+          "l89": 27004,
+          "l89+emit": 2730,
+          "l89+emit+s5p": 1007,
+          "l89+s5p": 1698,
+          "s2": 42392,
+          "s2+emit": 2214,
+          "s2+emit+s5p": 634,
+          "s2+l89": 4245,
+          "s2+l89+emit": 470,
+          "s2+l89+emit+s5p": 4,
+          "s2+l89+s5p": 849,
+          "s2+s5p": 2770,
+          "s5p": 2178
+        }
+      },
+      "dropped_examples_first_25": [
+        {
+          "event_id": "GAO20191020t163829p0000",
+          "id": "410",
+          "label": "0",
+          "plume_id": "GAO20191020t163829p0000-D"
+        },
+        {
+          "event_id": "GAO20191020t163829p0000",
+          "id": "450",
+          "label": "0",
+          "plume_id": "GAO20191020t163829p0000-D"
+        }
+      ],
+      "events": {
+        "retained_event_id_sha256": "c876bdf914d2fffbdb6cf5349f769a740a7ba15be0b9ae4b8d9e92d5569c2733",
+        "unique_after": 2554,
+        "unique_before": 2554,
+        "unique_in_dropped_rows": 1
+      },
+      "labels": {
+        "after": {
+          "0": 53477,
+          "1": 60367
+        },
+        "before": {
+          "0": 53479,
+          "1": 60367
+        },
+        "dropped": {
+          "0": 2
+        }
+      },
+      "rows": {
+        "after": 113844,
+        "before": 113846,
+        "dropped_all_sensors_invalid": 2
+      },
+      "sensors": {
+        "emit": {
+          "accepted_payload_occurrences_by_location": {
+            "source": 98130
+          },
+          "complete_triplet_rows_before": 32710,
+          "declared_rows_before": 32710,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 32710
+        },
+        "l89": {
+          "accepted_payload_occurrences_by_location": {
+            "hashed_raw_cache": 2169,
+            "source": 111852
+          },
+          "complete_triplet_rows_before": 38007,
+          "declared_rows_before": 38007,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 38007
+        },
+        "s2": {
+          "accepted_payload_occurrences_by_location": {
+            "hashed_raw_cache": 26647,
+            "source": 134083
+          },
+          "complete_triplet_rows_before": 53578,
+          "declared_rows_before": 53578,
+          "failure_reasons": {
+            "s2_0_path:missing_or_not_regular": 1,
+            "s2_360_path:missing_or_not_regular": 1,
+            "s2_360_path:zero_size": 1,
+            "s2_90_path:missing_or_not_regular": 1
+          },
+          "invalid_examples_first_25": [
+            {
+              "cache_issue": "missing_or_not_regular",
+              "column": "s2_0_path",
+              "id": "410",
+              "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_0.tif",
+              "reason": "missing_or_not_regular"
+            },
+            {
+              "cache_issue": "missing_or_not_regular",
+              "column": "s2_90_path",
+              "id": "410",
+              "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_90.tif",
+              "reason": "missing_or_not_regular"
+            },
+            {
+              "cache_issue": "missing_or_not_regular",
+              "column": "s2_360_path",
+              "id": "410",
+              "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_360.tif",
+              "reason": "missing_or_not_regular"
+            },
+            {
+              "cache_issue": "missing_or_not_regular",
+              "column": "s2_360_path",
+              "id": "450",
+              "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000450/s2_360.tif",
+              "reason": "zero_size"
+            }
+          ],
+          "invalidated_rows": 2,
+          "retained_rows_after": 53576
+        },
+        "s5p": {
+          "accepted_payload_occurrences_by_location": {
+            "hashed_raw_cache": 14611
+          },
+          "declared_rows_before": 14611,
+          "failure_reasons": {},
+          "invalid_examples_first_25": [],
+          "invalidated_rows": 0,
+          "retained_rows_after": 14611,
+          "validation": "non-zero regular .npz with ZIP magic; no array decode"
+        }
+      },
+      "split": "train_core"
+    }
+  }
+}

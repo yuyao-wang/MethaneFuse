@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/multi_sensor_shared_stage_a/shared_stageA_baseline_480m_e4_max/ckpt_best_test.pth",
+  "count": 57,
+  "eval_csv": "data/controlled_release_test/combined_original_labels_stage1_crop32/s2_model_manifest.csv",
+  "loss": 3.1017181434129415,
+  "overall": {
+    "acc": 0.24561403508771928,
+    "auroc": 0.5148148148148148,
+    "count": 57.0,
+    "fpr": 0.9555555555555556,
+    "recall": 1.0
+  }
+}

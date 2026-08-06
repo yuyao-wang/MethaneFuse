@@ -1,0 +1,98 @@
+{
+  "args": {
+    "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/bounds_center_ab/v7_train_tanager.csv",
+    "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/bounds_center_ab/v7_test_tanager.csv",
+    "mode": "current",
+    "timepoints": "t0,prev1,prev2,prev3,seasonal,year",
+    "band_indices": "0,1,2,3,4,5,6,7,10,11",
+    "center_box": 0,
+    "max_train_samples": 20000,
+    "max_test_samples": 10000,
+    "batch_size": 512,
+    "epochs": 3,
+    "num_workers": 16,
+    "local_cache_dir": "/diniuvol/yuyao/s2_v7_bounds_resnet_gate_cache",
+    "cache_workers": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "seed": 20260723,
+    "device": "cuda:0",
+    "output": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/bounds_center_ab/resnet18_v7_tanager_bounds.json"
+  },
+  "train_rows": 20000,
+  "test_rows": 10000,
+  "history": [
+    {
+      "epoch": 1,
+      "seconds": 22.46,
+      "train": {
+        "accuracy": 0.55675,
+        "f1": 0.5656753711234138,
+        "auroc": 0.57388628,
+        "tp": 5773,
+        "tn": 5362,
+        "fp": 4638,
+        "fn": 4227,
+        "loss": 0.7552136077880859
+      },
+      "test": {
+        "accuracy": 0.5112,
+        "f1": 0.5041590586325827,
+        "auroc": 0.51953398,
+        "tp": 2485,
+        "tn": 2627,
+        "fp": 2373,
+        "fn": 2515,
+        "loss": 0.7925148169517517
+      }
+    },
+    {
+      "epoch": 2,
+      "seconds": 11.15,
+      "train": {
+        "accuracy": 0.60825,
+        "f1": 0.6297083983175008,
+        "auroc": 0.6485415600000001,
+        "tp": 6662,
+        "tn": 5503,
+        "fp": 4497,
+        "fn": 3338,
+        "loss": 0.659927229309082
+      },
+      "test": {
+        "accuracy": 0.5169,
+        "f1": 0.48204138522568885,
+        "auroc": 0.53870978,
+        "tp": 2248,
+        "tn": 2921,
+        "fp": 2079,
+        "fn": 2752,
+        "loss": 0.7673444878578186
+      }
+    },
+    {
+      "epoch": 3,
+      "seconds": 11.24,
+      "train": {
+        "accuracy": 0.62255,
+        "f1": 0.6425832110222054,
+        "auroc": 0.6778728250000001,
+        "tp": 6786,
+        "tn": 5665,
+        "fp": 4335,
+        "fn": 3214,
+        "loss": 0.6406392028808594
+      },
+      "test": {
+        "accuracy": 0.5461,
+        "f1": 0.654013263206037,
+        "auroc": 0.57865652,
+        "tp": 4290,
+        "tn": 1171,
+        "fp": 3829,
+        "fn": 710,
+        "loss": 0.7032857903480529
+      }
+    }
+  ]
+}

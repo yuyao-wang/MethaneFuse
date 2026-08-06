@@ -1,0 +1,39 @@
+{
+  "train_rows": 128354,
+  "test_rows": 16287,
+  "train_labels": {
+    "0": 63007,
+    "1": 65347
+  },
+  "test_labels": {
+    "0": 7729,
+    "1": 8558
+  },
+  "train_plumes": 4392,
+  "test_plumes": 713,
+  "train_event_groups": 1685,
+  "test_event_groups": 193,
+  "event_group_overlap": 0,
+  "plume_id_overlap": 0,
+  "train_zero_mask_positive_labels": 0,
+  "test_zero_mask_positive_labels": 0,
+  "train_nonzero_mask_negative_labels": 0,
+  "test_nonzero_mask_negative_labels": 0,
+  "invalid_timestamps": {
+    "t0_image_time": 0,
+    "prev1_image_time": 0,
+    "prev2_image_time": 0,
+    "prev3_image_time": 0,
+    "seasonal_image_time": 0,
+    "year_image_time": 0
+  },
+  "path_census": {
+    "rows_sampled": 4000,
+    "files_sampled": 28000,
+    "unique_files_sampled": 28000,
+    "missing_files": 0,
+    "missing_examples": []
+  },
+  "status": "ok",
+  "errors": []
+}

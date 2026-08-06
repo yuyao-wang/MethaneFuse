@@ -1,0 +1,430 @@
+{
+  "interpretation_rule": {
+    "brightness_not_supported": "Paired score changes are near zero or have inconsistent signs across parents.",
+    "brightness_supported": "Scores rise monotonically for most parents under global scaling and/or fall consistently when matched to the training-negative centroid."
+  },
+  "paired_vs_scale_1p00": {
+    "match_train_negative_centroid": {
+      "all": {
+        "count": 23,
+        "fraction_decreased": 0.7391304347826086,
+        "fraction_increased": 0.2608695652173913,
+        "mean_delta": -0.020805027173913044,
+        "median_delta": -0.01416015625,
+        "wilcoxon_two_sided_p": 0.006032705307006836
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_decreased": 1.0,
+        "fraction_increased": 0.0,
+        "mean_delta": -0.03819056919642857,
+        "median_delta": -0.025634765625,
+        "wilcoxon_two_sided_p": 0.0001220703125
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_decreased": 0.3333333333333333,
+        "fraction_increased": 0.6666666666666666,
+        "mean_delta": 0.006239149305555556,
+        "median_delta": 0.005859375,
+        "wilcoxon_two_sided_p": 0.42578125
+      }
+    },
+    "match_train_positive_centroid": {
+      "all": {
+        "count": 23,
+        "fraction_decreased": 0.6521739130434783,
+        "fraction_increased": 0.30434782608695654,
+        "mean_delta": -0.01203719429347826,
+        "median_delta": -0.00927734375,
+        "wilcoxon_two_sided_p": 0.042498111724853516
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_decreased": 1.0,
+        "fraction_increased": 0.0,
+        "mean_delta": -0.027692522321428572,
+        "median_delta": -0.021484375,
+        "wilcoxon_two_sided_p": 0.0001220703125
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_decreased": 0.1111111111111111,
+        "fraction_increased": 0.7777777777777778,
+        "mean_delta": 0.012315538194444444,
+        "median_delta": 0.0048828125,
+        "wilcoxon_two_sided_p": 0.0546875
+      }
+    },
+    "scale_0p70": {
+      "all": {
+        "count": 23,
+        "fraction_decreased": 0.9565217391304348,
+        "fraction_increased": 0.043478260869565216,
+        "mean_delta": -0.023182744565217392,
+        "median_delta": -0.0185546875,
+        "wilcoxon_two_sided_p": 4.935264587402344e-05
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_decreased": 1.0,
+        "fraction_increased": 0.0,
+        "mean_delta": -0.028041294642857144,
+        "median_delta": -0.017333984375,
+        "wilcoxon_two_sided_p": 0.0001220703125
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_decreased": 0.8888888888888888,
+        "fraction_increased": 0.1111111111111111,
+        "mean_delta": -0.015625,
+        "median_delta": -0.02001953125,
+        "wilcoxon_two_sided_p": 0.09765625
+      }
+    },
+    "scale_0p85": {
+      "all": {
+        "count": 23,
+        "fraction_decreased": 0.6956521739130435,
+        "fraction_increased": 0.30434782608695654,
+        "mean_delta": -0.003842561141304348,
+        "median_delta": -0.00390625,
+        "wilcoxon_two_sided_p": 0.0354313850402832
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_decreased": 0.7142857142857143,
+        "fraction_increased": 0.2857142857142857,
+        "mean_delta": -0.007463727678571429,
+        "median_delta": -0.008056640625,
+        "wilcoxon_two_sided_p": 0.0107421875
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_decreased": 0.6666666666666666,
+        "fraction_increased": 0.3333333333333333,
+        "mean_delta": 0.0017903645833333333,
+        "median_delta": -0.00341796875,
+        "wilcoxon_two_sided_p": 0.734375
+      }
+    },
+    "scale_1p00": {
+      "all": {
+        "count": 23,
+        "fraction_decreased": 0.0,
+        "fraction_increased": 0.0,
+        "mean_delta": 0.0,
+        "median_delta": 0.0,
+        "wilcoxon_two_sided_p": null
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_decreased": 0.0,
+        "fraction_increased": 0.0,
+        "mean_delta": 0.0,
+        "median_delta": 0.0,
+        "wilcoxon_two_sided_p": null
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_decreased": 0.0,
+        "fraction_increased": 0.0,
+        "mean_delta": 0.0,
+        "median_delta": 0.0,
+        "wilcoxon_two_sided_p": null
+      }
+    },
+    "scale_1p15": {
+      "all": {
+        "count": 23,
+        "fraction_decreased": 0.21739130434782608,
+        "fraction_increased": 0.782608695652174,
+        "mean_delta": 0.01384171195652174,
+        "median_delta": 0.01220703125,
+        "wilcoxon_two_sided_p": 0.008262157440185547
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_decreased": 0.0,
+        "fraction_increased": 1.0,
+        "mean_delta": 0.0244140625,
+        "median_delta": 0.0146484375,
+        "wilcoxon_two_sided_p": 0.0001220703125
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_decreased": 0.5555555555555556,
+        "fraction_increased": 0.4444444444444444,
+        "mean_delta": -0.0026041666666666665,
+        "median_delta": -0.00341796875,
+        "wilcoxon_two_sided_p": 0.65234375
+      }
+    },
+    "scale_1p30": {
+      "all": {
+        "count": 23,
+        "fraction_decreased": 0.17391304347826086,
+        "fraction_increased": 0.8260869565217391,
+        "mean_delta": 0.022206182065217392,
+        "median_delta": 0.02978515625,
+        "wilcoxon_two_sided_p": 0.00914621353149414
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_decreased": 0.0,
+        "fraction_increased": 1.0,
+        "mean_delta": 0.04188755580357143,
+        "median_delta": 0.039306640625,
+        "wilcoxon_two_sided_p": 0.0001220703125
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_decreased": 0.4444444444444444,
+        "fraction_increased": 0.5555555555555556,
+        "mean_delta": -0.008409288194444444,
+        "median_delta": 0.0009765625,
+        "wilcoxon_two_sided_p": 0.734375
+      }
+    }
+  },
+  "per_mode": [
+    {
+      "auroc": 0.626984126984127,
+      "average_precision": 0.5457685832685832,
+      "brightness_mode": "scale_0p70",
+      "count": 23,
+      "fpr_at_0p5": 1.0,
+      "negative_mean": 0.8681640625,
+      "positive_mean": 0.9040256076388888,
+      "recall_at_0p5": 1.0
+    },
+    {
+      "auroc": 0.6785714285714286,
+      "average_precision": 0.5353260392476079,
+      "brightness_mode": "scale_0p85",
+      "count": 23,
+      "fpr_at_0p5": 1.0,
+      "negative_mean": 0.8887416294642857,
+      "positive_mean": 0.9214409722222222,
+      "recall_at_0p5": 1.0
+    },
+    {
+      "auroc": 0.6666666666666667,
+      "average_precision": 0.6081223844381739,
+      "brightness_mode": "scale_1p00",
+      "count": 23,
+      "fpr_at_0p5": 1.0,
+      "negative_mean": 0.8962053571428571,
+      "positive_mean": 0.9196506076388888,
+      "recall_at_0p5": 1.0
+    },
+    {
+      "auroc": 0.4444444444444444,
+      "average_precision": 0.4421922304275246,
+      "brightness_mode": "scale_1p15",
+      "count": 23,
+      "fpr_at_0p5": 1.0,
+      "negative_mean": 0.9206194196428571,
+      "positive_mean": 0.9170464409722222,
+      "recall_at_0p5": 1.0
+    },
+    {
+      "auroc": 0.2857142857142857,
+      "average_precision": 0.3912533978603885,
+      "brightness_mode": "scale_1p30",
+      "count": 23,
+      "fpr_at_0p5": 1.0,
+      "negative_mean": 0.9380929129464286,
+      "positive_mean": 0.9112413194444444,
+      "recall_at_0p5": 1.0
+    },
+    {
+      "auroc": 0.7777777777777778,
+      "average_precision": 0.7347222222222223,
+      "brightness_mode": "match_train_negative_centroid",
+      "count": 23,
+      "fpr_at_0p5": 1.0,
+      "negative_mean": 0.8580147879464286,
+      "positive_mean": 0.9258897569444444,
+      "recall_at_0p5": 1.0
+    },
+    {
+      "auroc": 0.8055555555555556,
+      "average_precision": 0.7437169312169314,
+      "brightness_mode": "match_train_positive_centroid",
+      "count": 23,
+      "fpr_at_0p5": 1.0,
+      "negative_mean": 0.8685128348214286,
+      "positive_mean": 0.9319661458333334,
+      "recall_at_0p5": 1.0
+    }
+  ],
+  "predictions": "/home/yuyao/panopticon/results/eval/s2_legacy360_brightness_probe_universal360_predictions.csv",
+  "probe_manifest": "/home/yuyao/panopticon/data/controlled_release_test/brightness_probe_legacy360_v1/manifest_all_modes.csv",
+  "rows": 161,
+  "scalar_brightness_trends": {
+    "per_parent": [
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20210803_32p053111_m102p300687",
+        "slope_probability_per_scale_unit": -0.15006510416666582,
+        "spearman_rho": -0.9999999999999999
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20211019_33p630634_m114p489143",
+        "slope_probability_per_scale_unit": 0.0719401041666667,
+        "spearman_rho": 0.7
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20211103_33p630634_m114p489143",
+        "slope_probability_per_scale_unit": 0.02669270833333342,
+        "spearman_rho": 0.49999999999999994
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20221029_32p821000_m111p786000",
+        "slope_probability_per_scale_unit": 0.0491536458333334,
+        "spearman_rho": 0.7
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20221108_32p821842_m111p785754",
+        "slope_probability_per_scale_unit": 0.04654947916666648,
+        "spearman_rho": 0.7
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20221115_32p821842_m111p785754",
+        "slope_probability_per_scale_unit": 0.009440104166667514,
+        "spearman_rho": 0.09999999999999999
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20221118_32p821842_m111p785754",
+        "slope_probability_per_scale_unit": 0.0149739583333337,
+        "spearman_rho": 0.09999999999999999
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20230627_32p245193_m93p286508",
+        "slope_probability_per_scale_unit": 0.05957031250000017,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 1,
+        "parent_id": "s2_cr_20230719_32p201060_m103p685018",
+        "slope_probability_per_scale_unit": -0.06803385416666632,
+        "spearman_rho": 0.0
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_ehrenberg_az_20180413t182458",
+        "slope_probability_per_scale_unit": 0.20703125000000058,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_ehrenberg_az_20180528t182453",
+        "slope_probability_per_scale_unit": 0.18033854166666666,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_ehrenberg_az_20180617t182455",
+        "slope_probability_per_scale_unit": 0.12174479166666644,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_ehrenberg_az_20180727t182454",
+        "slope_probability_per_scale_unit": 0.20410156250000022,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_ehrenberg_az_20180801t182457",
+        "slope_probability_per_scale_unit": 0.14908854166666669,
+        "spearman_rho": 0.9746794344808964
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_ehrenberg_az_20180816t182450",
+        "slope_probability_per_scale_unit": 0.19010416666666666,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_ehrenberg_az_20181109t182452",
+        "slope_probability_per_scale_unit": 0.16178385416666696,
+        "spearman_rho": 0.8999999999999998
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_casa_grande_az_20180408t182459",
+        "slope_probability_per_scale_unit": 0.07910156250000028,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_casa_grande_az_20180604t181503",
+        "slope_probability_per_scale_unit": 0.07975260416666681,
+        "spearman_rho": 0.9999999999999999
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_casa_grande_az_20180629t181506",
+        "slope_probability_per_scale_unit": 0.036132812500000354,
+        "spearman_rho": 0.7
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_casa_grande_az_20180902t181457",
+        "slope_probability_per_scale_unit": 0.050781250000000035,
+        "spearman_rho": 0.8999999999999998
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_casa_grande_az_20180910t182458",
+        "slope_probability_per_scale_unit": 0.05859375000000002,
+        "spearman_rho": 0.8999999999999998
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_casa_grande_az_20181119t182455",
+        "slope_probability_per_scale_unit": 0.024739583333333665,
+        "spearman_rho": 0.8999999999999998
+      },
+      {
+        "label": 0,
+        "parent_id": "s2_temporal_neg_casa_grande_az_20181121t181503",
+        "slope_probability_per_scale_unit": 0.05957031250000062,
+        "spearman_rho": 0.8999999999999998
+      }
+    ],
+    "summary": {
+      "all": {
+        "count": 23,
+        "fraction_positive_slope": 0.9130434782608695,
+        "mean_slope": 0.07230808423913067,
+        "median_slope": 0.05957031250000017,
+        "median_spearman_rho": 0.8999999999999998
+      },
+      "label_0": {
+        "count": 14,
+        "fraction_positive_slope": 1.0,
+        "mean_slope": 0.11449032738095258,
+        "median_slope": 0.10074869791666663,
+        "median_spearman_rho": 0.9873397172404481
+      },
+      "label_1": {
+        "count": 9,
+        "fraction_positive_slope": 0.7777777777777778,
+        "mean_slope": 0.006691261574074357,
+        "median_slope": 0.02669270833333342,
+        "median_spearman_rho": 0.49999999999999994
+      }
+    }
+  }
+}

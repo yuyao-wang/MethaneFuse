@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/home/yuyao/panopticon/checkpoints/stage2_classification_360m.pt",
+  "count": 384,
+  "eval_csv": "/home/yuyao/panopticon/data/controlled_release_test/label1_legacy_balanced_360m/manifest.csv",
+  "loss": 1.6405126464863617,
+  "overall": {
+    "acc": 0.515625,
+    "auroc": 0.7279866536458334,
+    "count": 384.0,
+    "fpr": 0.96875,
+    "recall": 1.0
+  }
+}

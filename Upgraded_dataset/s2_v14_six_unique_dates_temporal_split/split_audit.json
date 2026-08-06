@@ -1,0 +1,48 @@
+{
+  "rule": "retain plumes with six distinct acquisition timestamps",
+  "time_columns": [
+    "t0_image_time",
+    "prev1_image_time",
+    "prev2_image_time",
+    "prev3_image_time",
+    "seasonal_image_time",
+    "year_image_time"
+  ],
+  "rows": {
+    "all": 132625,
+    "train": 109212,
+    "test": 23413
+  },
+  "plumes": {
+    "all": 4201,
+    "train": 3467,
+    "test": 734,
+    "overlap": 0
+  },
+  "events": {
+    "all": 1586,
+    "train": 1376,
+    "test": 210,
+    "overlap": 0
+  },
+  "labels": {
+    "train": {
+      "0": 54081,
+      "1": 55131
+    },
+    "test": {
+      "0": 11642,
+      "1": 11771
+    }
+  },
+  "test_ratios": {
+    "patch": 0.17653534401508011,
+    "plume": 0.17472030468935967,
+    "event": 0.13240857503152584
+  },
+  "outputs": {
+    "all": "/home/yuyao/panopticon/Upgraded_dataset/s2_v14_six_unique_dates_temporal_split/all.csv",
+    "train": "/home/yuyao/panopticon/Upgraded_dataset/s2_v14_six_unique_dates_temporal_split/train.csv",
+    "test": "/home/yuyao/panopticon/Upgraded_dataset/s2_v14_six_unique_dates_temporal_split/test.csv"
+  }
+}

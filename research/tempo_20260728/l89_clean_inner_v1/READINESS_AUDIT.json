@@ -1,0 +1,144 @@
+{
+  "event_rule": "plume_id:strip-final-hyphen-suffix",
+  "inner_split": {
+    "dev": {
+      "events": 176,
+      "labels": {
+        "0": 2661,
+        "1": 2016
+      },
+      "rows": 4677,
+      "time_max": "2025-08-05T08:06:47+00:00",
+      "time_min": "2024-10-14T19:52:36+00:00"
+    },
+    "dev_csv": "/home/yuyao/panopticon/research/tempo_20260728/l89_clean_inner_v1/dev.csv",
+    "development_cutoff_utc": "2024-10-14T19:52:36+00:00",
+    "development_target_fraction": 0.2,
+    "event_overlap": 0,
+    "policy": "newest complete events until 20 percent row target",
+    "train": {
+      "events": 672,
+      "labels": {
+        "0": 10237,
+        "1": 8445
+      },
+      "rows": 18682,
+      "time_max": "2024-10-14T19:40:57+00:00",
+      "time_min": "2016-09-16T20:08:14+00:00"
+    },
+    "train_csv": "/home/yuyao/panopticon/research/tempo_20260728/l89_clean_inner_v1/train.csv"
+  },
+  "local_cache": {
+    "coverage_by_role": {
+      "path_prev1": {
+        "files": 10129,
+        "fraction": 0.4336230146838478,
+        "rows": 23359
+      },
+      "path_prev2": {
+        "files": 10122,
+        "fraction": 0.43332334432124664,
+        "rows": 23359
+      },
+      "path_prev3": {
+        "files": 10122,
+        "fraction": 0.43332334432124664,
+        "rows": 23359
+      },
+      "path_seasonal": {
+        "files": 10129,
+        "fraction": 0.4336230146838478,
+        "rows": 23359
+      },
+      "path_t0": {
+        "files": 10129,
+        "fraction": 0.4336230146838478,
+        "rows": 23359
+      },
+      "path_year": {
+        "files": 10122,
+        "fraction": 0.43332334432124664,
+        "rows": 23359
+      }
+    },
+    "missing_id_sample": [
+      "335513",
+      "335514",
+      "335519",
+      "335530",
+      "335545",
+      "335553",
+      "335583",
+      "335628",
+      "335632",
+      "335633",
+      "335634",
+      "335650",
+      "335664",
+      "335666",
+      "335667",
+      "335786",
+      "335793",
+      "335794",
+      "335818",
+      "335823"
+    ],
+    "prior_staged_manifest_row_fraction": 0.43332334432124664,
+    "remote_source_paths_statted": false,
+    "roots_only": [
+      "/diniuvol/yuyao/methanefuse_research_20260727/cache/l89_3time",
+      "/diniuvol/yuyao/methanefuse_research_20260727/cache/l89_6time_extra"
+    ],
+    "rows_already_present_in_prior_staged_manifests": 10122,
+    "six_role_complete_fraction": 0.43332334432124664,
+    "six_role_complete_rows": 10122,
+    "six_role_missing_rows": 13237,
+    "staged_manifest_inputs": [
+      {
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/l89_6time/train.csv",
+        "rows": 10033,
+        "sha256": "3861d1385928f5e4b886a6f552320f5f357808a589cd079885c929f7de1618b8",
+        "unique_ids": 10033
+      },
+      {
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/l89_6time/val.csv",
+        "rows": 9614,
+        "sha256": "b854eb309fae5121f5ac9b742bed21e624f269b41c257fc2644f0231a1b33c71",
+        "unique_ids": 9614
+      }
+    ]
+  },
+  "readiness_gate": {
+    "estimated_under_45_minutes_pass": true,
+    "gpu0_memory_gate_checked_externally": true,
+    "local_coverage_pass": false,
+    "minimum_local_six_role_fraction": 0.99,
+    "ready_to_launch": false,
+    "reason": "local six-role coverage is below the required threshold"
+  },
+  "schema_version": "l89-clean-train-only-inner-readiness-v1",
+  "source": {
+    "events": 848,
+    "held_out_paths_read_or_statted_or_listed": false,
+    "labels": {
+      "0": 12898,
+      "1": 10461
+    },
+    "path": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_full_event_balanced_split/L89_temporal_train_full_event_balanced.csv",
+    "rows": 23359,
+    "sha256": "cb3d8720ee1dd94dc007a13be79786e8403878def12eb91da8398ca42864a798",
+    "time_max": "2025-08-05T08:06:47+00:00",
+    "time_min": "2016-09-16T20:08:14+00:00"
+  },
+  "test_or_sealed_or_holdout_access": false,
+  "throughput_estimate": {
+    "conservative_1_5x_shared_gpu_minutes": 27.238493917646462,
+    "estimated_one_gpu_minutes_if_all_local": 18.15899594509764,
+    "estimated_one_gpu_seconds_if_all_local": 1089.5397567058585,
+    "historical_dev_rows": 9614,
+    "historical_dev_seconds": 394.3,
+    "historical_train_rows": 10033,
+    "historical_train_seconds": 522.1
+  },
+  "training_requirement": "P5 and all D1 seeds must be retrained only on this inner train; prior heads overlap the new inner dev and are not reusable."
+}

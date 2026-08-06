@@ -1,0 +1,29 @@
+{
+  "completed_utc": "2026-07-28T09:39:22.541293+00:00",
+  "inputs": {
+    "base_cache": "/diniuvol/yuyao/methanefuse_research_20260727/cache/l89_ragged_cls_v1/val.pt",
+    "base_cache_sha256": "a47611f25e3670af31199b9b99a07e5ca1e0b9ba67b98133411018769d8993ca",
+    "p5_cache": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/cache/p5/val.pt",
+    "p5_cache_sha256": "105cb3c3ca3da97d743f87df1ad38070f683eaa2d47ee9919e40d9e55fb2231a"
+  },
+  "lock_manifest": "/home/yuyao/panopticon/research/tempo_20260728/l89_outer_lock_template_v2/LOCK_MANIFEST.json",
+  "lock_manifest_sha256": "bf49ea9ead94db4b1c010c678514abc98d652d06e34c48437553f5e1703d985c",
+  "mode": "development_dry_run",
+  "outputs": {
+    "metrics": "/home/yuyao/panopticon/research/tempo_20260728/l89_outer_lock_template_v2/dev_dry_run/LOCKED_METRICS.json",
+    "metrics_sha256": "8356948333e1e765221ffe08f685719400f96ee82bb3e158dda32ae84ac7c2ff",
+    "predictions": "/home/yuyao/panopticon/research/tempo_20260728/l89_outer_lock_template_v2/dev_dry_run/LOCKED_PREDICTIONS.csv",
+    "predictions_sha256": "c023b1be6e136e0ca26d87225cb58ca6c2975b0212e440e870b42dff4a9fc1aa"
+  },
+  "runtime": {
+    "device": "cpu",
+    "host": "diniunov",
+    "python": "3.9.25",
+    "torch": "2.0.0+cu117"
+  },
+  "schema_version": "tempo-l89-outer-receipt-v1",
+  "selection_performed": false,
+  "started_utc": "2026-07-28T09:39:22.472140+00:00",
+  "status": "complete",
+  "test_or_sealed_or_holdout_read": false
+}

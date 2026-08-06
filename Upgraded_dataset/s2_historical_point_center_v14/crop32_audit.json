@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "failures": [],
+  "rows": {
+    "all": 157084,
+    "train": 133451,
+    "test": 23633
+  },
+  "plumes": {
+    "train": 4313,
+    "test": 741,
+    "overlap": 0,
+    "minimum_rows": 1,
+    "median_rows": 32.0,
+    "maximum_rows": 32
+  },
+  "events": {
+    "train": 1679,
+    "test": 213,
+    "overlap": 0
+  },
+  "labels": {
+    "0": 77922,
+    "1": 79162
+  },
+  "positive_fraction": 0.5039469328512134,
+  "path_checks": {
+    "files": 1099588,
+    "missing": 0,
+    "missing_examples": []
+  },
+  "geometry": {
+    "positive_bad": 0,
+    "random_bad": 0
+  },
+  "sample_inspection": {
+    "rows": 5000,
+    "invalid": 0,
+    "muted_nonzero": 0,
+    "valid_empty": 0,
+    "dtypes": [
+      "float32"
+    ],
+    "invalid_examples": []
+  },
+  "args": {
+    "train_csv": "/diniuvol/yuyao/s2_6time_legacy_notebook_point_v14_32/train.csv",
+    "test_csv": "/diniuvol/yuyao/s2_6time_legacy_notebook_point_v14_32/test.csv",
+    "sample_rows": 5000,
+    "workers": 64,
+    "output": "Upgraded_dataset/s2_historical_point_center_v14/crop32_audit.json"
+  }
+}

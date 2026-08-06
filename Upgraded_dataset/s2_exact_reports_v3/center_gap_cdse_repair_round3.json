@@ -1,0 +1,1515 @@
+{
+  "selection": "failed",
+  "selected_tasks": 251,
+  "repaired_source": 0,
+  "repaired_resume": 0,
+  "kept_completed": 0,
+  "unresolved": [
+    {
+      "plume_id": "ang20191010t155034-E",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20190625T172901_N0500_R055_T14SKA_20230628T014341.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20230430t173028p0000-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230401T165849_N0510_R069_T15RUN_20240828T100301.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20170908t193821-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20170906T184419_N0500_R027_T11SKV_20230729T080518.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "av320241008t185527-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20240706T173909_N0510_R098_T13SER_20240706T213154.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20230430t185208p0000-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230401T165849_N0510_R069_T15RUN_20240828T100301.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20191013t154421-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20190926T174101_N0500_R098_T13SER_20230509T092053.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20230430t185208p0000-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20230501T165849_N0510_R069_T15RUN_20240831T081957.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20191013t152730-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20191011T174249_N0500_R098_T13SER_20230615T141506.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20230430t185208p0000-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230401T165849_N0510_R069_T15RUN_20240828T100301.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230228t163504p11003-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20230228T180259_N0510_R041_T12SUB_20240823T040528.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20191013t152730-B",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20191011T174249_N0500_R098_T13SER_20230615T141506.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "av320241008t185527-B",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20240706T173909_N0510_R098_T13SER_20240706T213154.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230325t134135p09034-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20230326T090611_N0510_R050_T34RCS_20240826T064427.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20210506t175942p0000-1",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20210412T162829_N0500_R083_T15RYP_20230512T082244.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20171013t193251-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20170713T184431_N0500_R027_T11SKV_20230818T181739.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20220506t194111p0000-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20220407T162829_N0510_R083_T15RYP_20240607T053557.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20191013t152730-11",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20191011T174249_N0500_R098_T13SER_20230615T141506.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230325t134135p09034-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20230316T090721_N0510_R050_T34RCS_20240827T132812.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20230824t185535p0000-H",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20220828T172911_N0510_R055_T13SGR_20240710T191125.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "av320241008t185527-D",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20241004T174109_N0511_R098_T13SES_20241004T220141.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20230430t185208p0000-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20230501T165849_N0510_R069_T15RUN_20240831T081957.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "av320241008t185527-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20241004T174109_N0511_R098_T13SER_20241004T220141.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20190924t181121-C",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20190625T172901_N0500_R055_T13SGR_20230628T014341.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230227t172227p11010-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20230227T183319_N0510_R027_T11SNR_20240820T070740.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "GAO20230430t173028p0000-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20230501T165849_N0510_R069_T15RUN_20240831T081957.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230809t060349p04028-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20220811T064629_N0510_R020_T40TFK_20240709T042256.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230227t172227p11010-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230207T183529_N0510_R027_T11SNR_20240812T224025.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230805t074037p05052-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20230801T064631_N0510_R020_T40TFK_20241017T135102.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230228t163504p11003-B",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20230223T180331_N0510_R041_T12SUB_20240821T012624.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230805t074037p05052-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20230806T064629_N0510_R020_T40TFK_20241019T015046.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20200724t212216-1",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20200423T182909_N0500_R027_T11SKV_20230410T035802.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230809t060349p04028-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20230806T064629_N0510_R020_T40TFK_20241019T015046.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230822t070125p05020-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20230820T062629_N0510_R077_T41TNE_20241022T060250.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230809t060349p04028-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20230801T064631_N0510_R020_T40TFK_20241017T135102.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230805t074037p05052-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20220722T064629_N0510_R020_T40TFK_20240717T155750.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230814t101054p07030-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20230507T062631_N0510_R077_T41TNE_20240903T164532.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230228t163504p11003-B",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20230218T180409_N0510_R041_T12SUB_20240820T124525.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230809t060349p04028-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20230508T064629_N0510_R020_T40TFK_20240908T052516.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230424t090806p06011-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20230122T081139_N0510_R078_T36SYB_20240810T061340.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230822t070125p05020-B",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20230820T062629_N0510_R077_T41TNE_20241022T060250.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "ang20200724t212216-1",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20200722T182919_N0500_R027_T11SKV_20230324T082228.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230822t070125p05020-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20220825T062629_N0510_R077_T41TNE_20240720T010633.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230824t083907p06023-B",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20230818T072619_N0510_R049_T38RQN_20241024T201227.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230814t101054p07030-B",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20230810T062629_N0510_R077_T41TNE_20241021T114643.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230814t101054p07030-B",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20230815T062631_N0510_R077_T41TNE_20241027T000201.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230424t090806p06011-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20230417T080611_N0510_R078_T36SYB_20240902T194454.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240215t083826p06019-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20240216T044859_N0510_R076_T45RUL_20240216T071303.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230424t090806p06011-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20220427T080559_N0510_R078_T36SYB_20240522T075526.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230814t101054p07030-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20230507T062631_N0510_R077_T41TNE_20240903T164532.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20231015t215309p14017-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20230713T175921_N0510_R041_T12SUB_20241001T164347.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240201t082418p06034-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20240202T065109_N0510_R020_T40TFK_20240202T095544.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20231015t215309p14017-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20231016T180329_N0510_R041_T12SUB_20241101T101807.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240408t052254p04006-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20240408T061901_N0510_R034_T41TQE_20240408T094953.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230424t090806p06011-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20230422T080609_N0510_R078_T36SYB_20240903T214713.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230822t070125p05020-B",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20230815T062631_N0510_R077_T41TNE_20241027T000201.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240201t082418p06034-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20240113T065239_N0510_R020_T40TFK_20240113T084012.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230814t101054p07030-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20230810T062629_N0510_R077_T41TNE_20241021T114643.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20231015t092740p06023-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20231011T061801_N0510_R034_T41TQE_20241102T192504.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240821t081938p06030-B",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20240817T072621_N0511_R049_T39RUQ_20240817T120352.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240215t083826p06019-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20240107T045159_N0510_R076_T45RUL_20240107T070907.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20240418T034539_N0510_R104_T47PNR_20240418T064256.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240817t082107p06021-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20240805T064631_N0511_R020_T40TFK_20240805T131606.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20240413T034541_N0510_R104_T47PNR_20240413T093951.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240726t095137p07016-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20240727T070629_N0511_R106_T39RYM_20240727T093733.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240726t095137p07016-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20240722T070621_N0510_R106_T39RYM_20240722T113149.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230919T080609_N0509_R078_T36SYB_20230919T113627.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20240731T182919_N0511_R027_T11SNR_20240731T220220.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20230626T080611_N0509_R078_T36SYB_20230626T113655.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20231015t092740p06023-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20221016T061841_N0510_R034_T41TQE_20240722T112741.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240817t082107p06021-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20240810T064629_N0511_R020_T40TFK_20240810T111308.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250110t122922p08002-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20250110T144731_N0511_R139_T18HXE_20250110T194901.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20240805T184101_N0511_R027_T11SNR_20240806T012051.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20240408T034529_N0510_R104_T47PNR_20240408T063227.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250618t073629p05011-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20250613T065321_N0511_R020_T40TFK_20250613T094016.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250618t073629p05011-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20250616T064619_N0511_R020_T40TFK_20250616T090449.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250623t095348p06019-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250623T100029_N0511_R122_T32RMV_20250623T140147.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240928t104501p07002-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20240921T090559_N0511_R050_T34RCS_20240921T115053.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240821t081938p06030-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20240822T072619_N0511_R049_T39RUQ_20240822T103322.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240928t104501p07002-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20240628T090601_N0510_R050_T34RCS_20240628T134250.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240928t104501p07002-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20231002T090811_N0510_R050_T34RCS_20241101T094232.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20220929T080731_N0510_R078_T37SBS_20240726T001729.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240928t104501p07002-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20240926T090731_N0511_R050_T34RCS_20240926T152806.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20230806T182919_N0509_R027_T11SNR_20230806T223347.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250826t083931p05007-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250824T095051_N0511_R079_T32RNS_20250824T151016.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250826t083931p05007-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250526T095051_N0511_R079_T32RNS_20250526T165713.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250110t122922p08002-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20241231T144731_N0511_R139_T18HXE_20241231T195105.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250207t102601c00s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250131T095139_N0511_R079_T32RNS_20250131T135145.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250623t095348p06019-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20250618T100041_N0511_R122_T32RMV_20250618T150415.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20230924T080651_N0510_R078_T36SYB_20241027T040648.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250207t102601c00s4001-B",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250131T095139_N0511_R079_T32RNS_20250131T135145.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250826t083931p05007-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240829T095031_N0511_R079_T32RNS_20240829T140151.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250803t153306p10003-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20250721T164921_N0511_R026_T14QNG_20250721T211713.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250803t153306p10003-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250502T164901_N0511_R026_T14QNG_20250502T214604.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250826t083931p05007-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250819T095029_N0511_R079_T32RNS_20250819T122725.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-D",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240212T174441_N0510_R098_T13SER_20240212T225951.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250826t083931p05007-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20250826T095041_N0511_R079_T32RNS_20250826T121113.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20251003t073100p04009-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250928T080629_N0511_R078_T37SBS_20250928T105825.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250407t174740c00s4001-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20240411T171859_N0510_R012_T14SNE_20240411T213058.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250521t150649p10006-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250219T131301_N0511_R138_T23KKQ_20250219T160312.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20241122t070753c00s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20241123T065211_N0511_R020_T40TFK_20241123T100453.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t104600c00s4001-B",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20250428T095041_N0511_R079_T32RNS_20250428T182104.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t104600c00s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250426T095051_N0511_R079_T32RNS_20250426T145202.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t104600c00s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250126T095331_N0511_R079_T32RNS_20250126T133810.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250407t174740c00s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250106T172619_N0511_R012_T14SNE_20250106T212204.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t104600c00s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250426T095051_N0511_R079_T32RNS_20250426T145202.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250222t015145c00s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250117T014919_N0511_R017_T54UXD_20250117T053015.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-D",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20241108T174541_N0511_R098_T13SER_20241108T234352.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250228t041236c00s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240220T033801_N0510_R061_T48RWQ_20240220T070051.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-B",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250426T053639_N0511_R005_T45UVA_20250426T074533.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20251003t073100p04009-A",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20251003T080811_N0511_R078_T37SBS_20251003T115704.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250228t041236c00s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20250105T034131_N0511_R061_T48RWQ_20250105T080351.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250223t182611c00s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20250216T174431_N0511_R098_T12RXP_20250216T213715.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t104600c00s4001-C",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250126T095331_N0511_R079_T32RNS_20250126T133810.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250501T053701_N0511_R005_T45UVA_20250501T090514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250407t174740c00s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20250322T172031_N0511_R012_T14SNE_20250322T224712.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t183121c00s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250123T180701_N0511_R041_T12SYF_20250123T212009.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250228t041236c00s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250301T033559_N0511_R061_T48RWQ_20250301T061709.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t183121c00s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20250423T175931_N0511_R041_T13SBA_20250423T232413.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-G",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20250426T053639_N0511_R005_T45UVA_20250426T074533.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250222t015145c00s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20241118T014929_N0511_R017_T54UXD_20241118T033549.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t104600c00s4001-C",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20250428T095041_N0511_R079_T32RNS_20250428T182104.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-G",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250416T053649_N0511_R005_T45UVA_20250416T074446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t074124c30s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250531T071641_N0511_R006_T40SBJ_20250531T105512.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250416T053649_N0511_R005_T45UVA_20250416T074446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-S",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250426T053639_N0511_R005_T45UVA_20250426T074533.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-K",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250426T053639_N0511_R005_T45UVA_20250426T074533.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-N",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250501T053701_N0511_R005_T45UVA_20250501T090514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-K",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250501T053701_N0511_R005_T45UVA_20250501T090514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t183121c00s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250428T175909_N0511_R041_T13SBA_20250428T215813.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-O",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250501T053701_N0511_R005_T45UVA_20250501T090514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-P",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250501T053701_N0511_R005_T45UVA_20250501T090514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-S",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250501T053701_N0511_R005_T45UVA_20250501T090514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-S",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250416T053649_N0511_R005_T45UVA_20250416T074446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-P",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250416T053649_N0511_R005_T45UVA_20250416T074446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-K",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250416T053649_N0511_R005_T45UVA_20250416T074446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-T",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250416T053649_N0511_R005_T45UVA_20250416T074446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-T",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20250426T053639_N0511_R005_T45UVA_20250426T074533.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-N",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250426T053639_N0511_R005_T45UVA_20250426T074533.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250427t183121c00s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20250425T180751_N0511_R041_T12SYF_20250426T024013.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t060447c30s4001-N",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250416T053649_N0511_R005_T45UVA_20250416T074446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t074124c30s4001-B",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240605T071621_N0510_R006_T39SYD_20240605T114254.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t074124c30s4001-C",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240605T071621_N0510_R006_T39SYD_20240605T114254.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t074124c30s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250531T071641_N0511_R006_T39SYD_20250531T105512.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t074124c30s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250526T071619_N0511_R006_T40SBJ_20250526T092205.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250601t074124c30s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250302T071841_N0511_R006_T39SYD_20250302T105013.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t194517c33s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20250707T184941_N0511_R113_T10TFR_20250707T235518.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t194517c33s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20250709T185831_N0511_R113_T10TFR_20250710T011913.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250729t080117c58s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20250728T072619_N0511_R049_T39TYM_20250728T082459.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250714t070736c46s4001-C",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240717T061631_N0510_R034_T42TTK_20240717T143128.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-M",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250409T172859_N0511_R055_T13SGR_20250409T205934.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-C",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20250705T080631_N0511_R078_T36SYB_20250705T114715.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-B",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20250707T081021_N0511_R078_T36SYB_20250707T114117.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-M",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20250708T172859_N0511_R055_T14SKA_20250708T212136.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250824t092752c76s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240828T083601_N0511_R064_T36SVD_20240828T130859.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250710T080609_N0511_R078_T37SBS_20250710T103052.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-M",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20240713T172859_N0510_R055_T14SKA_20240713T214123.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20250705T080631_N0511_R078_T36SYB_20250705T114715.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250729t080117c58s4001-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20240802T072619_N0511_R049_T39TYM_20240802T085501.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250714t070736c46s4001-B",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240717T061631_N0510_R034_T41TQE_20240717T143128.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t090442c16s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240918T080611_N0511_R078_T37SBU_20240918T143849.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250909t080902c64s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250908T071631_N0511_R006_T39SYD_20250908T104213.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t195446c24s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250915T185031_N0511_R113_T10TFR_20250916T012207.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250824t092752c76s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250818T083559_N0511_R064_T36SVD_20250818T111754.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t195446c24s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250831T184919_N0511_R113_T10TFR_20250831T224258.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-C",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20250707T081021_N0511_R078_T36SYB_20250707T114117.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250909t080902c64s4001-C",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240913T071621_N0511_R006_T39SYD_20240913T122245.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t090442c16s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250918T080609_N0511_R078_T37SBU_20250918T105953.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-M",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250628T172859_N0511_R055_T14SKA_20250628T210049.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251010t073829c94s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20251010T070719_N0511_R106_T43WER_20251010T090446.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t195446c24s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250617T184941_N0511_R113_T10TFR_20250617T234722.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t090442c16s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20250913T080621_N0511_R078_T37SBU_20250913T133717.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250909t080902c64s4001-C",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250903T071619_N0511_R006_T40SBJ_20250903T093802.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t090442c16s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20250915T081631_N0511_R078_T37SBU_20250915T101355.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250710T080609_N0511_R078_T36SYB_20250710T103052.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250917t195446c24s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240920T185051_N0511_R113_T10TFR_20240921T005645.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20250707T081021_N0511_R078_T36SYB_20250707T114117.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-C",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20241117T100311_N0511_R079_T32RNS_20260626T183836.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251101t040312c69s4001-H",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20251102T031501_N0511_R075_T49SFC_20251102T061803.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20251107T095119_N0511_R079_T32RNS_20251107T120952.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251118t081713c06s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20251105T073009_N0511_R049_T39TYM_20251105T093121.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250909t080902c64s4001-C",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250610T071641_N0511_R006_T39SYD_20250610T100116.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20251107T095119_N0511_R079_T32RNS_20251107T120952.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20241117T100311_N0511_R079_T32RNS_20260626T183836.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20250709t085527c89s4001-C",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250710T080609_N0511_R078_T36SYB_20250710T103052.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251130t094043c41s4001-C",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250831T084559_N0511_R107_T36STG_20250831T110735.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-C",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250814T095051_N0511_R079_T32RNS_20250814T154107.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251223T084501_N0511_R064_T35RNP_20251223T103711.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20251112T095251_N0511_R079_T32RNS_20251112T134718.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251128t142318c30s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20251121T131239_N0511_R138_T22KHV_20251121T145535.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251121t031333c45s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20251028T021821_N0511_R003_T52SDE_20251028T054320.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251118t082024c03s4001-F",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20251114T071151_N0511_R106_T39RVP_20251114T104412.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251121t031333c45s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20251122T021919_N0511_R003_T52SDE_20251122T034926.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251101t040312c69s4001-H",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20251028T030739_N0511_R075_T49SFC_20251028T050936.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251130t094043c41s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250831T084559_N0511_R107_T36STG_20250831T110735.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251207t190449c98s4001-E",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20251208T174629_N0511_R098_T12RXP_20251208T210331.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251223T084501_N0511_R064_T35RNP_20251223T103711.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250814T095051_N0511_R079_T32RNS_20250814T154107.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251114t184810c66s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20251115T174731_N0511_R098_T13RBH_20251115T211109.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251130t094043c41s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251116T085431_N0511_R107_T36STG_20251116T103813.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260128t185303c27s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20251227T172741_N0511_R012_T13QEG_20251227T204410.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251216t174812c17s4001-F",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20241210T164741_N0511_R126_T15QVV_20260520T092234.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250923T080701_N0511_R078_T36SYB_20250923T134018.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251224T081401_N0511_R078_T36SYB_20251224T115116.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250924T083741_N0511_R064_T35RNP_20250924T103514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250924T083741_N0511_R064_T35RNP_20250924T103514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20251221T084401_N0511_R064_T35RNP_20251221T124111.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20251222T081351_N0511_R078_T36SYB_20251222T095909.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251130t094043c41s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251116T085431_N0511_R107_T36STG_20251116T103813.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-B",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20251221T084401_N0511_R064_T35RNP_20251221T124111.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260113T035121_N0511_R104_T47PNR_20260113T064318.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260316t110548c39s4001-C",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260317T095029_N0512_R079_T32RNS_20260317T134632.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250923T080701_N0511_R078_T36SYB_20250923T134018.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260316t110548c39s4001-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260317T095029_N0512_R079_T32RNS_20260317T134632.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260314T052651_N0512_R105_T43QBB_20260314T105213.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251227t102812c49s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250926T092231_N0511_R093_T34RCT_20250926T115412.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20260309T052639_N0512_R105_T43QBB_20260309T092006.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260316t110548c39s4001-C",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20260314T095051_N0512_R079_T32RNS_20260314T165715.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-K",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20260309T052639_N0512_R105_T43QCB_20260309T092006.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-K",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260314T052651_N0512_R105_T43QCB_20260314T105213.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-C",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20260311T024529_N0512_R132_T51TXM_20260311T064248.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20250118T035101_N0511_R104_T47PNR_20250118T065552.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20251216T025131_N0511_R132_T51TXM_20251216T060611.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260316t110548c39s4001-B",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20260314T095051_N0512_R079_T32RNS_20260314T165715.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260316T024531_N0512_R132_T51TXM_20260316T063610.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251224T081401_N0511_R078_T36SYB_20251224T115116.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20260314T034541_N0512_R104_T47PNR_20260314T091810.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20251010T034559_N0511_R104_T47PNR_20251010T072748.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260112t200407c49s4001-D",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20251124T185731_N0511_R113_T10SEH_20251124T211308.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20251222T081351_N0511_R078_T36SYB_20251222T095909.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-C",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260321T024539_N0512_R132_T51TXM_20260321T045840.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260316T024531_N0512_R132_T51TXM_20260316T063610.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-E",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260321T024539_N0512_R132_T51TXM_20260321T045840.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250319T034601_N0511_R104_T47PNR_20250319T090407.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260319T034529_N0512_R104_T47PNR_20260319T073036.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260321t184013c24s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20260317T172041_N0512_R012_T13RGQ_20260317T224816.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-B",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250321T024551_N0511_R132_T51TXM_20250321T064108.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260321t184013c24s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260322T171909_N0512_R012_T13RGQ_20260322T224451.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260321t184013c24s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20251217T172741_N0511_R012_T13RGQ_20251217T203910.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260523t085742c55s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250527T073631_N0511_R092_T40UDF_20250527T104713.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260523t085742c55s4001-B",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250527T073631_N0511_R092_T40UDF_20250527T104713.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260424t082511c52s4001-AW",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20260418T072321_N0512_R006_T40SBJ_20260418T104709.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260523t085742c55s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260522T073611_N0512_R092_T40UDF_20260522T105000.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260424t082511c52s4001-AW",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250421T071641_N0511_R006_T40SBJ_20250421T105406.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-C",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20260301T024529_N0512_R132_T51TXM_20260301T063617.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260523t085742c55s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260522T073611_N0512_R092_T40UDF_20260522T105000.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260321t184013c24s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250322T172031_N0511_R012_T13RGQ_20250322T224712.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260320t034213c66s4001-E",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20260204T024921_N0511_R132_T51TXM_20260204T054309.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260517t065449c86s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20260518T054251_N0512_R005_T43REQ_20260518T085615.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260520t185145c54s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20260512T173901_N0512_R098_T13SER_20260512T225415.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20260423T132229_N0512_R038_T23KKQ_20260423T153948.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    },
+    {
+      "plume_id": "emi20250623t095348p06019-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250320T100051_N0511_R122_T32RMV_20250320T160514.SAFE",
+      "error": "no alternate CDSE product or same-acquisition tile mosaic fully covers the 512 crop"
+    }
+  ]
+}

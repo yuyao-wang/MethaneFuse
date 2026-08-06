@@ -1,0 +1,1326 @@
+{
+  "records": 29,
+  "maximum_shift": 8,
+  "summary": {
+    "t0": {
+      "same_coordinate_correlation_median": 0.024403162259330955,
+      "best_correlation_median": 0.292104798835431,
+      "zero_shift_best": 1,
+      "best_shift_x_median": 3.0,
+      "best_shift_y_median": -4.0
+    },
+    "prev1": {
+      "same_coordinate_correlation_median": 0.9212457292578954,
+      "best_correlation_median": 1.0,
+      "zero_shift_best": 11,
+      "best_shift_x_median": 0.0,
+      "best_shift_y_median": 0.0
+    },
+    "prev2": {
+      "same_coordinate_correlation_median": 0.8132798733512037,
+      "best_correlation_median": 1.0,
+      "zero_shift_best": 12,
+      "best_shift_x_median": 0.0,
+      "best_shift_y_median": 0.0
+    },
+    "prev3": {
+      "same_coordinate_correlation_median": 0.9054574662452183,
+      "best_correlation_median": 1.0,
+      "zero_shift_best": 10,
+      "best_shift_x_median": 0.0,
+      "best_shift_y_median": 0.0
+    },
+    "seasonal": {
+      "same_coordinate_correlation_median": 0.3377157174761266,
+      "best_correlation_median": 1.0,
+      "zero_shift_best": 2,
+      "best_shift_x_median": -1.0,
+      "best_shift_y_median": 1.0
+    },
+    "year": {
+      "same_coordinate_correlation_median": 0.43894718622442036,
+      "best_correlation_median": 1.0,
+      "zero_shift_best": 2,
+      "best_shift_x_median": -1.0,
+      "best_shift_y_median": 1.0
+    }
+  },
+  "details": [
+    {
+      "plume_id": "GAO20240415t181759p0000-C",
+      "label": 1,
+      "crop_x": 241,
+      "crop_y": 238,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.0799577803258077,
+          "best_band11_correlation": 0.30170012149287123,
+          "best_shift_x": 6,
+          "best_shift_y": -1
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.9101227915557792,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 1
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": -0.2287924987574393,
+          "best_band11_correlation": 0.06540927455837213,
+          "best_shift_x": -8,
+          "best_shift_y": -8
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.9054574662452183,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.1827001116551671,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 4
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.35667247721386885,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 4
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-A",
+      "label": 1,
+      "crop_x": 238,
+      "crop_y": 242,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.17431852329630712,
+          "best_band11_correlation": 0.2216172679888427,
+          "best_shift_x": -1,
+          "best_shift_y": -8
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.09244561601521922,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -2,
+          "best_shift_y": 8
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.030888128943314108,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -2,
+          "best_shift_y": 8
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-B",
+      "label": 1,
+      "crop_x": 242,
+      "crop_y": 240,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.018304291220075587,
+          "best_band11_correlation": 0.3676615535921055,
+          "best_shift_x": 6,
+          "best_shift_y": -2
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": -0.019654053659375142,
+          "best_band11_correlation": 0.2248827399024818,
+          "best_shift_x": 3,
+          "best_shift_y": -5
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.40649097886895624,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 4,
+          "best_shift_y": -3
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.36304367135149995,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 4,
+          "best_shift_y": -3
+        }
+      }
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "label": 1,
+      "crop_x": 234,
+      "crop_y": 239,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.8902833996714317,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.8984820548504133,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": -0.24140898250238269,
+          "best_band11_correlation": 0.14144795948784236,
+          "best_shift_x": -8,
+          "best_shift_y": -8
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.9066587535287097,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.5867358121566273,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -3
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.6009723422489188,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -3
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-E",
+      "label": 1,
+      "crop_x": 236,
+      "crop_y": 237,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.08399716005087726,
+          "best_band11_correlation": 0.3953793542660957,
+          "best_shift_x": 6,
+          "best_shift_y": -7
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.9218953340460702,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.9098763292580883,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.893515697132162,
+          "best_band11_correlation": 0.9999999999999998,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.510848739140561,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 1,
+          "best_shift_y": -2
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.46805352452242677,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 1,
+          "best_shift_y": -2
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200728t174227p0000-A",
+      "label": 1,
+      "crop_x": 240,
+      "crop_y": 244,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.01083475416274297,
+          "best_band11_correlation": 0.22679788066944467,
+          "best_shift_x": -8,
+          "best_shift_y": 6
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": -0.002763908302384952,
+          "best_band11_correlation": 0.19209472188539953,
+          "best_shift_x": -8,
+          "best_shift_y": 6
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.0354849780568027,
+          "best_band11_correlation": 0.19645091183920346,
+          "best_shift_x": -7,
+          "best_shift_y": 6
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.3447536771248076,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 2,
+          "best_shift_y": 2
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.49104437376547866,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 2,
+          "best_shift_y": 2
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-C",
+      "label": 1,
+      "crop_x": 235,
+      "crop_y": 245,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.06426131853757543,
+          "best_band11_correlation": 0.26252855369508976,
+          "best_shift_x": 5,
+          "best_shift_y": -4
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.9212457292578954,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": -0.15780520572072515,
+          "best_band11_correlation": 0.06375440307665109,
+          "best_shift_x": -8,
+          "best_shift_y": -8
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.9191250504673334,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.6668658140123449,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": -4,
+          "best_shift_y": 1
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.6583594515971115,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -4,
+          "best_shift_y": 1
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-A",
+      "label": 1,
+      "crop_x": 242,
+      "crop_y": 245,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.0388820005504319,
+          "best_band11_correlation": 0.22990602688589268,
+          "best_shift_x": -1,
+          "best_shift_y": -6
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20230629t013516p01007-A",
+      "label": 1,
+      "crop_x": 239,
+      "crop_y": 242,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.02246280627447081,
+          "best_band11_correlation": 0.18186691091970092,
+          "best_shift_x": -1,
+          "best_shift_y": -8
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.1129162375562668,
+          "best_band11_correlation": 0.14123471892792486,
+          "best_shift_x": 1,
+          "best_shift_y": -7
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.04866538691741053,
+          "best_band11_correlation": 0.07711738299819283,
+          "best_shift_x": 5,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.8259264411695749,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 1,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.13555856097378324,
+          "best_band11_correlation": 0.9999999999999998,
+          "best_shift_x": -7,
+          "best_shift_y": 0
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.32267704458263274,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -7,
+          "best_shift_y": 0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-B",
+      "label": 1,
+      "crop_x": 241,
+      "crop_y": 242,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.030860980822540206,
+          "best_band11_correlation": 0.4198731987555439,
+          "best_shift_x": 6,
+          "best_shift_y": -6
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.6438223800401949,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 1,
+          "best_shift_y": 1
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.6737472839691253,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 1,
+          "best_shift_y": 1
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-C",
+      "label": 1,
+      "crop_x": 244,
+      "crop_y": 239,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.03730091891837906,
+          "best_band11_correlation": 0.4089221251298575,
+          "best_shift_x": 6,
+          "best_shift_y": -5
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.1939784953954726,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -6,
+          "best_shift_y": 3
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.30411739374834584,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -6,
+          "best_shift_y": 3
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240420t183810p0000-B",
+      "label": 1,
+      "crop_x": 237,
+      "crop_y": 244,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.5771758209421615,
+          "best_band11_correlation": -0.21964745164722652,
+          "best_shift_x": -8,
+          "best_shift_y": -8
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.6710002978838608,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -5
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.5998567713447294,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -5
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-B",
+      "label": 1,
+      "crop_x": 237,
+      "crop_y": 245,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.03972897013441991,
+          "best_band11_correlation": 0.3397846303159243,
+          "best_shift_x": 5,
+          "best_shift_y": -8
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.9999999999999999,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20241005t160604p11012-A",
+      "label": 1,
+      "crop_x": 242,
+      "crop_y": 237,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.14147324444829465,
+          "best_band11_correlation": 0.19252626847876655,
+          "best_shift_x": 7,
+          "best_shift_y": -7
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": -0.028905652350794828,
+          "best_band11_correlation": 0.2579348380327149,
+          "best_shift_x": -2,
+          "best_shift_y": 8
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": -0.01691529611250654,
+          "best_band11_correlation": 0.222511370879705,
+          "best_shift_x": -2,
+          "best_shift_y": 8
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": -0.23720722160814287,
+          "best_band11_correlation": 0.4713723164499942,
+          "best_shift_x": -5,
+          "best_shift_y": 8
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.04114926290506311,
+          "best_band11_correlation": 0.3713082068339679,
+          "best_shift_x": 8,
+          "best_shift_y": 8
+        }
+      }
+    },
+    {
+      "plume_id": "emi20231010t052236p04020-A",
+      "label": 1,
+      "crop_x": 245,
+      "crop_y": 244,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.13169524307653252,
+          "best_band11_correlation": 0.13730316770440643,
+          "best_shift_x": -8,
+          "best_shift_y": 8
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.7891008244302828,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.8132798733512037,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.807615932425834,
+          "best_band11_correlation": 0.9999999999999998,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.08927525020847099,
+          "best_band11_correlation": 0.20450250530414704,
+          "best_shift_x": -3,
+          "best_shift_y": 2
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.13515781802640173,
+          "best_band11_correlation": 0.25759657290136045,
+          "best_shift_x": -3,
+          "best_shift_y": 2
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-C",
+      "label": 1,
+      "crop_x": 241,
+      "crop_y": 234,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.19035636956848967,
+          "best_band11_correlation": 0.41188547281412097,
+          "best_shift_x": 5,
+          "best_shift_y": 5
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": -0.030551167132346662,
+          "best_band11_correlation": 0.18389059569893168,
+          "best_shift_x": -1,
+          "best_shift_y": 5
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": -0.01891930787159027,
+          "best_band11_correlation": 0.20217232355375822,
+          "best_shift_x": -1,
+          "best_shift_y": 5
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.32456288773100256,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -3,
+          "best_shift_y": 0
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.270146026069437,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -3,
+          "best_shift_y": 0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-A",
+      "label": 1,
+      "crop_x": 235,
+      "crop_y": 243,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.18270902001309489,
+          "best_band11_correlation": 0.2094501255642527,
+          "best_shift_x": -1,
+          "best_shift_y": -1
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.9420619103001736,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.2777945531156197,
+          "best_band11_correlation": 0.3890312964330333,
+          "best_shift_x": -8,
+          "best_shift_y": -8
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.9181994212979401,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.8479330343154267,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": -1,
+          "best_shift_y": 1
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.9083953813386944,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 1
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "label": 1,
+      "crop_x": 242,
+      "crop_y": 238,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.2459429510360881,
+          "best_band11_correlation": 0.3369132768066638,
+          "best_shift_x": -8,
+          "best_shift_y": -1
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.3494819777302496,
+          "best_band11_correlation": 0.6037771620122021,
+          "best_shift_x": -8,
+          "best_shift_y": 6
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.23995355022018477,
+          "best_band11_correlation": 0.32842289836514,
+          "best_shift_x": -8,
+          "best_shift_y": -1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.3377157174761266,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -8,
+          "best_shift_y": -3
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.2891306693096646,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -8,
+          "best_shift_y": -3
+        }
+      }
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "label": 1,
+      "crop_x": 237,
+      "crop_y": 245,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.22468464950173905,
+          "best_band11_correlation": 0.15090513749354448,
+          "best_shift_x": 8,
+          "best_shift_y": -8
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": -0.2574570770878555,
+          "best_band11_correlation": 0.14987327069947598,
+          "best_shift_x": 8,
+          "best_shift_y": -8
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.4284782385353379,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -3
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": -0.2483437351132513,
+          "best_band11_correlation": 0.14855129044786677,
+          "best_shift_x": 8,
+          "best_shift_y": -8
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.08954603651964015,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": -7,
+          "best_shift_y": 3
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.08522368629907441,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -7,
+          "best_shift_y": 3
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "label": 1,
+      "crop_x": 238,
+      "crop_y": 243,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.11326016233887558,
+          "best_band11_correlation": 0.33220654825532436,
+          "best_shift_x": 8,
+          "best_shift_y": 1
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.1064901070308901,
+          "best_band11_correlation": 0.3076142489553237,
+          "best_shift_x": 8,
+          "best_shift_y": 1
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.11907496317550187,
+          "best_band11_correlation": 0.3319192420230468,
+          "best_shift_x": 8,
+          "best_shift_y": 1
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.1199842133449667,
+          "best_band11_correlation": 0.3076867517166433,
+          "best_shift_x": 8,
+          "best_shift_y": 1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.6793480627761814,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 2,
+          "best_shift_y": -1
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.5707097335192185,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 2,
+          "best_shift_y": -1
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200724t155931p0000-A",
+      "label": 1,
+      "crop_x": 236,
+      "crop_y": 235,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.015369391114255867,
+          "best_band11_correlation": 0.07033251881752584,
+          "best_shift_x": 8,
+          "best_shift_y": 8
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": -0.006016978148620958,
+          "best_band11_correlation": 0.09033302355428209,
+          "best_shift_x": 8,
+          "best_shift_y": 8
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.9153427591260256,
+          "best_band11_correlation": 0.9999999999999998,
+          "best_shift_x": 0,
+          "best_shift_y": 1
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": -0.006912581711712979,
+          "best_band11_correlation": 0.09086974181782967,
+          "best_shift_x": 8,
+          "best_shift_y": 8
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.1586003914010565,
+          "best_band11_correlation": 0.9999999999999998,
+          "best_shift_x": 8,
+          "best_shift_y": 6
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.09754081274041303,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 8,
+          "best_shift_y": 6
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-D",
+      "label": 1,
+      "crop_x": 241,
+      "crop_y": 243,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.024403162259330955,
+          "best_band11_correlation": 0.30916701570557775,
+          "best_shift_x": 3,
+          "best_shift_y": -5
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.9999999999999999,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.20708919297996173,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 3,
+          "best_shift_y": 4
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.43894718622442036,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 3,
+          "best_shift_y": 4
+        }
+      }
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "label": 1,
+      "crop_x": 243,
+      "crop_y": 238,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.024981825191244426,
+          "best_band11_correlation": 0.1565773489547046,
+          "best_shift_x": 6,
+          "best_shift_y": -7
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.9999999999999998,
+          "best_band11_correlation": 0.9999999999999998,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.06298252717666925,
+          "best_band11_correlation": 0.29055888440411104,
+          "best_shift_x": -6,
+          "best_shift_y": 1
+        },
+        "year": {
+          "same_coordinate_band11_correlation": -0.045175521807247224,
+          "best_band11_correlation": 0.1512105464102917,
+          "best_shift_x": -2,
+          "best_shift_y": -5
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20201120t182953p0000-2",
+      "label": 1,
+      "crop_x": 236,
+      "crop_y": 243,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.1741607863505572,
+          "best_band11_correlation": 0.3248046632625483,
+          "best_shift_x": 8,
+          "best_shift_y": -5
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.17707746134919863,
+          "best_band11_correlation": 0.33558188608392087,
+          "best_shift_x": 8,
+          "best_shift_y": 5
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.17026393210279245,
+          "best_band11_correlation": 0.33225111607423463,
+          "best_shift_x": 8,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": -0.16821262426605588,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -3,
+          "best_shift_y": 7
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.07946014939019624,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": -3,
+          "best_shift_y": 7
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "label": 1,
+      "crop_x": 243,
+      "crop_y": 236,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.25239668630504153,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -5,
+          "best_shift_y": 0
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.10245665382829588,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -5,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.10897099967850603,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -5,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": -0.04458613850296374,
+          "best_band11_correlation": 0.1273469450664128,
+          "best_shift_x": 0,
+          "best_shift_y": -5
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.43948912006684604,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 5,
+          "best_shift_y": 7
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.47703279607596466,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 5,
+          "best_shift_y": 7
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "label": 1,
+      "crop_x": 239,
+      "crop_y": 234,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.24662953052586722,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -7,
+          "best_shift_y": 0
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.06265199301242803,
+          "best_band11_correlation": 0.27109984729718095,
+          "best_shift_x": 8,
+          "best_shift_y": 8
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.10587931874191192,
+          "best_band11_correlation": 0.26129177528904335,
+          "best_shift_x": 8,
+          "best_shift_y": 8
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.11284305656352722,
+          "best_band11_correlation": 0.20874534526260294,
+          "best_shift_x": 8,
+          "best_shift_y": 8
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.5754615849819618,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 3
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.5973728206705344,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 3
+        }
+      }
+    },
+    {
+      "plume_id": "emi20250608t011708p01008-L",
+      "label": 1,
+      "crop_x": 239,
+      "crop_y": 239,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.006235210558276288,
+          "best_band11_correlation": 0.2020360813231893,
+          "best_shift_x": 1,
+          "best_shift_y": 5
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.3155162097011436,
+          "best_band11_correlation": 0.41989622225836687,
+          "best_shift_x": -1,
+          "best_shift_y": -8
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.3805941936391769,
+          "best_band11_correlation": 0.4879935766925974,
+          "best_shift_x": -1,
+          "best_shift_y": -8
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.7995169771293077,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": -1
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": -0.26619017714481574,
+          "best_band11_correlation": 0.009944608723244255,
+          "best_shift_x": -8,
+          "best_shift_y": -5
+        },
+        "year": {
+          "same_coordinate_band11_correlation": -0.281612050765042,
+          "best_band11_correlation": 0.026451305051426423,
+          "best_shift_x": -8,
+          "best_shift_y": -4
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-D",
+      "label": 1,
+      "crop_x": 237,
+      "crop_y": 238,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": 0.20050491532510487,
+          "best_band11_correlation": 0.292104798835431,
+          "best_shift_x": -2,
+          "best_shift_y": 5
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 0.9468546053207444,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 1,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 0.2959526941270263,
+          "best_band11_correlation": 0.3240694027254073,
+          "best_shift_x": -1,
+          "best_shift_y": -1
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 0.9196331347792042,
+          "best_band11_correlation": 0.9999999999999999,
+          "best_shift_x": 1,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.8123190478668805,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 1
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.9058190514334593,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": -1,
+          "best_shift_y": 1
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-D",
+      "label": 1,
+      "crop_x": 245,
+      "crop_y": 243,
+      "timepoints": {
+        "t0": {
+          "same_coordinate_band11_correlation": -0.1000942243382732,
+          "best_band11_correlation": 0.2808060836580109,
+          "best_shift_x": 3,
+          "best_shift_y": -6
+        },
+        "prev1": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev2": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "prev3": {
+          "same_coordinate_band11_correlation": 1.0,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 0,
+          "best_shift_y": 0
+        },
+        "seasonal": {
+          "same_coordinate_band11_correlation": 0.32456447309141273,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 3,
+          "best_shift_y": 3
+        },
+        "year": {
+          "same_coordinate_band11_correlation": 0.6267823011934934,
+          "best_band11_correlation": 1.0,
+          "best_shift_x": 3,
+          "best_shift_y": 3
+        }
+      }
+    }
+  ]
+}

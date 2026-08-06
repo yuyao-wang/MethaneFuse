@@ -1,0 +1,44 @@
+{
+  "csv": "Upgraded_dataset/s2_historical_bounds_native_v9/geometry_gate_high640.csv",
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/s2/ckpt_best_test.pth",
+  "checkpoint_epoch": 3,
+  "rows": 6000,
+  "labels": {
+    "0": 3000,
+    "1": 3000
+  },
+  "path_columns": [
+    "path_t0",
+    "path_seasonal",
+    "path_year"
+  ],
+  "band_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "mask_band_indices": [],
+  "raw_dn_add": 0,
+  "raw_dn_add_columns": [],
+  "raw_dn_add_bands": [],
+  "metrics": {
+    "accuracy": 0.5398333333333334,
+    "f1": 0.6447960890261161,
+    "auroc": 0.5905425555555556,
+    "recall": 0.8353333333333334,
+    "fpr": 0.7556666666666667,
+    "tp": 2506,
+    "tn": 733,
+    "fp": 2267,
+    "fn": 494
+  }
+}

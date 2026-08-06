@@ -1,0 +1,37 @@
+{
+  "common": {
+    "python": "/home/yuyao/miniconda3/envs/panopticon/bin/python",
+    "queue_script": "/home/yuyao/panopticon/Upgraded_dataset/run_s2_convergence_queue.py",
+    "train_script": "/home/yuyao/panopticon/Upgraded_dataset/dino_classifier_head_s2_legacy360_repro.py",
+    "weights": "/home/yuyao/panopticon/weights/panopticon_vitb14_teacher.pth",
+    "max_epochs": 10,
+    "min_epoch": 8,
+    "patience": 2,
+    "min_delta": 0.001,
+    "early_stop_metric": "test_auroc",
+    "batch_size": 32,
+    "num_workers": 4
+  },
+  "stages": [
+    {
+      "name": "priority2_newgee_native36_event_disjoint",
+      "side": "gee",
+      "split_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits",
+      "checkpoint_root": "/transferdiniu2/yuyao/checkpoints/s2_sampling_contract_36_20260729/newgee_native36",
+      "result_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/sampling_contract_36_20260729/newgee_native36",
+      "run_prefix": "s2_sampling_contract_newgee_native36_seed20260729",
+      "splits": ["event_disjoint_80_20"],
+      "seed": 20260729,
+      "contract_downsample_size": 36
+    },
+    {
+      "name": "priority3_resume_newgee_raw_row_then_event",
+      "side": "gee",
+      "split_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits",
+      "checkpoint_root": "/transferdiniu2/yuyao/checkpoints/s2_legacy360_matched_gee_reproduction_20260728",
+      "result_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/reproduction_results",
+      "run_prefix": "s2_legacy360_matched_gee",
+      "splits": ["row_random_80_20", "event_disjoint_80_20"]
+    }
+  ]
+}

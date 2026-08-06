@@ -1,0 +1,201 @@
+{
+  "failed_product_groups": 240,
+  "failed_tasks": 484,
+  "locally_repaired_tasks": 462,
+  "product_root_counts": {
+    "/diniuvol/yuyao/s2_cdse_point_repair_cache": 6,
+    "/diniuvol/yuyao/s2_early_boundary_products": 2,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/data_download/raw_data_dir_s2": 4680,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/data_download/raw_data_dir_s2_-7": 919,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/raw_data_dir_S2": 3839,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/raw_data_dir_s2_90360": 10612,
+    "/mnt/engg-niulab/yuyao/sensors_raw_data/S2/raw_data_dir_s2": 4329
+  },
+  "repair_status_counts": {
+    "local_mosaic_repaired": 24,
+    "local_point_repaired": 438
+  },
+  "unresolved_examples": [
+    {
+      "latitude": 39.65596768,
+      "longitude": -80.14917301,
+      "plume_id": "GAO20210521t155242p0000-2",
+      "product_id": "c12b8411-e688-4fe8-a2d7-f0b856a004c7",
+      "product_name": "S2A_MSIL2A_20210518T155901_N0500_R097_T17TNE_20230219T122354.SAFE",
+      "row_index": 376,
+      "timepoint": "prev1"
+    },
+    {
+      "latitude": 39.65596768,
+      "longitude": -80.14917301,
+      "plume_id": "GAO20210521t155242p0000-2",
+      "product_id": "c12b8411-e688-4fe8-a2d7-f0b856a004c7",
+      "product_name": "S2A_MSIL2A_20210518T155901_N0500_R097_T17TNE_20230219T122354.SAFE",
+      "row_index": 376,
+      "timepoint": "prev2"
+    },
+    {
+      "latitude": 32.514511074401966,
+      "longitude": 36.11133836657885,
+      "plume_id": "emi20230424t090806p06011-A",
+      "product_id": "1a69698e-e726-4d5d-90c3-008c50b41569",
+      "product_name": "S2B_MSIL2A_20230425T081609_N0510_R121_T36SYA_20240903T225306.SAFE",
+      "row_index": 1064,
+      "timepoint": "t0"
+    },
+    {
+      "latitude": 32.514511074401966,
+      "longitude": 36.11133836657885,
+      "plume_id": "emi20230424t090806p06011-A",
+      "product_id": "1a69698e-e726-4d5d-90c3-008c50b41569",
+      "product_name": "S2B_MSIL2A_20230425T081609_N0510_R121_T36SYA_20240903T225306.SAFE",
+      "row_index": 1064,
+      "timepoint": "prev1"
+    },
+    {
+      "latitude": 32.514511074401966,
+      "longitude": 36.11133836657885,
+      "plume_id": "emi20230424t090806p06011-A",
+      "product_id": "edc97591-d161-457f-b967-4f60c55362bf",
+      "product_name": "S2A_MSIL2A_20230420T081601_N0510_R121_T37SBR_20240901T210108.SAFE",
+      "row_index": 1064,
+      "timepoint": "prev3"
+    },
+    {
+      "latitude": 32.512833032757285,
+      "longitude": 36.11585638495691,
+      "plume_id": "emi20230926t114143p08041-A",
+      "product_id": "aec24be7-dbde-42fc-b9b4-87bf03948da1",
+      "product_name": "S2A_MSIL2A_20230626T080611_N0510_R078_T37SBR_20240917T070423.SAFE",
+      "row_index": 1075,
+      "timepoint": "seasonal"
+    },
+    {
+      "latitude": 14.05820850688808,
+      "longitude": 99.96208667354983,
+      "plume_id": "emi20240417t080011p05030-A",
+      "product_id": "e3adb088-d976-45fa-b7d2-e3bd1391d1f8",
+      "product_name": "S2B_MSIL2A_20240418T034539_N0510_R104_T47PPR_20240418T064256.SAFE",
+      "row_index": 1085,
+      "timepoint": "t0"
+    },
+    {
+      "latitude": 14.05820850688808,
+      "longitude": 99.96208667354983,
+      "plume_id": "emi20240417t080011p05030-A",
+      "product_id": "e3adb088-d976-45fa-b7d2-e3bd1391d1f8",
+      "product_name": "S2B_MSIL2A_20240418T034539_N0510_R104_T47PPR_20240418T064256.SAFE",
+      "row_index": 1085,
+      "timepoint": "prev1"
+    },
+    {
+      "latitude": 14.05820850688808,
+      "longitude": 99.96208667354983,
+      "plume_id": "emi20240417t080011p05030-A",
+      "product_id": "8b5ebdd3-8084-4b1a-b17d-a83258853da1",
+      "product_name": "S2A_MSIL2A_20240413T034541_N0510_R104_T47PPR_20240413T093951.SAFE",
+      "row_index": 1085,
+      "timepoint": "prev3"
+    },
+    {
+      "latitude": 38.734743924215024,
+      "longitude": 64.61759710967905,
+      "plume_id": "emi20240625t051438p04015-B",
+      "product_id": "6ddf70bc-f9df-4c32-85a5-dd9806fdc492",
+      "product_name": "S2B_MSIL2A_20240615T062629_N0510_R077_T41SPD_20240615T080910.SAFE",
+      "row_index": 1086,
+      "timepoint": "prev3"
+    },
+    {
+      "latitude": 32.40858543342556,
+      "longitude": -116.74371604340688,
+      "plume_id": "emi20240805t172803p12003-A",
+      "product_id": "c35587a9-9b73-4eda-a15a-dca6235f238d",
+      "product_name": "S2A_MSIL2A_20240805T184101_N0511_R027_T11SNS_20240806T012051.SAFE",
+      "row_index": 1092,
+      "timepoint": "t0"
+    },
+    {
+      "latitude": 32.40858543342556,
+      "longitude": -116.74371604340688,
+      "plume_id": "emi20240805t172803p12003-A",
+      "product_id": "c35587a9-9b73-4eda-a15a-dca6235f238d",
+      "product_name": "S2A_MSIL2A_20240805T184101_N0511_R027_T11SNS_20240806T012051.SAFE",
+      "row_index": 1092,
+      "timepoint": "prev1"
+    },
+    {
+      "latitude": 32.40858543342556,
+      "longitude": -116.74371604340688,
+      "plume_id": "emi20240805t172803p12003-A",
+      "product_id": "c99c673d-a6e6-491c-bf8d-00d2becba192",
+      "product_name": "S2B_MSIL2A_20240731T182919_N0511_R027_T11SNS_20240731T220220.SAFE",
+      "row_index": 1092,
+      "timepoint": "prev3"
+    },
+    {
+      "latitude": 32.40858543342556,
+      "longitude": -116.74371604340688,
+      "plume_id": "emi20240805t172803p12003-A",
+      "product_id": "09a02ce6-ed7b-471e-a08b-5bcf895087fe",
+      "product_name": "S2B_MSIL2A_20230806T182919_N0510_R027_T11SNS_20241021T054204.SAFE",
+      "row_index": 1092,
+      "timepoint": "year"
+    },
+    {
+      "latitude": 31.082025077535377,
+      "longitude": 8.033163531593175,
+      "plume_id": "emi20250623t095348p06019-A",
+      "product_id": "c8384aa8-415a-45b5-87e2-55373e7d96bd",
+      "product_name": "S2A_MSIL2A_20240626T101031_N0510_R022_T32RLV_20240626T174950.SAFE",
+      "row_index": 1105,
+      "timepoint": "year"
+    },
+    {
+      "latitude": 53.15224299537721,
+      "longitude": 143.25384950354163,
+      "plume_id": "tan20250222t015145c00s4001-A",
+      "product_id": "3d4573ef-25bd-47e6-8adb-6c30a6aedad6",
+      "product_name": "S2B_MSIL2A_20250124T013849_N0511_R117_T54UXE_20250124T031123.SAFE",
+      "row_index": 1117,
+      "timepoint": "prev1"
+    },
+    {
+      "latitude": 53.15224299537721,
+      "longitude": 143.25384950354163,
+      "plume_id": "tan20250222t015145c00s4001-A",
+      "product_id": "fc6b1763-3260-4acf-856d-02190f8ebe64",
+      "product_name": "S2B_MSIL2A_20240120T013959_N0510_R117_T54UXE_20240120T032333.SAFE",
+      "row_index": 1117,
+      "timepoint": "year"
+    },
+    {
+      "latitude": 25.98310333348408,
+      "longitude": -109.02150095005804,
+      "plume_id": "tan20250223t182611c00s4001-B",
+      "product_id": "28961747-7cfc-4b54-8125-62c656ee872d",
+      "product_name": "S2B_MSIL2A_20250221T174249_N0511_R098_T12RYP_20250221T223817.SAFE",
+      "row_index": 1118,
+      "timepoint": "prev1"
+    },
+    {
+      "latitude": 32.51263019173797,
+      "longitude": 36.11250214352816,
+      "plume_id": "tan20250709t085527c89s4001-A",
+      "product_id": "e2c4ce1f-3d3e-4f45-a3c9-564409c23948",
+      "product_name": "S2C_MSIL2A_20250409T081631_N0511_R121_T37SBR_20250409T135659.SAFE",
+      "row_index": 1139,
+      "timepoint": "seasonal"
+    },
+    {
+      "latitude": 32.51095161611411,
+      "longitude": 36.12043691694399,
+      "plume_id": "tan20250709t085527c89s4001-B",
+      "product_id": "e2c4ce1f-3d3e-4f45-a3c9-564409c23948",
+      "product_name": "S2C_MSIL2A_20250409T081631_N0511_R121_T37SBR_20250409T135659.SAFE",
+      "row_index": 1140,
+      "timepoint": "seasonal"
+    }
+  ],
+  "unresolved_tasks": 22
+}

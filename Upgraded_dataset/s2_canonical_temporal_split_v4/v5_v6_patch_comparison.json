@@ -1,0 +1,17 @@
+{
+  "band8_changed_files": 10893,
+  "band9_changed_files": 10887,
+  "comparison_error_examples": [],
+  "comparison_errors": 0,
+  "metadata_differences": 0,
+  "new_band8_nonzero_files": 11976,
+  "new_band9_nonzero_files": 11970,
+  "new_only_keys": 0,
+  "new_rows": 154045,
+  "old_band8_nonzero_files": 1083,
+  "old_band9_nonzero_files": 1083,
+  "old_only_keys": 0,
+  "old_rows": 154045,
+  "sampled_image_pairs": 12000,
+  "sampled_rows": 2000
+}

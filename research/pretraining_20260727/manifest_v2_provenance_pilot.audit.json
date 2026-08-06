@@ -1,0 +1,4861 @@
+{
+  "embedded_emit_probe": {
+    "alias_assignment_warning": "stable_first_slot_for_audit_only is not a production alias_of decision; intended target-time metadata must be frozen first",
+    "duplicate_source_npz_groups": [
+      {
+        "plume_id": "emi20230405t190335p13004-A",
+        "slots": [
+          "prev2",
+          "prev3"
+        ],
+        "source_npz": "/mnt/engg-niulab/yuyao/sensors_raw_data/EMIT/prev3/emi20230405t190335p13004-A/emit_ch4_32.npz"
+      }
+    ],
+    "large_npz_array_read_calls": 0,
+    "netcdf_array_read_calls": 0,
+    "npz_scalar_uncompressed_bytes_read": 6192,
+    "provenance_conflict_count": 1,
+    "raster_pixel_read_calls": 0,
+    "requested_ids_missing_from_wide_manifest": [],
+    "requested_plume_ids": [
+      "emi20230405t190335p13004-A"
+    ],
+    "selection_is_explicit_not_random": true,
+    "slot_records": 6,
+    "status_counts": {
+      "provenance_conflict": 1,
+      "verified": 5
+    },
+    "verified_observation_alias_groups": [
+      {
+        "all_slots_verified": false,
+        "extra_slots": [
+          "prev3"
+        ],
+        "observation_key": "EMIT_L2A_RFL_001_20230328T221308_2308715_003",
+        "plume_id": "emi20230405t190335p13004-A",
+        "slots": [
+          "prev2",
+          "prev3"
+        ],
+        "stable_first_slot_for_audit_only": "prev2"
+      },
+      {
+        "all_slots_verified": true,
+        "extra_slots": [
+          "year"
+        ],
+        "observation_key": "EMIT_L2A_RFL_001_20220828T174353_2224012_006",
+        "plume_id": "emi20230405t190335p13004-A",
+        "slots": [
+          "seasonal",
+          "year"
+        ],
+        "stable_first_slot_for_audit_only": "seasonal"
+      }
+    ]
+  },
+  "io_contract": {
+    "emit_npz": "granule_id.npy and source_nc.npy only, each size-capped",
+    "emit_tiff": "header/default tags only; dataset.read never called",
+    "netcdf_arrays_read": false,
+    "raster_pixels_read": false,
+    "task_and_validation_inputs": "CSV metadata read",
+    "wide_manifest": "sequential CSV metadata read"
+  },
+  "legacy_emit_pipeline": {
+    "exists": true,
+    "path": "/home/yuyao/methane_train/Upgrade_data_pipeline/code/EMIT_preprocess/emit_6time_preprocess.py",
+    "sha256": "52b35553d03b3fb01f093b3f75097601461ccbec1bdaa8179d8c687c079581a3",
+    "size_bytes": 29498
+  },
+  "mode": "read_only_metadata_audit",
+  "no_materialization_or_training": true,
+  "output_probe_csv": "research/pretraining_20260727/manifest_v2_provenance_pilot.emit_probe.csv",
+  "output_probe_csv_sha256": "83a4e307cc09e77b2379bd78c1bfdade44f72474d81b8190c9b238b95b0a1f59",
+  "production_crop_authorized": false,
+  "remaining_blockers": [
+    "v2 execution/query-coverage columns are not materialized",
+    "full-table embedded provenance is unaudited; this pilot probes only explicitly named EMIT plume IDs",
+    "query any-valid smoke metadata lacks per-channel validity and frozen usable-threshold decisions",
+    "canonical alias_of selection needs explicit intended target times for every sensor/time slot",
+    "at least one embedded/manifest provenance conflict must be repaired or quarantined",
+    "78 EMIT slots have manifest acquisition times inconsistent with their product IDs",
+    "current task pilot is not stratified across both labels and all train/val/test splits"
+  ],
+  "schema_version": "methanefuse_manifest_v2_provenance_audit_v1",
+  "script": {
+    "exists": true,
+    "path": "/home/yuyao/panopticon/research/pretraining_20260727/audit_manifest_v2_provenance.py",
+    "sha256": "283f5ee0ecd3acab48363d0e228d7f86bccf0b415104c638e4cc1638411d261c",
+    "size_bytes": 49787
+  },
+  "task_manifests": [
+    {
+      "available_sensor_pattern_counts": {
+        "s2|l89": 2,
+        "s2|l89|emit|s5p": 2
+      },
+      "column_count": 125,
+      "duplicate_task_id_rows": 0,
+      "explicit_v2_query_current_sensor_mask_present": false,
+      "input": {
+        "exists": true,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/manifests/unified_crop_tasks_smoke_partial.csv",
+        "sha256": "99883cd27c72f6561760d0710eb7ffe1af1d624d1554db31ddb16f816f290a3f",
+        "size_bytes": 18884
+      },
+      "label_counts": {
+        "0": 2,
+        "1": 2
+      },
+      "label_present": true,
+      "legacy_sensor_presence_mask_present": true,
+      "pairwise_event_group_overlap": {
+        "train_test": 0,
+        "train_val": 0,
+        "val_test": 0
+      },
+      "rows": 4,
+      "schema_version_column_present": true,
+      "split_counts": {
+        "train": 4
+      },
+      "task_id_present": true,
+      "unique_task_ids": 4
+    }
+  ],
+  "v2_schema_readiness": {
+    "fields": {
+      "coverage_config_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "eligible_fused_current_classification": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_current_usable": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_num_unique_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_num_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_acquisition_time": {
+        "column": "emit_prev1_image_time",
+        "status": "compatibility_alias"
+      },
+      "emit_prev1_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_product_id": {
+        "column": "emit_prev1_product_id",
+        "status": "direct"
+      },
+      "emit_prev1_source_exists": {
+        "column": "emit_prev1_exists",
+        "status": "compatibility_alias"
+      },
+      "emit_prev1_source_path": {
+        "column": "emit_prev1_path",
+        "status": "compatibility_alias"
+      },
+      "emit_prev1_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev1_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_acquisition_time": {
+        "column": "emit_prev2_image_time",
+        "status": "compatibility_alias"
+      },
+      "emit_prev2_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_product_id": {
+        "column": "emit_prev2_product_id",
+        "status": "direct"
+      },
+      "emit_prev2_source_exists": {
+        "column": "emit_prev2_exists",
+        "status": "compatibility_alias"
+      },
+      "emit_prev2_source_path": {
+        "column": "emit_prev2_path",
+        "status": "compatibility_alias"
+      },
+      "emit_prev2_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev2_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_acquisition_time": {
+        "column": "emit_prev3_image_time",
+        "status": "compatibility_alias"
+      },
+      "emit_prev3_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_product_id": {
+        "column": "emit_prev3_product_id",
+        "status": "direct"
+      },
+      "emit_prev3_source_exists": {
+        "column": "emit_prev3_exists",
+        "status": "compatibility_alias"
+      },
+      "emit_prev3_source_path": {
+        "column": "emit_prev3_path",
+        "status": "compatibility_alias"
+      },
+      "emit_prev3_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_prev3_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_query_any_valid_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_query_unique_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_query_usable_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_acquisition_time": {
+        "column": "emit_seasonal_image_time",
+        "status": "compatibility_alias"
+      },
+      "emit_seasonal_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_product_id": {
+        "column": "emit_seasonal_product_id",
+        "status": "direct"
+      },
+      "emit_seasonal_source_exists": {
+        "column": "emit_seasonal_exists",
+        "status": "compatibility_alias"
+      },
+      "emit_seasonal_source_path": {
+        "column": "emit_seasonal_path",
+        "status": "compatibility_alias"
+      },
+      "emit_seasonal_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_seasonal_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_source_path_time_mask": {
+        "column": "emit_source_time_presence_mask",
+        "status": "compatibility_alias"
+      },
+      "emit_ssl_current_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_ssl_temporal_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_acquisition_time": {
+        "column": "emit_t0_image_time",
+        "status": "compatibility_alias"
+      },
+      "emit_t0_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_product_id": {
+        "column": "emit_t0_product_id",
+        "status": "direct"
+      },
+      "emit_t0_source_exists": {
+        "column": "emit_t0_exists",
+        "status": "compatibility_alias"
+      },
+      "emit_t0_source_path": {
+        "column": "emit_t0_path",
+        "status": "compatibility_alias"
+      },
+      "emit_t0_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_t0_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_acquisition_time": {
+        "column": "emit_year_image_time",
+        "status": "compatibility_alias"
+      },
+      "emit_year_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_product_id": {
+        "column": "emit_year_product_id",
+        "status": "direct"
+      },
+      "emit_year_source_exists": {
+        "column": "emit_year_exists",
+        "status": "compatibility_alias"
+      },
+      "emit_year_source_path": {
+        "column": "emit_year_path",
+        "status": "compatibility_alias"
+      },
+      "emit_year_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "emit_year_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "event_group_id": {
+        "column": "event_group_id",
+        "status": "direct"
+      },
+      "execution_status": {
+        "column": "execution_status",
+        "status": "direct"
+      },
+      "l89_current_usable": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_num_unique_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_num_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_acquisition_time": {
+        "column": "l89_prev1_image_time",
+        "status": "compatibility_alias"
+      },
+      "l89_prev1_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_product_id": {
+        "column": "l89_prev1_overpass_key",
+        "status": "compatibility_alias"
+      },
+      "l89_prev1_source_exists": {
+        "column": "l89_prev1_exists",
+        "status": "compatibility_alias"
+      },
+      "l89_prev1_source_path": {
+        "column": "l89_prev1_path",
+        "status": "compatibility_alias"
+      },
+      "l89_prev1_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev1_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_acquisition_time": {
+        "column": "l89_prev2_image_time",
+        "status": "compatibility_alias"
+      },
+      "l89_prev2_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_product_id": {
+        "column": "l89_prev2_overpass_key",
+        "status": "compatibility_alias"
+      },
+      "l89_prev2_source_exists": {
+        "column": "l89_prev2_exists",
+        "status": "compatibility_alias"
+      },
+      "l89_prev2_source_path": {
+        "column": "l89_prev2_path",
+        "status": "compatibility_alias"
+      },
+      "l89_prev2_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev2_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_acquisition_time": {
+        "column": "l89_prev3_image_time",
+        "status": "compatibility_alias"
+      },
+      "l89_prev3_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_product_id": {
+        "column": "l89_prev3_overpass_key",
+        "status": "compatibility_alias"
+      },
+      "l89_prev3_source_exists": {
+        "column": "l89_prev3_exists",
+        "status": "compatibility_alias"
+      },
+      "l89_prev3_source_path": {
+        "column": "l89_prev3_path",
+        "status": "compatibility_alias"
+      },
+      "l89_prev3_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_prev3_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_query_any_valid_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_query_unique_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_query_usable_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_acquisition_time": {
+        "column": "l89_seasonal_image_time",
+        "status": "compatibility_alias"
+      },
+      "l89_seasonal_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_product_id": {
+        "column": "l89_seasonal_overpass_key",
+        "status": "compatibility_alias"
+      },
+      "l89_seasonal_source_exists": {
+        "column": "l89_seasonal_exists",
+        "status": "compatibility_alias"
+      },
+      "l89_seasonal_source_path": {
+        "column": "l89_seasonal_path",
+        "status": "compatibility_alias"
+      },
+      "l89_seasonal_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_seasonal_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_source_path_time_mask": {
+        "column": "l89_source_time_presence_mask",
+        "status": "compatibility_alias"
+      },
+      "l89_ssl_current_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_ssl_temporal_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_acquisition_time": {
+        "column": "l89_t0_image_time",
+        "status": "compatibility_alias"
+      },
+      "l89_t0_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_product_id": {
+        "column": "l89_t0_overpass_key",
+        "status": "compatibility_alias"
+      },
+      "l89_t0_source_exists": {
+        "column": "l89_t0_exists",
+        "status": "compatibility_alias"
+      },
+      "l89_t0_source_path": {
+        "column": "l89_t0_path",
+        "status": "compatibility_alias"
+      },
+      "l89_t0_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_t0_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_acquisition_time": {
+        "column": "l89_year_image_time",
+        "status": "compatibility_alias"
+      },
+      "l89_year_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_product_id": {
+        "column": "l89_year_overpass_key",
+        "status": "compatibility_alias"
+      },
+      "l89_year_source_exists": {
+        "column": "l89_year_exists",
+        "status": "compatibility_alias"
+      },
+      "l89_year_source_path": {
+        "column": "l89_year_path",
+        "status": "compatibility_alias"
+      },
+      "l89_year_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "l89_year_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "label": {
+        "column": "label",
+        "status": "direct"
+      },
+      "missingness_policy_version": {
+        "column": "",
+        "status": "missing"
+      },
+      "plume_id": {
+        "column": "plume_id",
+        "status": "direct"
+      },
+      "query_center_latitude": {
+        "column": "query_center_latitude",
+        "status": "direct"
+      },
+      "query_center_longitude": {
+        "column": "query_center_longitude",
+        "status": "direct"
+      },
+      "query_current_sensor_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "query_usable_anytime_sensor_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_current_usable": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_num_unique_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_num_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_acquisition_time": {
+        "column": "s2_prev1_image_time",
+        "status": "compatibility_alias"
+      },
+      "s2_prev1_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_product_id": {
+        "column": "s2_prev1_product_id",
+        "status": "direct"
+      },
+      "s2_prev1_source_exists": {
+        "column": "s2_prev1_exists",
+        "status": "compatibility_alias"
+      },
+      "s2_prev1_source_path": {
+        "column": "s2_prev1_path",
+        "status": "compatibility_alias"
+      },
+      "s2_prev1_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev1_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_acquisition_time": {
+        "column": "s2_prev2_image_time",
+        "status": "compatibility_alias"
+      },
+      "s2_prev2_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_product_id": {
+        "column": "s2_prev2_product_id",
+        "status": "direct"
+      },
+      "s2_prev2_source_exists": {
+        "column": "s2_prev2_exists",
+        "status": "compatibility_alias"
+      },
+      "s2_prev2_source_path": {
+        "column": "s2_prev2_path",
+        "status": "compatibility_alias"
+      },
+      "s2_prev2_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev2_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_acquisition_time": {
+        "column": "s2_prev3_image_time",
+        "status": "compatibility_alias"
+      },
+      "s2_prev3_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_product_id": {
+        "column": "s2_prev3_product_id",
+        "status": "direct"
+      },
+      "s2_prev3_source_exists": {
+        "column": "s2_prev3_exists",
+        "status": "compatibility_alias"
+      },
+      "s2_prev3_source_path": {
+        "column": "s2_prev3_path",
+        "status": "compatibility_alias"
+      },
+      "s2_prev3_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_prev3_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_query_any_valid_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_query_unique_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_query_usable_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_acquisition_time": {
+        "column": "s2_seasonal_image_time",
+        "status": "compatibility_alias"
+      },
+      "s2_seasonal_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_product_id": {
+        "column": "s2_seasonal_product_id",
+        "status": "direct"
+      },
+      "s2_seasonal_source_exists": {
+        "column": "s2_seasonal_exists",
+        "status": "compatibility_alias"
+      },
+      "s2_seasonal_source_path": {
+        "column": "s2_seasonal_path",
+        "status": "compatibility_alias"
+      },
+      "s2_seasonal_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_seasonal_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_source_path_time_mask": {
+        "column": "s2_source_time_presence_mask",
+        "status": "compatibility_alias"
+      },
+      "s2_ssl_current_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_ssl_temporal_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_acquisition_time": {
+        "column": "s2_t0_image_time",
+        "status": "compatibility_alias"
+      },
+      "s2_t0_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_product_id": {
+        "column": "s2_t0_product_id",
+        "status": "direct"
+      },
+      "s2_t0_source_exists": {
+        "column": "s2_t0_exists",
+        "status": "compatibility_alias"
+      },
+      "s2_t0_source_path": {
+        "column": "s2_t0_path",
+        "status": "compatibility_alias"
+      },
+      "s2_t0_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_t0_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_acquisition_time": {
+        "column": "s2_year_image_time",
+        "status": "compatibility_alias"
+      },
+      "s2_year_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_product_id": {
+        "column": "s2_year_product_id",
+        "status": "direct"
+      },
+      "s2_year_source_exists": {
+        "column": "s2_year_exists",
+        "status": "compatibility_alias"
+      },
+      "s2_year_source_path": {
+        "column": "s2_year_path",
+        "status": "compatibility_alias"
+      },
+      "s2_year_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s2_year_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_current_usable": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_num_unique_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_num_usable_times": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_acquisition_time": {
+        "column": "s5p_prev1_image_time",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev1_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_product_id": {
+        "column": "s5p_prev1_product_id",
+        "status": "direct"
+      },
+      "s5p_prev1_source_exists": {
+        "column": "s5p_prev1_exists",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev1_source_path": {
+        "column": "s5p_prev1_path",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev1_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev1_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_acquisition_time": {
+        "column": "s5p_prev2_image_time",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev2_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_product_id": {
+        "column": "s5p_prev2_product_id",
+        "status": "direct"
+      },
+      "s5p_prev2_source_exists": {
+        "column": "s5p_prev2_exists",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev2_source_path": {
+        "column": "s5p_prev2_path",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev2_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev2_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_acquisition_time": {
+        "column": "s5p_prev3_image_time",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev3_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_product_id": {
+        "column": "s5p_prev3_product_id",
+        "status": "direct"
+      },
+      "s5p_prev3_source_exists": {
+        "column": "s5p_prev3_exists",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev3_source_path": {
+        "column": "s5p_prev3_path",
+        "status": "compatibility_alias"
+      },
+      "s5p_prev3_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_prev3_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_query_any_valid_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_query_unique_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_query_usable_time_mask": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_acquisition_time": {
+        "column": "s5p_seasonal_image_time",
+        "status": "compatibility_alias"
+      },
+      "s5p_seasonal_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_product_id": {
+        "column": "s5p_seasonal_product_id",
+        "status": "direct"
+      },
+      "s5p_seasonal_source_exists": {
+        "column": "s5p_seasonal_exists",
+        "status": "compatibility_alias"
+      },
+      "s5p_seasonal_source_path": {
+        "column": "s5p_seasonal_path",
+        "status": "compatibility_alias"
+      },
+      "s5p_seasonal_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_seasonal_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_source_path_time_mask": {
+        "column": "s5p_source_time_presence_mask",
+        "status": "compatibility_alias"
+      },
+      "s5p_ssl_current_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_ssl_temporal_eligible": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_acquisition_time": {
+        "column": "s5p_t0_image_time",
+        "status": "compatibility_alias"
+      },
+      "s5p_t0_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_product_id": {
+        "column": "s5p_t0_product_id",
+        "status": "direct"
+      },
+      "s5p_t0_source_exists": {
+        "column": "s5p_t0_exists",
+        "status": "compatibility_alias"
+      },
+      "s5p_t0_source_path": {
+        "column": "s5p_t0_path",
+        "status": "compatibility_alias"
+      },
+      "s5p_t0_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_t0_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_acquisition_time": {
+        "column": "s5p_year_image_time",
+        "status": "compatibility_alias"
+      },
+      "s5p_year_alias_of": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_crop_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_crop_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_crop_status": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_observation_key": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_product_id": {
+        "column": "s5p_year_product_id",
+        "status": "direct"
+      },
+      "s5p_year_source_exists": {
+        "column": "s5p_year_exists",
+        "status": "compatibility_alias"
+      },
+      "s5p_year_source_path": {
+        "column": "s5p_year_path",
+        "status": "compatibility_alias"
+      },
+      "s5p_year_total_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_valid_elements_by_channel": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_valid_reference_fraction": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_valid_reference_pixels": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_validity_path": {
+        "column": "",
+        "status": "missing"
+      },
+      "s5p_year_validity_sha256": {
+        "column": "",
+        "status": "missing"
+      },
+      "source_sensor_presence_mask": {
+        "column": "sensor_presence_mask",
+        "status": "compatibility_alias"
+      },
+      "split": {
+        "column": "split",
+        "status": "direct"
+      },
+      "task_id": {
+        "column": "task_id",
+        "status": "direct"
+      }
+    },
+    "interpretation": "Compatibility aliases are source evidence, not permission to overload v1 presence masks with query usability.",
+    "missing_fields": [
+      "query_usable_anytime_sensor_mask",
+      "query_current_sensor_mask",
+      "eligible_fused_current_classification",
+      "missingness_policy_version",
+      "coverage_config_sha256",
+      "s2_query_any_valid_time_mask",
+      "s2_query_usable_time_mask",
+      "s2_query_unique_time_mask",
+      "s2_num_usable_times",
+      "s2_num_unique_usable_times",
+      "s2_current_usable",
+      "s2_ssl_current_eligible",
+      "s2_ssl_temporal_eligible",
+      "l89_query_any_valid_time_mask",
+      "l89_query_usable_time_mask",
+      "l89_query_unique_time_mask",
+      "l89_num_usable_times",
+      "l89_num_unique_usable_times",
+      "l89_current_usable",
+      "l89_ssl_current_eligible",
+      "l89_ssl_temporal_eligible",
+      "emit_query_any_valid_time_mask",
+      "emit_query_usable_time_mask",
+      "emit_query_unique_time_mask",
+      "emit_num_usable_times",
+      "emit_num_unique_usable_times",
+      "emit_current_usable",
+      "emit_ssl_current_eligible",
+      "emit_ssl_temporal_eligible",
+      "s5p_query_any_valid_time_mask",
+      "s5p_query_usable_time_mask",
+      "s5p_query_unique_time_mask",
+      "s5p_num_usable_times",
+      "s5p_num_unique_usable_times",
+      "s5p_current_usable",
+      "s5p_ssl_current_eligible",
+      "s5p_ssl_temporal_eligible",
+      "s2_t0_observation_key",
+      "s2_t0_alias_of",
+      "s2_t0_crop_status",
+      "s2_t0_valid_reference_pixels",
+      "s2_t0_total_reference_pixels",
+      "s2_t0_valid_reference_fraction",
+      "s2_t0_valid_elements_by_channel",
+      "s2_t0_crop_path",
+      "s2_t0_validity_path",
+      "s2_t0_crop_sha256",
+      "s2_t0_validity_sha256",
+      "s2_prev1_observation_key",
+      "s2_prev1_alias_of",
+      "s2_prev1_crop_status",
+      "s2_prev1_valid_reference_pixels",
+      "s2_prev1_total_reference_pixels",
+      "s2_prev1_valid_reference_fraction",
+      "s2_prev1_valid_elements_by_channel",
+      "s2_prev1_crop_path",
+      "s2_prev1_validity_path",
+      "s2_prev1_crop_sha256",
+      "s2_prev1_validity_sha256",
+      "s2_prev2_observation_key",
+      "s2_prev2_alias_of",
+      "s2_prev2_crop_status",
+      "s2_prev2_valid_reference_pixels",
+      "s2_prev2_total_reference_pixels",
+      "s2_prev2_valid_reference_fraction",
+      "s2_prev2_valid_elements_by_channel",
+      "s2_prev2_crop_path",
+      "s2_prev2_validity_path",
+      "s2_prev2_crop_sha256",
+      "s2_prev2_validity_sha256",
+      "s2_prev3_observation_key",
+      "s2_prev3_alias_of",
+      "s2_prev3_crop_status",
+      "s2_prev3_valid_reference_pixels",
+      "s2_prev3_total_reference_pixels",
+      "s2_prev3_valid_reference_fraction",
+      "s2_prev3_valid_elements_by_channel",
+      "s2_prev3_crop_path",
+      "s2_prev3_validity_path",
+      "s2_prev3_crop_sha256",
+      "s2_prev3_validity_sha256",
+      "s2_seasonal_observation_key",
+      "s2_seasonal_alias_of",
+      "s2_seasonal_crop_status",
+      "s2_seasonal_valid_reference_pixels",
+      "s2_seasonal_total_reference_pixels",
+      "s2_seasonal_valid_reference_fraction",
+      "s2_seasonal_valid_elements_by_channel",
+      "s2_seasonal_crop_path",
+      "s2_seasonal_validity_path",
+      "s2_seasonal_crop_sha256",
+      "s2_seasonal_validity_sha256",
+      "s2_year_observation_key",
+      "s2_year_alias_of",
+      "s2_year_crop_status",
+      "s2_year_valid_reference_pixels",
+      "s2_year_total_reference_pixels",
+      "s2_year_valid_reference_fraction",
+      "s2_year_valid_elements_by_channel",
+      "s2_year_crop_path",
+      "s2_year_validity_path",
+      "s2_year_crop_sha256",
+      "s2_year_validity_sha256",
+      "l89_t0_observation_key",
+      "l89_t0_alias_of",
+      "l89_t0_crop_status",
+      "l89_t0_valid_reference_pixels",
+      "l89_t0_total_reference_pixels",
+      "l89_t0_valid_reference_fraction",
+      "l89_t0_valid_elements_by_channel",
+      "l89_t0_crop_path",
+      "l89_t0_validity_path",
+      "l89_t0_crop_sha256",
+      "l89_t0_validity_sha256",
+      "l89_prev1_observation_key",
+      "l89_prev1_alias_of",
+      "l89_prev1_crop_status",
+      "l89_prev1_valid_reference_pixels",
+      "l89_prev1_total_reference_pixels",
+      "l89_prev1_valid_reference_fraction",
+      "l89_prev1_valid_elements_by_channel",
+      "l89_prev1_crop_path",
+      "l89_prev1_validity_path",
+      "l89_prev1_crop_sha256",
+      "l89_prev1_validity_sha256",
+      "l89_prev2_observation_key",
+      "l89_prev2_alias_of",
+      "l89_prev2_crop_status",
+      "l89_prev2_valid_reference_pixels",
+      "l89_prev2_total_reference_pixels",
+      "l89_prev2_valid_reference_fraction",
+      "l89_prev2_valid_elements_by_channel",
+      "l89_prev2_crop_path",
+      "l89_prev2_validity_path",
+      "l89_prev2_crop_sha256",
+      "l89_prev2_validity_sha256",
+      "l89_prev3_observation_key",
+      "l89_prev3_alias_of",
+      "l89_prev3_crop_status",
+      "l89_prev3_valid_reference_pixels",
+      "l89_prev3_total_reference_pixels",
+      "l89_prev3_valid_reference_fraction",
+      "l89_prev3_valid_elements_by_channel",
+      "l89_prev3_crop_path",
+      "l89_prev3_validity_path",
+      "l89_prev3_crop_sha256",
+      "l89_prev3_validity_sha256",
+      "l89_seasonal_observation_key",
+      "l89_seasonal_alias_of",
+      "l89_seasonal_crop_status",
+      "l89_seasonal_valid_reference_pixels",
+      "l89_seasonal_total_reference_pixels",
+      "l89_seasonal_valid_reference_fraction",
+      "l89_seasonal_valid_elements_by_channel",
+      "l89_seasonal_crop_path",
+      "l89_seasonal_validity_path",
+      "l89_seasonal_crop_sha256",
+      "l89_seasonal_validity_sha256",
+      "l89_year_observation_key",
+      "l89_year_alias_of",
+      "l89_year_crop_status",
+      "l89_year_valid_reference_pixels",
+      "l89_year_total_reference_pixels",
+      "l89_year_valid_reference_fraction",
+      "l89_year_valid_elements_by_channel",
+      "l89_year_crop_path",
+      "l89_year_validity_path",
+      "l89_year_crop_sha256",
+      "l89_year_validity_sha256",
+      "emit_t0_observation_key",
+      "emit_t0_alias_of",
+      "emit_t0_crop_status",
+      "emit_t0_valid_reference_pixels",
+      "emit_t0_total_reference_pixels",
+      "emit_t0_valid_reference_fraction",
+      "emit_t0_valid_elements_by_channel",
+      "emit_t0_crop_path",
+      "emit_t0_validity_path",
+      "emit_t0_crop_sha256",
+      "emit_t0_validity_sha256",
+      "emit_prev1_observation_key",
+      "emit_prev1_alias_of",
+      "emit_prev1_crop_status",
+      "emit_prev1_valid_reference_pixels",
+      "emit_prev1_total_reference_pixels",
+      "emit_prev1_valid_reference_fraction",
+      "emit_prev1_valid_elements_by_channel",
+      "emit_prev1_crop_path",
+      "emit_prev1_validity_path",
+      "emit_prev1_crop_sha256",
+      "emit_prev1_validity_sha256",
+      "emit_prev2_observation_key",
+      "emit_prev2_alias_of",
+      "emit_prev2_crop_status",
+      "emit_prev2_valid_reference_pixels",
+      "emit_prev2_total_reference_pixels",
+      "emit_prev2_valid_reference_fraction",
+      "emit_prev2_valid_elements_by_channel",
+      "emit_prev2_crop_path",
+      "emit_prev2_validity_path",
+      "emit_prev2_crop_sha256",
+      "emit_prev2_validity_sha256",
+      "emit_prev3_observation_key",
+      "emit_prev3_alias_of",
+      "emit_prev3_crop_status",
+      "emit_prev3_valid_reference_pixels",
+      "emit_prev3_total_reference_pixels",
+      "emit_prev3_valid_reference_fraction",
+      "emit_prev3_valid_elements_by_channel",
+      "emit_prev3_crop_path",
+      "emit_prev3_validity_path",
+      "emit_prev3_crop_sha256",
+      "emit_prev3_validity_sha256",
+      "emit_seasonal_observation_key",
+      "emit_seasonal_alias_of",
+      "emit_seasonal_crop_status",
+      "emit_seasonal_valid_reference_pixels",
+      "emit_seasonal_total_reference_pixels",
+      "emit_seasonal_valid_reference_fraction",
+      "emit_seasonal_valid_elements_by_channel",
+      "emit_seasonal_crop_path",
+      "emit_seasonal_validity_path",
+      "emit_seasonal_crop_sha256",
+      "emit_seasonal_validity_sha256",
+      "emit_year_observation_key",
+      "emit_year_alias_of",
+      "emit_year_crop_status",
+      "emit_year_valid_reference_pixels",
+      "emit_year_total_reference_pixels",
+      "emit_year_valid_reference_fraction",
+      "emit_year_valid_elements_by_channel",
+      "emit_year_crop_path",
+      "emit_year_validity_path",
+      "emit_year_crop_sha256",
+      "emit_year_validity_sha256",
+      "s5p_t0_observation_key",
+      "s5p_t0_alias_of",
+      "s5p_t0_crop_status",
+      "s5p_t0_valid_reference_pixels",
+      "s5p_t0_total_reference_pixels",
+      "s5p_t0_valid_reference_fraction",
+      "s5p_t0_valid_elements_by_channel",
+      "s5p_t0_crop_path",
+      "s5p_t0_validity_path",
+      "s5p_t0_crop_sha256",
+      "s5p_t0_validity_sha256",
+      "s5p_prev1_observation_key",
+      "s5p_prev1_alias_of",
+      "s5p_prev1_crop_status",
+      "s5p_prev1_valid_reference_pixels",
+      "s5p_prev1_total_reference_pixels",
+      "s5p_prev1_valid_reference_fraction",
+      "s5p_prev1_valid_elements_by_channel",
+      "s5p_prev1_crop_path",
+      "s5p_prev1_validity_path",
+      "s5p_prev1_crop_sha256",
+      "s5p_prev1_validity_sha256",
+      "s5p_prev2_observation_key",
+      "s5p_prev2_alias_of",
+      "s5p_prev2_crop_status",
+      "s5p_prev2_valid_reference_pixels",
+      "s5p_prev2_total_reference_pixels",
+      "s5p_prev2_valid_reference_fraction",
+      "s5p_prev2_valid_elements_by_channel",
+      "s5p_prev2_crop_path",
+      "s5p_prev2_validity_path",
+      "s5p_prev2_crop_sha256",
+      "s5p_prev2_validity_sha256",
+      "s5p_prev3_observation_key",
+      "s5p_prev3_alias_of",
+      "s5p_prev3_crop_status",
+      "s5p_prev3_valid_reference_pixels",
+      "s5p_prev3_total_reference_pixels",
+      "s5p_prev3_valid_reference_fraction",
+      "s5p_prev3_valid_elements_by_channel",
+      "s5p_prev3_crop_path",
+      "s5p_prev3_validity_path",
+      "s5p_prev3_crop_sha256",
+      "s5p_prev3_validity_sha256",
+      "s5p_seasonal_observation_key",
+      "s5p_seasonal_alias_of",
+      "s5p_seasonal_crop_status",
+      "s5p_seasonal_valid_reference_pixels",
+      "s5p_seasonal_total_reference_pixels",
+      "s5p_seasonal_valid_reference_fraction",
+      "s5p_seasonal_valid_elements_by_channel",
+      "s5p_seasonal_crop_path",
+      "s5p_seasonal_validity_path",
+      "s5p_seasonal_crop_sha256",
+      "s5p_seasonal_validity_sha256",
+      "s5p_year_observation_key",
+      "s5p_year_alias_of",
+      "s5p_year_crop_status",
+      "s5p_year_valid_reference_pixels",
+      "s5p_year_total_reference_pixels",
+      "s5p_year_valid_reference_fraction",
+      "s5p_year_valid_elements_by_channel",
+      "s5p_year_crop_path",
+      "s5p_year_validity_path",
+      "s5p_year_crop_sha256",
+      "s5p_year_validity_sha256"
+    ],
+    "ready_for_v2_execution": false,
+    "required_field_count": 410,
+    "status_counts": {
+      "compatibility_alias": 83,
+      "direct": 26,
+      "missing": 301
+    }
+  },
+  "validation_sidecars": [
+    {
+      "columns": [
+        "task_id",
+        "plume_id",
+        "label",
+        "available_sensors",
+        "status",
+        "reason",
+        "raster_time_shapes",
+        "raster_valid_time_masks",
+        "sensor_mask_positive_pixels",
+        "s5p_query_pixels"
+      ],
+      "examples": [
+        {
+          "label": "1",
+          "plume_id": "ang20160925t201200-A",
+          "query_any_valid_masks": {
+            "l89": "111111",
+            "s2": "111111"
+          },
+          "reason": "ok",
+          "status": "ok",
+          "task_id": "7434efedd8687b4cf90a1d39"
+        },
+        {
+          "label": "1",
+          "plume_id": "emi20230405t190335p13004-A",
+          "query_any_valid_masks": {
+            "emit": "010011",
+            "l89": "111111",
+            "s2": "111111"
+          },
+          "reason": "zero_finite:emit:t0;zero_finite:emit:prev2;zero_finite:emit:prev3",
+          "status": "warning",
+          "task_id": "9b2242faf6b8b9e9502fbee9"
+        }
+      ],
+      "input": {
+        "exists": true,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/manifests/unified_crop_tasks_smoke_partial.validation.csv",
+        "sha256": "512bff95b77352b3c0f985a4d135de2b4157035fab80121e10d445d556585912",
+        "size_bytes": 3877
+      },
+      "known_emit_regression": {
+        "emit_expected": "010011",
+        "emit_matches_expected": true,
+        "label": "1",
+        "plume_id": "emi20230405t190335p13004-A",
+        "query_any_valid_masks": {
+          "emit": "010011",
+          "l89": "111111",
+          "s2": "111111"
+        },
+        "reason": "zero_finite:emit:t0;zero_finite:emit:prev2;zero_finite:emit:prev3",
+        "status": "warning",
+        "task_id": "9b2242faf6b8b9e9502fbee9"
+      },
+      "label_counts": {
+        "1": 2
+      },
+      "limitations": [
+        "finite_values is an aggregate, not per-channel validity",
+        "no frozen usable-threshold decision is materialized",
+        "no alias/provenance quarantine state is materialized"
+      ],
+      "mask_source_counts": {
+        "raster_valid_time_masks": 2
+      },
+      "query_any_valid_mask_patterns": {
+        "emit": {
+          "010011": 1
+        },
+        "l89": {
+          "111111": 2
+        },
+        "s2": {
+          "111111": 2
+        }
+      },
+      "rows": 2,
+      "status_counts": {
+        "ok": 1,
+        "warning": 1
+      }
+    }
+  ],
+  "wide_manifest": {
+    "debug_limited": false,
+    "emit_product_time_tolerance_seconds": 300.0,
+    "event_groups_by_split": {
+      "test": 1896,
+      "train": 4517,
+      "val": 695
+    },
+    "event_split_gate_pass": true,
+    "input": {
+      "exists": true,
+      "path": "/diniuvol/yuyao/methanefuse_research_20260727/manifests/multisensor_6time_512_wide.csv",
+      "sha256": "2ada7e41e397689710440d242a1975271e3bb0c5bd2cc260122170da12bf0703",
+      "size_bytes": 60082142
+    },
+    "max_rows": 0,
+    "pairwise_event_group_overlap": {
+      "train_test": 0,
+      "train_val": 0,
+      "val_test": 0
+    },
+    "rows_read": 19834,
+    "sensors": {
+      "emit": {
+        "exact_path_alias_groups": 0,
+        "exact_path_alias_samples": [],
+        "exact_path_extra_slots": 0,
+        "manifest_identity_alias_groups": 3319,
+        "manifest_identity_alias_samples": [
+          {
+            "groups": [
+              [
+                "prev2",
+                "prev3",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220910T140432_2225309_004"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220910T140432_2225309_004"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220910T140432_2225309_004"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220910T140432_2225309_004"
+              ]
+            },
+            "plume_id": "emi20230129t130333p08047-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ],
+              [
+                "prev3",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220821T122832_2223308_017"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220810T082206_2222206_025"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220821T122832_2223308_017"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220810T082206_2222206_025"
+              ]
+            },
+            "plume_id": "emi20230205t092720p07026-A"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "seasonal"
+              ],
+              [
+                "prev3",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T174642_2223812_024"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220810T160726_2222211_009"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T174642_2223812_024"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220810T160726_2222211_009"
+              ]
+            },
+            "plume_id": "emi20230205t171244p12006-A"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T174642_2223812_024"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T174642_2223812_024"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T174642_2223812_024"
+              ]
+            },
+            "plume_id": "emi20230205t171244p12006-B"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T192357_2223413_026"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T192357_2223413_026"
+              ]
+            },
+            "plume_id": "emi20230205t171244p12006-C"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "seasonal"
+              ],
+              [
+                "prev3",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T174642_2223812_024"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220810T160726_2222211_009"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T174642_2223812_024"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220810T160726_2222211_009"
+              ]
+            },
+            "plume_id": "emi20230205t171244p12006-G"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220821T122832_2223308_017"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220821T122832_2223308_017"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220821T122832_2223308_017"
+              ]
+            },
+            "plume_id": "emi20230216t133737p09019-A"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "seasonal"
+              ],
+              [
+                "prev2",
+                "prev3"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T052323_2223404_022"
+              ],
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220818T070105_2223005_022"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220818T070105_2223005_022"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T052323_2223404_022"
+              ]
+            },
+            "plume_id": "emi20230217t063221p04014-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "prev3"
+              ],
+              [
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220818T070105_2223005_022"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220818T070105_2223005_022"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T052311_2223404_021"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T052311_2223404_021"
+              ]
+            },
+            "plume_id": "emi20230217t063221p04014-B"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T100653_2223407_004"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T100653_2223407_004"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T100653_2223407_004"
+              ]
+            },
+            "plume_id": "emi20230217t111603p07012-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T113902_2223408_010"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T113902_2223408_010"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T113902_2223408_010"
+              ]
+            },
+            "plume_id": "emi20230217t124812p08008-A"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "seasonal"
+              ],
+              [
+                "prev2",
+                "prev3",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20230128T111054_2302808_047"
+              ],
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220819T105604_2223107_006"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220819T105604_2223107_006"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20230128T111054_2302808_047"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220819T105604_2223107_006"
+              ]
+            },
+            "plume_id": "emi20230218t102723p07007-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "prev3",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083400_2223206_016"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083400_2223206_016"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083400_2223206_016"
+              ]
+            },
+            "plume_id": "emi20230219t080527p05017-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "prev3",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083400_2223206_016"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083400_2223206_016"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083400_2223206_016"
+              ]
+            },
+            "plume_id": "emi20230219t080527p05017-B"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T052323_2223404_022"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T052323_2223404_022"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T052323_2223404_022"
+              ]
+            },
+            "plume_id": "emi20230221t045604p03014-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T051947_2223804_007"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T051947_2223804_007"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220826T051947_2223804_007"
+              ]
+            },
+            "plume_id": "emi20230221t063001p04015-A"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T100653_2223407_004"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220822T100653_2223407_004"
+              ]
+            },
+            "plume_id": "emi20230221t093954p06016-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "prev3"
+              ],
+              [
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220828T051853_2224004_002"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220828T051853_2224004_002"
+              ]
+            },
+            "plume_id": "emi20230223t063033p04008-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ]
+            },
+            "plume_id": "emi20230223t063033p04008-B"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "prev3",
+                "seasonal",
+                "year"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ],
+              "prev3": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ],
+              "seasonal": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ],
+              "year": [
+                "product_id",
+                "EMIT_L2A_RFL_001_20220820T083324_2223206_013"
+              ]
+            },
+            "plume_id": "emi20230223t063033p04008-C"
+          }
+        ],
+        "manifest_identity_extra_slots": 3670,
+        "path_identity_conflict_groups": 0,
+        "path_identity_conflict_samples": [],
+        "product_time_mismatch_by_slot": {
+          "prev2": 6,
+          "prev3": 64,
+          "t0": 8
+        },
+        "product_time_mismatch_samples": [
+          {
+            "delta_seconds": 12178741.0,
+            "manifest_acquisition_time": "20230129T130333Z",
+            "plume_id": "emi20230129t130333p08047-A",
+            "product_id": "EMIT_L2A_RFL_001_20220910T140432_2225309_004",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 15809476.0,
+            "manifest_acquisition_time": "20230217T063221Z",
+            "plume_id": "emi20230217t063221p04014-A",
+            "product_id": "EMIT_L2A_RFL_001_20220818T070105_2223005_022",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 15809476.0,
+            "manifest_acquisition_time": "20230217T063221Z",
+            "plume_id": "emi20230217t063221p04014-B",
+            "product_id": "EMIT_L2A_RFL_001_20220818T070105_2223005_022",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 15809479.0,
+            "manifest_acquisition_time": "20230218T102723Z",
+            "plume_id": "emi20230218t102723p07007-A",
+            "product_id": "EMIT_L2A_RFL_001_20220819T105604_2223107_006",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 15809487.0,
+            "manifest_acquisition_time": "20230219T080527Z",
+            "plume_id": "emi20230219t080527p05017-A",
+            "product_id": "EMIT_L2A_RFL_001_20220820T083400_2223206_016",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 15809487.0,
+            "manifest_acquisition_time": "20230219T080527Z",
+            "plume_id": "emi20230219t080527p05017-B",
+            "product_id": "EMIT_L2A_RFL_001_20220820T083400_2223206_016",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 16149429.0,
+            "manifest_acquisition_time": "20230223T063033Z",
+            "plume_id": "emi20230223t063033p04008-A",
+            "product_id": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 16149429.0,
+            "manifest_acquisition_time": "20230223T063033Z",
+            "plume_id": "emi20230223t063033p04008-B",
+            "product_id": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 16149429.0,
+            "manifest_acquisition_time": "20230223T063033Z",
+            "plume_id": "emi20230223t063033p04008-C",
+            "product_id": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 16149429.0,
+            "manifest_acquisition_time": "20230223T063033Z",
+            "plume_id": "emi20230223t063033p04008-D",
+            "product_id": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 16149428.0,
+            "manifest_acquisition_time": "20230223T080523Z",
+            "plume_id": "emi20230223t080523p05009-A",
+            "product_id": "EMIT_L2A_RFL_001_20220820T100815_2223207_007",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 16489601.0,
+            "manifest_acquisition_time": "20230305T094051Z",
+            "plume_id": "emi20230305t094051p06003-A",
+            "product_id": "EMIT_L2A_RFL_001_20220826T131410_2223809_003",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 18249459.0,
+            "manifest_acquisition_time": "20230326T112509Z",
+            "plume_id": "emi20230326t112509p08041-A",
+            "product_id": "EMIT_L2A_RFL_001_20220827T060730_2223904_011",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 19441646.0,
+            "manifest_acquisition_time": "20230329T103801Z",
+            "plume_id": "emi20230329t103801p07052-A",
+            "product_id": "EMIT_L2A_RFL_001_20220816T101035_2222807_012",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 21187798.0,
+            "manifest_acquisition_time": "20230417T095836Z",
+            "plume_id": "emi20230417t095836p07011-A",
+            "product_id": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 21187798.0,
+            "manifest_acquisition_time": "20230417T095836Z",
+            "plume_id": "emi20230417t095836p07011-B",
+            "product_id": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 21187798.0,
+            "manifest_acquisition_time": "20230417T095836Z",
+            "plume_id": "emi20230417t095836p07011-C",
+            "product_id": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 21187798.0,
+            "manifest_acquisition_time": "20230417T095836Z",
+            "plume_id": "emi20230417t095836p07011-D",
+            "product_id": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 21187798.0,
+            "manifest_acquisition_time": "20230417T095836Z",
+            "plume_id": "emi20230417t095836p07011-E",
+            "product_id": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "timepoint": "prev3"
+          },
+          {
+            "delta_seconds": 21187798.0,
+            "manifest_acquisition_time": "20230417T095836Z",
+            "plume_id": "emi20230417t095836p07011-F",
+            "product_id": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "timepoint": "prev3"
+          }
+        ],
+        "product_time_mismatch_slots": 78,
+        "represented_rows": 3297,
+        "represented_slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "value": 3297
+            },
+            "exists": {
+              "true": 3297
+            },
+            "path": {
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "value": 3297
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "value": 3297
+            },
+            "exists": {
+              "true": 3297
+            },
+            "path": {
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "value": 3297
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "value": 3297
+            },
+            "exists": {
+              "true": 3297
+            },
+            "path": {
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "value": 3297
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "value": 3297
+            },
+            "exists": {
+              "true": 3297
+            },
+            "path": {
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "value": 3297
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "value": 3297
+            },
+            "exists": {
+              "true": 3297
+            },
+            "path": {
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "value": 3297
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "value": 3297
+            },
+            "exists": {
+              "true": 3297
+            },
+            "path": {
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "value": 3297
+            }
+          }
+        },
+        "rows_with_exact_path_alias": 0,
+        "rows_with_manifest_identity_alias": 2492,
+        "rows_with_product_time_mismatch": 72,
+        "same_identity_multiple_time_groups": 56,
+        "same_identity_multiple_time_samples": [
+          {
+            "acquisition_times": [
+              "2022-09-10T14:04:32+00:00",
+              "2023-01-29T13:03:33+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220910T140432_2225309_004",
+            "plume_id": "emi20230129t130333p08047-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-18T07:01:05+00:00",
+              "2023-02-17T06:32:21+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220818T070105_2223005_022",
+            "plume_id": "emi20230217t063221p04014-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-18T07:01:05+00:00",
+              "2023-02-17T06:32:21+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220818T070105_2223005_022",
+            "plume_id": "emi20230217t063221p04014-B"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-19T10:56:04+00:00",
+              "2023-02-18T10:27:23+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220819T105604_2223107_006",
+            "plume_id": "emi20230218t102723p07007-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-20T08:34:00+00:00",
+              "2023-02-19T08:05:27+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220820T083400_2223206_016",
+            "plume_id": "emi20230219t080527p05017-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-20T08:34:00+00:00",
+              "2023-02-19T08:05:27+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220820T083400_2223206_016",
+            "plume_id": "emi20230219t080527p05017-B"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-20T08:33:24+00:00",
+              "2023-02-23T06:30:33+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "plume_id": "emi20230223t063033p04008-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-20T08:33:24+00:00",
+              "2023-02-23T06:30:33+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "plume_id": "emi20230223t063033p04008-B"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-20T08:33:24+00:00",
+              "2023-02-23T06:30:33+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "plume_id": "emi20230223t063033p04008-C"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-20T08:33:24+00:00",
+              "2023-02-23T06:30:33+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220820T083324_2223206_013",
+            "plume_id": "emi20230223t063033p04008-D"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-20T10:08:15+00:00",
+              "2023-02-23T08:05:23+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220820T100815_2223207_007",
+            "plume_id": "emi20230223t080523p05009-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-27T06:07:30+00:00",
+              "2023-03-26T11:25:09+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220827T060730_2223904_011",
+            "plume_id": "emi20230326t112509p08041-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-16T10:10:35+00:00",
+              "2023-03-29T10:38:01+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220816T101035_2222807_012",
+            "plume_id": "emi20230329t103801p07052-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-15T04:28:38+00:00",
+              "2023-04-17T09:58:36+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "plume_id": "emi20230417t095836p07011-A"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-15T04:28:38+00:00",
+              "2023-04-17T09:58:36+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "plume_id": "emi20230417t095836p07011-B"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-15T04:28:38+00:00",
+              "2023-04-17T09:58:36+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "plume_id": "emi20230417t095836p07011-C"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-15T04:28:38+00:00",
+              "2023-04-17T09:58:36+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "plume_id": "emi20230417t095836p07011-D"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-15T04:28:38+00:00",
+              "2023-04-17T09:58:36+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "plume_id": "emi20230417t095836p07011-E"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-15T04:28:38+00:00",
+              "2023-04-17T09:58:36+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "plume_id": "emi20230417t095836p07011-F"
+          },
+          {
+            "acquisition_times": [
+              "2022-08-15T04:28:38+00:00",
+              "2023-04-17T09:58:36+00:00"
+            ],
+            "identity": "EMIT_L2A_RFL_001_20220815T042838_2222703_003",
+            "plume_id": "emi20230417t095836p07011-H"
+          }
+        ],
+        "slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "exists": {
+              "empty": 16537,
+              "true": 3297
+            },
+            "path": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "empty": 16537,
+              "value": 3297
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "exists": {
+              "empty": 16537,
+              "true": 3297
+            },
+            "path": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "empty": 16537,
+              "value": 3297
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "exists": {
+              "empty": 16537,
+              "true": 3297
+            },
+            "path": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "empty": 16537,
+              "value": 3297
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "exists": {
+              "empty": 16537,
+              "true": 3297
+            },
+            "path": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "empty": 16537,
+              "value": 3297
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "exists": {
+              "empty": 16537,
+              "true": 3297
+            },
+            "path": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "empty": 16537,
+              "value": 3297
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "exists": {
+              "empty": 16537,
+              "true": 3297
+            },
+            "path": {
+              "empty": 16537,
+              "value": 3297
+            },
+            "product_or_overpass_identity": {
+              "empty": 16537,
+              "value": 3297
+            }
+          }
+        }
+      },
+      "l89": {
+        "exact_path_alias_groups": 0,
+        "exact_path_alias_samples": [],
+        "exact_path_extra_slots": 0,
+        "manifest_identity_alias_groups": 27,
+        "manifest_identity_alias_samples": [
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC08|P018|20220622|2022-06-22T16:06:48+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC08|P018|20220622|2022-06-22T16:06:48+00:00"
+              ]
+            },
+            "plume_id": "GAO20220926t152856p0000-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC08|P018|20220622|2022-06-22T16:06:48+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC08|P018|20220622|2022-06-22T16:06:48+00:00"
+              ]
+            },
+            "plume_id": "GAO20220926t152856p0000-B"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC09|P121|20230705|2023-07-05T02:45:51+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P121|20230705|2023-07-05T02:45:51+00:00"
+              ]
+            },
+            "plume_id": "emi20230921t074856p05002-C"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC09|P125|20231224|2023-12-24T03:07:01+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P125|20231224|2023-12-24T03:07:01+00:00"
+              ]
+            },
+            "plume_id": "emi20240328t061714p04012-F"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC08|P018|20240204|2024-02-04T16:04:41+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC08|P018|20240204|2024-02-04T16:04:41+00:00"
+              ]
+            },
+            "plume_id": "emi20240407t152732p10016-A"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ]
+            },
+            "plume_id": "emi20250622t151627p10021-A"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ]
+            },
+            "plume_id": "emi20250622t151627p10021-B"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ]
+            },
+            "plume_id": "emi20250622t151627p10021-C"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ]
+            },
+            "plume_id": "emi20250622t151627p10021-D"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250327|2025-03-27T15:58:17+00:00"
+              ]
+            },
+            "plume_id": "emi20250622t151627p10021-F"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250428|2025-04-28T15:58:08+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250428|2025-04-28T15:58:08+00:00"
+              ]
+            },
+            "plume_id": "av320250723t182221-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250428|2025-04-28T15:58:08+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P017|20250428|2025-04-28T15:58:08+00:00"
+              ]
+            },
+            "plume_id": "av320250724t152229-D"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC08|P114|20250802|2025-08-02T01:59:24+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC08|P114|20250802|2025-08-02T01:59:24+00:00"
+              ]
+            },
+            "plume_id": "tan20251105t025809c59s4001-A"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ]
+            },
+            "plume_id": "tan20251111t064957c63s4001-A"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ]
+            },
+            "plume_id": "tan20251111t064957c63s4001-C"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ]
+            },
+            "plume_id": "tan20251111t064957c63s4001-M"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC09|P148|20250909|2025-09-09T05:34:12+00:00"
+              ]
+            },
+            "plume_id": "tan20251111t064957c63s4001-O"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC08|P154|20251029|2025-10-29T06:02:36+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC08|P154|20251029|2025-10-29T06:02:36+00:00"
+              ]
+            },
+            "plume_id": "tan20260131t072644c80s4001-A"
+          },
+          {
+            "groups": [
+              [
+                "prev2",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev2": [
+                "overpass_and_time",
+                "L89|LC08|P154|20251029|2025-10-29T06:02:36+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC08|P154|20251029|2025-10-29T06:02:36+00:00"
+              ]
+            },
+            "plume_id": "tan20260131t072644c80s4001-B"
+          },
+          {
+            "groups": [
+              [
+                "prev3",
+                "seasonal"
+              ]
+            ],
+            "identity_details": {
+              "prev3": [
+                "overpass_and_time",
+                "L89|LC08|P181|20251213|2025-12-13T08:49:27+00:00"
+              ],
+              "seasonal": [
+                "overpass_and_time",
+                "L89|LC08|P181|20251213|2025-12-13T08:49:27+00:00"
+              ]
+            },
+            "plume_id": "tan20260310t101827c55s4001-A"
+          }
+        ],
+        "manifest_identity_extra_slots": 27,
+        "path_identity_conflict_groups": 0,
+        "path_identity_conflict_samples": [],
+        "product_time_mismatch_by_slot": {},
+        "product_time_mismatch_samples": [],
+        "product_time_mismatch_slots": 0,
+        "represented_rows": 3458,
+        "represented_slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "value": 3458
+            },
+            "exists": {
+              "false": 38,
+              "true": 3420
+            },
+            "path": {
+              "empty": 38,
+              "value": 3420
+            },
+            "product_or_overpass_identity": {
+              "empty": 2384,
+              "value": 1074
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "value": 3458
+            },
+            "exists": {
+              "false": 205,
+              "true": 3253
+            },
+            "path": {
+              "empty": 205,
+              "value": 3253
+            },
+            "product_or_overpass_identity": {
+              "empty": 1,
+              "value": 3457
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "value": 3458
+            },
+            "exists": {
+              "false": 146,
+              "true": 3312
+            },
+            "path": {
+              "empty": 146,
+              "value": 3312
+            },
+            "product_or_overpass_identity": {
+              "empty": 1,
+              "value": 3457
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "value": 3458
+            },
+            "exists": {
+              "false": 39,
+              "true": 3419
+            },
+            "path": {
+              "empty": 39,
+              "value": 3419
+            },
+            "product_or_overpass_identity": {
+              "empty": 2384,
+              "value": 1074
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "value": 3458
+            },
+            "exists": {
+              "false": 49,
+              "true": 3409
+            },
+            "path": {
+              "empty": 49,
+              "value": 3409
+            },
+            "product_or_overpass_identity": {
+              "empty": 2384,
+              "value": 1074
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "value": 3458
+            },
+            "exists": {
+              "false": 59,
+              "true": 3399
+            },
+            "path": {
+              "empty": 59,
+              "value": 3399
+            },
+            "product_or_overpass_identity": {
+              "empty": 2384,
+              "value": 1074
+            }
+          }
+        },
+        "rows_with_exact_path_alias": 0,
+        "rows_with_manifest_identity_alias": 27,
+        "rows_with_product_time_mismatch": 0,
+        "same_identity_multiple_time_groups": 303,
+        "same_identity_multiple_time_samples": [
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t200814-A"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t200814-C"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t202433-D"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t202433-H"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t204345-B"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t205810-A"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t211157-F"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t212645-A"
+          },
+          {
+            "acquisition_times": [
+              "2016-07-31T18:34:08+00:00",
+              "2016-08-16T18:34:11+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20160916t212645-B"
+          },
+          {
+            "acquisition_times": [
+              "2016-08-09T18:28:21+00:00",
+              "2016-08-25T18:28:28+00:00"
+            ],
+            "identity": "LANDSAT_8|41|36",
+            "plume_id": "ang20160925t201200-A"
+          },
+          {
+            "acquisition_times": [
+              "2016-08-09T18:28:21+00:00",
+              "2016-08-25T18:28:28+00:00"
+            ],
+            "identity": "LANDSAT_8|41|36",
+            "plume_id": "ang20160925t201200-C"
+          },
+          {
+            "acquisition_times": [
+              "2016-09-24T18:40:07+00:00",
+              "2016-10-10T18:40:12+00:00"
+            ],
+            "identity": "LANDSAT_8|43|34",
+            "plume_id": "ang20161026t182549-A"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t194958-A"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t194958-B"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t194958-C"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t194958-D"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t194958-E"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t210400-A"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t211946-A"
+          },
+          {
+            "acquisition_times": [
+              "2017-07-02T18:33:53+00:00",
+              "2017-07-18T18:33:58+00:00"
+            ],
+            "identity": "LANDSAT_8|42|35",
+            "plume_id": "ang20170919t212654-A"
+          }
+        ],
+        "slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "empty": 16376,
+              "value": 3458
+            },
+            "exists": {
+              "empty": 16376,
+              "false": 38,
+              "true": 3420
+            },
+            "path": {
+              "empty": 16414,
+              "value": 3420
+            },
+            "product_or_overpass_identity": {
+              "empty": 18760,
+              "value": 1074
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "empty": 16376,
+              "value": 3458
+            },
+            "exists": {
+              "empty": 16376,
+              "false": 205,
+              "true": 3253
+            },
+            "path": {
+              "empty": 16581,
+              "value": 3253
+            },
+            "product_or_overpass_identity": {
+              "empty": 16377,
+              "value": 3457
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "empty": 16376,
+              "value": 3458
+            },
+            "exists": {
+              "empty": 16376,
+              "false": 146,
+              "true": 3312
+            },
+            "path": {
+              "empty": 16522,
+              "value": 3312
+            },
+            "product_or_overpass_identity": {
+              "empty": 16377,
+              "value": 3457
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "empty": 16376,
+              "value": 3458
+            },
+            "exists": {
+              "empty": 16376,
+              "false": 39,
+              "true": 3419
+            },
+            "path": {
+              "empty": 16415,
+              "value": 3419
+            },
+            "product_or_overpass_identity": {
+              "empty": 18760,
+              "value": 1074
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "empty": 16376,
+              "value": 3458
+            },
+            "exists": {
+              "empty": 16376,
+              "false": 49,
+              "true": 3409
+            },
+            "path": {
+              "empty": 16425,
+              "value": 3409
+            },
+            "product_or_overpass_identity": {
+              "empty": 18760,
+              "value": 1074
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "empty": 16376,
+              "value": 3458
+            },
+            "exists": {
+              "empty": 16376,
+              "false": 59,
+              "true": 3399
+            },
+            "path": {
+              "empty": 16435,
+              "value": 3399
+            },
+            "product_or_overpass_identity": {
+              "empty": 18760,
+              "value": 1074
+            }
+          }
+        }
+      },
+      "s2": {
+        "exact_path_alias_groups": 0,
+        "exact_path_alias_samples": [],
+        "exact_path_extra_slots": 0,
+        "manifest_identity_alias_groups": 455,
+        "manifest_identity_alias_samples": [
+          {
+            "groups": [
+              [
+                "t0",
+                "prev1"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "t0": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191017t174946-E"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191023t142135-B"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191023t142135-C"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191023t142135-D"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191023t142135-E"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191023t142135-F"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191023t142135-G"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "ang20191023t142135-J"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-A"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-B"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-C"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-D"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-E"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-F"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-G"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-H"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t145412p0000-I"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "0807a35f-7bdc-484f-b7fb-5573bb214ffd"
+              ],
+              "prev2": [
+                "product_id",
+                "0807a35f-7bdc-484f-b7fb-5573bb214ffd"
+              ]
+            },
+            "plume_id": "ang20191023t145837-A"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t151100p0000-A"
+          },
+          {
+            "groups": [
+              [
+                "prev1",
+                "prev2"
+              ]
+            ],
+            "identity_details": {
+              "prev1": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ],
+              "prev2": [
+                "product_id",
+                "06e06e52-e795-4fbb-b963-a055fc26e9fc"
+              ]
+            },
+            "plume_id": "GAO20191023t151100p0000-B"
+          }
+        ],
+        "manifest_identity_extra_slots": 455,
+        "path_identity_conflict_groups": 0,
+        "path_identity_conflict_samples": [],
+        "product_time_mismatch_by_slot": {},
+        "product_time_mismatch_samples": [],
+        "product_time_mismatch_slots": 0,
+        "represented_rows": 4614,
+        "represented_slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "value": 4614
+            },
+            "exists": {
+              "false": 517,
+              "true": 4097
+            },
+            "path": {
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "value": 4614
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "value": 4614
+            },
+            "exists": {
+              "false": 517,
+              "true": 4097
+            },
+            "path": {
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "value": 4614
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "value": 4614
+            },
+            "exists": {
+              "false": 517,
+              "true": 4097
+            },
+            "path": {
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "value": 4614
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "value": 4614
+            },
+            "exists": {
+              "false": 25,
+              "true": 4589
+            },
+            "path": {
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 530,
+              "value": 4084
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "value": 4614
+            },
+            "exists": {
+              "false": 25,
+              "true": 4589
+            },
+            "path": {
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 492,
+              "value": 4122
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "value": 4614
+            },
+            "exists": {
+              "false": 25,
+              "true": 4589
+            },
+            "path": {
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 530,
+              "value": 4084
+            }
+          }
+        },
+        "rows_with_exact_path_alias": 0,
+        "rows_with_manifest_identity_alias": 435,
+        "rows_with_product_time_mismatch": 0,
+        "same_identity_multiple_time_groups": 0,
+        "same_identity_multiple_time_samples": [],
+        "slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "exists": {
+              "empty": 15220,
+              "false": 517,
+              "true": 4097
+            },
+            "path": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 15220,
+              "value": 4614
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "exists": {
+              "empty": 15220,
+              "false": 517,
+              "true": 4097
+            },
+            "path": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 15220,
+              "value": 4614
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "exists": {
+              "empty": 15220,
+              "false": 517,
+              "true": 4097
+            },
+            "path": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 15220,
+              "value": 4614
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "exists": {
+              "empty": 15220,
+              "false": 25,
+              "true": 4589
+            },
+            "path": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 15750,
+              "value": 4084
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "exists": {
+              "empty": 15220,
+              "false": 25,
+              "true": 4589
+            },
+            "path": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 15712,
+              "value": 4122
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "exists": {
+              "empty": 15220,
+              "false": 25,
+              "true": 4589
+            },
+            "path": {
+              "empty": 15220,
+              "value": 4614
+            },
+            "product_or_overpass_identity": {
+              "empty": 15750,
+              "value": 4084
+            }
+          }
+        }
+      },
+      "s5p": {
+        "exact_path_alias_groups": 0,
+        "exact_path_alias_samples": [],
+        "exact_path_extra_slots": 0,
+        "manifest_identity_alias_groups": 0,
+        "manifest_identity_alias_samples": [],
+        "manifest_identity_extra_slots": 0,
+        "path_identity_conflict_groups": 0,
+        "path_identity_conflict_samples": [],
+        "product_time_mismatch_by_slot": {},
+        "product_time_mismatch_samples": [],
+        "product_time_mismatch_slots": 0,
+        "represented_rows": 14757,
+        "represented_slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "value": 14757
+            },
+            "exists": {
+              "true": 14757
+            },
+            "path": {
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "value": 14757
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "value": 14757
+            },
+            "exists": {
+              "true": 14757
+            },
+            "path": {
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "value": 14757
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "value": 14757
+            },
+            "exists": {
+              "true": 14757
+            },
+            "path": {
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "value": 14757
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "value": 14757
+            },
+            "exists": {
+              "true": 14757
+            },
+            "path": {
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "value": 14757
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "value": 14757
+            },
+            "exists": {
+              "true": 14757
+            },
+            "path": {
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "value": 14757
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "value": 14757
+            },
+            "exists": {
+              "true": 14757
+            },
+            "path": {
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "value": 14757
+            }
+          }
+        },
+        "rows_with_exact_path_alias": 0,
+        "rows_with_manifest_identity_alias": 0,
+        "rows_with_product_time_mismatch": 0,
+        "same_identity_multiple_time_groups": 0,
+        "same_identity_multiple_time_samples": [],
+        "slot_states": {
+          "prev1": {
+            "acquisition_time": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "exists": {
+              "empty": 5077,
+              "true": 14757
+            },
+            "path": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "empty": 5077,
+              "value": 14757
+            }
+          },
+          "prev2": {
+            "acquisition_time": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "exists": {
+              "empty": 5077,
+              "true": 14757
+            },
+            "path": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "empty": 5077,
+              "value": 14757
+            }
+          },
+          "prev3": {
+            "acquisition_time": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "exists": {
+              "empty": 5077,
+              "true": 14757
+            },
+            "path": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "empty": 5077,
+              "value": 14757
+            }
+          },
+          "seasonal": {
+            "acquisition_time": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "exists": {
+              "empty": 5077,
+              "true": 14757
+            },
+            "path": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "empty": 5077,
+              "value": 14757
+            }
+          },
+          "t0": {
+            "acquisition_time": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "exists": {
+              "empty": 5077,
+              "true": 14757
+            },
+            "path": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "empty": 5077,
+              "value": 14757
+            }
+          },
+          "year": {
+            "acquisition_time": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "exists": {
+              "empty": 5077,
+              "true": 14757
+            },
+            "path": {
+              "empty": 5077,
+              "value": 14757
+            },
+            "product_or_overpass_identity": {
+              "empty": 5077,
+              "value": 14757
+            }
+          }
+        }
+      }
+    },
+    "unique_event_group_ids": 7108,
+    "unique_plume_ids": 19834
+  }
+}

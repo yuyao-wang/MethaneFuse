@@ -1,0 +1,68 @@
+{
+  "event_clean": {
+    "test_event_time_range": [
+      "2023-02-17T12:48:12Z",
+      "2025-10-20T07:02:11Z"
+    ],
+    "test_label_counts": {
+      "0": 3550,
+      "1": 2455
+    },
+    "test_rows": 6005,
+    "test_unique_base_events": 228,
+    "train_event_time_range": [
+      "2023-01-29T13:03:33Z",
+      "2025-10-30T15:01:56Z"
+    ],
+    "train_label_counts": {
+      "0": 20158,
+      "1": 13771
+    },
+    "train_rows": 33929,
+    "train_unique_base_events": 934
+  },
+  "input_test": "/mnt/engg-niulab/Yuyao/final_crop/emit_32band/emit32_temporal_test.csv",
+  "input_train": "/mnt/engg-niulab/Yuyao/final_crop/emit_32band/emit32_temporal_train.csv",
+  "original": {
+    "test_label_counts": {
+      "0": 3549,
+      "1": 2455
+    },
+    "test_rows": 6004,
+    "train_label_counts": {
+      "0": 20159,
+      "1": 13771
+    },
+    "train_rows": 33930
+  },
+  "output_test": "/home/yuyao/panopticon/Upgraded_dataset/emit32_event_clean/emit32_temporal_test_event_clean.csv",
+  "output_train": "/home/yuyao/panopticon/Upgraded_dataset/emit32_event_clean/emit32_temporal_train_event_clean.csv",
+  "seed": 20260713,
+  "split_key": "plume_id stripped with r\"-[A-Za-z]+$\" plus normalized event_time",
+  "verification": {
+    "base_plume_id": {
+      "examples": [],
+      "overlap_unique": 0,
+      "test_rows_in_overlap": 0,
+      "train_rows_in_overlap": 0
+    },
+    "base_plume_id_event_time": {
+      "examples": [],
+      "overlap_unique": 0,
+      "test_rows_in_overlap": 0,
+      "train_rows_in_overlap": 0
+    },
+    "event_time": {
+      "examples": [],
+      "overlap_unique": 0,
+      "test_rows_in_overlap": 0,
+      "train_rows_in_overlap": 0
+    },
+    "exact_plume_id": {
+      "examples": [],
+      "overlap_unique": 0,
+      "test_rows_in_overlap": 0,
+      "train_rows_in_overlap": 0
+    }
+  }
+}

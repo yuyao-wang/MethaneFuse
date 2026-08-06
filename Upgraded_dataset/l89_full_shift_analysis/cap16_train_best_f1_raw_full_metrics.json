@@ -1,0 +1,15 @@
+{
+  "count": 10998,
+  "acc": 0.737315875613748,
+  "f1": 0.6956063639237172,
+  "recall": 0.6612580128205128,
+  "fpr": 0.19946719946719946,
+  "auroc": 0.8130612709939633,
+  "tp": 3301,
+  "fp": 1198,
+  "fn": 1691,
+  "tn": 4808,
+  "loss": 0.5452118871222411,
+  "checkpoint": "/home/yuyao/panopticon/checkpoints/l89_full_event_balanced/l89_event_balanced_cap16_warmup1500/ckpt_best_test_f1.pth",
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_full_event_balanced_split/L89_temporal_test_full_event_raw.csv"
+}

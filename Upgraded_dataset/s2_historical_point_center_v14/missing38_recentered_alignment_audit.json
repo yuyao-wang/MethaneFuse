@@ -1,0 +1,1944 @@
+{
+  "passed": true,
+  "failures": [],
+  "source_rows": 38,
+  "source_summary": {
+    "seasonal": {
+      "files": 38,
+      "valid_files": 38,
+      "muted_nonzero": 0,
+      "files_without_valid_pixels": 0,
+      "dtypes": [
+        "uint16"
+      ]
+    },
+    "year": {
+      "files": 38,
+      "valid_files": 38,
+      "muted_nonzero": 0,
+      "files_without_valid_pixels": 0,
+      "dtypes": [
+        "uint16"
+      ]
+    }
+  },
+  "center_summary": {
+    "files": 0,
+    "valid_sidecars": 0,
+    "maximum_center_error_pixels": null,
+    "median_center_error_pixels": null,
+    "source_dn_add_counts": {},
+    "source_kind_counts": {}
+  },
+  "comparison_summary": {
+    "seasonal": {
+      "samples": 29,
+      "median_band11_correlation": 1.0,
+      "median_valid_band_correlation": 1.0,
+      "median_valid_band_mae": 0.0
+    },
+    "year": {
+      "samples": 29,
+      "median_band11_correlation": 1.0,
+      "median_valid_band_correlation": 1.0,
+      "median_valid_band_mae": 0.0
+    }
+  },
+  "comparison_details": [
+    {
+      "plume_id": "GAO20240415t181759p0000-C",
+      "crop_x": 241,
+      "crop_y": 238,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-A",
+      "crop_x": 238,
+      "crop_y": 242,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-B",
+      "crop_x": 242,
+      "crop_y": 240,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "crop_x": 234,
+      "crop_y": 239,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999999,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999999,
+            0.9999999999999998,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 0.9999999999999999,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            0.9999999999999999,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-E",
+      "crop_x": 236,
+      "crop_y": 237,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200728t174227p0000-A",
+      "crop_x": 240,
+      "crop_y": 244,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999999,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-C",
+      "crop_x": 235,
+      "crop_y": 245,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999999,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-A",
+      "crop_x": 242,
+      "crop_y": 245,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            0.9999999999999998,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20230629t013516p01007-A",
+      "crop_x": 239,
+      "crop_y": 242,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999999,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999998
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999998,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-B",
+      "crop_x": 241,
+      "crop_y": 242,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-C",
+      "crop_x": 244,
+      "crop_y": 239,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240420t183810p0000-B",
+      "crop_x": 237,
+      "crop_y": 244,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999999,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            0.9999999999999999,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-B",
+      "crop_x": 237,
+      "crop_y": 245,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999999,
+            0.9999999999999999,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 0.9999999999999999,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20241005t160604p11012-A",
+      "crop_x": 242,
+      "crop_y": 237,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999998,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20231010t052236p04020-A",
+      "crop_x": 245,
+      "crop_y": 244,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999998,
+            0.9999999999999999,
+            0.9999999999999998,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200724t161329p0000-C",
+      "crop_x": 241,
+      "crop_y": 234,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-A",
+      "crop_x": 235,
+      "crop_y": 243,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "crop_x": 242,
+      "crop_y": 238,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "crop_x": 237,
+      "crop_y": 245,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "crop_x": 238,
+      "crop_y": 243,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999999,
+            0.9999999999999999,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 0.9999999999999999,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999998,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20200724t155931p0000-A",
+      "crop_x": 236,
+      "crop_y": 235,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999998
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999998,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t175128p0000-D",
+      "crop_x": 241,
+      "crop_y": 243,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999998,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "crop_x": 243,
+      "crop_y": 238,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999998,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999998,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999998
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999998,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20201120t182953p0000-2",
+      "crop_x": 236,
+      "crop_y": 243,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999998,
+            0.9999999999999999
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 0.9999999999999999,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "crop_x": 243,
+      "crop_y": 236,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            0.9999999999999999,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "crop_x": 239,
+      "crop_y": 234,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999999,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            0.9999999999999999,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "emi20250608t011708p01008-L",
+      "crop_x": 239,
+      "crop_y": 239,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999998,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t181759p0000-D",
+      "crop_x": 237,
+      "crop_y": 238,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            0.9999999999999999,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    },
+    {
+      "plume_id": "GAO20240415t172403p0000-D",
+      "crop_x": 245,
+      "crop_y": 243,
+      "timepoints": {
+        "seasonal": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            0.9999999999999998,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.9999999999999999,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        },
+        "year": {
+          "band_correlations": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "band_mae": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "band11_correlation": 1.0,
+          "median_valid_band_correlation": 1.0,
+          "median_valid_band_mae": 0.0
+        }
+      }
+    }
+  ],
+  "failed_source_details": [],
+  "failed_center_details": [],
+  "args": {
+    "source_csv": "/tmp/s2_missing38_recentered_source.csv",
+    "patch_csv": "/tmp/s2_missing38_patches.csv",
+    "timepoints": "seasonal,year",
+    "sample_plumes": 38,
+    "workers": 8,
+    "output": "Upgraded_dataset/s2_historical_point_center_v14/missing38_recentered_alignment_audit.json"
+  }
+}

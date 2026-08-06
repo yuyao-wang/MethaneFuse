@@ -1,0 +1,745 @@
+{
+  "assertions": {
+    "source_train_test_event_overlap_observed_not_modified": 706,
+    "source_train_test_id_overlap": 0,
+    "source_train_test_plume_overlap": 0,
+    "train_core_dev_event_overlap": 0,
+    "train_core_dev_id_overlap": 0,
+    "train_core_dev_plume_overlap": 0,
+    "train_core_plus_dev_equals_source_train": true
+  },
+  "created_utc": "2026-07-27T22:05:59.387798+00:00",
+  "dev_selection": {
+    "achieved_fraction": 0.09979678493203761,
+    "algorithm": "train-only stable-SHA256 event seeds + SplitMix64 permutation search; random-prefix candidate closest to target rows; objective matches label and availability-signature distributions",
+    "coverage_constraints": {
+      "label_x_signature_min_source_events_for_both_arms": 10,
+      "signature_min_source_events_for_both_arms": 5
+    },
+    "objective": {
+      "label_total_variation": 0.0006635313915792085,
+      "label_x_signature_total_variation": 0.021371119607554567,
+      "row_fraction_error": 0.0002032150679623923,
+      "signature_total_variation": 0.019948303319484433,
+      "total": 0.1302699547584235
+    },
+    "objective_weights": {
+      "label_total_variation": 4.0,
+      "label_x_signature_total_variation": 2.0,
+      "row_fraction_error": 25.0,
+      "signature_total_variation": 4.0
+    },
+    "search_trials": 8192,
+    "seed": 360,
+    "selected_dev_event_ids_sha256": "0949e37ff9feab39d8ed632a3fb43dd93893947d9a47d433d2b9cfd803e81c4a",
+    "selected_dev_events": 291,
+    "source_train_events": 2845,
+    "target_fraction": 0.1,
+    "test_manifest_used_for_selection": false
+  },
+  "event_id": {
+    "regex": "-[A-Za-z0-9]+$",
+    "rule": "strip-terminal-hyphen-alphanumeric-suffix-v1"
+  },
+  "inputs": {
+    "metadata": [
+      {
+        "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_360m_cluster_split/manifest_time_train_360m_macroregion_by_plume.csv",
+        "sha256": "e2b8de67efb79a243d14c3522b23ffd0345176032a0a903929d418c6993069c1"
+      },
+      {
+        "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/datasets_360m_cluster_split/manifest_time_test_360m_macroregion_by_plume.csv",
+        "sha256": "74f16955f1bd3c3fa012502736f38163ea979e2690691a6a3a610780bc31213f"
+      }
+    ],
+    "metadata_join": {
+      "_sample_id_matches_source_plume_id": true,
+      "id_universe_exact_match": true,
+      "key": "globally unique id over both metadata files",
+      "metadata_ids": 158031,
+      "source_ids": 158031
+    },
+    "test": {
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/manifest_time_test.csv",
+      "rows": 31564,
+      "sha256": "7804b406e7a251dfc769a77110eec99a379d6131c50aa325b3f69a7cec0da6ba"
+    },
+    "train": {
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/manifest_time_train.csv",
+      "rows": 126467,
+      "sha256": "6dbc97fdd51172954be484855569628e44d9e61c0b0bcbf9df7680a689c82c37"
+    }
+  },
+  "overlaps": {
+    "dev__test": {
+      "cluster_id": {
+        "count": 164,
+        "examples": [
+          "1036",
+          "115",
+          "1170",
+          "1195",
+          "1213",
+          "1275",
+          "1279",
+          "1282",
+          "129",
+          "1297",
+          "1306",
+          "1443",
+          "1460",
+          "1461",
+          "1481",
+          "1502",
+          "153",
+          "1536",
+          "1537",
+          "1538"
+        ]
+      },
+      "event_id": {
+        "count": 78,
+        "examples": [
+          "GAO20191023t173308p0000",
+          "GAO20191023t192246p0000",
+          "GAO20191031t161745p0000",
+          "GAO20200719t165324p0000",
+          "GAO20200724t170724p0000",
+          "GAO20200804t183914p0000",
+          "GAO20211003t181653p0000",
+          "GAO20230925t190727p0000",
+          "GAO20240409t203547p0000",
+          "GAO20240410t202454p0000",
+          "GAO20240411t185539p0000",
+          "GAO20240430t162924p0000",
+          "GAO20240430t165629p0000",
+          "GAO20240430t190724p0000",
+          "GAO20240503t154351p0000",
+          "GAO20240506t180831p0000",
+          "GAO20240507t173329p0000",
+          "GAO20240508t173544p0000",
+          "GAO20240509t183050p0000",
+          "GAO20240509t183855p0000"
+        ]
+      },
+      "id": {
+        "count": 0,
+        "examples": []
+      },
+      "macro_region_id": {
+        "count": 44,
+        "examples": [
+          "0",
+          "1",
+          "10",
+          "109",
+          "11",
+          "113",
+          "12",
+          "13",
+          "14",
+          "16",
+          "17",
+          "18",
+          "19",
+          "22",
+          "23",
+          "24",
+          "26",
+          "29",
+          "30",
+          "33"
+        ]
+      },
+      "plume_id": {
+        "count": 0,
+        "examples": []
+      },
+      "query360_index": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    "source_train__source_test": {
+      "cluster_id": {
+        "count": 666,
+        "examples": [
+          "1004",
+          "1007",
+          "1009",
+          "1011",
+          "1015",
+          "1016",
+          "1020",
+          "1023",
+          "1035",
+          "1036",
+          "1043",
+          "105",
+          "1077",
+          "1101",
+          "1117",
+          "1119",
+          "1124",
+          "1126",
+          "1127",
+          "1129"
+        ]
+      },
+      "event_id": {
+        "count": 706,
+        "examples": [
+          "GAO20191020t163829p0000",
+          "GAO20191020t165717p0000",
+          "GAO20191020t171158p0000",
+          "GAO20191020t173137p0000",
+          "GAO20191020t184019p0000",
+          "GAO20191020t185458p0000",
+          "GAO20191022t154327p0000",
+          "GAO20191023t145412p0000",
+          "GAO20191023t152337p0000",
+          "GAO20191023t153942p0000",
+          "GAO20191023t164940p0000",
+          "GAO20191023t170505p0000",
+          "GAO20191023t171802p0000",
+          "GAO20191023t173308p0000",
+          "GAO20191023t174556p0000",
+          "GAO20191023t180055p0000",
+          "GAO20191023t181324p0000",
+          "GAO20191023t182826p0000",
+          "GAO20191023t192246p0000",
+          "GAO20191031t161745p0000"
+        ]
+      },
+      "id": {
+        "count": 0,
+        "examples": []
+      },
+      "macro_region_id": {
+        "count": 84,
+        "examples": [
+          "0",
+          "1",
+          "10",
+          "105",
+          "109",
+          "11",
+          "110",
+          "111",
+          "113",
+          "114",
+          "115",
+          "118",
+          "12",
+          "13",
+          "130",
+          "14",
+          "143",
+          "15",
+          "16",
+          "17"
+        ]
+      },
+      "plume_id": {
+        "count": 0,
+        "examples": []
+      },
+      "query360_index": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    "train_core__dev": {
+      "cluster_id": {
+        "count": 284,
+        "examples": [
+          "0",
+          "1005",
+          "1010",
+          "1089",
+          "115",
+          "116",
+          "1169",
+          "1197",
+          "122",
+          "1222",
+          "1267",
+          "1268",
+          "1275",
+          "1278",
+          "1279",
+          "1297",
+          "1306",
+          "1309",
+          "133",
+          "1443"
+        ]
+      },
+      "event_id": {
+        "count": 0,
+        "examples": []
+      },
+      "id": {
+        "count": 0,
+        "examples": []
+      },
+      "macro_region_id": {
+        "count": 50,
+        "examples": [
+          "0",
+          "1",
+          "10",
+          "109",
+          "11",
+          "12",
+          "121",
+          "13",
+          "14",
+          "16",
+          "17",
+          "18",
+          "19",
+          "22",
+          "23",
+          "24",
+          "26",
+          "29",
+          "30",
+          "33"
+        ]
+      },
+      "plume_id": {
+        "count": 0,
+        "examples": []
+      },
+      "query360_index": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    "train_core__test": {
+      "cluster_id": {
+        "count": 643,
+        "examples": [
+          "1004",
+          "1007",
+          "1009",
+          "1011",
+          "1015",
+          "1016",
+          "1020",
+          "1023",
+          "1035",
+          "1043",
+          "105",
+          "1077",
+          "1101",
+          "1117",
+          "1119",
+          "1124",
+          "1126",
+          "1127",
+          "1129",
+          "1131"
+        ]
+      },
+      "event_id": {
+        "count": 628,
+        "examples": [
+          "GAO20191020t163829p0000",
+          "GAO20191020t165717p0000",
+          "GAO20191020t171158p0000",
+          "GAO20191020t173137p0000",
+          "GAO20191020t184019p0000",
+          "GAO20191020t185458p0000",
+          "GAO20191022t154327p0000",
+          "GAO20191023t145412p0000",
+          "GAO20191023t152337p0000",
+          "GAO20191023t153942p0000",
+          "GAO20191023t164940p0000",
+          "GAO20191023t170505p0000",
+          "GAO20191023t171802p0000",
+          "GAO20191023t174556p0000",
+          "GAO20191023t180055p0000",
+          "GAO20191023t181324p0000",
+          "GAO20191023t182826p0000",
+          "GAO20191031t163137p0000",
+          "GAO20191031t164711p0000",
+          "GAO20191031t171656p0000"
+        ]
+      },
+      "id": {
+        "count": 0,
+        "examples": []
+      },
+      "macro_region_id": {
+        "count": 83,
+        "examples": [
+          "0",
+          "1",
+          "10",
+          "105",
+          "109",
+          "11",
+          "110",
+          "111",
+          "114",
+          "115",
+          "118",
+          "12",
+          "13",
+          "130",
+          "14",
+          "143",
+          "15",
+          "16",
+          "17",
+          "18"
+        ]
+      },
+      "plume_id": {
+        "count": 0,
+        "examples": []
+      },
+      "query360_index": {
+        "count": 0,
+        "examples": []
+      }
+    }
+  },
+  "post_write_verification": {
+    "dev": {
+      "id_order_sha256": "c81d307e6ce21be3e8402fa91d075479272f638eb68bbaf309163c1323fc74d2",
+      "rows_reloaded": 12621,
+      "sha256_recomputed": "d1c8084914e1f6a94047e296c5f6da6a12394e72f35c169b250f36483315597f"
+    },
+    "test": {
+      "id_order_sha256": "27aba6c97d51b3c06e8c1fc70a33fbae7f5fe7507489875ef8f5f3f809501024",
+      "rows_reloaded": 31564,
+      "sha256_recomputed": "a547e6d2f76db884b47f6fbaca3df6a1fb4c164ab3dcf332b861d40778117920"
+    },
+    "train_core": {
+      "id_order_sha256": "6bdecb25a423916932076eca69786d17b1327640b7890890b8ad12413d4925bb",
+      "rows_reloaded": 113846,
+      "sha256_recomputed": "99b27f20ea7d2fd865a8936929328f2520dcc3842d3c014b5e504b9f98e36d40"
+    }
+  },
+  "query360_index": {
+    "globally_unique": true,
+    "range": [
+      0,
+      158030
+    ],
+    "rule": "global source-order integer: legacy train first, then legacy test"
+  },
+  "read_policy": {
+    "dev_selection_inputs": "legacy train rows only: event_id, label, availability_signature",
+    "image_or_npz_payloads_opened": false,
+    "manifest_rows_subsampled": false,
+    "s5p_availability_rule": "non-empty .npz s5p_0_path only; s5p_90_path and s5p_360_path ignored"
+  },
+  "schema_version": "legacy360-dual-axis-manifests-v1",
+  "splits": {
+    "dev": {
+      "availability_signature_by_label": {
+        "emit": {
+          "0": 865,
+          "1": 1328
+        },
+        "emit+s5p": {
+          "0": 241,
+          "1": 352
+        },
+        "l89": {
+          "0": 1503,
+          "1": 1529
+        },
+        "l89+emit": {
+          "0": 121,
+          "1": 144
+        },
+        "l89+emit+s5p": {
+          "0": 48,
+          "1": 64
+        },
+        "l89+s5p": {
+          "0": 48,
+          "1": 48
+        },
+        "s2": {
+          "0": 2348,
+          "1": 2373
+        },
+        "s2+emit": {
+          "0": 177,
+          "1": 176
+        },
+        "s2+emit+s5p": {
+          "0": 32,
+          "1": 32
+        },
+        "s2+l89": {
+          "0": 221,
+          "1": 246
+        },
+        "s2+l89+emit": {
+          "0": 16,
+          "1": 16
+        },
+        "s2+l89+emit+s5p": {
+          "0": 16,
+          "1": 16
+        },
+        "s2+l89+s5p": {
+          "0": 0,
+          "1": 32
+        },
+        "s2+s5p": {
+          "0": 174,
+          "1": 182
+        },
+        "s5p": {
+          "0": 128,
+          "1": 145
+        }
+      },
+      "availability_signatures": {
+        "emit": 2193,
+        "emit+s5p": 593,
+        "l89": 3032,
+        "l89+emit": 265,
+        "l89+emit+s5p": 112,
+        "l89+s5p": 96,
+        "s2": 4721,
+        "s2+emit": 353,
+        "s2+emit+s5p": 64,
+        "s2+l89": 467,
+        "s2+l89+emit": 32,
+        "s2+l89+emit+s5p": 32,
+        "s2+l89+s5p": 32,
+        "s2+s5p": 356,
+        "s5p": 273
+      },
+      "cluster_ids": 501,
+      "event_ids": 291,
+      "ids": 12621,
+      "labels": {
+        "0": 5938,
+        "1": 6683
+      },
+      "macro_region_ids": 54,
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_dev.csv",
+      "plume_ids": 621,
+      "positive_fraction": 0.5295143015608906,
+      "query360_index_max": 126440,
+      "query360_index_min": 0,
+      "rows": 12621,
+      "sensor_available_rows": {
+        "emit": 3644,
+        "l89": 4068,
+        "s2": 6057,
+        "s5p": 1558
+      },
+      "sha256": "d1c8084914e1f6a94047e296c5f6da6a12394e72f35c169b250f36483315597f"
+    },
+    "test": {
+      "availability_signature_by_label": {
+        "emit": {
+          "0": 2392,
+          "1": 3496
+        },
+        "emit+s5p": {
+          "0": 530,
+          "1": 879
+        },
+        "l89": {
+          "0": 3638,
+          "1": 3637
+        },
+        "l89+emit": {
+          "0": 314,
+          "1": 391
+        },
+        "l89+emit+s5p": {
+          "0": 104,
+          "1": 132
+        },
+        "l89+s5p": {
+          "0": 230,
+          "1": 259
+        },
+        "s2": {
+          "0": 5742,
+          "1": 5700
+        },
+        "s2+emit": {
+          "0": 322,
+          "1": 328
+        },
+        "s2+emit+s5p": {
+          "0": 143,
+          "1": 144
+        },
+        "s2+l89": {
+          "0": 723,
+          "1": 793
+        },
+        "s2+l89+emit": {
+          "0": 16,
+          "1": 16
+        },
+        "s2+l89+s5p": {
+          "0": 48,
+          "1": 112
+        },
+        "s2+s5p": {
+          "0": 403,
+          "1": 464
+        },
+        "s5p": {
+          "0": 277,
+          "1": 331
+        }
+      },
+      "availability_signatures": {
+        "emit": 5888,
+        "emit+s5p": 1409,
+        "l89": 7275,
+        "l89+emit": 705,
+        "l89+emit+s5p": 236,
+        "l89+s5p": 489,
+        "s2": 11442,
+        "s2+emit": 650,
+        "s2+emit+s5p": 287,
+        "s2+l89": 1516,
+        "s2+l89+emit": 32,
+        "s2+l89+s5p": 160,
+        "s2+s5p": 867,
+        "s5p": 608
+      },
+      "cluster_ids": 1111,
+      "event_ids": 1098,
+      "ids": 31564,
+      "labels": {
+        "0": 14882,
+        "1": 16682
+      },
+      "macro_region_ids": 93,
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_test.csv",
+      "plume_ids": 1533,
+      "positive_fraction": 0.5285134963882905,
+      "query360_index_max": 158030,
+      "query360_index_min": 126467,
+      "rows": 31564,
+      "sensor_available_rows": {
+        "emit": 9207,
+        "l89": 10413,
+        "s2": 14954,
+        "s5p": 4056
+      },
+      "sha256": "a547e6d2f76db884b47f6fbaca3df6a1fb4c164ab3dcf332b861d40778117920"
+    },
+    "train_core": {
+      "availability_signature_by_label": {
+        "emit": {
+          "0": 8048,
+          "1": 12132
+        },
+        "emit+s5p": {
+          "0": 2053,
+          "1": 3418
+        },
+        "l89": {
+          "0": 13527,
+          "1": 13477
+        },
+        "l89+emit": {
+          "0": 1283,
+          "1": 1447
+        },
+        "l89+emit+s5p": {
+          "0": 447,
+          "1": 560
+        },
+        "l89+s5p": {
+          "0": 763,
+          "1": 935
+        },
+        "s2": {
+          "0": 21062,
+          "1": 21330
+        },
+        "s2+emit": {
+          "0": 1077,
+          "1": 1137
+        },
+        "s2+emit+s5p": {
+          "0": 298,
+          "1": 336
+        },
+        "s2+l89": {
+          "0": 2071,
+          "1": 2174
+        },
+        "s2+l89+emit": {
+          "0": 230,
+          "1": 240
+        },
+        "s2+l89+emit+s5p": {
+          "0": 4,
+          "1": 0
+        },
+        "s2+l89+s5p": {
+          "0": 280,
+          "1": 569
+        },
+        "s2+s5p": {
+          "0": 1333,
+          "1": 1437
+        },
+        "s5p": {
+          "0": 1003,
+          "1": 1175
+        }
+      },
+      "availability_signatures": {
+        "emit": 20180,
+        "emit+s5p": 5471,
+        "l89": 27004,
+        "l89+emit": 2730,
+        "l89+emit+s5p": 1007,
+        "l89+s5p": 1698,
+        "s2": 42392,
+        "s2+emit": 2214,
+        "s2+emit+s5p": 634,
+        "s2+l89": 4245,
+        "s2+l89+emit": 470,
+        "s2+l89+emit+s5p": 4,
+        "s2+l89+s5p": 849,
+        "s2+s5p": 2770,
+        "s5p": 2178
+      },
+      "cluster_ids": 2781,
+      "event_ids": 2554,
+      "ids": 113846,
+      "labels": {
+        "0": 53479,
+        "1": 60367
+      },
+      "macro_region_ids": 132,
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/legacy360_train_core.csv",
+      "plume_ids": 5489,
+      "positive_fraction": 0.5302513922316111,
+      "query360_index_max": 126466,
+      "query360_index_min": 32,
+      "rows": 113846,
+      "sensor_available_rows": {
+        "emit": 32710,
+        "l89": 38007,
+        "s2": 53578,
+        "s5p": 14611
+      },
+      "sha256": "99b27f20ea7d2fd865a8936929328f2520dcc3842d3c014b5e504b9f98e36d40"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "direct_counts": {
+    "seasonal:historical_gee_direct": 1037,
+    "t0:historical_cdse0_t0": 999,
+    "year:historical_gee_direct": 1037
+  },
+  "dropped_quality_event_groups": [
+    "GAO20211021t172155p0000",
+    "GAO20211021t173002p0000",
+    "tan20250810t142021c88s4001",
+    "tan20250913t085045c81s4001",
+    "tan20260308t070515c65s4001"
+  ],
+  "dropped_quality_plumes": [
+    "GAO20211021t172155p0000-A",
+    "GAO20211021t173002p0000-A",
+    "GAO20211021t173002p0000-B",
+    "tan20250810t142021c88s4001-A",
+    "tan20250913t085045c81s4001-A",
+    "tan20250913t085045c81s4001-B",
+    "tan20250913t085045c81s4001-C",
+    "tan20260308t070515c65s4001-A",
+    "tan20260308t070515c65s4001-B"
+  ],
+  "elapsed_seconds": 19.83,
+  "fallback_source_counts": {
+    "cdse_nodes_exact": 488,
+    "stac_cog": 8146
+  },
+  "fallback_tasks": 8651,
+  "files": 32106,
+  "final_table": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/s2_v8_all_512.csv",
+  "finished_at": "2026-07-24T07:05:12Z",
+  "restored_bytes": 54338407092,
+  "rows": 5351,
+  "safe_recrop_counts": {
+    "prev1:safe_recrop": 4002,
+    "prev2:safe_recrop": 3846,
+    "prev3:safe_recrop": 2967,
+    "seasonal:safe_recrop": 3103,
+    "t0:safe_recrop": 3164,
+    "year:safe_recrop": 3354
+  },
+  "target_root": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_historical_exact_v8"
+}

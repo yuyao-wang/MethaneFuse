@@ -1,0 +1,426 @@
+{
+  "rows": 36,
+  "tasks": 216,
+  "threshold": 0.2,
+  "unreadable": [],
+  "invalid_centers": [
+    {
+      "plume_id": "GAO20191101t174632p0000-B",
+      "timepoint": "prev1",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/prev1/GAO20191101t174632p0000-B/s2_-7.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.3388671875,
+      "center_zero_fractions": [
+        0.3388671875,
+        0.3388671875,
+        0.3388671875,
+        0.3388671875,
+        0.3388671875,
+        0.3388671875,
+        0.3388671875,
+        0.3388671875,
+        0.3388671875,
+        0.3388671875
+      ]
+    },
+    {
+      "plume_id": "GAO20200724t165348p0000-B",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20200724t165348p0000-B/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.7392578125,
+      "center_zero_fractions": [
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125
+      ]
+    },
+    {
+      "plume_id": "GAO20200724t165348p0000-B",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200724t165348p0000-B/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.7392578125,
+      "center_zero_fractions": [
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125,
+        0.7392578125
+      ]
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20210720t174343p0000-A/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.298828125,
+      "center_zero_fractions": [
+        0.298828125,
+        0.2568359375,
+        0.0,
+        0.0517578125,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "plume_id": "GAO20230509t172829p0000-C",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20230509t172829p0000-C/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.3828125,
+      "center_zero_fractions": [
+        0.3828125,
+        0.3828125,
+        0.3828125,
+        0.3828125,
+        0.3828125,
+        0.3828125,
+        0.3828125,
+        0.3828125,
+        0.3828125,
+        0.3828125
+      ]
+    },
+    {
+      "plume_id": "GAO20230612t170617p0000-A",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/GAO20230612t170617p0000-A/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.416015625,
+      "center_zero_fractions": [
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625
+      ]
+    },
+    {
+      "plume_id": "GAO20230612t170617p0000-A",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20230612t170617p0000-A/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.416015625,
+      "center_zero_fractions": [
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625,
+        0.416015625
+      ]
+    },
+    {
+      "plume_id": "GAO20240420t182155p0000-C",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20240420t182155p0000-C/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 1.0,
+      "center_zero_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "plume_id": "ang20191013t152730-C",
+      "timepoint": "prev3",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/prev3/ang20191013t152730-C/s2_prev3.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.341796875,
+      "center_zero_fractions": [
+        0.341796875,
+        0.341796875,
+        0.341796875,
+        0.341796875,
+        0.341796875,
+        0.341796875,
+        0.341796875,
+        0.341796875,
+        0.341796875,
+        0.341796875
+      ]
+    },
+    {
+      "plume_id": "emi20220901t034652p03009-B",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20220901t034652p03009-B/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 1.0,
+      "center_zero_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "plume_id": "emi20240716t172921p11028-A",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20240716t172921p11028-A/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.3544921875,
+      "center_zero_fractions": [
+        0.3193359375,
+        0.3544921875,
+        0.3544921875,
+        0.3544921875,
+        0.3544921875,
+        0.3544921875,
+        0.3544921875,
+        0.3544921875,
+        0.3544921875,
+        0.3544921875
+      ]
+    },
+    {
+      "plume_id": "emi20240716t172921p11028-A",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/emi20240716t172921p11028-A/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.28515625,
+      "center_zero_fractions": [
+        0.28515625,
+        0.28515625,
+        0.28515625,
+        0.28515625,
+        0.28515625,
+        0.28515625,
+        0.28515625,
+        0.28515625,
+        0.28515625,
+        0.28515625
+      ]
+    },
+    {
+      "plume_id": "emi20250608t011656p01007-A",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/emi20250608t011656p01007-A/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 1.0,
+      "center_zero_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-B",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250812t075729c11s4001-B/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.78125,
+      "center_zero_fractions": [
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125
+      ]
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-B",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/tan20250812t075729c11s4001-B/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.78125,
+      "center_zero_fractions": [
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125,
+        0.78125
+      ]
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-C",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250812t075729c11s4001-C/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.4375,
+      "center_zero_fractions": [
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375
+      ]
+    },
+    {
+      "plume_id": "tan20250812t075729c11s4001-C",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/tan20250812t075729c11s4001-C/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.4375,
+      "center_zero_fractions": [
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375,
+        0.4375
+      ]
+    },
+    {
+      "plume_id": "tan20250821t112530c67s4001-A",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250821t112530c67s4001-A/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 1.0,
+      "center_zero_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "plume_id": "tan20250821t112530c67s4001-B",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250821t112530c67s4001-B/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 1.0,
+      "center_zero_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "plume_id": "tan20250821t112530c67s4001-B",
+      "timepoint": "year",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/tan20250821t112530c67s4001-B/s2_-360.tif",
+      "ok": true,
+      "max_center_zero_fraction": 1.0,
+      "center_zero_fractions": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "plume_id": "tan20250909t080902c64s4001-A",
+      "timepoint": "seasonal",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/seasonal/tan20250909t080902c64s4001-A/s2_-90.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.515625,
+      "center_zero_fractions": [
+        0.515625,
+        0.515625,
+        0.515625,
+        0.515625,
+        0.515625,
+        0.515625,
+        0.515625,
+        0.515625,
+        0.515625,
+        0.515625
+      ]
+    },
+    {
+      "plume_id": "tan20251115t180834c12s4001-A",
+      "timepoint": "prev1",
+      "path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/prev1/tan20251115t180834c12s4001-A/s2_-7.tif",
+      "ok": true,
+      "max_center_zero_fraction": 0.4560546875,
+      "center_zero_fractions": [
+        0.3994140625,
+        0.4560546875,
+        0.4560546875,
+        0.4560546875,
+        0.4560546875,
+        0.455078125,
+        0.4541015625,
+        0.447265625,
+        0.4560546875,
+        0.4560546875
+      ]
+    }
+  ]
+}

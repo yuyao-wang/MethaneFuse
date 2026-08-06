@@ -1,0 +1,51 @@
+{
+  "source_csv": "/mnt/engg-niulab/yuyao/final_crop/s2_6time_legacy_center_zero_mask_32_to_224/all_patches_224.csv",
+  "rule": "drop any event with missing/invalid required time/path columns; split by plume_id event_time date cutoff; train event_time <= cutoff; test event_time > cutoff",
+  "cutoff_date": "2025-12-28",
+  "rows_total_source": 129216,
+  "events_total_source": 4038,
+  "rows_dropped": 320,
+  "events_dropped": 10,
+  "missing_by_required_column": {
+    "event_time": 0,
+    "t0_image_time": 0,
+    "prev1_image_time": 0,
+    "prev2_image_time": 0,
+    "prev3_image_time": 0,
+    "seasonal_image_time": 320,
+    "year_image_time": 320,
+    "path_t0": 0,
+    "path_prev1": 0,
+    "path_prev2": 0,
+    "path_prev3": 0,
+    "path_seasonal": 0,
+    "path_year": 0,
+    "path_plume": 0
+  },
+  "rows_clean": 128896,
+  "events_clean": 4028,
+  "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_6time_legacy_center_zero_mask_temporal_cutoff_2025-12-28/S2_legacy_center_zero_mask_temporal_train_cutoff_2025-12-28.csv",
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_6time_legacy_center_zero_mask_temporal_cutoff_2025-12-28/S2_legacy_center_zero_mask_temporal_test_cutoff_2025-12-28.csv",
+  "dropped_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_6time_legacy_center_zero_mask_temporal_cutoff_2025-12-28/S2_legacy_center_zero_mask_temporal_dropped_missing_required_cutoff_2025-12-28.csv",
+  "train_rows": 109312,
+  "test_rows": 19584,
+  "train_events": 3416,
+  "test_events": 612,
+  "train_ratio_rows": 0.8480635551142006,
+  "test_ratio_rows": 0.1519364448857994,
+  "train_label_counts": {
+    "0": 54656,
+    "1": 54656
+  },
+  "test_label_counts": {
+    "0": 9792,
+    "1": 9792
+  },
+  "event_leakage_count": 0,
+  "per_event_rows_value_counts": {
+    "32": 4028
+  },
+  "per_event_pos_value_counts": {
+    "16": 4028
+  }
+}

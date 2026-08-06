@@ -1,0 +1,25 @@
+{
+  "accuracy": 0.7354497354497355,
+  "ap_random_prevalence_baseline": 0.7619047619047619,
+  "auroc": 0.6357253086419753,
+  "average_precision": 0.8593277597340079,
+  "balanced_accuracy": 0.4979166666666666,
+  "confusion_matrix": {
+    "fn": 7,
+    "fp": 43,
+    "tn": 2,
+    "tp": 137
+  },
+  "count": 189,
+  "decision_rule": "argmax of original two-class model logits",
+  "f1": 0.845679012345679,
+  "fpr": 0.9555555555555556,
+  "manifest": "/home/yuyao/panopticon/data/controlled_release_test/legacy360_shared_materializer_v1/distance144pos_table45neg/manifest.csv",
+  "negative_count": 45,
+  "positive_count": 144,
+  "positive_prevalence": 0.7619047619047619,
+  "precision": 0.7611111111111111,
+  "predicted_positive_count": 180,
+  "predictions": "/home/yuyao/panopticon/results/eval/controlled_release_s2_legacy360_shared_distance144pos_table45neg_universal360_predictions.csv",
+  "recall": 0.9513888888888888
+}

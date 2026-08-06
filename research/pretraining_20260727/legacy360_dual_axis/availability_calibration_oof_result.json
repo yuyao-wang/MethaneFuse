@@ -1,0 +1,2988 @@
+{
+  "fold_audit": [
+    {
+      "calibration_events": 242,
+      "calibration_plumes": 531,
+      "calibration_rows": 10677,
+      "event_overlap": 0,
+      "fold": 0,
+      "held_events": 49,
+      "held_label_counts": {
+        "0": 933,
+        "1": 1011
+      },
+      "held_plumes": 90,
+      "held_rows": 1944,
+      "plume_overlap": 0
+    },
+    {
+      "calibration_events": 231,
+      "calibration_plumes": 481,
+      "calibration_rows": 9801,
+      "event_overlap": 0,
+      "fold": 1,
+      "held_events": 60,
+      "held_label_counts": {
+        "0": 1283,
+        "1": 1537
+      },
+      "held_plumes": 140,
+      "held_rows": 2820,
+      "plume_overlap": 0
+    },
+    {
+      "calibration_events": 222,
+      "calibration_plumes": 473,
+      "calibration_rows": 9857,
+      "event_overlap": 0,
+      "fold": 2,
+      "held_events": 69,
+      "held_label_counts": {
+        "0": 1312,
+        "1": 1452
+      },
+      "held_plumes": 148,
+      "held_rows": 2764,
+      "plume_overlap": 0
+    },
+    {
+      "calibration_events": 238,
+      "calibration_plumes": 506,
+      "calibration_rows": 9826,
+      "event_overlap": 0,
+      "fold": 3,
+      "held_events": 53,
+      "held_label_counts": {
+        "0": 1326,
+        "1": 1469
+      },
+      "held_plumes": 115,
+      "held_rows": 2795,
+      "plume_overlap": 0
+    },
+    {
+      "calibration_events": 231,
+      "calibration_plumes": 493,
+      "calibration_rows": 10323,
+      "event_overlap": 0,
+      "fold": 4,
+      "held_events": 60,
+      "held_label_counts": {
+        "0": 1084,
+        "1": 1214
+      },
+      "held_plumes": 128,
+      "held_rows": 2298,
+      "plume_overlap": 0
+    }
+  ],
+  "fold_calibrators": [
+    {
+      "calibration_rows": 10677,
+      "conditioned": {
+        "availability_signature": {
+          "group_column": "availability_signature",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.3102886481058248,
+              "eligible_local_fit": true,
+              "events": 65,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8513775708187815,
+              "negatives": 793,
+              "positives": 1200,
+              "rows": 1993,
+              "shrink_weight": 0.8861716318363717
+            },
+            "emit+s5p": {
+              "applied_threshold": 0.3893413607097592,
+              "eligible_local_fit": true,
+              "events": 15,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.4020168,
+              "local_training_binary_f1": 0.9258698940998488,
+              "negatives": 213,
+              "positives": 320,
+              "rows": 533,
+              "shrink_weight": 0.6755386565272496
+            },
+            "l89": {
+              "applied_threshold": 0.34867447660258927,
+              "eligible_local_fit": true,
+              "events": 40,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.34708062,
+              "local_training_binary_f1": 0.8813559322033898,
+              "negatives": 1132,
+              "positives": 1161,
+              "rows": 2293,
+              "shrink_weight": 0.8995684582189094
+            },
+            "l89+emit": {
+              "applied_threshold": 0.4271201774193548,
+              "eligible_local_fit": true,
+              "events": 10,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.49556762,
+              "local_training_binary_f1": 0.9584905660377359,
+              "negatives": 112,
+              "positives": 128,
+              "rows": 240,
+              "shrink_weight": 0.4838709677419355
+            },
+            "l89+emit+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 20,
+              "positives": 32,
+              "rows": 52,
+              "shrink_weight": 0.0
+            },
+            "l89+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 32,
+              "rows": 64,
+              "shrink_weight": 0.0
+            },
+            "s2": {
+              "applied_threshold": 0.30992718490549254,
+              "eligible_local_fit": true,
+              "events": 55,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.939524348810872,
+              "negatives": 2108,
+              "positives": 2133,
+              "rows": 4241,
+              "shrink_weight": 0.9430731598843674
+            },
+            "s2+emit": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 4,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 161,
+              "positives": 160,
+              "rows": 321,
+              "shrink_weight": 0.0
+            },
+            "s2+emit+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 32,
+              "rows": 64,
+              "shrink_weight": 0.0
+            },
+            "s2+l89": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 5,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 116,
+              "positives": 134,
+              "rows": 250,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,negatives<16,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 0,
+              "positives": 32,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 5,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 158,
+              "positives": 166,
+              "rows": 324,
+              "shrink_weight": 0.0
+            },
+            "s5p": {
+              "applied_threshold": 0.21739459736842104,
+              "eligible_local_fit": true,
+              "events": 51,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.06083005,
+              "local_training_binary_f1": 0.7393939393939394,
+              "negatives": 112,
+              "positives": 126,
+              "rows": 238,
+              "shrink_weight": 0.4817813765182186
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": [
+            "s2+l89+emit+s5p"
+          ]
+        },
+        "count_primary": {
+          "group_column": "count_primary_key",
+          "groups": {
+            "n=1|primary=emit": {
+              "applied_threshold": 0.3102886481058248,
+              "eligible_local_fit": true,
+              "events": 65,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8513775708187815,
+              "negatives": 793,
+              "positives": 1200,
+              "rows": 1993,
+              "shrink_weight": 0.8861716318363717
+            },
+            "n=1|primary=l89": {
+              "applied_threshold": 0.34867447660258927,
+              "eligible_local_fit": true,
+              "events": 40,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.34708062,
+              "local_training_binary_f1": 0.8813559322033898,
+              "negatives": 1132,
+              "positives": 1161,
+              "rows": 2293,
+              "shrink_weight": 0.8995684582189094
+            },
+            "n=1|primary=s2": {
+              "applied_threshold": 0.30992718490549254,
+              "eligible_local_fit": true,
+              "events": 55,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.939524348810872,
+              "negatives": 2108,
+              "positives": 2133,
+              "rows": 4241,
+              "shrink_weight": 0.9430731598843674
+            },
+            "n=1|primary=s5p": {
+              "applied_threshold": 0.21739459736842104,
+              "eligible_local_fit": true,
+              "events": 51,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.06083005,
+              "local_training_binary_f1": 0.7393939393939394,
+              "negatives": 112,
+              "positives": 126,
+              "rows": 238,
+              "shrink_weight": 0.4817813765182186
+            },
+            "n=2|primary=emit": {
+              "applied_threshold": 0.3893413607097592,
+              "eligible_local_fit": true,
+              "events": 15,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.4020168,
+              "local_training_binary_f1": 0.9258698940998488,
+              "negatives": 213,
+              "positives": 320,
+              "rows": 533,
+              "shrink_weight": 0.6755386565272496
+            },
+            "n=2|primary=l89": {
+              "applied_threshold": 0.3827493188571428,
+              "eligible_local_fit": true,
+              "events": 12,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.39942184,
+              "local_training_binary_f1": 0.9578313253012049,
+              "negatives": 144,
+              "positives": 160,
+              "rows": 304,
+              "shrink_weight": 0.5428571428571428
+            },
+            "n=2|primary=s2": {
+              "applied_threshold": 0.4115607393570808,
+              "eligible_local_fit": true,
+              "events": 14,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.42546484,
+              "local_training_binary_f1": 0.9508547008547008,
+              "negatives": 435,
+              "positives": 460,
+              "rows": 895,
+              "shrink_weight": 0.7775847089487402
+            },
+            "n=3|primary=l89": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 20,
+              "positives": 32,
+              "rows": 52,
+              "shrink_weight": 0.0
+            },
+            "n=3|primary=s2": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 4,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 80,
+              "rows": 128,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": [
+            "n=4|primary=s2"
+          ]
+        },
+        "primary_sensor": {
+          "group_column": "primary_sensor",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.3885184870165349,
+              "eligible_local_fit": true,
+              "events": 77,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.39110968,
+              "local_training_binary_f1": 0.8644995172191825,
+              "negatives": 1006,
+              "positives": 1520,
+              "rows": 2526,
+              "shrink_weight": 0.907979870596693
+            },
+            "l89": {
+              "applied_threshold": 0.3748121742616179,
+              "eligible_local_fit": true,
+              "events": 53,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.37595847,
+              "local_training_binary_f1": 0.8917007815407517,
+              "negatives": 1296,
+              "positives": 1353,
+              "rows": 2649,
+              "shrink_weight": 0.9118760757314974
+            },
+            "s2": {
+              "applied_threshold": 0.4103213883188406,
+              "eligible_local_fit": true,
+              "events": 70,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.41262513,
+              "local_training_binary_f1": 0.9406795224977044,
+              "negatives": 2591,
+              "positives": 2673,
+              "rows": 5264,
+              "shrink_weight": 0.9536231884057971
+            },
+            "s5p": {
+              "applied_threshold": 0.21739459736842104,
+              "eligible_local_fit": true,
+              "events": 51,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.06083005,
+              "local_training_binary_f1": 0.7393939393939394,
+              "negatives": 112,
+              "positives": 126,
+              "rows": 238,
+              "shrink_weight": 0.4817813765182186
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "sensor_count": {
+          "group_column": "sensor_count_key",
+          "groups": {
+            "n=1": {
+              "applied_threshold": 0.2921519250304844,
+              "eligible_local_fit": true,
+              "events": 209,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.2900841,
+              "local_training_binary_f1": 0.8920041536863966,
+              "negatives": 4145,
+              "positives": 4620,
+              "rows": 8765,
+              "shrink_weight": 0.971621771422237
+            },
+            "n=2": {
+              "applied_threshold": 0.39472535517102614,
+              "eligible_local_fit": true,
+              "events": 41,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.39942184,
+              "local_training_binary_f1": 0.9425168306576903,
+              "negatives": 792,
+              "positives": 940,
+              "rows": 1732,
+              "shrink_weight": 0.8712273641851107
+            },
+            "n=3": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 6,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 68,
+              "positives": 112,
+              "rows": 180,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": [
+            "n=4"
+          ]
+        }
+      },
+      "fold": 0,
+      "global": {
+        "calibration_binary_f1": 0.9005544005544005,
+        "threshold": 0.3629507
+      },
+      "held_rows": 1944
+    },
+    {
+      "calibration_rows": 9801,
+      "conditioned": {
+        "availability_signature": {
+          "group_column": "availability_signature",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.3188194723809524,
+              "eligible_local_fit": true,
+              "events": 54,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.3119054,
+              "local_training_binary_f1": 0.8610715979137031,
+              "negatives": 656,
+              "positives": 978,
+              "rows": 1634,
+              "shrink_weight": 0.8645502645502645
+            },
+            "emit+s5p": {
+              "applied_threshold": 0.3845326713286713,
+              "eligible_local_fit": true,
+              "events": 13,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.4020168,
+              "local_training_binary_f1": 0.9205479452054794,
+              "negatives": 140,
+              "positives": 176,
+              "rows": 316,
+              "shrink_weight": 0.5524475524475524
+            },
+            "l89": {
+              "applied_threshold": 0.3710044249731279,
+              "eligible_local_fit": true,
+              "events": 40,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.37181774,
+              "local_training_binary_f1": 0.8917748917748918,
+              "negatives": 1262,
+              "positives": 1273,
+              "rows": 2535,
+              "shrink_weight": 0.9082766033679684
+            },
+            "l89+emit": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 7,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 75,
+              "positives": 96,
+              "rows": 171,
+              "shrink_weight": 0.0
+            },
+            "l89+emit+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 64,
+              "rows": 112,
+              "shrink_weight": 0.0
+            },
+            "l89+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 48,
+              "rows": 96,
+              "shrink_weight": 0.0
+            },
+            "s2": {
+              "applied_threshold": 0.3105709083760684,
+              "eligible_local_fit": true,
+              "events": 54,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.9234527687296417,
+              "negatives": 1739,
+              "positives": 1749,
+              "rows": 3488,
+              "shrink_weight": 0.9316239316239316
+            },
+            "s2+emit": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 4,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 161,
+              "positives": 160,
+              "rows": 321,
+              "shrink_weight": 0.0
+            },
+            "s2+emit+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 32,
+              "rows": 64,
+              "shrink_weight": 0.0
+            },
+            "s2+l89": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 7,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 221,
+              "positives": 246,
+              "rows": 467,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,negatives<16,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 0,
+              "positives": 32,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+s5p": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 5,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 142,
+              "positives": 150,
+              "rows": 292,
+              "shrink_weight": 0.0
+            },
+            "s5p": {
+              "applied_threshold": 0.22358784013548386,
+              "eligible_local_fit": true,
+              "events": 50,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.052885007,
+              "local_training_binary_f1": 0.7353951890034365,
+              "negatives": 99,
+              "positives": 110,
+              "rows": 209,
+              "shrink_weight": 0.44946236559139785
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "count_primary": {
+          "group_column": "count_primary_key",
+          "groups": {
+            "n=1|primary=emit": {
+              "applied_threshold": 0.3188194723809524,
+              "eligible_local_fit": true,
+              "events": 54,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.3119054,
+              "local_training_binary_f1": 0.8610715979137031,
+              "negatives": 656,
+              "positives": 978,
+              "rows": 1634,
+              "shrink_weight": 0.8645502645502645
+            },
+            "n=1|primary=l89": {
+              "applied_threshold": 0.3710044249731279,
+              "eligible_local_fit": true,
+              "events": 40,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.37181774,
+              "local_training_binary_f1": 0.8917748917748918,
+              "negatives": 1262,
+              "positives": 1273,
+              "rows": 2535,
+              "shrink_weight": 0.9082766033679684
+            },
+            "n=1|primary=s2": {
+              "applied_threshold": 0.3105709083760684,
+              "eligible_local_fit": true,
+              "events": 54,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.9234527687296417,
+              "negatives": 1739,
+              "positives": 1749,
+              "rows": 3488,
+              "shrink_weight": 0.9316239316239316
+            },
+            "n=1|primary=s5p": {
+              "applied_threshold": 0.22358784013548386,
+              "eligible_local_fit": true,
+              "events": 50,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.052885007,
+              "local_training_binary_f1": 0.7353951890034365,
+              "negatives": 99,
+              "positives": 110,
+              "rows": 209,
+              "shrink_weight": 0.44946236559139785
+            },
+            "n=2|primary=emit": {
+              "applied_threshold": 0.3845326713286713,
+              "eligible_local_fit": true,
+              "events": 13,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.4020168,
+              "local_training_binary_f1": 0.9205479452054794,
+              "negatives": 140,
+              "positives": 176,
+              "rows": 316,
+              "shrink_weight": 0.5524475524475524
+            },
+            "n=2|primary=l89": {
+              "applied_threshold": 0.3768714878011472,
+              "eligible_local_fit": true,
+              "events": 10,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.39021876,
+              "local_training_binary_f1": 0.9523809523809523,
+              "negatives": 123,
+              "positives": 144,
+              "rows": 267,
+              "shrink_weight": 0.5105162523900574
+            },
+            "n=2|primary=s2": {
+              "applied_threshold": 0.3609252958083833,
+              "eligible_local_fit": true,
+              "events": 16,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.3604452,
+              "local_training_binary_f1": 0.9352014010507881,
+              "negatives": 524,
+              "positives": 556,
+              "rows": 1080,
+              "shrink_weight": 0.8083832335329342
+            },
+            "n=3|primary=l89": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 64,
+              "rows": 112,
+              "shrink_weight": 0.0
+            },
+            "n=3|primary=s2": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 4,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 80,
+              "rows": 128,
+              "shrink_weight": 0.0
+            },
+            "n=4|primary=s2": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "primary_sensor": {
+          "group_column": "primary_sensor",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.38863353476881235,
+              "eligible_local_fit": true,
+              "events": 66,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.39200523,
+              "local_training_binary_f1": 0.8676532769556026,
+              "negatives": 796,
+              "positives": 1154,
+              "rows": 1950,
+              "shrink_weight": 0.8839528558476881
+            },
+            "l89": {
+              "applied_threshold": 0.37110166358359625,
+              "eligible_local_fit": true,
+              "events": 52,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.37181774,
+              "local_training_binary_f1": 0.8997982515131137,
+              "negatives": 1433,
+              "positives": 1481,
+              "rows": 2914,
+              "shrink_weight": 0.9192429022082019
+            },
+            "s2": {
+              "applied_threshold": 0.3243198853932584,
+              "eligible_local_fit": true,
+              "events": 73,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.3222282,
+              "local_training_binary_f1": 0.9256165473349244,
+              "negatives": 2327,
+              "positives": 2401,
+              "rows": 4728,
+              "shrink_weight": 0.9486356340288925
+            },
+            "s5p": {
+              "applied_threshold": 0.22358784013548386,
+              "eligible_local_fit": true,
+              "events": 50,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.052885007,
+              "local_training_binary_f1": 0.7353951890034365,
+              "negatives": 99,
+              "positives": 110,
+              "rows": 209,
+              "shrink_weight": 0.44946236559139785
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "sensor_count": {
+          "group_column": "sensor_count_key",
+          "groups": {
+            "n=1": {
+              "applied_threshold": 0.316845170494952,
+              "eligible_local_fit": true,
+              "events": 197,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.31534466,
+              "local_training_binary_f1": 0.8896156991005724,
+              "negatives": 3756,
+              "positives": 4110,
+              "rows": 7866,
+              "shrink_weight": 0.9684806697857671
+            },
+            "n=2": {
+              "applied_threshold": 0.3717129074778531,
+              "eligible_local_fit": true,
+              "events": 39,
+              "fallback_reason": null,
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": 0.37306175,
+              "local_training_binary_f1": 0.9314917127071823,
+              "negatives": 787,
+              "positives": 876,
+              "rows": 1663,
+              "shrink_weight": 0.866597186034393
+            },
+            "n=3": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 7,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 96,
+              "positives": 144,
+              "rows": 240,
+              "shrink_weight": 0.0
+            },
+            "n=4": {
+              "applied_threshold": 0.3629507,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.3629507,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        }
+      },
+      "fold": 1,
+      "global": {
+        "calibration_binary_f1": 0.8972829688535454,
+        "threshold": 0.3629507
+      },
+      "held_rows": 2820
+    },
+    {
+      "calibration_rows": 9857,
+      "conditioned": {
+        "availability_signature": {
+          "group_column": "availability_signature",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.3104666057486137,
+              "eligible_local_fit": true,
+              "events": 60,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8693204664254122,
+              "negatives": 758,
+              "positives": 1150,
+              "rows": 1908,
+              "shrink_weight": 0.8817005545286506
+            },
+            "emit+s5p": {
+              "applied_threshold": 0.4131726946745562,
+              "eligible_local_fit": true,
+              "events": 15,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.44423628,
+              "local_training_binary_f1": 0.9050279329608939,
+              "negatives": 164,
+              "positives": 256,
+              "rows": 420,
+              "shrink_weight": 0.621301775147929
+            },
+            "l89": {
+              "applied_threshold": 0.36681584558011054,
+              "eligible_local_fit": true,
+              "events": 45,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.36726257,
+              "local_training_binary_f1": 0.8891394212701992,
+              "negatives": 1303,
+              "positives": 1337,
+              "rows": 2640,
+              "shrink_weight": 0.9116022099447514
+            },
+            "l89+emit": {
+              "applied_threshold": 0.49539384259259256,
+              "eligible_local_fit": true,
+              "events": 8,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.68911725,
+              "local_training_binary_f1": 0.9297297297297298,
+              "negatives": 80,
+              "positives": 96,
+              "rows": 176,
+              "shrink_weight": 0.4074074074074074
+            },
+            "l89+emit+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 64,
+              "rows": 112,
+              "shrink_weight": 0.0
+            },
+            "l89+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 32,
+              "rows": 64,
+              "shrink_weight": 0.0
+            },
+            "s2": {
+              "applied_threshold": 0.3105840742857143,
+              "eligible_local_fit": true,
+              "events": 45,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.926896551724138,
+              "negatives": 1700,
+              "positives": 1726,
+              "rows": 3426,
+              "shrink_weight": 0.9304725692558392
+            },
+            "s2+emit": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 4,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 176,
+              "positives": 176,
+              "rows": 352,
+              "shrink_weight": 0.0
+            },
+            "s2+emit+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 6,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 200,
+              "positives": 214,
+              "rows": 414,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 48,
+              "rows": 96,
+              "shrink_weight": 0.0
+            },
+            "s5p": {
+              "applied_threshold": 0.25039833922902494,
+              "eligible_local_fit": true,
+              "events": 44,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.09567656,
+              "local_training_binary_f1": 0.7530364372469636,
+              "negatives": 85,
+              "positives": 100,
+              "rows": 185,
+              "shrink_weight": 0.41950113378684806
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": [
+            "s2+l89+emit",
+            "s2+l89+s5p"
+          ]
+        },
+        "count_primary": {
+          "group_column": "count_primary_key",
+          "groups": {
+            "n=1|primary=emit": {
+              "applied_threshold": 0.3104666057486137,
+              "eligible_local_fit": true,
+              "events": 60,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8693204664254122,
+              "negatives": 758,
+              "positives": 1150,
+              "rows": 1908,
+              "shrink_weight": 0.8817005545286506
+            },
+            "n=1|primary=l89": {
+              "applied_threshold": 0.36681584558011054,
+              "eligible_local_fit": true,
+              "events": 45,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.36726257,
+              "local_training_binary_f1": 0.8891394212701992,
+              "negatives": 1303,
+              "positives": 1337,
+              "rows": 2640,
+              "shrink_weight": 0.9116022099447514
+            },
+            "n=1|primary=s2": {
+              "applied_threshold": 0.3105840742857143,
+              "eligible_local_fit": true,
+              "events": 45,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.926896551724138,
+              "negatives": 1700,
+              "positives": 1726,
+              "rows": 3426,
+              "shrink_weight": 0.9304725692558392
+            },
+            "n=1|primary=s5p": {
+              "applied_threshold": 0.25039833922902494,
+              "eligible_local_fit": true,
+              "events": 44,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.09567656,
+              "local_training_binary_f1": 0.7530364372469636,
+              "negatives": 85,
+              "positives": 100,
+              "rows": 185,
+              "shrink_weight": 0.41950113378684806
+            },
+            "n=2|primary=emit": {
+              "applied_threshold": 0.4131726946745562,
+              "eligible_local_fit": true,
+              "events": 15,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.44423628,
+              "local_training_binary_f1": 0.9050279329608939,
+              "negatives": 164,
+              "positives": 256,
+              "rows": 420,
+              "shrink_weight": 0.621301775147929
+            },
+            "n=2|primary=l89": {
+              "applied_threshold": 0.39849128064516126,
+              "eligible_local_fit": true,
+              "events": 10,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.43719238,
+              "local_training_binary_f1": 0.9389312977099237,
+              "negatives": 112,
+              "positives": 128,
+              "rows": 240,
+              "shrink_weight": 0.4838709677419355
+            },
+            "n=2|primary=s2": {
+              "applied_threshold": 0.3503422592665474,
+              "eligible_local_fit": true,
+              "events": 12,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.34681803,
+              "local_training_binary_f1": 0.9271523178807947,
+              "negatives": 424,
+              "positives": 438,
+              "rows": 862,
+              "shrink_weight": 0.7710196779964222
+            },
+            "n=3|primary=l89": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 64,
+              "rows": 112,
+              "shrink_weight": 0.0
+            },
+            "n=3|primary=s2": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "n=4|primary=s2": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "primary_sensor": {
+          "group_column": "primary_sensor",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.38824645473684216,
+              "eligible_local_fit": true,
+              "events": 73,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.39110968,
+              "local_training_binary_f1": 0.8743994509265615,
+              "negatives": 922,
+              "positives": 1406,
+              "rows": 2328,
+              "shrink_weight": 0.9009287925696594
+            },
+            "l89": {
+              "applied_threshold": 0.39660551285714285,
+              "eligible_local_fit": true,
+              "events": 57,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.39954853,
+              "local_training_binary_f1": 0.8956206783009549,
+              "negatives": 1463,
+              "positives": 1529,
+              "rows": 2992,
+              "shrink_weight": 0.9211822660098522
+            },
+            "s2": {
+              "applied_threshold": 0.3135189222222222,
+              "eligible_local_fit": true,
+              "events": 58,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.3106548,
+              "local_training_binary_f1": 0.9270199826238054,
+              "negatives": 2156,
+              "positives": 2196,
+              "rows": 4352,
+              "shrink_weight": 0.9444444444444444
+            },
+            "s5p": {
+              "applied_threshold": 0.25039833922902494,
+              "eligible_local_fit": true,
+              "events": 44,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.09567656,
+              "local_training_binary_f1": 0.7530364372469636,
+              "negatives": 85,
+              "positives": 100,
+              "rows": 185,
+              "shrink_weight": 0.41950113378684806
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "sensor_count": {
+          "group_column": "sensor_count_key",
+          "groups": {
+            "n=1": {
+              "applied_threshold": 0.30936544035650626,
+              "eligible_local_fit": true,
+              "events": 193,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.3077074,
+              "local_training_binary_f1": 0.8912390070132472,
+              "negatives": 3846,
+              "positives": 4313,
+              "rows": 8159,
+              "shrink_weight": 0.9695781342840166
+            },
+            "n=2": {
+              "applied_threshold": 0.34710142084364454,
+              "eligible_local_fit": true,
+              "events": 37,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.34456033,
+              "local_training_binary_f1": 0.9187319884726225,
+              "negatives": 700,
+              "positives": 822,
+              "rows": 1522,
+              "shrink_weight": 0.8560179977502812
+            },
+            "n=3": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 4,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 64,
+              "positives": 80,
+              "rows": 144,
+              "shrink_weight": 0.0
+            },
+            "n=4": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        }
+      },
+      "fold": 2,
+      "global": {
+        "calibration_binary_f1": 0.8958585388552815,
+        "threshold": 0.362209
+      },
+      "held_rows": 2764
+    },
+    {
+      "calibration_rows": 9826,
+      "conditioned": {
+        "availability_signature": {
+          "group_column": "availability_signature",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.31097256967278136,
+              "eligible_local_fit": true,
+              "events": 63,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8571428571428571,
+              "negatives": 688,
+              "positives": 1073,
+              "rows": 1761,
+              "shrink_weight": 0.8730788299454636
+            },
+            "emit+s5p": {
+              "applied_threshold": 0.4186900711435523,
+              "eligible_local_fit": true,
+              "events": 18,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.44423628,
+              "local_training_binary_f1": 0.911976911976912,
+              "negatives": 230,
+              "positives": 336,
+              "rows": 566,
+              "shrink_weight": 0.6885644768856448
+            },
+            "l89": {
+              "applied_threshold": 0.3535957371162335,
+              "eligible_local_fit": true,
+              "events": 37,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.35235906,
+              "local_training_binary_f1": 0.8826446280991735,
+              "negatives": 894,
+              "positives": 889,
+              "rows": 1783,
+              "shrink_weight": 0.874448258950466
+            },
+            "l89+emit": {
+              "applied_threshold": 0.3757329043232323,
+              "eligible_local_fit": true,
+              "events": 10,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.39021876,
+              "local_training_binary_f1": 0.9363295880149812,
+              "negatives": 111,
+              "positives": 128,
+              "rows": 239,
+              "shrink_weight": 0.48282828282828283
+            },
+            "l89+emit+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 44,
+              "positives": 48,
+              "rows": 92,
+              "shrink_weight": 0.0
+            },
+            "l89+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 32,
+              "rows": 64,
+              "shrink_weight": 0.0
+            },
+            "s2": {
+              "applied_threshold": 0.41344856264282165,
+              "eligible_local_fit": true,
+              "events": 50,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.41692796,
+              "local_training_binary_f1": 0.9376748918850165,
+              "negatives": 1877,
+              "positives": 1893,
+              "rows": 3770,
+              "shrink_weight": 0.9364133134624938
+            },
+            "s2+emit": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 5,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 177,
+              "positives": 176,
+              "rows": 353,
+              "shrink_weight": 0.0
+            },
+            "s2+emit+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 7,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 221,
+              "positives": 246,
+              "rows": 467,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,negatives<16,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 0,
+              "positives": 32,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+s5p": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 6,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 174,
+              "positives": 182,
+              "rows": 356,
+              "shrink_weight": 0.0
+            },
+            "s5p": {
+              "applied_threshold": 0.21421575815109345,
+              "eligible_local_fit": true,
+              "events": 53,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.06083005,
+              "local_training_binary_f1": 0.7411764705882353,
+              "negatives": 116,
+              "positives": 131,
+              "rows": 247,
+              "shrink_weight": 0.49105367793240556
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "count_primary": {
+          "group_column": "count_primary_key",
+          "groups": {
+            "n=1|primary=emit": {
+              "applied_threshold": 0.31097256967278136,
+              "eligible_local_fit": true,
+              "events": 63,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8571428571428571,
+              "negatives": 688,
+              "positives": 1073,
+              "rows": 1761,
+              "shrink_weight": 0.8730788299454636
+            },
+            "n=1|primary=l89": {
+              "applied_threshold": 0.3535957371162335,
+              "eligible_local_fit": true,
+              "events": 37,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.35235906,
+              "local_training_binary_f1": 0.8826446280991735,
+              "negatives": 894,
+              "positives": 889,
+              "rows": 1783,
+              "shrink_weight": 0.874448258950466
+            },
+            "n=1|primary=s2": {
+              "applied_threshold": 0.41344856264282165,
+              "eligible_local_fit": true,
+              "events": 50,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.41692796,
+              "local_training_binary_f1": 0.9376748918850165,
+              "negatives": 1877,
+              "positives": 1893,
+              "rows": 3770,
+              "shrink_weight": 0.9364133134624938
+            },
+            "n=1|primary=s5p": {
+              "applied_threshold": 0.21421575815109345,
+              "eligible_local_fit": true,
+              "events": 53,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.06083005,
+              "local_training_binary_f1": 0.7411764705882353,
+              "negatives": 116,
+              "positives": 131,
+              "rows": 247,
+              "shrink_weight": 0.49105367793240556
+            },
+            "n=2|primary=emit": {
+              "applied_threshold": 0.4186900711435523,
+              "eligible_local_fit": true,
+              "events": 18,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.44423628,
+              "local_training_binary_f1": 0.911976911976912,
+              "negatives": 230,
+              "positives": 336,
+              "rows": 566,
+              "shrink_weight": 0.6885644768856448
+            },
+            "n=2|primary=l89": {
+              "applied_threshold": 0.37739139227191415,
+              "eligible_local_fit": true,
+              "events": 12,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.39021876,
+              "local_training_binary_f1": 0.9486404833836858,
+              "negatives": 143,
+              "positives": 160,
+              "rows": 303,
+              "shrink_weight": 0.5420393559928444
+            },
+            "n=2|primary=s2": {
+              "applied_threshold": 0.3607605162011173,
+              "eligible_local_fit": true,
+              "events": 18,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.3604452,
+              "local_training_binary_f1": 0.9371980676328503,
+              "negatives": 572,
+              "positives": 604,
+              "rows": 1176,
+              "shrink_weight": 0.8212290502793296
+            },
+            "n=3|primary=l89": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 44,
+              "positives": 48,
+              "rows": 92,
+              "shrink_weight": 0.0
+            },
+            "n=3|primary=s2": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 64,
+              "rows": 96,
+              "shrink_weight": 0.0
+            },
+            "n=4|primary=s2": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "primary_sensor": {
+          "group_column": "primary_sensor",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.30934045188153314,
+              "eligible_local_fit": true,
+              "events": 78,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8672212978369385,
+              "negatives": 918,
+              "positives": 1409,
+              "rows": 2327,
+              "shrink_weight": 0.9008904374758033
+            },
+            "l89": {
+              "applied_threshold": 0.36673105236647496,
+              "eligible_local_fit": true,
+              "events": 51,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.36726257,
+              "local_training_binary_f1": 0.8928412627834593,
+              "negatives": 1081,
+              "positives": 1097,
+              "rows": 2178,
+              "shrink_weight": 0.8948233360723089
+            },
+            "s2": {
+              "applied_threshold": 0.3738338100712945,
+              "eligible_local_fit": true,
+              "events": 69,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.37442032,
+              "local_training_binary_f1": 0.937196261682243,
+              "negatives": 2497,
+              "positives": 2577,
+              "rows": 5074,
+              "shrink_weight": 0.9519699812382739
+            },
+            "s5p": {
+              "applied_threshold": 0.21421575815109345,
+              "eligible_local_fit": true,
+              "events": 53,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.06083005,
+              "local_training_binary_f1": 0.7411764705882353,
+              "negatives": 116,
+              "positives": 131,
+              "rows": 247,
+              "shrink_weight": 0.49105367793240556
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "sensor_count": {
+          "group_column": "sensor_count_key",
+          "groups": {
+            "n=1": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": true,
+              "events": 201,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.362209,
+              "local_training_binary_f1": 0.8913389685164768,
+              "negatives": 3575,
+              "positives": 3986,
+              "rows": 7561,
+              "shrink_weight": 0.9672508635026225
+            },
+            "n=2": {
+              "applied_threshold": 0.4133600668622338,
+              "eligible_local_fit": true,
+              "events": 48,
+              "fallback_reason": null,
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": 0.41976333,
+              "local_training_binary_f1": 0.9281277728482697,
+              "negatives": 945,
+              "positives": 1100,
+              "rows": 2045,
+              "shrink_weight": 0.8887440243372446
+            },
+            "n=3": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 5,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 76,
+              "positives": 112,
+              "rows": 188,
+              "shrink_weight": 0.0
+            },
+            "n=4": {
+              "applied_threshold": 0.362209,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.362209,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        }
+      },
+      "fold": 3,
+      "global": {
+        "calibration_binary_f1": 0.8999720331872845,
+        "threshold": 0.362209
+      },
+      "held_rows": 2795
+    },
+    {
+      "calibration_rows": 10323,
+      "conditioned": {
+        "availability_signature": {
+          "group_column": "availability_signature",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.30586020339491915,
+              "eligible_local_fit": true,
+              "events": 54,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8515864892528148,
+              "negatives": 565,
+              "positives": 911,
+              "rows": 1476,
+              "shrink_weight": 0.8521939953810623
+            },
+            "emit+s5p": {
+              "applied_threshold": 0.5188580577427491,
+              "eligible_local_fit": true,
+              "events": 15,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.61397827,
+              "local_training_binary_f1": 0.9169329073482428,
+              "negatives": 217,
+              "positives": 320,
+              "rows": 537,
+              "shrink_weight": 0.6771752837326608
+            },
+            "l89": {
+              "applied_threshold": 0.34481297559527607,
+              "eligible_local_fit": true,
+              "events": 46,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.34708062,
+              "local_training_binary_f1": 0.8829201101928374,
+              "negatives": 1421,
+              "positives": 1456,
+              "rows": 2877,
+              "shrink_weight": 0.918289179699968
+            },
+            "l89+emit": {
+              "applied_threshold": 0.353182242122449,
+              "eligible_local_fit": true,
+              "events": 9,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.39021876,
+              "local_training_binary_f1": 0.9505703422053232,
+              "negatives": 106,
+              "positives": 128,
+              "rows": 234,
+              "shrink_weight": 0.4775510204081633
+            },
+            "l89+emit+s5p": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 48,
+              "rows": 80,
+              "shrink_weight": 0.0
+            },
+            "l89+s5p": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 48,
+              "rows": 96,
+              "shrink_weight": 0.0
+            },
+            "s2": {
+              "applied_threshold": 0.3074919101969158,
+              "eligible_local_fit": true,
+              "events": 56,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.93125,
+              "negatives": 1968,
+              "positives": 1991,
+              "rows": 3959,
+              "shrink_weight": 0.9392645314353499
+            },
+            "s2+emit": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 33,
+              "positives": 32,
+              "rows": 65,
+              "shrink_weight": 0.0
+            },
+            "s2+emit+s5p": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 32,
+              "rows": 64,
+              "shrink_weight": 0.0
+            },
+            "s2+l89": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 3,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 126,
+              "positives": 144,
+              "rows": 270,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+emit+s5p": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+l89+s5p": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,negatives<16,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 0,
+              "positives": 32,
+              "rows": 32,
+              "shrink_weight": 0.0
+            },
+            "s2+s5p": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 6,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 174,
+              "positives": 182,
+              "rows": 356,
+              "shrink_weight": 0.0
+            },
+            "s5p": {
+              "applied_threshold": 0.21973947351812367,
+              "eligible_local_fit": true,
+              "events": 46,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.10004556,
+              "local_training_binary_f1": 0.743859649122807,
+              "negatives": 100,
+              "positives": 113,
+              "rows": 213,
+              "shrink_weight": 0.4541577825159915
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "count_primary": {
+          "group_column": "count_primary_key",
+          "groups": {
+            "n=1|primary=emit": {
+              "applied_threshold": 0.30586020339491915,
+              "eligible_local_fit": true,
+              "events": 54,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.30352423,
+              "local_training_binary_f1": 0.8515864892528148,
+              "negatives": 565,
+              "positives": 911,
+              "rows": 1476,
+              "shrink_weight": 0.8521939953810623
+            },
+            "n=1|primary=l89": {
+              "applied_threshold": 0.34481297559527607,
+              "eligible_local_fit": true,
+              "events": 46,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.34708062,
+              "local_training_binary_f1": 0.8829201101928374,
+              "negatives": 1421,
+              "positives": 1456,
+              "rows": 2877,
+              "shrink_weight": 0.918289179699968
+            },
+            "n=1|primary=s2": {
+              "applied_threshold": 0.3074919101969158,
+              "eligible_local_fit": true,
+              "events": 56,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.30672652,
+              "local_training_binary_f1": 0.93125,
+              "negatives": 1968,
+              "positives": 1991,
+              "rows": 3959,
+              "shrink_weight": 0.9392645314353499
+            },
+            "n=1|primary=s5p": {
+              "applied_threshold": 0.21973947351812367,
+              "eligible_local_fit": true,
+              "events": 46,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.10004556,
+              "local_training_binary_f1": 0.743859649122807,
+              "negatives": 100,
+              "positives": 113,
+              "rows": 213,
+              "shrink_weight": 0.4541577825159915
+            },
+            "n=2|primary=emit": {
+              "applied_threshold": 0.5188580577427491,
+              "eligible_local_fit": true,
+              "events": 15,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.61397827,
+              "local_training_binary_f1": 0.9169329073482428,
+              "negatives": 217,
+              "positives": 320,
+              "rows": 537,
+              "shrink_weight": 0.6771752837326608
+            },
+            "n=2|primary=l89": {
+              "applied_threshold": 0.3592496580204778,
+              "eligible_local_fit": true,
+              "events": 12,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.39021876,
+              "local_training_binary_f1": 0.9608938547486033,
+              "negatives": 154,
+              "positives": 176,
+              "rows": 330,
+              "shrink_weight": 0.5631399317406144
+            },
+            "n=2|primary=s2": {
+              "applied_threshold": 0.3393868717317846,
+              "eligible_local_fit": true,
+              "events": 12,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.34681803,
+              "local_training_binary_f1": 0.9374167776298269,
+              "negatives": 333,
+              "positives": 358,
+              "rows": 691,
+              "shrink_weight": 0.7296726504751848
+            },
+            "n=3|primary=l89": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 2,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 32,
+              "positives": 48,
+              "rows": 80,
+              "shrink_weight": 0.0
+            },
+            "n=3|primary=s2": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 4,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 48,
+              "positives": 80,
+              "rows": 128,
+              "shrink_weight": 0.0
+            },
+            "n=4|primary=s2": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "primary_sensor": {
+          "group_column": "primary_sensor",
+          "groups": {
+            "emit": {
+              "applied_threshold": 0.3098172802556192,
+              "eligible_local_fit": true,
+              "events": 66,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.3086077,
+              "local_training_binary_f1": 0.8607975921745673,
+              "negatives": 782,
+              "positives": 1231,
+              "rows": 2013,
+              "shrink_weight": 0.8871749669457911
+            },
+            "l89": {
+              "applied_threshold": 0.36379909014676826,
+              "eligible_local_fit": true,
+              "events": 59,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.36726257,
+              "local_training_binary_f1": 0.892463509085493,
+              "negatives": 1607,
+              "positives": 1680,
+              "rows": 3287,
+              "shrink_weight": 0.9277448489980242
+            },
+            "s2": {
+              "applied_threshold": 0.3220816720884327,
+              "eligible_local_fit": true,
+              "events": 70,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.3222282,
+              "local_training_binary_f1": 0.9317914543316347,
+              "negatives": 2365,
+              "positives": 2445,
+              "rows": 4810,
+              "shrink_weight": 0.9494670351362021
+            },
+            "s5p": {
+              "applied_threshold": 0.21973947351812367,
+              "eligible_local_fit": true,
+              "events": 46,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.10004556,
+              "local_training_binary_f1": 0.743859649122807,
+              "negatives": 100,
+              "positives": 113,
+              "rows": 213,
+              "shrink_weight": 0.4541577825159915
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        },
+        "sensor_count": {
+          "group_column": "sensor_count_key",
+          "groups": {
+            "n=1": {
+              "applied_threshold": 0.30804620132103405,
+              "eligible_local_fit": true,
+              "events": 200,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.3077074,
+              "local_training_binary_f1": 0.8904479222881814,
+              "negatives": 4054,
+              "positives": 4471,
+              "rows": 8525,
+              "shrink_weight": 0.9708461450859811
+            },
+            "n=2": {
+              "applied_threshold": 0.3967563402976847,
+              "eligible_local_fit": true,
+              "events": 39,
+              "fallback_reason": null,
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": 0.40947875,
+              "local_training_binary_f1": 0.9291784702549575,
+              "negatives": 704,
+              "positives": 854,
+              "rows": 1558,
+              "shrink_weight": 0.8588754134509372
+            },
+            "n=3": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 6,
+              "fallback_reason": "events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 80,
+              "positives": 128,
+              "rows": 208,
+              "shrink_weight": 0.0
+            },
+            "n=4": {
+              "applied_threshold": 0.31932855,
+              "eligible_local_fit": false,
+              "events": 1,
+              "fallback_reason": "rows<128,events<8",
+              "global_threshold": 0.31932855,
+              "local_threshold_unshrunk": null,
+              "local_training_binary_f1": null,
+              "negatives": 16,
+              "positives": 16,
+              "rows": 32,
+              "shrink_weight": 0.0
+            }
+          },
+          "unseen_held_groups_falling_back_to_global": []
+        }
+      },
+      "fold": 4,
+      "global": {
+        "calibration_binary_f1": 0.8961690885072655,
+        "threshold": 0.31932855
+      },
+      "held_rows": 2298
+    }
+  ],
+  "generated_utc": "2026-07-28T01:16:30.625438+00:00",
+  "inputs": {
+    "canonical_dev_manifest": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_dev_sanitized.csv",
+      "sha256": "4f6fa26292461feb3def0213d97782c4968c4ad096394b5d94448ab23e7ed924"
+    },
+    "predictions": {
+      "path": "/diniuvol/yuyao/methanefuse_two_axis_legacy360_v1/formal_v5/pilot16k_heads_axial/universal_current_only_lr1e4/dev_predictions_best.csv",
+      "sha256": "bfce305268f4959525fbadd0a7eee4cbb64b4488132013738dbb2f39fdbda71d"
+    },
+    "test_or_sealed_input_read": false
+  },
+  "interpretation_guardrail": "Dev-only OOF calibration of frozen probabilities; not a dual-axis, training, representation, or pretraining gain; no final-test claim.",
+  "join_audit": {
+    "availability_counts": {
+      "emit": 2193,
+      "emit+s5p": 593,
+      "l89": 3032,
+      "l89+emit": 265,
+      "l89+emit+s5p": 112,
+      "l89+s5p": 96,
+      "s2": 4721,
+      "s2+emit": 353,
+      "s2+emit+s5p": 64,
+      "s2+l89": 467,
+      "s2+l89+emit": 32,
+      "s2+l89+emit+s5p": 32,
+      "s2+l89+s5p": 32,
+      "s2+s5p": 356,
+      "s5p": 273
+    },
+    "canonical_event_source": "manifest.event_id",
+    "canonical_primary_sensor_source": "manifest.anchor_sensor",
+    "event_count": 291,
+    "every_plume_maps_to_exactly_one_event": true,
+    "id_sets_identical": true,
+    "join_cardinality": "one_to_one",
+    "join_key": "id",
+    "joined_rows": 12621,
+    "label_counts": {
+      "0": 5938,
+      "1": 6683
+    },
+    "manifest_id_unique": true,
+    "manifest_rows": 12621,
+    "metadata_fields_verified_equal": [
+      "label",
+      "plume_id",
+      "availability_signature"
+    ],
+    "plume_count": 621,
+    "prediction_id_unique": true,
+    "prediction_rows": 12621
+  },
+  "oof_metrics_by_availability_signature": {
+    "emit": {
+      "events": 74,
+      "negatives": 865,
+      "positives": 1328,
+      "rows": 2193,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.8569415081042988,
+          "macro_f1": 0.7973338031477566
+        },
+        "count_primary": {
+          "binary_f1": 0.8569415081042988,
+          "macro_f1": 0.7973338031477566
+        },
+        "global": {
+          "binary_f1": 0.850632911392405,
+          "macro_f1": 0.7979259560046541
+        },
+        "primary_sensor": {
+          "binary_f1": 0.8505415162454874,
+          "macro_f1": 0.7971766987168031
+        },
+        "sensor_count": {
+          "binary_f1": 0.8556263269639066,
+          "macro_f1": 0.7970439327127226
+        }
+      }
+    },
+    "emit+s5p": {
+      "events": 19,
+      "negatives": 241,
+      "positives": 352,
+      "rows": 593,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9001367989056087,
+          "macro_f1": 0.8698486192330241
+        },
+        "count_primary": {
+          "binary_f1": 0.9001367989056087,
+          "macro_f1": 0.8698486192330241
+        },
+        "global": {
+          "binary_f1": 0.9057104913678619,
+          "macro_f1": 0.870869102496864
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9078771695594126,
+          "macro_f1": 0.8749912163586536
+        },
+        "sensor_count": {
+          "binary_f1": 0.9064171122994652,
+          "macro_f1": 0.8732998803506458
+        }
+      }
+    },
+    "l89": {
+      "events": 52,
+      "negatives": 1503,
+      "positives": 1529,
+      "rows": 3032,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.8843760235833606,
+          "macro_f1": 0.8835696125887578
+        },
+        "count_primary": {
+          "binary_f1": 0.8843760235833606,
+          "macro_f1": 0.8835696125887578
+        },
+        "global": {
+          "binary_f1": 0.8841623036649214,
+          "macro_f1": 0.8832380667260777
+        },
+        "primary_sensor": {
+          "binary_f1": 0.8825271470878578,
+          "macro_f1": 0.8822553090811189
+        },
+        "sensor_count": {
+          "binary_f1": 0.8821243523316062,
+          "macro_f1": 0.8799062621873085
+        }
+      }
+    },
+    "l89+emit": {
+      "events": 11,
+      "negatives": 121,
+      "positives": 144,
+      "rows": 265,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9297658862876255,
+          "macro_f1": 0.9194283976892672
+        },
+        "count_primary": {
+          "binary_f1": 0.9368770764119602,
+          "macro_f1": 0.9269538220487749
+        },
+        "global": {
+          "binary_f1": 0.9311475409836065,
+          "macro_f1": 0.9189071038251366
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9337748344370861,
+          "macro_f1": 0.923027768095736
+        },
+        "sensor_count": {
+          "binary_f1": 0.9240924092409241,
+          "macro_f1": 0.9113854116689202
+        }
+      }
+    },
+    "l89+emit+s5p": {
+      "events": 3,
+      "negatives": 48,
+      "positives": 64,
+      "rows": 112,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9343065693430657,
+          "macro_f1": 0.9154291467404984
+        },
+        "count_primary": {
+          "binary_f1": 0.9343065693430657,
+          "macro_f1": 0.9154291467404984
+        },
+        "global": {
+          "binary_f1": 0.9343065693430657,
+          "macro_f1": 0.9154291467404984
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9411764705882353,
+          "macro_f1": 0.9251336898395721
+        },
+        "sensor_count": {
+          "binary_f1": 0.9343065693430657,
+          "macro_f1": 0.9154291467404984
+        }
+      }
+    },
+    "l89+s5p": {
+      "events": 3,
+      "negatives": 48,
+      "positives": 48,
+      "rows": 96,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9894736842105263,
+          "macro_f1": 0.9895822029300054
+        },
+        "count_primary": {
+          "binary_f1": 0.9894736842105263,
+          "macro_f1": 0.9895822029300054
+        },
+        "global": {
+          "binary_f1": 0.9894736842105263,
+          "macro_f1": 0.9895822029300054
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9894736842105263,
+          "macro_f1": 0.9895822029300054
+        },
+        "sensor_count": {
+          "binary_f1": 0.9894736842105263,
+          "macro_f1": 0.9895822029300054
+        }
+      }
+    },
+    "s2": {
+      "events": 65,
+      "negatives": 2348,
+      "positives": 2373,
+      "rows": 4721,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.929817444219067,
+          "macro_f1": 0.9265665235279732
+        },
+        "count_primary": {
+          "binary_f1": 0.929817444219067,
+          "macro_f1": 0.9265665235279732
+        },
+        "global": {
+          "binary_f1": 0.9301664636622006,
+          "macro_f1": 0.9269964293510294
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9288176840397485,
+          "macro_f1": 0.9255039428844276
+        },
+        "sensor_count": {
+          "binary_f1": 0.9294521932484334,
+          "macro_f1": 0.9259051844996338
+        }
+      }
+    },
+    "s2+emit": {
+      "events": 5,
+      "negatives": 177,
+      "positives": 176,
+      "rows": 353,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9171270718232044,
+          "macro_f1": 0.9149588847488115
+        },
+        "count_primary": {
+          "binary_f1": 0.9192200557103064,
+          "macro_f1": 0.917823284339303
+        },
+        "global": {
+          "binary_f1": 0.9171270718232044,
+          "macro_f1": 0.9149588847488115
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9171270718232044,
+          "macro_f1": 0.9149588847488115
+        },
+        "sensor_count": {
+          "binary_f1": 0.9204545454545454,
+          "macro_f1": 0.9206792501284027
+        }
+      }
+    },
+    "s2+emit+s5p": {
+      "events": 2,
+      "negatives": 32,
+      "positives": 32,
+      "rows": 64,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.896551724137931,
+          "macro_f1": 0.9054187192118226
+        },
+        "count_primary": {
+          "binary_f1": 0.896551724137931,
+          "macro_f1": 0.9054187192118226
+        },
+        "global": {
+          "binary_f1": 0.896551724137931,
+          "macro_f1": 0.9054187192118226
+        },
+        "primary_sensor": {
+          "binary_f1": 0.896551724137931,
+          "macro_f1": 0.9054187192118226
+        },
+        "sensor_count": {
+          "binary_f1": 0.896551724137931,
+          "macro_f1": 0.9054187192118226
+        }
+      }
+    },
+    "s2+l89": {
+      "events": 7,
+      "negatives": 221,
+      "positives": 246,
+      "rows": 467,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9430255402750491,
+          "macro_f1": 0.937395123078701
+        },
+        "count_primary": {
+          "binary_f1": 0.93812375249501,
+          "macro_f1": 0.933265109503856
+        },
+        "global": {
+          "binary_f1": 0.9430255402750491,
+          "macro_f1": 0.937395123078701
+        },
+        "primary_sensor": {
+          "binary_f1": 0.93812375249501,
+          "macro_f1": 0.933265109503856
+        },
+        "sensor_count": {
+          "binary_f1": 0.9383697813121272,
+          "macro_f1": 0.9332220136259012
+        }
+      }
+    },
+    "s2+l89+emit": {
+      "events": 1,
+      "negatives": 16,
+      "positives": 16,
+      "rows": 32,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.8421052631578947,
+          "macro_f1": 0.8056680161943319
+        },
+        "count_primary": {
+          "binary_f1": 0.8421052631578947,
+          "macro_f1": 0.8056680161943319
+        },
+        "global": {
+          "binary_f1": 0.8421052631578947,
+          "macro_f1": 0.8056680161943319
+        },
+        "primary_sensor": {
+          "binary_f1": 0.8205128205128205,
+          "macro_f1": 0.7702564102564102
+        },
+        "sensor_count": {
+          "binary_f1": 0.8421052631578947,
+          "macro_f1": 0.8056680161943319
+        }
+      }
+    },
+    "s2+l89+emit+s5p": {
+      "events": 1,
+      "negatives": 16,
+      "positives": 16,
+      "rows": 32,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9696969696969697,
+          "macro_f1": 0.9687194525904204
+        },
+        "count_primary": {
+          "binary_f1": 0.9696969696969697,
+          "macro_f1": 0.9687194525904204
+        },
+        "global": {
+          "binary_f1": 0.9696969696969697,
+          "macro_f1": 0.9687194525904204
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9696969696969697,
+          "macro_f1": 0.9687194525904204
+        },
+        "sensor_count": {
+          "binary_f1": 0.9696969696969697,
+          "macro_f1": 0.9687194525904204
+        }
+      }
+    },
+    "s2+l89+s5p": {
+      "events": 1,
+      "negatives": 0,
+      "positives": 32,
+      "rows": 32,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 1.0,
+          "macro_f1": 0.5
+        },
+        "count_primary": {
+          "binary_f1": 1.0,
+          "macro_f1": 0.5
+        },
+        "global": {
+          "binary_f1": 1.0,
+          "macro_f1": 0.5
+        },
+        "primary_sensor": {
+          "binary_f1": 1.0,
+          "macro_f1": 0.5
+        },
+        "sensor_count": {
+          "binary_f1": 1.0,
+          "macro_f1": 0.5
+        }
+      }
+    },
+    "s2+s5p": {
+      "events": 6,
+      "negatives": 174,
+      "positives": 182,
+      "rows": 356,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.9365079365079365,
+          "macro_f1": 0.9323258245413935
+        },
+        "count_primary": {
+          "binary_f1": 0.9283819628647215,
+          "macro_f1": 0.9238924739696741
+        },
+        "global": {
+          "binary_f1": 0.9365079365079365,
+          "macro_f1": 0.9323258245413935
+        },
+        "primary_sensor": {
+          "binary_f1": 0.9210526315789473,
+          "macro_f1": 0.9153455928979074
+        },
+        "sensor_count": {
+          "binary_f1": 0.9283819628647215,
+          "macro_f1": 0.9238924739696741
+        }
+      }
+    },
+    "s5p": {
+      "events": 61,
+      "negatives": 128,
+      "positives": 145,
+      "rows": 273,
+      "strategies": {
+        "availability_signature": {
+          "binary_f1": 0.6878980891719745,
+          "macro_f1": 0.6327421480342631
+        },
+        "count_primary": {
+          "binary_f1": 0.6878980891719745,
+          "macro_f1": 0.6327421480342631
+        },
+        "global": {
+          "binary_f1": 0.5877862595419847,
+          "macro_f1": 0.6037522847005699
+        },
+        "primary_sensor": {
+          "binary_f1": 0.6878980891719745,
+          "macro_f1": 0.6327421480342631
+        },
+        "sensor_count": {
+          "binary_f1": 0.5912408759124088,
+          "macro_f1": 0.589738085015028
+        }
+      }
+    }
+  },
+  "oof_metrics_with_event_cluster_ci": {
+    "availability_signature": {
+      "binary_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9122097076347186,
+        "ci_95_low": 0.8837303489208301,
+        "point": 0.8986198424741673
+      },
+      "macro_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9029316735222745,
+        "ci_95_low": 0.8709802091409347,
+        "point": 0.8877910227016106
+      }
+    },
+    "count_primary": {
+      "binary_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9119669047439377,
+        "ci_95_low": 0.8834204416520146,
+        "point": 0.8984019090317449
+      },
+      "macro_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9028205802238808,
+        "ci_95_low": 0.8709533591661552,
+        "point": 0.8876483390773374
+      }
+    },
+    "global": {
+      "binary_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9111158317772033,
+        "ci_95_low": 0.881045600507784,
+        "point": 0.8968779564806055
+      },
+      "macro_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9022445653148123,
+        "ci_95_low": 0.8695760285138178,
+        "point": 0.8868356394002019
+      }
+    },
+    "primary_sensor": {
+      "binary_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9111104573396456,
+        "ci_95_low": 0.8804412769226692,
+        "point": 0.8966819138894939
+      },
+      "macro_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9017033222818822,
+        "ci_95_low": 0.8682319556361747,
+        "point": 0.8863041621064873
+      }
+    },
+    "sensor_count": {
+      "binary_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9097473274027021,
+        "ci_95_low": 0.8812462512221472,
+        "point": 0.8963374990970165
+      },
+      "macro_f1": {
+        "bootstrap_method": "canonical-event cluster percentile, OOF predictions fixed",
+        "ci_95_high": 0.9001575990774133,
+        "ci_95_low": 0.868127500588672,
+        "point": 0.8852246316434289
+      }
+    }
+  },
+  "paired_deltas_vs_global": {
+    "availability_signature": {
+      "binary_f1": {
+        "ci_95_high": 0.004578403330745067,
+        "ci_95_low": -0.0014336666515967183,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": 0.0017418859935617315
+      },
+      "macro_f1": {
+        "ci_95_high": 0.003827758702395472,
+        "ci_95_low": -0.0022901031754470973,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": 0.0009553833014086521
+      }
+    },
+    "count_primary": {
+      "binary_f1": {
+        "ci_95_high": 0.004420773173959724,
+        "ci_95_low": -0.0016557567707391834,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": 0.0015239525511393515
+      },
+      "macro_f1": {
+        "ci_95_high": 0.0036841608875361168,
+        "ci_95_low": -0.0024327283718970057,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": 0.0008126996771354866
+      }
+    },
+    "primary_sensor": {
+      "binary_f1": {
+        "ci_95_high": 0.0019602571330129518,
+        "ci_95_low": -0.0023201167956107853,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": -0.00019604259111161149
+      },
+      "macro_f1": {
+        "ci_95_high": 0.001742008606526016,
+        "ci_95_low": -0.0028317944393262905,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": -0.0005314772937146106
+      }
+    },
+    "sensor_count": {
+      "binary_f1": {
+        "ci_95_high": 0.0019287628092034095,
+        "ci_95_low": -0.0028017999089781226,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": -0.0005404573835889881
+      },
+      "macro_f1": {
+        "ci_95_high": 0.0008996069629917999,
+        "ci_95_low": -0.004062470839459117,
+        "paired_bootstrap_method": "same resampled canonical events for both OOF strategies",
+        "point": -0.0016110077567730308
+      }
+    }
+  },
+  "protocol": {
+    "bootstrap_attempts": 2000,
+    "bootstrap_refits_calibrators": false,
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20260729,
+    "bootstrap_unit": "canonical event_id",
+    "fold_assignment": "StratifiedGroupKFold(shuffle=True), canonical event_id groups",
+    "folds": 5,
+    "global_objective": "empirical binary F1 on calibration folds",
+    "held_threshold_rule": "Every held fold uses thresholds fitted only on the other folds",
+    "local_objective": "empirical binary F1 within calibration subgroup",
+    "min_group_class_rows": 16,
+    "min_group_events": 8,
+    "min_group_rows": 128,
+    "positive_class": 1,
+    "seed": 20260728,
+    "shrink_formula": "w=n/(n+tau); applied=(1-w)*global+w*local; ineligible/unseen=>global",
+    "shrink_tau": 256.0,
+    "threshold_prediction_rule": "probability >= threshold",
+    "threshold_tie_break": "closest to parent/global target, then higher threshold"
+  },
+  "schema_version": 1,
+  "selection_bias_guardrail": "OOF controls threshold-fitting leakage only. It does not remove bias from any checkpoint/epoch/hyperparameter selection previously performed with this same dev set.",
+  "strategy_group_columns": {
+    "availability_signature": "availability_signature",
+    "count_primary": "count_primary_key",
+    "primary_sensor": "primary_sensor",
+    "sensor_count": "sensor_count_key"
+  },
+  "strategy_order": [
+    "global",
+    "availability_signature",
+    "sensor_count",
+    "primary_sensor",
+    "count_primary"
+  ],
+  "study_type": "post_hoc_decision_threshold_calibration"
+}

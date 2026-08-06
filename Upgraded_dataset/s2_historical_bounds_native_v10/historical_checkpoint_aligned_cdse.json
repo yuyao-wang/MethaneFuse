@@ -1,0 +1,44 @@
+{
+  "csv": "Upgraded_dataset/s2_historical_bounds_native_v10/aligned_test_cdse.csv",
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/s2/ckpt_best_test.pth",
+  "checkpoint_epoch": 3,
+  "rows": 8000,
+  "labels": {
+    "0": 4000,
+    "1": 4000
+  },
+  "path_columns": [
+    "path_t0",
+    "path_seasonal",
+    "path_year"
+  ],
+  "band_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "mask_band_indices": [],
+  "raw_dn_add": 0,
+  "raw_dn_add_columns": [],
+  "raw_dn_add_bands": [],
+  "metrics": {
+    "accuracy": 0.552,
+    "f1": 0.6580805189849266,
+    "auroc": 0.67937246875,
+    "recall": 0.86225,
+    "fpr": 0.75825,
+    "tp": 3449,
+    "tn": 967,
+    "fp": 3033,
+    "fn": 551
+  }
+}

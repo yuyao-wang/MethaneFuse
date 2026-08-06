@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/universal_360m/query dataset 360m/ckpt_best_test.pth",
+  "count": 276,
+  "eval_csv": "data/controlled_release_test/mechanism_probe_legacy360_v1/manifest_all_modes.csv",
+  "loss": 1.8127323786417644,
+  "overall": {
+    "acc": 0.427536231884058,
+    "auroc": 0.5567680776014109,
+    "count": 276.0,
+    "fpr": 0.8333333333333334,
+    "recall": 0.8333333333333334
+  }
+}

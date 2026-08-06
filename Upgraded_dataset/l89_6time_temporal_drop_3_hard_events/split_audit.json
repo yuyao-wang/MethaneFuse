@@ -1,0 +1,28 @@
+{
+  "method": "Preserve the original temporal train/test assignment, then remove the three events from both splits.",
+  "drop_events": [
+    "tan20251214t080904c51s4001",
+    "tan20251229t042659c62s4001",
+    "tan20260119t183533c73s4001"
+  ],
+  "train": {
+    "source": "/mnt/engg-niulab/Yuyao/preprocessed_512/L89/l89_6time_temporal_16_resized_to_224/L89_temporal_train.csv",
+    "output": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_temporal_drop_3_hard_events/L89_temporal_train_drop_3_hard_events.csv",
+    "rows_before": 62389,
+    "rows_after": 62389,
+    "rows_removed": 0,
+    "removed_events": []
+  },
+  "test": {
+    "source": "/mnt/engg-niulab/Yuyao/preprocessed_512/L89/l89_6time_temporal_16_resized_to_224/L89_temporal_test.csv",
+    "output": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_temporal_drop_3_hard_events/L89_temporal_test_drop_3_hard_events.csv",
+    "rows_before": 10998,
+    "rows_after": 8950,
+    "rows_removed": 2048,
+    "removed_events": [
+      "tan20251214t080904c51s4001",
+      "tan20251229t042659c62s4001",
+      "tan20260119t183533c73s4001"
+    ]
+  }
+}

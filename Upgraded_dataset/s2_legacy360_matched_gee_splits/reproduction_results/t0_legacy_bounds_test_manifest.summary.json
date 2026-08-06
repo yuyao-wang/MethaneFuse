@@ -1,0 +1,12 @@
+{
+  "input_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_export_input_legacy_t0_bounds_center.csv",
+  "raw_root": "/diniuvol/yuyao/s2_legacy360_matched_gee_t0_legacy_bounds_test",
+  "manifest": "Upgraded_dataset/s2_legacy360_matched_gee_splits/reproduction_results/t0_legacy_bounds_test_manifest.csv",
+  "plumes": 1,
+  "timepoints": [
+    "t0"
+  ],
+  "latest_status": {
+    "downloaded": 1
+  }
+}

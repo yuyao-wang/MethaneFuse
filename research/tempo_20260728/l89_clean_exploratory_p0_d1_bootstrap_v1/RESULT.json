@@ -1,0 +1,211 @@
+{
+  "arithmetic": {
+    "d1_logit_weight": 0.5,
+    "formula": "0.5*logit(P0)+0.5*logit(single_seed_D1)",
+    "p0_logit_weight": 0.5,
+    "single_d1_seed": 20260728,
+    "weight_search_performed": false
+  },
+  "bootstrap": {
+    "point_selected_thresholds_fixed_per_system": true,
+    "replicates": 2000,
+    "seed": 2026072812,
+    "thresholds_refit_per_replicate": false,
+    "unit": "canonical event_id"
+  },
+  "event_balanced_metric_definition": "row predictions with inverse canonical-event-size weights",
+  "events": 176,
+  "input_provenance": {
+    "d1": {
+      "path": "/tmp/l89_clean_exploratory_p0_v1/d1_default_cpu/seed_20260728/d1_gated_delta_best_event_ap_predictions.csv",
+      "sha256": "b616264406d029b415bab7e34a824cc7dbc91c2c88051cea3195969f8d2e68a8"
+    },
+    "p0": {
+      "path": "/tmp/l89_clean_exploratory_p0_v1/head/p0/validation_best_event_balanced_ap_predictions.csv",
+      "sha256": "dc05b3ebbc2b6ec5b5a03c259f3d9a41e4ba29b974273dcd24edab9ff81ebb92"
+    }
+  },
+  "paired_event_cluster_bootstrap": {
+    "fusion_minus_d1": {
+      "all_negative_fp_mass": {
+        "better_direction": "lower",
+        "ci_95_high": -0.125,
+        "ci_95_low": -1.125,
+        "point": -0.625,
+        "win_probability": 0.9955
+      },
+      "event_balanced_ap": {
+        "better_direction": "higher",
+        "ci_95_high": 0.019613999342662752,
+        "ci_95_low": 0.0003506683187858073,
+        "point": 0.010144339060183194,
+        "win_probability": 0.9795
+      },
+      "event_balanced_auc": {
+        "better_direction": "higher",
+        "ci_95_high": 0.006891753962778907,
+        "ci_95_low": -0.0009387726998479784,
+        "point": 0.0031094977014894942,
+        "win_probability": 0.931
+      },
+      "event_balanced_macro_f1_selected": {
+        "better_direction": "higher",
+        "ci_95_high": 0.007431409853225722,
+        "ci_95_low": -0.004263414315698377,
+        "point": 0.0017119960206950502,
+        "win_probability": 0.707
+      },
+      "event_balanced_positive_f1_selected": {
+        "better_direction": "higher",
+        "ci_95_high": 0.006589780055131993,
+        "ci_95_low": -0.009311054763555263,
+        "point": -0.0011256611087419044,
+        "win_probability": 0.394
+      }
+    },
+    "fusion_minus_p0": {
+      "all_negative_fp_mass": {
+        "better_direction": "lower",
+        "ci_95_high": 2.075,
+        "ci_95_low": 0.5,
+        "point": 1.2125000000000004,
+        "win_probability": 0.0
+      },
+      "event_balanced_ap": {
+        "better_direction": "higher",
+        "ci_95_high": 0.011109995238622248,
+        "ci_95_low": -0.008717968415821883,
+        "point": 0.0007364688106696882,
+        "win_probability": 0.5545
+      },
+      "event_balanced_auc": {
+        "better_direction": "higher",
+        "ci_95_high": 0.007081082400851856,
+        "ci_95_low": -0.0015418019720358166,
+        "point": 0.0027173445941387486,
+        "win_probability": 0.9
+      },
+      "event_balanced_macro_f1_selected": {
+        "better_direction": "higher",
+        "ci_95_high": 0.01570268731159915,
+        "ci_95_low": -0.0032257056655243172,
+        "point": 0.0057914110862069546,
+        "win_probability": 0.8915
+      },
+      "event_balanced_positive_f1_selected": {
+        "better_direction": "higher",
+        "ci_95_high": 0.0293562433207775,
+        "ci_95_low": 0.0023158763115628065,
+        "point": 0.015135322585655642,
+        "win_probability": 0.992
+      }
+    }
+  },
+  "point_metrics": {
+    "d1": {
+      "all_negative_event_any_fp_rate": 0.6,
+      "all_negative_event_any_fp_rate_at_0_5": 0.48,
+      "all_negative_event_count": 50,
+      "all_negative_events_with_any_fp": 30,
+      "all_negative_events_with_any_fp_at_0_5": 24,
+      "all_negative_fp_mass": 7.033333333333333,
+      "all_negative_fp_mass_at_0_5": 4.236111111111111,
+      "all_negative_fp_rate_mean": 0.14066666666666666,
+      "all_negative_fp_rows": 105,
+      "all_negative_fp_rows_at_0_5": 63,
+      "all_negative_max_probability_mean": 0.44219137783859996,
+      "all_negative_mean_probability": 0.10936203804717538,
+      "event_balanced_ap": 0.742921407290617,
+      "event_balanced_auc": 0.8409968352456928,
+      "event_balanced_macro_f1_at_0_5": 0.7250505739738133,
+      "event_balanced_macro_f1_selected": 0.7692761464459448,
+      "event_balanced_positive_f1_at_0_5": 0.6159180869508325,
+      "event_balanced_positive_f1_selected": 0.7023394640743025,
+      "events": 176,
+      "positive_event_any_detection_recall": 0.9285714285714286,
+      "positive_event_any_detection_recall_at_0_5": 0.873015873015873,
+      "positive_event_count": 126,
+      "probability_mean": 0.28678252290356426,
+      "probability_std": 0.33133007854681834,
+      "row_ap": 0.7838023082582424,
+      "row_auc": 0.8336845260464202,
+      "row_macro_f1_selected": 0.7643432394383707,
+      "row_positive_f1_selected": 0.7240845796802475,
+      "rows": 4677,
+      "selected_threshold": 0.25075158
+    },
+    "fixed_p0_d1": {
+      "all_negative_event_any_fp_rate": 0.5,
+      "all_negative_event_any_fp_rate_at_0_5": 0.5,
+      "all_negative_event_count": 50,
+      "all_negative_events_with_any_fp": 25,
+      "all_negative_events_with_any_fp_at_0_5": 25,
+      "all_negative_fp_mass": 6.408333333333333,
+      "all_negative_fp_mass_at_0_5": 6.120833333333334,
+      "all_negative_fp_rate_mean": 0.12816666666666665,
+      "all_negative_fp_rows": 95,
+      "all_negative_fp_rows_at_0_5": 91,
+      "all_negative_max_probability_mean": 0.5042815291009543,
+      "all_negative_mean_probability": 0.1594469307970248,
+      "event_balanced_ap": 0.7530657463508001,
+      "event_balanced_auc": 0.8441063329471823,
+      "event_balanced_macro_f1_at_0_5": 0.7705855928452707,
+      "event_balanced_macro_f1_selected": 0.7709881424666398,
+      "event_balanced_positive_f1_at_0_5": 0.6991732980423835,
+      "event_balanced_positive_f1_selected": 0.7012138029655606,
+      "events": 176,
+      "positive_event_any_detection_recall": 0.9126984126984127,
+      "positive_event_any_detection_recall_at_0_5": 0.9126984126984127,
+      "positive_event_count": 126,
+      "probability_mean": 0.36624554982794577,
+      "probability_std": 0.3667326208866968,
+      "row_ap": 0.7929694927691309,
+      "row_auc": 0.8370499364721462,
+      "row_macro_f1_selected": 0.7652162695338176,
+      "row_positive_f1_selected": 0.721492380451918,
+      "rows": 4677,
+      "selected_threshold": 0.48028329461511193
+    },
+    "p0": {
+      "all_negative_event_any_fp_rate": 0.48,
+      "all_negative_event_any_fp_rate_at_0_5": 0.6,
+      "all_negative_event_count": 50,
+      "all_negative_events_with_any_fp": 24,
+      "all_negative_events_with_any_fp_at_0_5": 30,
+      "all_negative_fp_mass": 5.195833333333333,
+      "all_negative_fp_mass_at_0_5": 10.095833333333333,
+      "all_negative_fp_rate_mean": 0.10391666666666666,
+      "all_negative_fp_rows": 79,
+      "all_negative_fp_rows_at_0_5": 139,
+      "all_negative_max_probability_mean": 0.5788765705919999,
+      "all_negative_mean_probability": 0.22245549688187383,
+      "event_balanced_ap": 0.7523292775401305,
+      "event_balanced_auc": 0.8413889883530435,
+      "event_balanced_macro_f1_at_0_5": 0.7602581194578271,
+      "event_balanced_macro_f1_selected": 0.7651967313804329,
+      "event_balanced_positive_f1_at_0_5": 0.7052207848077926,
+      "event_balanced_positive_f1_selected": 0.6860784803799049,
+      "events": 176,
+      "positive_event_any_detection_recall": 0.9047619047619048,
+      "positive_event_any_detection_recall_at_0_5": 0.9365079365079365,
+      "positive_event_count": 126,
+      "probability_mean": 0.44538480732732516,
+      "probability_std": 0.3906574441722976,
+      "row_ap": 0.7924252130906136,
+      "row_auc": 0.8348689626169896,
+      "row_macro_f1_selected": 0.7561889009254554,
+      "row_positive_f1_selected": 0.7024952015355086,
+      "rows": 4677,
+      "selected_threshold": 0.75127465
+    }
+  },
+  "prediction_output": {
+    "path": "/home/yuyao/panopticon/research/tempo_20260728/l89_clean_exploratory_p0_d1_bootstrap_v1/fixed_p0_d1_predictions.csv",
+    "sha256": "d201cce54b243fd152777b87a3e72c3dc74d5dc39efae572318acfc8aee208d4"
+  },
+  "promotion_eligible": false,
+  "rows": 4677,
+  "schema_version": "l89-clean-exploratory-p0-single-d1-fusion-v1",
+  "scope": "fresh clean inner-development exploratory diagnostic",
+  "test_or_sealed_or_holdout_or_outer_read": false
+}

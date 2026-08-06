@@ -1,0 +1,126 @@
+{
+  "artifacts": {
+    "candidate_metrics_sha256": "7d2b685cf184568f148ebc05e14f7230330716aeb5e39f788c0c7f0199abd11e",
+    "dev_predictions_best_sha256": "932ecd79e82b49e0e4319fc05d45a014299192b5c13968b205ec236b143dc527",
+    "feature_schema_sha256": "ddb19d13176e8f5631052b9159824e115896d4fc165b81e9165aabf4f6fe3374"
+  },
+  "claim_scope": "Strong simple legacy360 engineering control; not RCTP novelty and not a clean outer-test result.",
+  "created_utc": "2026-07-28T01:21:15.039031+00:00",
+  "inputs": {
+    "dev_cache": "/diniuvol/yuyao/methanefuse_two_axis_legacy360_v1/formal_v5/features/dev_universal_s2hybrid.pt",
+    "dev_cache_sha256": "e7379ef5eb1b005e0bf655e7ea10dd53ed043008ff39a0eea175b645c343767a",
+    "dev_manifest": {
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_dev_sanitized.csv",
+      "rows": 12621,
+      "sha256": "4f6fa26292461feb3def0213d97782c4968c4ad096394b5d94448ab23e7ed924"
+    },
+    "train_cache": "/diniuvol/yuyao/methanefuse_two_axis_legacy360_v1/formal_v5/features/pilot16k_train_core_universal_s2hybrid.pt",
+    "train_cache_sha256": "38f0b968c33f8ca281791e1de6b558fda639a5eb2a19ee5ca8f9bd9cd2335a3c",
+    "train_manifest": {
+      "parts": [
+        {
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu0_chunk00.csv",
+          "rows": 7997,
+          "sha256": "d06a4437ea1cf418a9764541ed4450bdf876a349ca716a2f5c8a7d3cbe182221"
+        },
+        {
+          "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/chunks/legacy360_train_core_gpu1_chunk00.csv",
+          "rows": 7976,
+          "sha256": "246e8659c2cbc3c7afc1419137319de1f6d26861f7419c33a021be3b0f7a78c4"
+        }
+      ],
+      "path": "/diniuvol/yuyao/methanefuse_two_axis_legacy360_v1/formal_v5/features/pilot16k_train_core_universal_s2hybrid.pt.manifest.csv",
+      "rows": 15973,
+      "sha256": "bcbe76bab83261492ed2c937e344eb83fead6e6636bffe6f6878213c1112aa37"
+    }
+  },
+  "model": {
+    "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/axisstats_pilot16k_dev_results_v2/axisstats_best_model.joblib",
+    "sha256": "3864bdacea07023ff3b85658946d210a2a2d8587e8da03bf12c75a418fb29360"
+  },
+  "protocol": {
+    "dev_expected_split": "dev",
+    "outer_test_metrics_computed": false,
+    "sealed_test_read": false,
+    "selection_source": "canonical development only",
+    "test_or_sealed_input_accepted": false,
+    "train_expected_split": "train_core"
+  },
+  "schema_version": "legacy360-axisstats-control-v1",
+  "selection": {
+    "comparison_to_reference": {
+      "ap_delta": 1.2626900636192318e-09,
+      "auc_delta": 1.1102230246251565e-16,
+      "axisstats_improves_reference": false,
+      "best_binary_f1_delta": 0.0,
+      "reference": "reference_universal_base"
+    },
+    "dev_locked_threshold": 0.48300340381507895,
+    "metric": "development best positive-class F1",
+    "strongest_direct_pth_reference": {
+      "ap": 0.9548278151093701,
+      "auc": 0.954632000369724,
+      "best_binary_f1": 0.8979264018691588,
+      "best_macro_f1": 0.8884227540265593,
+      "best_predicted_positive_rate": 0.5556611995879883,
+      "best_threshold": 0.3622090063440342,
+      "eligible_for_model_lock": false,
+      "family": "reference",
+      "feature_set": "fused_logit",
+      "fixed_balanced_accuracy": 0.8838358105833701,
+      "fixed_binary_f1": 0.8869857776418413,
+      "fixed_macro_f1": 0.8827398470583425,
+      "fixed_predicted_positive_rate": 0.5066951905554234,
+      "n_iter": 0,
+      "name": "reference_universal_base",
+      "parameters": {},
+      "positives": 6683,
+      "rows": 12621
+    },
+    "tie_break": [
+      "best_binary_f1",
+      "ap",
+      "auc",
+      "fixed_binary_f1",
+      "candidate_name"
+    ],
+    "winner": "logreg_universal_fused_c0p03",
+    "winner_metrics": {
+      "ap": 0.9548278163720602,
+      "auc": 0.9546320003697241,
+      "best_binary_f1": 0.8979264018691588,
+      "best_macro_f1": 0.8884227540265593,
+      "best_predicted_positive_rate": 0.5556611995879883,
+      "best_threshold": 0.48300340381507895,
+      "eligible_for_model_lock": true,
+      "family": "logistic_regression",
+      "feature_set": "universal_fused",
+      "fixed_balanced_accuracy": 0.887119429576722,
+      "fixed_binary_f1": 0.8970070422535211,
+      "fixed_macro_f1": 0.8880384048476908,
+      "fixed_predicted_positive_rate": 0.5505902860312178,
+      "n_iter": 7,
+      "name": "logreg_universal_fused_c0p03",
+      "parameters": {
+        "C": 0.03
+      },
+      "positives": 6683,
+      "rows": 12621,
+      "selected_feature_count": 1
+    }
+  },
+  "split_guard": {
+    "event_ids_dev_unique": 291,
+    "event_ids_overlap": 0,
+    "event_ids_train_unique": 284,
+    "ids_dev_unique": 12621,
+    "ids_overlap": 0,
+    "ids_train_unique": 15973,
+    "plume_ids_dev_unique": 621,
+    "plume_ids_overlap": 0,
+    "plume_ids_train_unique": 578,
+    "query360_indices_dev_unique": 12621,
+    "query360_indices_overlap": 0,
+    "query360_indices_train_unique": 15973
+  }
+}

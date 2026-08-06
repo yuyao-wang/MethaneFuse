@@ -1,0 +1,48 @@
+{
+  "common": {
+    "python": "/home/yuyao/miniconda3/envs/panopticon/bin/python",
+    "queue_script": "/home/yuyao/panopticon/Upgraded_dataset/run_s2_convergence_queue.py",
+    "train_script": "/home/yuyao/panopticon/Upgraded_dataset/dino_classifier_head_s2_legacy360_repro.py",
+    "weights": "/home/yuyao/panopticon/weights/panopticon_vitb14_teacher.pth",
+    "max_epochs": 10,
+    "min_epoch": 8,
+    "patience": 2,
+    "min_delta": 0.001,
+    "early_stop_metric": "test_auroc",
+    "batch_size": 32,
+    "num_workers": 4
+  },
+  "stages": [
+    {
+      "name": "priority1_legacy_original224_event_disjoint",
+      "side": "legacy",
+      "split_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_splits",
+      "checkpoint_root": "/transferdiniu2/yuyao/checkpoints/s2_legacy360_same_recipe_convergence_20260729",
+      "result_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_convergence_20260729",
+      "run_prefix": "s2_legacy360_same_rows",
+      "splits": ["event_disjoint_80_20"],
+      "seed": 20260729
+    },
+    {
+      "name": "priority2_newgee_zero_t0_b8a_b9_event_disjoint",
+      "comment": "Band ablation replacing the retired legacy_down36 stage. A least-squares fit shows legacy 224 imagery is reconstructible from a 36px grid to 0.01% residual, so it carries no sub-36px detail and a spatial bottleneck could not have explained the legacy/new-GEE gap. The remaining measured contract difference is radiometric: legacy t0 has bands 8 and 9 (B8A/B9) identically zero, at t0 only, while t90/t360 and every new-GEE timepoint carry real values. This arm gives pure-GEE data that exact t0 band contract and nothing else, so it isolates whether the legacy advantage comes from those two bands being absent.",
+      "side": "gee",
+      "split_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits",
+      "checkpoint_root": "/transferdiniu2/yuyao/checkpoints/s2_band_contract_20260729/newgee_zero_t0_b8a_b9",
+      "result_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/band_contract_20260729/newgee_zero_t0_b8a_b9",
+      "run_prefix": "s2_band_contract_newgee_zero_t0_b8a_b9_seed20260729",
+      "splits": ["event_disjoint_80_20"],
+      "seed": 20260729,
+      "zero_t0_band_indices": "8,9"
+    },
+    {
+      "name": "priority3_resume_legacy_original224_row_random",
+      "side": "legacy",
+      "split_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_splits",
+      "checkpoint_root": "/transferdiniu2/yuyao/checkpoints/s2_legacy360_same_recipe_convergence_20260729",
+      "result_root": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_convergence_20260729",
+      "run_prefix": "s2_legacy360_same_rows",
+      "splits": ["row_random_80_20"]
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "balance": {
+    "absolute_cost_delta": 2,
+    "maximum_group_cost": 5248,
+    "relative_cost_delta": 5.912314464181721e-06
+  },
+  "inputs": {
+    "dev": {
+      "estimated_cost": 67365,
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_dev_sanitized.csv",
+      "rows": 12621,
+      "sha256": "4f6fa26292461feb3def0213d97782c4968c4ad096394b5d94448ab23e7ed924"
+    },
+    "train_core": {
+      "estimated_cost": 609187,
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/sanitized_min1024/legacy360_train_core_sanitized.csv",
+      "rows": 113843,
+      "sha256": "bdfec2f6dcc1d775c03c93ff2c276fd4974c45669deb1b725b608c80e935ddb9"
+    }
+  },
+  "integrity": {
+    "dev_plume_overlap": 0,
+    "id_overlap_between_shards": 0,
+    "plume_overlap_between_shards": 0,
+    "query360_index_preserved": true,
+    "query360_index_sha256_sorted": "57e971ef407fe8d1fc269a6fe11939f116e41740d12756f67006ad8004922db9",
+    "rows_preserved": true
+  },
+  "outputs": {
+    "gpu0": {
+      "availability_signatures": {
+        "emit": 10630,
+        "emit+s5p": 2792,
+        "l89": 14522,
+        "l89+emit": 1370,
+        "l89+emit+s5p": 647,
+        "l89+s5p": 953,
+        "s2": 23032,
+        "s2+emit": 1371,
+        "s2+emit+s5p": 260,
+        "s2+l89": 2824,
+        "s2+l89+emit": 260,
+        "s2+l89+emit+s5p": 3,
+        "s2+l89+s5p": 640,
+        "s2+s5p": 1831,
+        "s5p": 1115
+      },
+      "groups": 1289,
+      "labels": {
+        "0": 29377,
+        "1": 32873
+      },
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/shards/legacy360_train_core_gpu0.csv",
+      "plumes": 2952,
+      "rows": 62250,
+      "scheduled_total_cost": 338277,
+      "sha256": "2d50f5f279447bf3de3cb65a3a03cc8e111c34ca74f2fda409b3e4b8c97991e5",
+      "train_cost": 338277
+    },
+    "gpu1": {
+      "availability_signatures": {
+        "emit": 9550,
+        "emit+s5p": 2679,
+        "l89": 12482,
+        "l89+emit": 1360,
+        "l89+emit+s5p": 360,
+        "l89+s5p": 745,
+        "s2": 19357,
+        "s2+emit": 843,
+        "s2+emit+s5p": 374,
+        "s2+l89": 1421,
+        "s2+l89+emit": 210,
+        "s2+l89+emit+s5p": 1,
+        "s2+l89+s5p": 209,
+        "s2+s5p": 939,
+        "s5p": 1063
+      },
+      "dev_cost": 67365,
+      "groups": 1265,
+      "labels": {
+        "0": 24099,
+        "1": 27494
+      },
+      "path": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/manifests/shards/legacy360_train_core_gpu1.csv",
+      "plumes": 2537,
+      "rows": 51593,
+      "scheduled_total_cost": 338275,
+      "sha256": "df4179d655d14302523293a93f9aa300f8174be234954130b3b9e4d0c26fbebd",
+      "train_cost": 270910
+    }
+  },
+  "scheduler": {
+    "algorithm": "deterministic largest-event-first greedy list scheduling",
+    "goal": "gpu0_train ~= gpu1_train + dev",
+    "group_column": "event_id",
+    "initial_loads": {
+      "gpu0": 0,
+      "gpu1": 67365
+    },
+    "sensor_costs": {
+      "emit": 4,
+      "l89": 4,
+      "s2": 5,
+      "s5p": 4
+    }
+  },
+  "schema_version": "legacy360-extraction-shards-v1",
+  "script_version": "legacy360-feature-shard-merge-v1"
+}

@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/multi_sensor_qv_loramoe_adapter/qv_loramoe_stageB_from_shared_stageA_retry/ckpt_best_test.pth",
+  "count": 384,
+  "eval_csv": "data/controlled_release_test/label1_legacy_balanced_480m/manifest.csv",
+  "loss": 1.9442526043082278,
+  "overall": {
+    "acc": 0.5052083333333334,
+    "auroc": 0.7052544487847222,
+    "count": 384.0,
+    "fpr": 0.9895833333333334,
+    "recall": 1.0
+  }
+}

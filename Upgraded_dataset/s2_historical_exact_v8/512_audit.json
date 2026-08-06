@@ -1,0 +1,109 @@
+{
+  "rows": 5351,
+  "paths": 32106,
+  "missing_paths": 0,
+  "wrong_gee_t0_paths": 0,
+  "target_paths": 29033,
+  "direct_paths": 3073,
+  "sampled_values": 1600,
+  "bad_sampled_values": 3,
+  "policy_counts": {
+    "t0": {
+      "recrop_or_restore": 4352,
+      "historical_cdse0_t0": 999
+    },
+    "prev1": {
+      "recrop_or_restore": 5351
+    },
+    "prev2": {
+      "recrop_or_restore": 5351
+    },
+    "prev3": {
+      "recrop_or_restore": 5351
+    },
+    "seasonal": {
+      "recrop_or_restore": 4314,
+      "historical_gee_direct": 1037
+    },
+    "year": {
+      "recrop_or_restore": 4314,
+      "historical_gee_direct": 1037
+    }
+  },
+  "elapsed_seconds": 129.0,
+  "missing_examples": [],
+  "bad_examples": [
+    {
+      "plume_id": "ang20180919t182318-A",
+      "tp": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/ang20180919t182318-A/s2_90_std_512.tif",
+      "shape": [
+        12,
+        512,
+        512
+      ],
+      "empty": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "zero89": null,
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20200719t160007p0000-B",
+      "tp": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20200719t160007p0000-B/s2_90_std_512.tif",
+      "shape": [
+        12,
+        512,
+        512
+      ],
+      "empty": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "zero89": null,
+      "error": ""
+    },
+    {
+      "plume_id": "GAO20230618t183446p0000-A",
+      "tp": "seasonal",
+      "path": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512/GAO20230618t183446p0000-A/s2_90_std_512.tif",
+      "shape": [
+        12,
+        512,
+        512
+      ],
+      "empty": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11
+      ],
+      "zero89": null,
+      "error": ""
+    }
+  ]
+}

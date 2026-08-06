@@ -1,0 +1,41 @@
+{
+  "csv": "/tmp/s2_v7_shared_events.csv",
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/s2/ckpt_best_test.pth",
+  "checkpoint_epoch": 3,
+  "rows": 12000,
+  "labels": {
+    "0": 6000,
+    "1": 6000
+  },
+  "path_columns": [
+    "path_t0",
+    "path_seasonal",
+    "path_year"
+  ],
+  "band_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "mask_band_indices": [],
+  "metrics": {
+    "accuracy": 0.588,
+    "f1": 0.668321481282705,
+    "auroc": 0.6390256944444445,
+    "recall": 0.8301666666666667,
+    "fpr": 0.6541666666666667,
+    "tp": 4981,
+    "tn": 2075,
+    "fp": 3925,
+    "fn": 1019
+  }
+}

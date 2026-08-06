@@ -1,0 +1,17 @@
+{
+  "cutoff_utc": "2025-12-25T00:00:00+00:00",
+  "rule": "train event_group_time < cutoff; test event_group_time >= cutoff",
+  "target_ratio": 0.85,
+  "actual_ratio": 0.8515697137580794,
+  "total_rows": 4332,
+  "total_event_groups": 1576,
+  "train_rows": 3689,
+  "test_rows": 643,
+  "train_ratio": 0.8515697137580794,
+  "train_event_groups": 1409,
+  "test_event_groups": 167,
+  "event_group_overlap": 0,
+  "plume_id_overlap": 0,
+  "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_6time_exact_point_center_v3_temporal_split/s2_cdse_legacy512_train_cutoff_2025-12-25.csv",
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_6time_exact_point_center_v3_temporal_split/s2_cdse_legacy512_test_cutoff_2025-12-25.csv"
+}

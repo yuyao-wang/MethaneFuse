@@ -1,0 +1,49 @@
+{
+  "csv": "Upgraded_dataset/s2_gee_legacy_notebook_6time/temporal_cutoff_split/cutoff_2025-12-22/test.csv",
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/360m_single4_retrain_20260422_185153/s2/ckpt_best_test.pth",
+  "checkpoint_epoch": 2,
+  "rows": 18245,
+  "labels": {
+    "0": 9080,
+    "1": 9165
+  },
+  "path_columns": [
+    "path_t0",
+    "path_seasonal",
+    "path_year"
+  ],
+  "band_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "mask_band_indices": [],
+  "raw_dn_add": 0,
+  "raw_dn_add_columns": [],
+  "raw_dn_add_bands": [],
+  "legacy_t0_cdse_contract": false,
+  "metrics": {
+    "accuracy": 0.5114277884351878,
+    "f1": 0.6666666666666666,
+    "best_test_f1": 0.6688560481663929,
+    "best_test_f1_threshold": 0.11698544770479202,
+    "auroc": 0.5684638937155574,
+    "negative_score_mean": 0.7390651471839011,
+    "positive_score_mean": 0.7661317832934615,
+    "recall": 0.9726132024004365,
+    "fpr": 0.9540748898678414,
+    "tp": 8914,
+    "tn": 417,
+    "fp": 8663,
+    "fn": 251
+  }
+}

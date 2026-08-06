@@ -1,0 +1,63 @@
+{
+  "source_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/cohort_all.csv",
+  "raw_root": "/diniuvol/yuyao/s2_legacy360_matched_gee_raw_exact",
+  "output_root": "/diniuvol/yuyao/s2_legacy360_matched_gee_crops36",
+  "output_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36.csv",
+  "alignment_reference_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_export_input.csv",
+  "source_rows": 74589,
+  "output_rows": 70833,
+  "dropped_rows": 3756,
+  "source_plumes": 2597,
+  "output_plumes": 2524,
+  "status_counts": {
+    "ok": 2597
+  },
+  "quality_failed_rows": 3756,
+  "out_of_bounds_rows": 0,
+  "splits": {
+    "row_random_80_20/train": {
+      "source_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/row_random_80_20/train.csv",
+      "output_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/row_random_80_20/train.csv",
+      "source_rows": 59671,
+      "output_rows": 56672,
+      "dropped_rows": 2999,
+      "labels": {
+        "0": 27850,
+        "1": 28822
+      }
+    },
+    "row_random_80_20/test": {
+      "source_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/row_random_80_20/test.csv",
+      "output_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/row_random_80_20/test.csv",
+      "source_rows": 14918,
+      "output_rows": 14161,
+      "dropped_rows": 757,
+      "labels": {
+        "0": 6972,
+        "1": 7189
+      }
+    },
+    "event_disjoint_80_20/train": {
+      "source_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/event_disjoint_80_20/train.csv",
+      "output_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/event_disjoint_80_20/train.csv",
+      "source_rows": 59671,
+      "output_rows": 56948,
+      "dropped_rows": 2723,
+      "labels": {
+        "0": 28046,
+        "1": 28902
+      }
+    },
+    "event_disjoint_80_20/test": {
+      "source_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/event_disjoint_80_20/test.csv",
+      "output_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/event_disjoint_80_20/test.csv",
+      "source_rows": 14918,
+      "output_rows": 13885,
+      "dropped_rows": 1033,
+      "labels": {
+        "0": 6776,
+        "1": 7109
+      }
+    }
+  }
+}

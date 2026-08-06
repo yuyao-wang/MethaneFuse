@@ -1,0 +1,95 @@
+{
+  "artifact_type": "l89_single_sensor_input_screen_v1",
+  "created_utc": "2026-07-27T18:00:00Z",
+  "evaluation_split": "recent_validation",
+  "sealed_test_read": false,
+  "status": "completed_exploratory",
+  "protocol_boundary": {
+    "train_rows": 10049,
+    "validation_rows": 9614,
+    "l89_train_validation_canonical_event_overlap": 0,
+    "strict_four_sensor_global_purge": false,
+    "global_purge_difference": {
+      "extra_train_rows": 16,
+      "extra_canonical_events": [
+        "emi20250202t054303p04011"
+      ],
+      "explanation": "The extra event is absent from L89 validation but is excluded by the later union-of-all-sensor validation purge. These results are valid only as an L89-only exploratory input screen and cannot support shared-encoder or joint-protocol claims."
+    }
+  },
+  "matched_config": {
+    "epochs": 1,
+    "optimizer_steps": 773,
+    "seed": 20260727,
+    "train_backbone": false,
+    "batch_size": 13,
+    "head_lr": 0.001,
+    "temporal_lr": 0.001,
+    "scheduler": "none",
+    "weights_sha256": "55024f411a7f383ed1a646d9b833b65683a4443846603fc7d37591d5afe9d26e"
+  },
+  "arms": {
+    "t0": {
+      "input_mode": "current",
+      "ap": 0.6578441910501207,
+      "auroc": 0.7007724570533977,
+      "macro_f1_at_0_5": 0.4961422410920975,
+      "positive_f1_at_0_5": 0.2488253319713994
+    },
+    "raw3": {
+      "input_mode": "raw",
+      "ap": 0.6605276578314774,
+      "auroc": 0.7048662899142477,
+      "macro_f1_at_0_5": 0.5176085217373745,
+      "positive_f1_at_0_5": 0.28865571174024945
+    },
+    "residual2": {
+      "input_mode": "residual",
+      "ap": 0.6189317670127245,
+      "auroc": 0.6425360444698316,
+      "macro_f1_at_0_5": 0.4607500311591047,
+      "positive_f1_at_0_5": 0.18259935553168635
+    },
+    "t0_residual2": {
+      "input_mode": "current_residual",
+      "ap": 0.6349210483246472,
+      "auroc": 0.6721563522538152,
+      "macro_f1_at_0_5": 0.6209651457401032,
+      "positive_f1_at_0_5": 0.513631090487239
+    }
+  },
+  "deltas_vs_t0": {
+    "raw3": {
+      "ap": 0.0026834667813566693,
+      "auroc": 0.004093832860849966,
+      "macro_f1_at_0_5": 0.021466280645277003
+    },
+    "residual2": {
+      "ap": -0.038912424037396254,
+      "auroc": -0.058236412583566155,
+      "macro_f1_at_0_5": -0.0353922099329928
+    },
+    "t0_residual2": {
+      "ap": -0.022923142725473467,
+      "auroc": -0.028616104799582542,
+      "macro_f1_at_0_5": 0.12482290464800572
+    }
+  },
+  "decision": {
+    "raw_history_ap_gate_required": 0.01,
+    "raw_history_ap_gate_observed": 0.0026834667813566693,
+    "raw_history_gate_pass": false,
+    "residual_ranking_gate_pass": false,
+    "interpretation": "Naive extra temporal tokens add only marginal ranking signal, while direct normalized residual streams reduce AP and AUROC. The higher thresholded macro-F1 of current+residual is an operating-point effect and does not offset its worse ranking. Proceed to explicit irregular-time, duplicate-aware controls; do not scale naive residual input."
+  },
+  "artifact_sha256": {
+    "launcher": "aab6389f055f17aa806a6cf8ca752db5660c40049441c8f1d6dad7ef17263c54",
+    "train_manifest": "e5853b0e6ce4694dfa2021b74985342887952b68e6d568b35957161c06c25a78",
+    "validation_manifest": "d2e1f017a1bdb49dc78c0487d8a5a3dfea546cea610d89c13861d1ddd3bf454c",
+    "t0_metrics": "4d01784c02e5fa70e4f382105c37541ef4ed70a9a2acef74dcf49354e37a7142",
+    "raw3_metrics": "ce5bb5c97feae4005a48dc3aff1d8acf25dd9629d0065ebedeb590dda0a61c17",
+    "residual2_metrics": "a082386b3cb31ed19efbbe29c85463093e22fd3535e98b34b814e58fbc0acf62",
+    "t0_residual2_metrics": "8ea0c418f41a060323e3009d89a2d7481b17b2cd10857fbfaf6e077216d38af2"
+  },
+  "source_snapshot_limitation": "The untracked L89 runner was extended on disk with an opt-in margin branch after these four Python processes had already imported the original default-off code. The live processes were not restarted and the added branch is disabled by default; a 10-test legacy-exact suite passes for the successor source. The exact pre-edit source SHA was not retained, so this remains an exploratory screen. Any promoted arm must be rerun from a frozen source snapshot."
+}

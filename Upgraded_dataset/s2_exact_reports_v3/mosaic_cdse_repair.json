@@ -1,0 +1,1574 @@
+{
+  "mosaic_tasks": 583,
+  "repaired_source": 322,
+  "repaired_resume": 322,
+  "kept_completed": 0,
+  "unresolved": [
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20200714T172859_N0500_R055_T13SFR_20230324T114534.SAFE",
+      "error": "CDSE footprint margin is negative: -4.565"
+    },
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20200704T172859_N0500_R055_T13SER_20230614T091324.SAFE",
+      "error": "CDSE footprint margin is negative: -4.573"
+    },
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20200709T172901_N0500_R055_T13SER_20230612T031658.SAFE",
+      "error": "CDSE footprint margin is negative: -4.573"
+    },
+    {
+      "plume_id": "GAO20200714t172448p0000-H",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20200629T172901_N0500_R055_T13SER_20230505T134129.SAFE",
+      "error": "CDSE footprint margin is negative: -4.565"
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20210720T174911_N0500_R141_T13TDE_20230212T140413.SAFE",
+      "error": "CDSE footprint margin is negative: -10.703"
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20200805T180919_N0500_R084_T12TXK_20230421T201955.SAFE",
+      "error": "CDSE footprint margin is negative: -10.079"
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20210715T174909_N0500_R141_T13TDE_20230826T060336.SAFE",
+      "error": "CDSE footprint margin is negative: -10.703"
+    },
+    {
+      "plume_id": "GAO20210924t190756p0000-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20210923T174949_N0500_R141_T13TEE_20230128T173619.SAFE",
+      "error": "CDSE footprint margin is negative: -8.246"
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20200731T180921_N0500_R084_T12TXK_20230325T110325.SAFE",
+      "error": "CDSE footprint margin is negative: -10.079"
+    },
+    {
+      "plume_id": "GAO20210924t190756p0000-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20200928T175029_N0500_R141_T13TDE_20230420T015439.SAFE",
+      "error": "CDSE footprint margin is negative: -8.274"
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20210922T173031_N0500_R055_T13SFR_20230114T221113.SAFE",
+      "error": "CDSE footprint margin is negative: -6.757"
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20210717T173911_N0500_R098_T13TDE_20230222T234546.SAFE",
+      "error": "CDSE footprint margin is negative: -10.703"
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20200802T175919_N0500_R041_T12TXK_20230420T124150.SAFE",
+      "error": "CDSE footprint margin is negative: -10.092"
+    },
+    {
+      "plume_id": "GAO20210720t174343p0000-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20210712T173909_N0500_R098_T13TEE_20230206T045826.SAFE",
+      "error": "CDSE footprint margin is negative: -10.703"
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20211002T173141_N0500_R055_T13SFR_20230109T113211.SAFE",
+      "error": "CDSE footprint margin is negative: -6.757"
+    },
+    {
+      "plume_id": "GAO20210924t190756p0000-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20210920T173919_N0500_R098_T13TDE_20230128T162153.SAFE",
+      "error": "CDSE footprint margin is negative: -8.246"
+    },
+    {
+      "plume_id": "GAO20200807t163414p0000-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20200807T175921_N0500_R041_T12TXK_20230317T003327.SAFE",
+      "error": "CDSE footprint margin is negative: -10.079"
+    },
+    {
+      "plume_id": "GAO20210924t190756p0000-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20210622T173909_N0500_R098_T13TEE_20230321T020026.SAFE",
+      "error": "CDSE footprint margin is negative: -8.274"
+    },
+    {
+      "plume_id": "GAO20210924t190756p0000-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20210925T174101_N0500_R098_T13TEE_20230526T234428.SAFE",
+      "error": "CDSE footprint margin is negative: -8.246"
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20210927T173009_N0500_R055_T13SFR_20230125T144326.SAFE",
+      "error": "CDSE footprint margin is negative: -6.757"
+    },
+    {
+      "plume_id": "GAO20210924t190756p0000-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20210918T175011_N0500_R141_T13TEE_20230113T103513.SAFE",
+      "error": "CDSE footprint margin is negative: -8.246"
+    },
+    {
+      "plume_id": "GAO20220923t173123p0000-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20220924T162929_N0510_R083_T16SDB_20240731T004153.SAFE",
+      "error": "CDSE footprint margin is negative: -6.430"
+    },
+    {
+      "plume_id": "GAO20220923t173123p0000-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20220914T162839_N0510_R083_T16SDB_20240731T104852.SAFE",
+      "error": "CDSE footprint margin is negative: -6.430"
+    },
+    {
+      "plume_id": "GAO20220923t173123p0000-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20220805T162839_N0510_R083_T16SDC_20240718T045850.SAFE",
+      "error": "CDSE footprint margin is negative: -6.430"
+    },
+    {
+      "plume_id": "GAO20211007t161356p0000-D",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20211007T173119_N0500_R055_T13SER_20230127T112322.SAFE",
+      "error": "CDSE footprint margin is negative: -6.757"
+    },
+    {
+      "plume_id": "GAO20220923t173123p0000-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20220919T162951_N0510_R083_T16SDB_20240731T074039.SAFE",
+      "error": "CDSE footprint margin is negative: -6.430"
+    },
+    {
+      "plume_id": "GAO20220923t173123p0000-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20220616T162839_N0510_R083_T16SDC_20240620T200100.SAFE",
+      "error": "CDSE footprint margin is negative: -6.430"
+    },
+    {
+      "plume_id": "GAO20230614t193553p0000-F",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20230615T183921_N0510_R070_T11SKV_20240916T132048.SAFE",
+      "error": "CDSE footprint margin is negative: -11.419"
+    },
+    {
+      "plume_id": "GAO20230614t193553p0000-F",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230521T183929_N0510_R070_T11SKV_20240811T000336.SAFE",
+      "error": "CDSE footprint margin is negative: -11.419"
+    },
+    {
+      "plume_id": "GAO20230614t193553p0000-F",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20220615T183919_N0510_R070_T11SKU_20240620T040857.SAFE",
+      "error": "CDSE footprint margin is negative: -11.419"
+    },
+    {
+      "plume_id": "GAO20230614t193553p0000-F",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20230531T183919_N0510_R070_T11SKV_20240909T014906.SAFE",
+      "error": "CDSE footprint margin is negative: -11.419"
+    },
+    {
+      "plume_id": "GAO20230614t193553p0000-F",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20230307T184221_N0510_R070_T11SKU_20240820T030648.SAFE",
+      "error": "CDSE footprint margin is negative: -11.419"
+    },
+    {
+      "plume_id": "GAO20230614t193553p0000-F",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20230526T183921_N0510_R070_T11SKV_20240906T143632.SAFE",
+      "error": "CDSE footprint margin is negative: -11.419"
+    },
+    {
+      "plume_id": "GAO20220923t173123p0000-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20210924T163021_N0500_R083_T16SDB_20230118T184928.SAFE",
+      "error": "CDSE footprint margin is negative: -6.430"
+    },
+    {
+      "plume_id": "GAO20240608t192515p0000-D",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20240609T183921_N0510_R070_T11SKV_20240610T012249.SAFE",
+      "error": "CDSE footprint margin is negative: -2.418"
+    },
+    {
+      "plume_id": "GAO20240608t192515p0000-D",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20240530T183921_N0510_R070_T11SKV_20240531T012300.SAFE",
+      "error": "CDSE footprint margin is negative: -2.418"
+    },
+    {
+      "plume_id": "GAO20240608t192515p0000-D",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20230531T183919_N0510_R070_T11SKA_20240909T014906.SAFE",
+      "error": "CDSE footprint margin is negative: -2.418"
+    },
+    {
+      "plume_id": "GAO20240608t192515p0000-D",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20240525T183919_N0510_R070_T11SKV_20240525T220718.SAFE",
+      "error": "CDSE footprint margin is negative: -2.418"
+    },
+    {
+      "plume_id": "GAO20240608t192515p0000-D",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20240604T183919_N0510_R070_T11SKV_20240604T221437.SAFE",
+      "error": "CDSE footprint margin is negative: -2.418"
+    },
+    {
+      "plume_id": "GAO20240608t192515p0000-D",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20240306T184229_N0510_R070_T11SKA_20240306T224745.SAFE",
+      "error": "CDSE footprint margin is negative: -2.418"
+    },
+    {
+      "plume_id": "ang20171003t202537-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20171004T184221_N0500_R070_T10SFH_20230910T141758.SAFE",
+      "error": "CDSE footprint margin is negative: -95.637"
+    },
+    {
+      "plume_id": "ang20191007t201917-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20191008T173219_N0500_R055_T13SFR_20230614T005808.SAFE",
+      "error": "CDSE footprint margin is negative: -0.404"
+    },
+    {
+      "plume_id": "ang20191013t155909-1",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20190928T173109_N0500_R055_T13SER_20230628T131435.SAFE",
+      "error": "CDSE footprint margin is negative: -8.499"
+    },
+    {
+      "plume_id": "ang20191013t155909-1",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20190918T172959_N0500_R055_T13SES_20230702T113411.SAFE",
+      "error": "CDSE footprint margin is negative: -8.489"
+    },
+    {
+      "plume_id": "ang20191013t155909-A",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20191008T173219_N0500_R055_T13SES_20230614T005808.SAFE",
+      "error": "CDSE footprint margin is negative: -8.104"
+    },
+    {
+      "plume_id": "ang20191013t155909-1",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20190710T172909_N0500_R055_T13SES_20230625T201720.SAFE",
+      "error": "CDSE footprint margin is negative: -8.550"
+    },
+    {
+      "plume_id": "ang20191013t155909-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20191013T173301_N0500_R055_T13SES_20230714T083847.SAFE",
+      "error": "CDSE footprint margin is negative: -8.129"
+    },
+    {
+      "plume_id": "ang20191013t155909-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20190928T173109_N0500_R055_T13SER_20230628T131435.SAFE",
+      "error": "CDSE footprint margin is negative: -8.091"
+    },
+    {
+      "plume_id": "ang20191013t155909-1",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20181008T173221_N0500_R055_T13SER_20230816T095641.SAFE",
+      "error": "CDSE footprint margin is negative: -8.540"
+    },
+    {
+      "plume_id": "ang20191013t155909-1",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20191013T173301_N0500_R055_T13SES_20230714T083847.SAFE",
+      "error": "CDSE footprint margin is negative: -8.537"
+    },
+    {
+      "plume_id": "ang20191013t155909-1",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20191008T173219_N0500_R055_T13SES_20230614T005808.SAFE",
+      "error": "CDSE footprint margin is negative: -8.512"
+    },
+    {
+      "plume_id": "ang20191013t155909-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20190710T172909_N0500_R055_T13SES_20230625T201720.SAFE",
+      "error": "CDSE footprint margin is negative: -8.142"
+    },
+    {
+      "plume_id": "ang20191013t155909-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20190918T172959_N0500_R055_T13SER_20230702T113411.SAFE",
+      "error": "CDSE footprint margin is negative: -8.081"
+    },
+    {
+      "plume_id": "ang20191013t155909-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20181008T173221_N0500_R055_T13SER_20230816T095641.SAFE",
+      "error": "CDSE footprint margin is negative: -8.132"
+    },
+    {
+      "plume_id": "ang20200709t224635-2",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20200403T182919_N0500_R027_T11SKU_20230405T025236.SAFE",
+      "error": "CDSE footprint margin is negative: -142.813"
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20200710T183921_N0500_R070_T11SKU_20230322T220215.SAFE",
+      "error": "CDSE footprint margin is negative: -2.679"
+    },
+    {
+      "plume_id": "ang20200709t223916-1",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20200403T182919_N0500_R027_T11SKU_20230405T025236.SAFE",
+      "error": "CDSE footprint margin is negative: -97.398"
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20200715T183919_N0500_R070_T11SLU_20230411T054303.SAFE",
+      "error": "CDSE footprint margin is negative: -2.665"
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20200707T182921_N0500_R027_T11SLU_20230515T110928.SAFE",
+      "error": "CDSE footprint margin is negative: -1.983"
+    },
+    {
+      "plume_id": "ang20200709t224635-2",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20190713T182921_N0500_R027_T11SKU_20221221T203916.SAFE",
+      "error": "CDSE footprint margin is negative: -99.069"
+    },
+    {
+      "plume_id": "ang20200715t172416-2",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20200712T182919_N0500_R027_T11SLU_20230325T231052.SAFE",
+      "error": "CDSE footprint margin is negative: -1.983"
+    },
+    {
+      "plume_id": "ang20200724t212216-1",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20200717T182921_N0500_R027_T11SKU_20230324T051106.SAFE",
+      "error": "CDSE footprint margin is negative: -206.908"
+    },
+    {
+      "plume_id": "ang20200709t223916-1",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20190713T182921_N0500_R027_T11SKU_20221221T203916.SAFE",
+      "error": "CDSE footprint margin is negative: -53.645"
+    },
+    {
+      "plume_id": "ang20200724t212216-1",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20190728T182929_N0500_R027_T11SKU_20230803T195109.SAFE",
+      "error": "CDSE footprint margin is negative: -164.565"
+    },
+    {
+      "plume_id": "ang20200724t212216-2",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20190728T182929_N0500_R027_T11SLV_20230803T195109.SAFE",
+      "error": "CDSE footprint margin is negative: -85.287"
+    },
+    {
+      "plume_id": "ang20200724t212216-2",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20200717T182921_N0500_R027_T11SKU_20230324T051106.SAFE",
+      "error": "CDSE footprint margin is negative: -127.657"
+    },
+    {
+      "plume_id": "ang20200724t212216-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20190728T182929_N0500_R027_T11SLV_20230803T195109.SAFE",
+      "error": "CDSE footprint margin is negative: -36.266"
+    },
+    {
+      "plume_id": "ang20200724t212216-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20200717T182921_N0500_R027_T11SKU_20230324T051106.SAFE",
+      "error": "CDSE footprint margin is negative: -78.605"
+    },
+    {
+      "plume_id": "ang20200924t220735-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20200920T182949_N0500_R027_T11SLU_20230503T184057.SAFE",
+      "error": "CDSE footprint margin is negative: -79.119"
+    },
+    {
+      "plume_id": "ang20220520t194728-B",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20210521T183919_N0500_R070_T11SKU_20230211T053610.SAFE",
+      "error": "CDSE footprint margin is negative: -11.256"
+    },
+    {
+      "plume_id": "ang20220520t194728-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20220506T183919_N0510_R070_T11SKV_20240610T160329.SAFE",
+      "error": "CDSE footprint margin is negative: -11.256"
+    },
+    {
+      "plume_id": "ang20220520t194728-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20220210T184521_N0510_R070_T11SKV_20240516T205450.SAFE",
+      "error": "CDSE footprint margin is negative: -11.256"
+    },
+    {
+      "plume_id": "ang20220520t194728-B",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20220511T183921_N0510_R070_T11SKV_20240615T114549.SAFE",
+      "error": "CDSE footprint margin is negative: -11.256"
+    },
+    {
+      "plume_id": "ang20220430t183401-B",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20210504T175911_N0500_R041_T13SBA_20230204T224838.SAFE",
+      "error": "CDSE footprint margin is negative: -180.472"
+    },
+    {
+      "plume_id": "ang20220520t194728-B",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20220516T183919_N0510_R070_T11SKV_20240612T063319.SAFE",
+      "error": "CDSE footprint margin is negative: -11.256"
+    },
+    {
+      "plume_id": "ang20220520t194728-B",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20220521T183931_N0510_R070_T11SKV_20240615T061933.SAFE",
+      "error": "CDSE footprint margin is negative: -11.256"
+    },
+    {
+      "plume_id": "ang20220430t183401-B",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20220424T175909_N0510_R041_T13SBA_20240605T103110.SAFE",
+      "error": "CDSE footprint margin is negative: -182.628"
+    },
+    {
+      "plume_id": "av320250109t211902-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250110T184649_N0511_R070_T11SKU_20250110T223204.SAFE",
+      "error": "CDSE footprint margin is negative: -4.521"
+    },
+    {
+      "plume_id": "ang20200924t220155-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20200920T182949_N0500_R027_T11SLU_20230503T184057.SAFE",
+      "error": "CDSE footprint margin is negative: -81.477"
+    },
+    {
+      "plume_id": "av320250109t211902-B",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20241206T184821_N0511_R070_T11SKV_20260608T094153.SAFE",
+      "error": "CDSE footprint margin is negative: -4.521"
+    },
+    {
+      "plume_id": "av320250109t211902-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20241201T184649_N0511_R070_T11SKU_20241201T210019.SAFE",
+      "error": "CDSE footprint margin is negative: -4.521"
+    },
+    {
+      "plume_id": "av320250109t211902-B",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20250105T184751_N0511_R070_T11SKU_20250105T221248.SAFE",
+      "error": "CDSE footprint margin is negative: -4.521"
+    },
+    {
+      "plume_id": "av320250109t211902-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20241007T184251_N0511_R070_T11SKV_20241007T231249.SAFE",
+      "error": "CDSE footprint margin is negative: -4.521"
+    },
+    {
+      "plume_id": "av320250916t195249-G",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250917T183919_N0511_R070_T11SKA_20250917T234521.SAFE",
+      "error": "CDSE footprint margin is negative: -1.914"
+    },
+    {
+      "plume_id": "av320250916t195249-L",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250917T183919_N0511_R070_T11SKA_20250917T234521.SAFE",
+      "error": "CDSE footprint margin is negative: -3.011"
+    },
+    {
+      "plume_id": "av320250916t195249-L",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250912T184001_N0511_R070_T11SKA_20250913T004015.SAFE",
+      "error": "CDSE footprint margin is negative: -3.011"
+    },
+    {
+      "plume_id": "av320250916t195249-L",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20250904T184831_N0511_R070_T11SKA_20250904T220018.SAFE",
+      "error": "CDSE footprint margin is negative: -3.011"
+    },
+    {
+      "plume_id": "av320250916t195249-L",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250616T184831_N0511_R070_T11SKA_20250617T053724.SAFE",
+      "error": "CDSE footprint margin is negative: -3.011"
+    },
+    {
+      "plume_id": "av320250916t195249-L",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250907T183919_N0511_R070_T11SKA_20250907T224208.SAFE",
+      "error": "CDSE footprint margin is negative: -3.011"
+    },
+    {
+      "plume_id": "av320250916t201439-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20250904T184831_N0511_R070_T11SKV_20250904T220018.SAFE",
+      "error": "CDSE footprint margin is negative: -11.020"
+    },
+    {
+      "plume_id": "av320250916t195249-G",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240917T184031_N0511_R070_T11SKV_20240918T005327.SAFE",
+      "error": "CDSE footprint margin is negative: -1.914"
+    },
+    {
+      "plume_id": "av320250916t201439-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250917T183919_N0511_R070_T11SKA_20250917T234521.SAFE",
+      "error": "CDSE footprint margin is negative: -11.020"
+    },
+    {
+      "plume_id": "av320250916t201439-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240917T184031_N0511_R070_T11SKA_20240918T005327.SAFE",
+      "error": "CDSE footprint margin is negative: -11.020"
+    },
+    {
+      "plume_id": "av320250916t201439-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250907T183919_N0511_R070_T11SKA_20250907T224208.SAFE",
+      "error": "CDSE footprint margin is negative: -11.020"
+    },
+    {
+      "plume_id": "av320250916t201439-B",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250912T184001_N0511_R070_T11SKA_20250913T004015.SAFE",
+      "error": "CDSE footprint margin is negative: -11.094"
+    },
+    {
+      "plume_id": "av320250916t201439-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250912T184001_N0511_R070_T11SKV_20250913T004015.SAFE",
+      "error": "CDSE footprint margin is negative: -11.020"
+    },
+    {
+      "plume_id": "av320250916t201439-B",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250907T183919_N0511_R070_T11SKA_20250907T224208.SAFE",
+      "error": "CDSE footprint margin is negative: -11.094"
+    },
+    {
+      "plume_id": "av320250916t201439-B",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20250904T184831_N0511_R070_T11SKV_20250904T220018.SAFE",
+      "error": "CDSE footprint margin is negative: -11.094"
+    },
+    {
+      "plume_id": "av320250916t201439-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250616T184831_N0511_R070_T11SKA_20250617T053724.SAFE",
+      "error": "CDSE footprint margin is negative: -11.020"
+    },
+    {
+      "plume_id": "av320250916t201439-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250917T183919_N0511_R070_T11SKA_20250917T234521.SAFE",
+      "error": "CDSE footprint margin is negative: -11.094"
+    },
+    {
+      "plume_id": "av320250916t195249-G",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250616T184831_N0511_R070_T11SKA_20250617T053724.SAFE",
+      "error": "CDSE footprint margin is negative: -1.914"
+    },
+    {
+      "plume_id": "av320250916t201439-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250616T184831_N0511_R070_T11SKA_20250617T053724.SAFE",
+      "error": "CDSE footprint margin is negative: -11.094"
+    },
+    {
+      "plume_id": "av320250109t211902-B",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240111T184731_N0510_R070_T11SKU_20240111T221252.SAFE",
+      "error": "CDSE footprint margin is negative: -4.521"
+    },
+    {
+      "plume_id": "av320250916t195249-G",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20250904T184831_N0511_R070_T11SKV_20250904T220018.SAFE",
+      "error": "CDSE footprint margin is negative: -1.914"
+    },
+    {
+      "plume_id": "av320250916t195249-G",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250912T184001_N0511_R070_T11SKA_20250913T004015.SAFE",
+      "error": "CDSE footprint margin is negative: -1.914"
+    },
+    {
+      "plume_id": "av320250916t195249-L",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240917T184031_N0511_R070_T11SKA_20240918T005327.SAFE",
+      "error": "CDSE footprint margin is negative: -3.011"
+    },
+    {
+      "plume_id": "av320250916t195249-G",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250907T183919_N0511_R070_T11SKA_20250907T224208.SAFE",
+      "error": "CDSE footprint margin is negative: -1.914"
+    },
+    {
+      "plume_id": "av320250916t201439-J",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250917T183919_N0511_R070_T11SKA_20250917T234521.SAFE",
+      "error": "CDSE footprint margin is negative: -5.442"
+    },
+    {
+      "plume_id": "av320250916t201439-B",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240917T184031_N0511_R070_T11SKV_20240918T005327.SAFE",
+      "error": "CDSE footprint margin is negative: -11.094"
+    },
+    {
+      "plume_id": "av320250916t201439-J",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240917T184031_N0511_R070_T11SKA_20240918T005327.SAFE",
+      "error": "CDSE footprint margin is negative: -5.442"
+    },
+    {
+      "plume_id": "av320250916t201439-J",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250912T184001_N0511_R070_T11SKA_20250913T004015.SAFE",
+      "error": "CDSE footprint margin is negative: -5.442"
+    },
+    {
+      "plume_id": "av320250916t201439-J",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250616T184831_N0511_R070_T11SKA_20250617T053724.SAFE",
+      "error": "CDSE footprint margin is negative: -5.442"
+    },
+    {
+      "plume_id": "emi20230404t090341p06057-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20220303T071809_N0510_R006_T39TXJ_20240519T231222.SAFE",
+      "error": "CDSE footprint margin is negative: -3.429"
+    },
+    {
+      "plume_id": "emi20230404t090341p06057-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230318T071629_N0510_R006_T39TXH_20240823T234102.SAFE",
+      "error": "CDSE footprint margin is negative: -3.429"
+    },
+    {
+      "plume_id": "av320250916t201439-J",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250907T183919_N0511_R070_T11SKA_20250907T224208.SAFE",
+      "error": "CDSE footprint margin is negative: -5.442"
+    },
+    {
+      "plume_id": "emi20230404t090341p06057-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20230321T072619_N0510_R049_T39TXH_20240826T205615.SAFE",
+      "error": "CDSE footprint margin is negative: -10.867"
+    },
+    {
+      "plume_id": "av320250916t201439-J",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20250904T184831_N0511_R070_T11SKV_20250904T220018.SAFE",
+      "error": "CDSE footprint margin is negative: -5.442"
+    },
+    {
+      "plume_id": "emi20230404t090341p06057-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20221228T072319_N0510_R006_T39TXH_20240807T193029.SAFE",
+      "error": "CDSE footprint margin is negative: -3.429"
+    },
+    {
+      "plume_id": "emi20230404t090341p06057-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20230405T072621_N0510_R049_T39TXJ_20240830T053642.SAFE",
+      "error": "CDSE footprint margin is negative: -10.964"
+    },
+    {
+      "plume_id": "emi20230404t090341p06057-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20230326T072611_N0510_R049_T39TXH_20240831T004820.SAFE",
+      "error": "CDSE footprint margin is negative: -10.876"
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20230624T063629_N0510_R120_T41SNC_20240911T185509.SAFE",
+      "error": "CDSE footprint margin is negative: -5.776"
+    },
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230919T080609_N0510_R078_T36SYA_20241031T145014.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230621T062629_N0510_R077_T41SNC_20240926T074720.SAFE",
+      "error": "CDSE footprint margin is negative: -8.876"
+    },
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20230626T080611_N0510_R078_T37SBR_20240917T070423.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20230626T062631_N0510_R077_T41SNC_20240927T163834.SAFE",
+      "error": "CDSE footprint margin is negative: -8.876"
+    },
+    {
+      "plume_id": "emi20230629t044101p03007-C",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20230629T063631_N0510_R120_T41SNB_20240912T100248.SAFE",
+      "error": "CDSE footprint margin is negative: -5.755"
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20231221T173731_N0510_R055_T13SER_20231221T222251.SAFE",
+      "error": "CDSE footprint margin is negative: -5.649"
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20231216T173739_N0510_R055_T13SES_20231216T201051.SAFE",
+      "error": "CDSE footprint margin is negative: -5.695"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20240408T034529_N0510_R104_T47PPR_20240408T063227.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20231224T174741_N0510_R098_T13SER_20231224T211652.SAFE",
+      "error": "CDSE footprint margin is negative: -1.534"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20240413T034541_N0510_R104_T47PPR_20240413T093951.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20240418T034539_N0510_R104_T47PPR_20240418T064256.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240623t065329p05023-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20240621T055641_N0510_R091_T42RUP_20240621T100149.SAFE",
+      "error": "CDSE footprint margin is negative: -6.345"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20230806T182919_N0510_R027_T11SNS_20241021T054204.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20231224t174522p12005-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20231211T173721_N0510_R055_T13SER_20241029T170421.SAFE",
+      "error": "CDSE footprint margin is negative: -5.597"
+    },
+    {
+      "plume_id": "emi20240623t065329p05023-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20240619T060629_N0510_R134_T42RUQ_20240619T074448.SAFE",
+      "error": "CDSE footprint margin is negative: -5.652"
+    },
+    {
+      "plume_id": "emi20240623t065329p05023-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20240624T060631_N0510_R134_T42RUP_20240624T101351.SAFE",
+      "error": "CDSE footprint margin is negative: -5.619"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20240805T184101_N0511_R027_T11SNS_20240806T012051.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240623t065329p05023-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20240321T060629_N0510_R134_T42RUP_20240321T082030.SAFE",
+      "error": "CDSE footprint margin is negative: -5.649"
+    },
+    {
+      "plume_id": "emi20240623t065329p05023-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20230625T060639_N0510_R134_T42RUP_20240813T043743.SAFE",
+      "error": "CDSE footprint margin is negative: -5.655"
+    },
+    {
+      "plume_id": "emi20240623t065329p05023-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20240616T055639_N0510_R091_T42RUP_20240616T080914.SAFE",
+      "error": "CDSE footprint margin is negative: -6.321"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20240731T182919_N0511_R027_T11SNS_20240731T220220.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-L",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250208T173409_N0511_R055_T13SER_20250208T205002.SAFE",
+      "error": "CDSE footprint margin is negative: -6.251"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-L",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250203T173601_N0511_R055_T13SER_20250203T205456.SAFE",
+      "error": "CDSE footprint margin is negative: -6.209"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-L",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20240204T173529_N0510_R055_T13SER_20240204T210401.SAFE",
+      "error": "CDSE footprint margin is negative: -6.279"
+    },
+    {
+      "plume_id": "tan20250203t082443c00s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250202T080201_N0511_R035_T38SKG_20250202T110710.SAFE",
+      "error": "CDSE footprint margin is negative: -1.249"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-L",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20250129T173459_N0511_R055_T13SER_20250129T213024.SAFE",
+      "error": "CDSE footprint margin is negative: -6.242"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-L",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250119T173549_N0511_R055_T13SES_20250119T213856.SAFE",
+      "error": "CDSE footprint margin is negative: -6.268"
+    },
+    {
+      "plume_id": "tan20250207t181204c00s4001-L",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20241105T173521_N0511_R055_T13SER_20241105T212152.SAFE",
+      "error": "CDSE footprint margin is negative: -6.274"
+    },
+    {
+      "plume_id": "tan20250203t082443c00s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20241030T075949_N0511_R035_T38SLG_20241030T093630.SAFE",
+      "error": "CDSE footprint margin is negative: -1.249"
+    },
+    {
+      "plume_id": "tan20250203t082443c00s4001-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20240203T080039_N0510_R035_T38SLF_20240203T093224.SAFE",
+      "error": "CDSE footprint margin is negative: -1.249"
+    },
+    {
+      "plume_id": "tan20250203t082443c00s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250128T080109_N0511_R035_T38SLF_20250128T090943.SAFE",
+      "error": "CDSE footprint margin is negative: -1.249"
+    },
+    {
+      "plume_id": "tan20250223t182611c00s4001-D",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20250221T174249_N0511_R098_T12RYP_20250221T223817.SAFE",
+      "error": "CDSE footprint margin is negative: -50.042"
+    },
+    {
+      "plume_id": "tan20250203t082443c00s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250204T075029_N0511_R135_T38SKF_20250204T085828.SAFE",
+      "error": "CDSE footprint margin is negative: -1.249"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-M",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250409T172859_N0511_R055_T13SGR_20250409T205934.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-I",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250409T172859_N0511_R055_T13SGR_20250409T205934.SAFE",
+      "error": "CDSE footprint margin is negative: -224.030"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-J",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250409T172859_N0511_R055_T13SGR_20250409T205934.SAFE",
+      "error": "CDSE footprint margin is negative: -120.177"
+    },
+    {
+      "plume_id": "tan20250907t142314c73s4001-B",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20250903T133241_N0511_R081_T22LGH_20250903T181914.SAFE",
+      "error": "CDSE footprint margin is negative: -6.342"
+    },
+    {
+      "plume_id": "tan20250907t142314c73s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20250905T133241_N0511_R081_T22LHH_20250905T180322.SAFE",
+      "error": "CDSE footprint margin is negative: -6.342"
+    },
+    {
+      "plume_id": "tan20250811t040535c13s4001-N",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250812T031519_N0511_R118_T49SFV_20250812T070456.SAFE",
+      "error": "CDSE footprint margin is negative: -3.858"
+    },
+    {
+      "plume_id": "tan20250811t040535c13s4001-N",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20250802T031519_N0511_R118_T49SFA_20250802T054631.SAFE",
+      "error": "CDSE footprint margin is negative: -3.858"
+    },
+    {
+      "plume_id": "tan20250811t040535c13s4001-N",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20250728T031601_N0511_R118_T49SFA_20250728T070717.SAFE",
+      "error": "CDSE footprint margin is negative: -3.858"
+    },
+    {
+      "plume_id": "tan20250907t142314c73s4001-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250908T133149_N0511_R081_T22LGH_20250908T170138.SAFE",
+      "error": "CDSE footprint margin is negative: -6.342"
+    },
+    {
+      "plume_id": "tan20250811t040535c13s4001-N",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240812T031521_N0511_R118_T49SFV_20240812T084251.SAFE",
+      "error": "CDSE footprint margin is negative: -3.858"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20250831T172721_N0511_R012_T14TPS_20250831T223114.SAFE",
+      "error": "CDSE footprint margin is negative: -1.875"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250921T173041_N0511_R055_T14TPS_20250921T224415.SAFE",
+      "error": "CDSE footprint margin is negative: -6.400"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240926T173101_N0511_R055_T14TPT_20240927T003707.SAFE",
+      "error": "CDSE footprint margin is negative: -6.515"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-B",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20250831T172721_N0511_R012_T14TPT_20250831T223114.SAFE",
+      "error": "CDSE footprint margin is negative: -10.790"
+    },
+    {
+      "plume_id": "tan20250907t142314c73s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250829T133149_N0511_R081_T22LHH_20250829T152908.SAFE",
+      "error": "CDSE footprint margin is negative: -6.342"
+    },
+    {
+      "plume_id": "tan20250907t142314c73s4001-B",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240908T133151_N0511_R081_T22LGH_20240908T183149.SAFE",
+      "error": "CDSE footprint margin is negative: -6.342"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250923T171929_N0511_R012_T14TPT_20250923T223427.SAFE",
+      "error": "CDSE footprint margin is negative: -1.875"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250623T172921_N0511_R055_T14TPS_20250623T225215.SAFE",
+      "error": "CDSE footprint margin is negative: -7.020"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250623T172921_N0511_R055_T14TPS_20250623T225215.SAFE",
+      "error": "CDSE footprint margin is negative: -6.456"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-B",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20240926T173101_N0511_R055_T14TPS_20240927T003707.SAFE",
+      "error": "CDSE footprint margin is negative: -6.962"
+    },
+    {
+      "plume_id": "tan20250907t142314c73s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250607T133241_N0511_R081_T22LHH_20250607T195513.SAFE",
+      "error": "CDSE footprint margin is negative: -6.342"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250827T172859_N0511_R055_T14TPT_20250827T210625.SAFE",
+      "error": "CDSE footprint margin is negative: -6.436"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-B",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20250923T171929_N0511_R012_T14TPT_20250923T223427.SAFE",
+      "error": "CDSE footprint margin is negative: -10.790"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-B",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20250921T173041_N0511_R055_T14TPS_20250921T224415.SAFE",
+      "error": "CDSE footprint margin is negative: -7.079"
+    },
+    {
+      "plume_id": "tan20250922t180834c89s4001-B",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20250827T172859_N0511_R055_T14TPT_20250827T210625.SAFE",
+      "error": "CDSE footprint margin is negative: -7.042"
+    },
+    {
+      "plume_id": "tan20251024t061109c86s4001-C",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250726T052241_N0511_R062_T45UWV_20250726T070513.SAFE",
+      "error": "CDSE footprint margin is negative: -5.001"
+    },
+    {
+      "plume_id": "tan20251024t061109c86s4001-C",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20251017T053241_N0511_R105_T45UWV_20251017T072518.SAFE",
+      "error": "CDSE footprint margin is negative: -2.232"
+    },
+    {
+      "plume_id": "tan20251024t061109c86s4001-C",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20241017T051821_N0511_R062_T45UWV_20241017T092901.SAFE",
+      "error": "CDSE footprint margin is negative: -5.001"
+    },
+    {
+      "plume_id": "tan20251024t061109c86s4001-C",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20251025T052921_N0511_R105_T45UWA_20251025T083716.SAFE",
+      "error": "CDSE footprint margin is negative: -2.083"
+    },
+    {
+      "plume_id": "tan20251102t093624c06s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20251103T083029_N0511_R021_T36SYJ_20251103T105121.SAFE",
+      "error": "CDSE footprint margin is negative: -7.277"
+    },
+    {
+      "plume_id": "tan20251207t190449c98s4001-E",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20251208T174629_N0511_R098_T12RYP_20251208T210331.SAFE",
+      "error": "CDSE footprint margin is negative: -248.793"
+    },
+    {
+      "plume_id": "tan20251024t061109c86s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20251022T051901_N0511_R062_T45UWV_20251022T084014.SAFE",
+      "error": "CDSE footprint margin is negative: -5.001"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20241117T100311_N0511_R079_T32RNR_20260626T183836.SAFE",
+      "error": "CDSE footprint margin is negative: -238.750"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250814T095051_N0511_R079_T32RNR_20250814T154107.SAFE",
+      "error": "CDSE footprint margin is negative: -239.847"
+    },
+    {
+      "plume_id": "tan20251102t093624c06s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20251024T082929_N0511_R021_T36SXJ_20251024T102202.SAFE",
+      "error": "CDSE footprint margin is negative: -7.277"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251223T084501_N0511_R064_T35RNN_20251223T103711.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251101t040352c45s4001-D",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20241105T031819_N0511_R118_T49SFV_20241105T054152.SAFE",
+      "error": "CDSE footprint margin is negative: -0.327"
+    },
+    {
+      "plume_id": "tan20251102t093624c06s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2A_MSIL2A_20251021T083021_N0511_R021_T36SYJ_20251021T121521.SAFE",
+      "error": "CDSE footprint margin is negative: -7.277"
+    },
+    {
+      "plume_id": "tan20251102t093624c06s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251031T083531_N0511_R021_T36SYJ_20251031T103123.SAFE",
+      "error": "CDSE footprint margin is negative: -7.277"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250923T080701_N0511_R078_T37SBR_20250923T134018.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251224T081401_N0511_R078_T36SYA_20251224T115116.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251102t093624c06s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250731T082711_N0511_R021_T36SXJ_20250731T132413.SAFE",
+      "error": "CDSE footprint margin is negative: -7.277"
+    },
+    {
+      "plume_id": "tan20251208t182346c41s4001-C",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20251207T172731_N0511_R012_T14SKA_20251207T205312.SAFE",
+      "error": "CDSE footprint margin is negative: -8.417"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250923T080701_N0511_R078_T37SBR_20250923T134018.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250924T083741_N0511_R064_T35RNN_20250924T103514.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251208t182346c41s4001-C",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20251122T172539_N0511_R012_T14RKV_20251122T204356.SAFE",
+      "error": "CDSE footprint margin is negative: -8.417"
+    },
+    {
+      "plume_id": "tan20251208t182346c41s4001-C",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250903T171859_N0511_R012_T14SKA_20250903T212347.SAFE",
+      "error": "CDSE footprint margin is negative: -8.417"
+    },
+    {
+      "plume_id": "tan20251229t042659c62s4001-L",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251227T032201_N0511_R118_T49SFA_20251227T060819.SAFE",
+      "error": "CDSE footprint margin is negative: -4.682"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260113T035121_N0511_R104_T47PPR_20260113T064318.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251229t042659c62s4001-L",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250906T031601_N0511_R118_T49SFV_20250906T055814.SAFE",
+      "error": "CDSE footprint margin is negative: -4.682"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20251010T034559_N0511_R104_T47PPR_20251010T072748.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251208t182346c41s4001-C",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20241122T173331_N0511_R012_T14RKV_20260623T192530.SAFE",
+      "error": "CDSE footprint margin is negative: -8.417"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251224T081401_N0511_R078_T36SYA_20251224T115116.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251102t093624c06s4001-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20241029T082959_N0511_R021_T36SXH_20241029T100705.SAFE",
+      "error": "CDSE footprint margin is negative: -7.277"
+    },
+    {
+      "plume_id": "tan20251229t042659c62s4001-L",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20251230T032039_N0511_R118_T49SFV_20251230T053910.SAFE",
+      "error": "CDSE footprint margin is negative: -4.682"
+    },
+    {
+      "plume_id": "tan20251208t182346c41s4001-C",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20251209T172741_N0511_R012_T14SKA_20251209T221410.SAFE",
+      "error": "CDSE footprint margin is negative: -8.417"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20250118T035101_N0511_R104_T47PPR_20250118T065552.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-D",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20251205T073209_N0511_R049_T39TXH_20251205T082245.SAFE",
+      "error": "CDSE footprint margin is negative: -8.672"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20251018T071921_N0511_R006_T39TXJ_20251018T104819.SAFE",
+      "error": "CDSE footprint margin is negative: -5.089"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-D",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20260104T073219_N0511_R049_T39TXH_20260104T092718.SAFE",
+      "error": "CDSE footprint margin is negative: -8.596"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-D",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20251018T071921_N0511_R006_T39TXJ_20251018T104819.SAFE",
+      "error": "CDSE footprint margin is negative: -7.870"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-D",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20251217T072331_N0511_R006_T39TXJ_20251217T105120.SAFE",
+      "error": "CDSE footprint margin is negative: -7.870"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20251217T072331_N0511_R006_T39TXJ_20251217T105120.SAFE",
+      "error": "CDSE footprint margin is negative: -5.089"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20250111T072251_N0511_R006_T39TXJ_20250111T100851.SAFE",
+      "error": "CDSE footprint margin is negative: -5.089"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-D",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20250111T072251_N0511_R006_T39TXH_20250111T100851.SAFE",
+      "error": "CDSE footprint margin is negative: -7.870"
+    },
+    {
+      "plume_id": "tan20260118t081840c58s4001-D",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260119T073231_N0511_R049_T39TXH_20260119T105413.SAFE",
+      "error": "CDSE footprint margin is negative: -8.577"
+    },
+    {
+      "plume_id": "tan20260206t144148c52s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260128T132231_N0511_R038_T22JGS_20260128T151909.SAFE",
+      "error": "CDSE footprint margin is negative: -3.651"
+    },
+    {
+      "plume_id": "tan20260206t144148c52s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260207T132231_N0512_R038_T22JGS_20260207T154718.SAFE",
+      "error": "CDSE footprint margin is negative: -3.651"
+    },
+    {
+      "plume_id": "tan20260212t041359c54s4001-Q",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260213T031841_N0512_R118_T49SFC_20260213T060810.SAFE",
+      "error": "CDSE footprint margin is negative: -1.296"
+    },
+    {
+      "plume_id": "tan20260206t144148c52s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250123T132301_N0511_R038_T22JGS_20250123T153810.SAFE",
+      "error": "CDSE footprint margin is negative: -3.651"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260314T052651_N0512_R105_T43QCB_20260314T105213.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-K",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260314T052651_N0512_R105_T43QBB_20260314T105213.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260212t041359c54s4001-Q",
+      "timepoint": "prev1",
+      "product_name": "S2B_MSIL2A_20260208T031809_N0512_R118_T49SGC_20260208T051254.SAFE",
+      "error": "CDSE footprint margin is negative: -1.276"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260319T034529_N0512_R104_T47PPR_20260319T073036.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260206t144148c52s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20260108T132241_N0511_R038_T22JFR_20260108T152711.SAFE",
+      "error": "CDSE footprint margin is negative: -3.651"
+    },
+    {
+      "plume_id": "tan20260212t041359c54s4001-Q",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20251104T031151_N0511_R075_T49SFB_20251104T060707.SAFE",
+      "error": "CDSE footprint margin is negative: -0.465"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20260314T034541_N0512_R104_T47PPR_20260314T091810.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260212t041359c54s4001-Q",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250215T030841_N0511_R075_T49SGC_20250215T071110.SAFE",
+      "error": "CDSE footprint margin is negative: -0.465"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250319T034601_N0511_R104_T47PPR_20250319T090407.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260212t041359c54s4001-Q",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20260131T030951_N0511_R075_T49SGB_20260131T065811.SAFE",
+      "error": "CDSE footprint margin is negative: -0.465"
+    },
+    {
+      "plume_id": "tan20260212t041359c54s4001-Q",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20260203T031931_N0511_R118_T49SGC_20260203T064409.SAFE",
+      "error": "CDSE footprint margin is negative: -1.276"
+    },
+    {
+      "plume_id": "tan20260206t144148c52s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20260123T132229_N0511_R038_T22JGR_20260123T153944.SAFE",
+      "error": "CDSE footprint margin is negative: -4.850"
+    },
+    {
+      "plume_id": "tan20260325t064231c32s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20251216T052129_N0511_R062_T43RHJ_20251216T072539.SAFE",
+      "error": "CDSE footprint margin is negative: -5.681"
+    },
+    {
+      "plume_id": "tan20260206t144148c52s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20251015T132229_N0511_R038_T22JFR_20251015T151216.SAFE",
+      "error": "CDSE footprint margin is negative: -3.651"
+    },
+    {
+      "plume_id": "tan20260325t064231c32s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20260316T051649_N0512_R062_T44RKQ_20260316T091005.SAFE",
+      "error": "CDSE footprint margin is negative: -5.681"
+    },
+    {
+      "plume_id": "tan20260325t064231c32s4001-A",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20260311T051651_N0512_R062_T44RKQ_20260311T103712.SAFE",
+      "error": "CDSE footprint margin is negative: -5.681"
+    },
+    {
+      "plume_id": "tan20260325t064231c32s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260321T051651_N0512_R062_T44RKP_20260321T102910.SAFE",
+      "error": "CDSE footprint margin is negative: -5.681"
+    },
+    {
+      "plume_id": "tan20260325t064231c32s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20250328T052231_N0511_R062_T44RKQ_20250328T120730.SAFE",
+      "error": "CDSE footprint margin is negative: -5.681"
+    },
+    {
+      "plume_id": "tan20260325t064231c32s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260326T051649_N0512_R062_T43RHJ_20260326T091052.SAFE",
+      "error": "CDSE footprint margin is negative: -5.681"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-G",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250425T051711_N0511_R062_T45UVA_20250425T103213.SAFE",
+      "error": "CDSE footprint margin is negative: -5.805"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-G",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260430T052031_N0512_R062_T45UWA_20260430T081910.SAFE",
+      "error": "CDSE footprint margin is negative: -5.805"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-G",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20260128T052959_N0511_R105_T45UVA_20260128T073645.SAFE",
+      "error": "CDSE footprint margin is negative: -5.805"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-G",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20260128T052959_N0511_R105_T45UWA_20260128T073645.SAFE",
+      "error": "CDSE footprint margin is negative: -5.805"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-G",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20260402T052251_N0512_R062_T45UVA_20260402T084556.SAFE",
+      "error": "CDSE footprint margin is negative: -5.805"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-G",
+      "timepoint": "prev3",
+      "product_name": "S2C_MSIL2A_20260123T053121_N0511_R105_T45UWA_20260123T091717.SAFE",
+      "error": "CDSE footprint margin is negative: -5.805"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-N",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20260331T051651_N0512_R062_T45UWV_20260331T083313.SAFE",
+      "error": "CDSE footprint margin is negative: -4.705"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20260423T132229_N0512_R038_T23KLQ_20260423T153948.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-N",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250425T051711_N0511_R062_T45UWA_20250425T103213.SAFE",
+      "error": "CDSE footprint margin is negative: -4.705"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-N",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20260214T051819_N0512_R062_T45UWV_20260214T090054.SAFE",
+      "error": "CDSE footprint margin is negative: -4.705"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-N",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20260128T052959_N0511_R105_T45UWA_20260128T073645.SAFE",
+      "error": "CDSE footprint margin is negative: -1.986"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260505T131241_N0512_R138_T23KKQ_20260505T163354.SAFE",
+      "error": "CDSE footprint margin is negative: -10.658"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20260507T131251_N0512_R138_T23KKQ_20260507T224213.SAFE",
+      "error": "CDSE footprint margin is negative: -10.658"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-N",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20260422T052241_N0512_R062_T45UWV_20260422T083311.SAFE",
+      "error": "CDSE footprint margin is negative: -4.705"
+    },
+    {
+      "plume_id": "tan20260429t063306c65s4001-N",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260430T052031_N0512_R062_T45UWA_20260430T081910.SAFE",
+      "error": "CDSE footprint margin is negative: -4.705"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20250505T131249_N0511_R138_T23KLQ_20250505T164152.SAFE",
+      "error": "CDSE footprint margin is negative: -10.658"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20260420T131239_N0512_R138_T23KLQ_20260420T150139.SAFE",
+      "error": "CDSE footprint margin is negative: -10.658"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20260110T131239_N0511_R138_T23KKQ_20260110T163330.SAFE",
+      "error": "CDSE footprint margin is negative: -10.658"
+    }
+  ]
+}

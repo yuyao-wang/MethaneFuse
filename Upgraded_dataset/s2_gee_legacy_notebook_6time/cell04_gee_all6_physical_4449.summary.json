@@ -1,0 +1,22 @@
+{
+  "input_rows": 4450,
+  "physical_all6_gee_rows": 4449,
+  "failed_rows": 1,
+  "unique_plumes": 4449,
+  "unique_events": 1632,
+  "gee_band_order": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "B8",
+    "B8A",
+    "B9",
+    "B11",
+    "B12"
+  ],
+  "non_gee_rows_kept": 0
+}

@@ -1,0 +1,263 @@
+{
+  "reason": "No same-acquisition CDSE product set could provide a fully covered 512x512 point-centered crop.",
+  "dropped_plumes": 15,
+  "remaining_rows": 4435,
+  "plume_ids": [
+    "emi20230926t114143p08041-A",
+    "emi20240417t080011p05030-A",
+    "emi20240805t172803p12003-A",
+    "tan20250709t181548c58s4001-M",
+    "tan20251114t110045c31s4001-A",
+    "tan20251207t190449c98s4001-E",
+    "tan20251223t100027c09s4001-A",
+    "tan20251223t100027c09s4001-B",
+    "tan20251224t092008c77s4001-A",
+    "tan20251224t092008c77s4001-D",
+    "tan20260114t045129c40s4001-A",
+    "tan20260313t065426c45s4001-A",
+    "tan20260313t065426c45s4001-K",
+    "tan20260318t051007c70s4001-A",
+    "tan20260506t143530c13s4001-E"
+  ],
+  "rows": [
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "plume_latitude": 32.512833032757285,
+      "plume_longitude": 36.11585638495691
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "plume_latitude": 14.05820850688808,
+      "plume_longitude": 99.96208667354983
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "plume_latitude": 32.40858543342556,
+      "plume_longitude": -116.74371604340688
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-M",
+      "plume_latitude": 32.17965099045689,
+      "plume_longitude": -101.72898206843898
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "plume_latitude": 28.0518542110722,
+      "plume_longitude": 9.81190279558652
+    },
+    {
+      "plume_id": "tan20251207t190449c98s4001-E",
+      "plume_latitude": 25.98326585223832,
+      "plume_longitude": -109.01809313854976
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-A",
+      "plume_latitude": 29.85097339117556,
+      "plume_longitude": 27.83165893651505
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-B",
+      "plume_latitude": 29.85244290083861,
+      "plume_longitude": 27.847369265854525
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "plume_latitude": 32.51441594144066,
+      "plume_longitude": 36.10936756045473
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "plume_latitude": 32.51609686270535,
+      "plume_longitude": 36.10943244162888
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "plume_latitude": 14.05374014254616,
+      "plume_longitude": 99.96140518067313
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-A",
+      "plume_latitude": 19.091410841050376,
+      "plume_longitude": 73.11563925443372
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-K",
+      "plume_latitude": 19.33473357819483,
+      "plume_longitude": 73.17564104231624
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "plume_latitude": 14.057717017970418,
+      "plume_longitude": 99.96194332241544
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "plume_latitude": -23.45378276022809,
+      "plume_longitude": -46.91022211807612
+    }
+  ],
+  "unresolved_timepoints": [
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20230626T080611_N0510_R078_T37SBR_20240917T070423.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20240418T034539_N0510_R104_T47PPR_20240418T064256.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20230926t114143p08041-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20230919T080609_N0510_R078_T36SYA_20241031T145014.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "prev3",
+      "product_name": "S2B_MSIL2A_20240408T034529_N0510_R104_T47PPR_20240408T063227.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "year",
+      "product_name": "S2B_MSIL2A_20230806T182919_N0510_R027_T11SNS_20241021T054204.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "t0",
+      "product_name": "S2A_MSIL2A_20240805T184101_N0511_R027_T11SNS_20240806T012051.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240805t172803p12003-A",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20240731T182919_N0511_R027_T11SNS_20240731T220220.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "emi20240417t080011p05030-A",
+      "timepoint": "prev2",
+      "product_name": "S2A_MSIL2A_20240413T034541_N0510_R104_T47PPR_20240413T093951.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20250709t181548c58s4001-M",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20250409T172859_N0511_R055_T13SGR_20250409T205934.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250814T095051_N0511_R079_T32RNR_20250814T154107.SAFE",
+      "error": "CDSE footprint margin is negative: -239.847"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251223T084501_N0511_R064_T35RNN_20251223T103711.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251207t190449c98s4001-E",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20251208T174629_N0511_R098_T12RYP_20251208T210331.SAFE",
+      "error": "CDSE footprint margin is negative: -248.793"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251224T081401_N0511_R078_T36SYA_20251224T115116.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "timepoint": "prev1",
+      "product_name": "S2A_MSIL2A_20251224T081401_N0511_R078_T36SYA_20251224T115116.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251114t110045c31s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20241117T100311_N0511_R079_T32RNR_20260626T183836.SAFE",
+      "error": "CDSE footprint margin is negative: -238.750"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250923T080701_N0511_R078_T37SBR_20250923T134018.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251223t100027c09s4001-B",
+      "timepoint": "seasonal",
+      "product_name": "S2A_MSIL2A_20250924T083741_N0511_R064_T35RNN_20250924T103514.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "prev1",
+      "product_name": "S2C_MSIL2A_20260113T035121_N0511_R104_T47PPR_20260113T064318.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20251224t092008c77s4001-D",
+      "timepoint": "seasonal",
+      "product_name": "S2C_MSIL2A_20250923T080701_N0511_R078_T37SBR_20250923T134018.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "year",
+      "product_name": "S2A_MSIL2A_20250118T035101_N0511_R104_T47PPR_20250118T065552.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260114t045129c40s4001-A",
+      "timepoint": "seasonal",
+      "product_name": "S2B_MSIL2A_20251010T034559_N0511_R104_T47PPR_20251010T072748.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2B_MSIL2A_20260319T034529_N0512_R104_T47PPR_20260319T073036.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-K",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260314T052651_N0512_R105_T43QBB_20260314T105213.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "year",
+      "product_name": "S2C_MSIL2A_20250319T034601_N0511_R104_T47PPR_20250319T090407.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260318t051007c70s4001-A",
+      "timepoint": "prev2",
+      "product_name": "S2C_MSIL2A_20260314T034541_N0512_R104_T47PPR_20260314T091810.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260313t065426c45s4001-A",
+      "timepoint": "t0",
+      "product_name": "S2C_MSIL2A_20260314T052651_N0512_R105_T43QCB_20260314T105213.SAFE",
+      "error": "no CDSE point-covering product"
+    },
+    {
+      "plume_id": "tan20260506t143530c13s4001-E",
+      "timepoint": "prev2",
+      "product_name": "S2B_MSIL2A_20260423T132229_N0512_R038_T23KLQ_20260423T153948.SAFE",
+      "error": "no CDSE point-covering product"
+    }
+  ]
+}

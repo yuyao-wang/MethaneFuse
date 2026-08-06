@@ -1,0 +1,19 @@
+{
+  "already_complete": 0,
+  "completed": 0,
+  "discovery": {
+    "already_complete": 29310,
+    "candidate_targets": 29310,
+    "explicitly_skipped": 76,
+    "missing_target": 0,
+    "preexisting_complete": 0,
+    "rows": 5409,
+    "sidecar_failure_targets": [],
+    "sidecar_failures": 0,
+    "unsupported_kind": 3144
+  },
+  "elapsed_seconds": 44.51,
+  "failures": [],
+  "manifest": "Upgraded_dataset/s2_canonical_temporal_split_v4/s2_cdse_legacy512_all_cutoff_2025-11-24.csv",
+  "repaired": 0
+}

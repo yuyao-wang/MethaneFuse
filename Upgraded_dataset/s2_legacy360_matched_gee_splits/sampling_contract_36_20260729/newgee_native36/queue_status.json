@@ -1,0 +1,51 @@
+{
+  "state": "complete",
+  "side": "gee",
+  "started_at": "2026-07-29T21:11:02.600140+00:00",
+  "splits": [
+    {
+      "split": "event_disjoint_80_20",
+      "state": "early_stopped",
+      "started_at": "2026-07-29T21:11:02.600461+00:00",
+      "side": "gee",
+      "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/event_disjoint_80_20/train.csv",
+      "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/event_disjoint_80_20/test.csv",
+      "checkpoint_root": "/transferdiniu2/yuyao/checkpoints/s2_sampling_contract_36_20260729/newgee_native36",
+      "run_name": "s2_sampling_contract_newgee_native36_seed20260729_event_disjoint_80_20_full_finetune",
+      "metrics_path": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/sampling_contract_36_20260729/newgee_native36/event_disjoint_80_20.metrics.jsonl",
+      "early_stop": {
+        "metric": "test_auroc",
+        "mode": "maximize",
+        "min_epoch": 8,
+        "patience": 2,
+        "min_delta": 0.001
+      },
+      "resume_epoch": 0,
+      "best_metric": 0.8387473942697421,
+      "bad_epochs": 2,
+      "target_epoch": 9,
+      "updated_at": "2026-07-30T04:29:29.198086+00:00",
+      "completed_epoch": 9,
+      "last_metrics": {
+        "epoch": 9,
+        "global_step": 16020,
+        "train_loss": 0.20676295644527592,
+        "train_acc": 0.9646695230736813,
+        "test_loss": 0.7713230617802158,
+        "test_acc": 0.7249153641143845,
+        "test_f1": 0.6814048552598648,
+        "test_recall": 0.5744830496553665,
+        "test_fpr": 0.1172128727487452,
+        "test_auroc": 0.8202576269978512,
+        "tp": 4084,
+        "tn": 5980,
+        "fp": 794,
+        "fn": 3025
+      },
+      "finished_at": "2026-07-30T04:29:29.198580+00:00",
+      "last_epoch": 9
+    }
+  ],
+  "updated_at": "2026-07-30T04:29:29.198982+00:00",
+  "finished_at": "2026-07-30T04:29:29.199226+00:00"
+}

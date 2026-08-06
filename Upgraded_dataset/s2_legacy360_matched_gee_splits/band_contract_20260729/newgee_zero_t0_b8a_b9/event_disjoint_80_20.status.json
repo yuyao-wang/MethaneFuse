@@ -1,0 +1,42 @@
+{
+  "split": "event_disjoint_80_20",
+  "state": "early_stopped",
+  "started_at": "2026-07-30T06:07:39.128054+00:00",
+  "side": "gee",
+  "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/event_disjoint_80_20/train.csv",
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/event_disjoint_80_20/test.csv",
+  "checkpoint_root": "/transferdiniu2/yuyao/checkpoints/s2_band_contract_20260729/newgee_zero_t0_b8a_b9",
+  "run_name": "s2_band_contract_newgee_zero_t0_b8a_b9_seed20260729_event_disjoint_80_20_full_finetune",
+  "metrics_path": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/band_contract_20260729/newgee_zero_t0_b8a_b9/event_disjoint_80_20.metrics.jsonl",
+  "early_stop": {
+    "metric": "test_auroc",
+    "mode": "maximize",
+    "min_epoch": 8,
+    "patience": 2,
+    "min_delta": 0.001
+  },
+  "resume_epoch": 0,
+  "best_metric": 0.8186640682147819,
+  "bad_epochs": 2,
+  "target_epoch": 9,
+  "updated_at": "2026-07-30T13:26:30.890394+00:00",
+  "completed_epoch": 9,
+  "last_metrics": {
+    "epoch": 9,
+    "global_step": 16020,
+    "train_loss": 0.35787593927779976,
+    "train_acc": 0.8707417292969024,
+    "test_loss": 0.6106303829989824,
+    "test_acc": 0.7253475473600807,
+    "test_f1": 0.7124217512632929,
+    "test_recall": 0.6643691095794064,
+    "test_fpr": 0.21065839976380277,
+    "test_auroc": 0.8125655183366617,
+    "tp": 4723,
+    "tn": 5347,
+    "fp": 1427,
+    "fn": 2386
+  },
+  "finished_at": "2026-07-30T13:26:30.890870+00:00",
+  "last_epoch": 9
+}

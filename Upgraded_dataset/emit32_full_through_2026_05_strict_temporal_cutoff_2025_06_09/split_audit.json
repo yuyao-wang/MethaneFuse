@@ -1,0 +1,49 @@
+{
+  "source_csvs": [
+    "/mnt/engg-niulab/Yuyao/final_crop/emit_32band/dataset_manifest_temporal.csv"
+  ],
+  "source_rows": 40730,
+  "source_unique_samples": 40730,
+  "source_unique_base_events": 1187,
+  "selection": "Choose the UTC date cutoff whose row-level test ratio is closest to the target while remaining within the allowed range.",
+  "target_test_ratio": 0.15,
+  "minimum_test_ratio": 0.1,
+  "maximum_test_ratio": 0.2,
+  "eligible_cutoff_dates": 36,
+  "cutoff_utc": "2025-06-09T00:00:00+00:00",
+  "split_rule": "train event_time < cutoff; test event_time >= cutoff",
+  "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/emit32_full_through_2026_05_strict_temporal_cutoff_2025_06_09/emit32_temporal_train.csv",
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/emit32_full_through_2026_05_strict_temporal_cutoff_2025_06_09/emit32_temporal_test.csv",
+  "train_rows": 34592,
+  "test_rows": 6138,
+  "train_ratio": 0.8493002700712006,
+  "test_ratio": 0.1506997299287994,
+  "train_unique_base_events": 1029,
+  "test_unique_base_events": 158,
+  "base_event_leakage_count": 0,
+  "sample_id_leakage_count": 0,
+  "train_label_counts": {
+    "0": 20690,
+    "1": 13902
+  },
+  "test_label_counts": {
+    "0": 3494,
+    "1": 2644
+  },
+  "train_event_time": {
+    "min": "2023-01-29T13:03:33+00:00",
+    "max": "2025-06-08T07:29:16+00:00"
+  },
+  "test_event_time": {
+    "min": "2025-06-09T11:39:24+00:00",
+    "max": "2026-04-26T18:02:50+00:00"
+  },
+  "train_t0_image_time": {
+    "min": "2023-01-29T13:03:33+00:00",
+    "max": "2025-06-08T07:29:16+00:00"
+  },
+  "test_t0_image_time": {
+    "min": "2025-06-09T11:39:24+00:00",
+    "max": "2026-04-27T15:32:06+00:00"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "tasks": 1,
+  "successful": 1,
+  "failed": 0,
+  "records": [
+    {
+      "plume_id": "GAO20200718t184740p0000-A",
+      "timepoint": "year",
+      "source_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_historical_bounds_native_v9/year/GAO20200718t184740p0000-A/s2_-360.tif",
+      "target_path": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_point_center_plus1000_v14/year/GAO20200718t184740p0000-A/s2_-360.tif",
+      "shift_x": 4,
+      "shift_y": 3,
+      "offset_km": 0.08989680209052343,
+      "status": "legacy_512_recentered"
+    }
+  ],
+  "failures": []
+}

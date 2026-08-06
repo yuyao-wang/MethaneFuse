@@ -1,0 +1,25 @@
+{
+  "source": "Upgraded_dataset/s2_historical_point_center_v11/pre_harmonize_local_split",
+  "patches_per_class_per_plume": 4,
+  "splits": {
+    "train": {
+      "rows": 26512,
+      "plumes": 3314,
+      "events": 1303,
+      "labels": {
+        "0": 13256,
+        "1": 13256
+      }
+    },
+    "test": {
+      "rows": 5864,
+      "plumes": 733,
+      "events": 212,
+      "labels": {
+        "0": 2932,
+        "1": 2932
+      }
+    }
+  },
+  "event_overlap": 0
+}

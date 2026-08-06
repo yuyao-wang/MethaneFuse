@@ -1,0 +1,14 @@
+{
+  "rows": 509,
+  "labels": {
+    "0": 235,
+    "1": 274
+  },
+  "positive_zero_mask": 0,
+  "negative_nonzero_mask": 0,
+  "event_overlap": 0,
+  "source_counts": {
+    "legacy_notebook_center20": 274,
+    "legacy_notebook_random": 235
+  }
+}

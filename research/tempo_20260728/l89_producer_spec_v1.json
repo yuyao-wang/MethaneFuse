@@ -1,0 +1,197 @@
+{
+  "created_utc": "2026-07-28T09:49:35.163368+00:00",
+  "protocol": {
+    "command_template": {
+      "entrypoint": "/home/yuyao/panopticon/research/tempo_20260728/tempo_l89_outer_cache_producer.py",
+      "fusion_evaluator_input_outputs": [
+        "base_cache.pt",
+        "p5_cache.pt"
+      ],
+      "outer_csv_literal_sha256": "277e61432437cb60dd7a9d5635f85b7efd604994dce35b3bcc10bf45d312bce7",
+      "required_runtime_arguments": [
+        "--lock-manifest",
+        "--authorized-lock-sha256",
+        "--confirm",
+        "--producer-spec",
+        "--outer-csv",
+        "--output-dir",
+        "--local-image-cache-dir",
+        "--device"
+      ],
+      "subcommand": "produce-once"
+    },
+    "extraction": {
+      "amp_dtype": "bfloat16",
+      "band_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "base_output_name": "base_cache.pt",
+      "batch_size": 16,
+      "cache_split_value": "outer",
+      "channel_ids": [
+        442.0,
+        482.0,
+        560.0,
+        654.0,
+        864.0,
+        1608.0,
+        2203.0
+      ],
+      "duplicate_rule": "exact-utc-ns-valid-evidence-t0-then-role-order-v1",
+      "event_column": "event_group_id",
+      "id_column": "id",
+      "image_size": 224,
+      "label_column": "label",
+      "local_cache_bypass_root": "/diniuvol/yuyao",
+      "local_cache_min_free_gb": 20.0,
+      "local_cache_mode": "sync",
+      "local_cache_workers": 8,
+      "max_invalid_t0": 0,
+      "max_read_errors": 0,
+      "max_rows": 0,
+      "min_valid_fraction": 0.75,
+      "normalization_mean": [
+        10331.4521484375,
+        11042.103515625,
+        12900.3623046875,
+        14452.6201171875,
+        18574.63671875,
+        19728.4296875,
+        17492.8671875
+      ],
+      "normalization_source": "precomputed",
+      "normalization_std": [
+        2259.21142578125,
+        2469.471435546875,
+        3058.9375,
+        4151.76806640625,
+        3823.086181640625,
+        5154.72265625,
+        5008.92138671875
+      ],
+      "num_workers": 8,
+      "p5_output_name": "p5_cache.pt",
+      "path_columns": [
+        "path_t0",
+        "path_prev1",
+        "path_prev2",
+        "path_prev3",
+        "path_seasonal",
+        "path_year"
+      ],
+      "persistent_workers": true,
+      "plume_id_column": "plume_id",
+      "prefetch_factor": 2,
+      "role_names": [
+        "t0",
+        "prev1",
+        "prev2",
+        "prev3",
+        "seasonal",
+        "year"
+      ],
+      "row_selection_seed": 20260727,
+      "semantic_split": "outer",
+      "sidecar_batch_size": 512,
+      "staged_csv_name": "source_manifest.csv",
+      "storage_dtype": "float16",
+      "time_columns": [
+        "t0_image_time",
+        "prev1_image_time",
+        "prev2_image_time",
+        "prev3_image_time",
+        "seasonal_image_time",
+        "year_image_time"
+      ],
+      "validity_band_index": 0,
+      "zero_invalid_pixels": true
+    },
+    "image_policy": "one base Panopticon extraction; P5 is derived from cached base CLS and never rereads imagery",
+    "locked_artifacts": [
+      {
+        "bytes": 22252,
+        "path": "/home/yuyao/panopticon/research/tempo_20260728/tempo_l89_outer_cache_producer.py",
+        "role": "authorized outer producer",
+        "sha256": "77d2d8280947f26c5455dc56094e3996ca9de40d374edf555f59a52eb99f2da3"
+      },
+      {
+        "bytes": 82402,
+        "path": "/home/yuyao/panopticon/research/pretraining_20260727/l89_ragged_cls_experiment.py",
+        "role": "per-time CLS extractor implementation",
+        "sha256": "bb029f6c07769ff2eb97e565e79d322becb80db9fc0ed95b9c4273d0568afad1"
+      },
+      {
+        "bytes": 50990,
+        "path": "/home/yuyao/panopticon/research/pretraining_20260727/rctp_l89_sidecar_fallback.py",
+        "role": "P5 sidecar cache implementation",
+        "sha256": "2a30089e616bca4a5a19294e467397e269244cc0113197fd84b996abde4e44b9"
+      },
+      {
+        "bytes": 395965930,
+        "path": "/home/yuyao/panopticon/weights/panopticon_vitb14_teacher.pth",
+        "role": "frozen Panopticon weights",
+        "sha256": "55024f411a7f383ed1a646d9b833b65683a4443846603fc7d37591d5afe9d26e"
+      },
+      {
+        "bytes": 3672123,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/pretrain/p5/sidecar_best_dev_ap.pt",
+        "role": "frozen P5 response-sidecar checkpoint",
+        "sha256": "6f9ec7ce1c4a33c509f354ce9f1f817bfa2fbb1d4ec23879be96a56aff1502c3"
+      },
+      {
+        "bytes": 92365189,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/cache/l89_ragged_cls_v1/val.pt",
+        "role": "safe development input-contract reference",
+        "sha256": "a47611f25e3670af31199b9b99a07e5ca1e0b9ba67b98133411018769d8993ca"
+      }
+    ],
+    "output_contract": {
+      "base_shape": "[N,6,768]",
+      "cache_sha256_bound_in_producer_receipt": true,
+      "mask_gap_quality_exact": true,
+      "ordered_id_plume_event_label_exact": true,
+      "overwrite": false,
+      "p5_first_768_byte_identical_to_base": true,
+      "p5_shape": "[N,6,1536]",
+      "rerun_allowed": false
+    },
+    "p5_sidecar_contract": {
+      "arm": "p5",
+      "base_channel_byte_identical": true,
+      "checkpoint_arm": "p5_correct_response",
+      "objective_response": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.15,
+        1.0
+      ],
+      "residual_scale": 0.1,
+      "sidecar_config": {
+        "feature_dim": 768,
+        "pretext_direct_base_feature_input": false,
+        "pretext_residual_scale": 1.0,
+        "rank": 8,
+        "residual_scale": 0.1,
+        "response_dim": 16
+      }
+    },
+    "producer_script_version": "tempo-l89-outer-cache-producer-v1",
+    "schema_version": "tempo-l89-outer-producer-protocol-v1",
+    "source_csv_policy": "after lock+token only: one sequential source pass into local staging while hashing; all later CSV reads use staged copy",
+    "target_csv_access_during_spec_build": false,
+    "target_csv_literal": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_temporal_hard_event_filtered_split/L89_temporal_test_hard_event_filtered.csv"
+  },
+  "protocol_sha256": "78a6abd3811b0534ebf18f588316c3217a47a4b3f5d2d97516d876017ed57b22",
+  "schema_version": "tempo-l89-outer-producer-spec-v1",
+  "status": "producer_template_locked_no_outer_read",
+  "test_or_sealed_or_holdout_read": false
+}

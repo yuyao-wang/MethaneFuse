@@ -1,0 +1,51 @@
+{
+  "bad_plume_ids_by_split": {
+    "test": [],
+    "train": []
+  },
+  "bad_rows": 0,
+  "bad_sampled_rows": [],
+  "event_overlap": 0,
+  "failures": [],
+  "kind": "patches",
+  "plume_count_stats": {
+    "test": {
+      "maximum": 32,
+      "median": 30.0,
+      "minimum": 1,
+      "partial": 451,
+      "plumes": 746
+    },
+    "train": {
+      "maximum": 32,
+      "median": 32.0,
+      "minimum": 1,
+      "partial": 762,
+      "plumes": 4502
+    }
+  },
+  "plume_overlap": 0,
+  "sampled_rows": 10000,
+  "test_labels": {
+    "0": 8939,
+    "1": 9897
+  },
+  "test_rows": 18836,
+  "train_labels": {
+    "0": 66761,
+    "1": 68448
+  },
+  "train_rows": 135209,
+  "valid_band_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    10,
+    11
+  ]
+}

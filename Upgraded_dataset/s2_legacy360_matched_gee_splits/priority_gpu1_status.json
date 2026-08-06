@@ -1,0 +1,56 @@
+{
+  "state": "complete",
+  "config": "/home/yuyao/panopticon/Upgraded_dataset/s2_priority_gpu1_gee.json",
+  "started_at": "2026-07-29T21:11:02.562333+00:00",
+  "completed_stages": [
+    {
+      "name": "priority2_newgee_native36_event_disjoint",
+      "finished_at": "2026-07-30T04:29:29.206714+00:00"
+    },
+    {
+      "name": "priority3_resume_newgee_raw_row_then_event",
+      "finished_at": "2026-07-30T13:25:03.048230+00:00"
+    }
+  ],
+  "current_stage": null,
+  "current_stage_index": 2,
+  "current_command": [
+    "/home/yuyao/miniconda3/envs/panopticon/bin/python",
+    "/home/yuyao/panopticon/Upgraded_dataset/run_s2_convergence_queue.py",
+    "--side",
+    "gee",
+    "--split-root",
+    "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits",
+    "--checkpoint-root",
+    "/transferdiniu2/yuyao/checkpoints/s2_legacy360_matched_gee_reproduction_20260728",
+    "--result-root",
+    "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/reproduction_results",
+    "--run-prefix",
+    "s2_legacy360_matched_gee",
+    "--python",
+    "/home/yuyao/miniconda3/envs/panopticon/bin/python",
+    "--train-script",
+    "/home/yuyao/panopticon/Upgraded_dataset/dino_classifier_head_s2_legacy360_repro.py",
+    "--weights",
+    "/home/yuyao/panopticon/weights/panopticon_vitb14_teacher.pth",
+    "--max-epochs",
+    "10",
+    "--min-epoch",
+    "8",
+    "--patience",
+    "2",
+    "--min-delta",
+    "0.001",
+    "--early-stop-metric",
+    "test_auroc",
+    "--batch-size",
+    "32",
+    "--num-workers",
+    "4",
+    "--splits",
+    "row_random_80_20",
+    "event_disjoint_80_20"
+  ],
+  "updated_at": "2026-07-30T13:25:03.048251+00:00",
+  "finished_at": "2026-07-30T13:25:03.048759+00:00"
+}

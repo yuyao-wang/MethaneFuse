@@ -1,0 +1,29 @@
+{
+  "mode": "prepare",
+  "rows": {
+    "all": 5087,
+    "damaged_point_rows": 4097,
+    "trusted_legacy_rows": 990
+  },
+  "split_rows": {
+    "train": 4346,
+    "test": 741
+  },
+  "damaged_by_timepoint": {
+    "s2_0_std_512_source_class": 4097,
+    "s2_-7_std_512_source_class": 4097,
+    "s2_prev2_std_512_source_class": 4097,
+    "s2_prev3_std_512_source_class": 4097,
+    "s2_-90_std_512_source_class": 4097,
+    "s2_-360_std_512_source_class": 4097
+  },
+  "events": {
+    "train": 1693,
+    "test": 213,
+    "overlap": 0
+  },
+  "outputs": {
+    "point_rows_to_recrop": "Upgraded_dataset/s2_historical_point_center_v14/point_rows_to_recrop.csv",
+    "all_rows_seed": "Upgraded_dataset/s2_historical_point_center_v14/all_rows_seed.csv"
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "source": {
+    "legacy_train_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/manifest_time_train.csv",
+    "legacy_test_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/manifest_time_test.csv",
+    "cohort_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/cohort_all.csv",
+    "rows": 74589,
+    "labels": {
+      "0": 36736,
+      "1": 37853
+    },
+    "positive_fraction": 0.5074876992586038,
+    "plumes": 2597,
+    "events": 960,
+    "date_min": "2016-09-16T22:15:43+00:00",
+    "date_max": "2025-10-03T18:40:27+00:00",
+    "row_sha256": "c04408968397562a5671d5c7020df508bc105f1e8072ece7f87b4651317f9e16"
+  },
+  "row_random": {
+    "name": "row_random_80_20",
+    "train_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/row_random_80_20/train.csv",
+    "test_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/row_random_80_20/test.csv",
+    "train": {
+      "rows": 59671,
+      "labels": {
+        "0": 29389,
+        "1": 30282
+      },
+      "positive_fraction": 0.5074826967873841,
+      "plumes": 2589,
+      "events": 957,
+      "date_min": "2016-09-16T22:15:43+00:00",
+      "date_max": "2025-10-03T18:40:27+00:00",
+      "row_sha256": "fbc6b4dbd19a75dc72d180c595317e6875414be649ede1ed5aed8a3c2e95555d"
+    },
+    "test": {
+      "rows": 14918,
+      "labels": {
+        "0": 7347,
+        "1": 7571
+      },
+      "positive_fraction": 0.5075077088081512,
+      "plumes": 2486,
+      "events": 920,
+      "date_min": "2016-09-16T22:15:43+00:00",
+      "date_max": "2025-10-03T18:40:27+00:00",
+      "row_sha256": "9b032fbf52d6647e5d2675d8fa1de820868cc86bfe981af50066de16e616a7ac"
+    },
+    "overlap": {
+      "ids": 0,
+      "plumes": 2478,
+      "events": 917
+    },
+    "diagnostics": {
+      "seed": 20260728,
+      "stratified_by": "label"
+    }
+  },
+  "event_disjoint": {
+    "name": "event_disjoint_80_20",
+    "train_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/event_disjoint_80_20/train.csv",
+    "test_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/event_disjoint_80_20/test.csv",
+    "train": {
+      "rows": 59671,
+      "labels": {
+        "0": 29425,
+        "1": 30246
+      },
+      "positive_fraction": 0.5068793886477518,
+      "plumes": 2069,
+      "events": 768,
+      "date_min": "2016-09-16T22:15:43+00:00",
+      "date_max": "2025-10-03T18:40:27+00:00",
+      "row_sha256": "b75fdf42e7eab0fe059dced9f5e5557c39c03bdd68885b781cc286c5200dcc47"
+    },
+    "test": {
+      "rows": 14918,
+      "labels": {
+        "0": 7311,
+        "1": 7607
+      },
+      "positive_fraction": 0.5099209009250569,
+      "plumes": 528,
+      "events": 192,
+      "date_min": "2016-09-19T21:13:11+00:00",
+      "date_max": "2025-10-02T17:45:22+00:00",
+      "row_sha256": "02d8ebd5405ef2d79ad2e0279df29005bbcad6b15d3f40e73dbdf9f7757ad478"
+    },
+    "overlap": {
+      "ids": 0,
+      "plumes": 0,
+      "events": 0
+    },
+    "diagnostics": {
+      "trials": 5000,
+      "target_test_fraction": 0.2,
+      "achieved_test_fraction": 0.20000268136052232,
+      "target_positive_fraction": 0.5074876992586038,
+      "test_positive_fraction": 0.5099209009250569,
+      "score_row_fraction": 1.3406802611571986e-05,
+      "score_positive_fraction": 0.002433201666453111
+    }
+  },
+  "gee_export_input": {
+    "source_csv": "/home/yuyao/methane_train/Upgrade_data_pipeline/csv/s2_6time_legacy_rebuild/s2_6time_legacy_prev123_gee_export_input.csv",
+    "output_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_export_input.csv",
+    "rows": 2597,
+    "plumes": 2597,
+    "duplicate_plumes": 0,
+    "missing_plumes": [],
+    "extra_plumes": []
+  }
+}

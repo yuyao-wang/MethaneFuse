@@ -1,0 +1,144 @@
+{
+  "args": {
+    "train_csv": "/diniuvol/yuyao/s2_6time_point_center_corrected_32/train.csv",
+    "test_csv": "/diniuvol/yuyao/s2_6time_point_center_corrected_32/test.csv",
+    "mode": "current",
+    "timepoints": "t0,prev1,prev2,prev3,seasonal,year",
+    "band_indices": "0,1,2,3,4,5,6,7,8,9,10,11",
+    "center_box": 0,
+    "max_train_samples": 20000,
+    "max_test_samples": 10000,
+    "batch_size": 256,
+    "epochs": 5,
+    "num_workers": 16,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "seed": 20260723,
+    "device": "cuda:0",
+    "output": "/home/yuyao/panopticon/Upgraded_dataset/diagnostics/s2_resnet18_point_center_full6.json"
+  },
+  "train_rows": 20000,
+  "test_rows": 10000,
+  "history": [
+    {
+      "epoch": 1,
+      "seconds": 122.54,
+      "train": {
+        "accuracy": 0.62065,
+        "f1": 0.6356082801018202,
+        "auroc": 0.6510191649999999,
+        "tp": 6617,
+        "tn": 5796,
+        "fp": 4204,
+        "fn": 3383,
+        "loss": 0.7053209716796875
+      },
+      "test": {
+        "accuracy": 0.5237,
+        "f1": 0.3761624099541585,
+        "auroc": 0.57532718,
+        "tp": 1436,
+        "tn": 3801,
+        "fp": 1199,
+        "fn": 3564,
+        "loss": 0.7565332183837891
+      }
+    },
+    {
+      "epoch": 2,
+      "seconds": 12.84,
+      "train": {
+        "accuracy": 0.66815,
+        "f1": 0.6776120852965464,
+        "auroc": 0.7240517399999999,
+        "tp": 6975,
+        "tn": 6388,
+        "fp": 3612,
+        "fn": 3025,
+        "loss": 0.6185737251281739
+      },
+      "test": {
+        "accuracy": 0.5572,
+        "f1": 0.5043653458697113,
+        "auroc": 0.57627754,
+        "tp": 2253,
+        "tn": 3319,
+        "fp": 1681,
+        "fn": 2747,
+        "loss": 0.7788042572021484
+      }
+    },
+    {
+      "epoch": 3,
+      "seconds": 10.39,
+      "train": {
+        "accuracy": 0.68585,
+        "f1": 0.6937661451479261,
+        "auroc": 0.7531235,
+        "tp": 7117,
+        "tn": 6600,
+        "fp": 3400,
+        "fn": 2883,
+        "loss": 0.5931822341918945
+      },
+      "test": {
+        "accuracy": 0.5845,
+        "f1": 0.5743264009835057,
+        "auroc": 0.6172599799999999,
+        "tp": 2803,
+        "tn": 3042,
+        "fp": 1958,
+        "fn": 2197,
+        "loss": 0.6994430526733398
+      }
+    },
+    {
+      "epoch": 4,
+      "seconds": 9.48,
+      "train": {
+        "accuracy": 0.713,
+        "f1": 0.7170462387853692,
+        "auroc": 0.7804019149999999,
+        "tp": 7273,
+        "tn": 6987,
+        "fp": 3013,
+        "fn": 2727,
+        "loss": 0.5666633529663085
+      },
+      "test": {
+        "accuracy": 0.5774,
+        "f1": 0.6674535725527226,
+        "auroc": 0.62734552,
+        "tp": 4241,
+        "tn": 1533,
+        "fp": 3467,
+        "fn": 759,
+        "loss": 0.7767534957885742
+      }
+    },
+    {
+      "epoch": 5,
+      "seconds": 9.5,
+      "train": {
+        "accuracy": 0.72695,
+        "f1": 0.7303609341825902,
+        "auroc": 0.79580329,
+        "tp": 7396,
+        "tn": 7143,
+        "fp": 2857,
+        "fn": 2604,
+        "loss": 0.5500656196594238
+      },
+      "test": {
+        "accuracy": 0.618,
+        "f1": 0.5755555555555556,
+        "auroc": 0.65550394,
+        "tp": 2590,
+        "tn": 3590,
+        "fp": 1410,
+        "fn": 2410,
+        "loss": 0.681909487915039
+      }
+    }
+  ]
+}

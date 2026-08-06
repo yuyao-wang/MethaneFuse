@@ -1,0 +1,56 @@
+{
+  "source_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_v14_six_unique_dates_temporal_split/all.csv",
+  "rules": {
+    "maximum_event_time_inclusive": "2025-10-31T23:59:59+00:00",
+    "train": "event_time < 2025-07-27T00:00:00+00:00",
+    "test": "2025-07-27T00:00:00+00:00 <= event_time <= 2025-10-31T23:59:59+00:00",
+    "grouping": "event_group_id"
+  },
+  "rows": {
+    "all": 106001,
+    "train": 89851,
+    "test": 16150
+  },
+  "plumes": {
+    "all": 3366,
+    "train": 2857,
+    "test": 509,
+    "overlap": 0
+  },
+  "events": {
+    "all": 1337,
+    "train": 1162,
+    "test": 175,
+    "overlap": 0
+  },
+  "labels": {
+    "train": {
+      "0": 44439,
+      "1": 45412
+    },
+    "test": {
+      "0": 8051,
+      "1": 8099
+    }
+  },
+  "test_ratios": {
+    "patch": 0.15235705323534685,
+    "plume": 0.15121806298276885,
+    "event": 0.13089005235602094
+  },
+  "event_time_ranges": {
+    "train": {
+      "minimum": "2016-09-19T18:28:30+00:00",
+      "maximum": "2025-07-25T18:28:56+00:00"
+    },
+    "test": {
+      "minimum": "2025-07-27T10:56:23+00:00",
+      "maximum": "2025-10-31T17:10:34+00:00"
+    }
+  },
+  "outputs": {
+    "all": "/home/yuyao/panopticon/Upgraded_dataset/s2_v14_six_unique_dates_through_2025_10_temporal_split/all.csv",
+    "train": "/home/yuyao/panopticon/Upgraded_dataset/s2_v14_six_unique_dates_through_2025_10_temporal_split/train.csv",
+    "test": "/home/yuyao/panopticon/Upgraded_dataset/s2_v14_six_unique_dates_through_2025_10_temporal_split/test.csv"
+  }
+}

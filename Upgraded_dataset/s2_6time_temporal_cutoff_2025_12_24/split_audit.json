@@ -1,0 +1,70 @@
+{
+  "cutoff_inclusive_utc_date": "2025-12-24",
+  "dropped_events": 35,
+  "dropped_rows_missing_required_or_bad_event_time": 1120,
+  "event_leakage_count": 0,
+  "input_csv": "/mnt/engg-niulab/yuyao/final_crop/s2_6time_32_to_224/all_patches_224.csv",
+  "output_columns": [
+    "id",
+    "label",
+    "plume_id",
+    "path",
+    "path_plume",
+    "source_x",
+    "source_y",
+    "latitude",
+    "longitude",
+    "event_time",
+    "t0_image_time",
+    "prev1_image_time",
+    "prev2_image_time",
+    "prev3_image_time",
+    "seasonal_image_time",
+    "year_image_time",
+    "path_t0",
+    "path_prev1",
+    "path_prev2",
+    "path_prev3",
+    "path_seasonal",
+    "path_year"
+  ],
+  "required_path_columns": [
+    "path_t0",
+    "path_prev1",
+    "path_prev2",
+    "path_prev3",
+    "path_seasonal",
+    "path_year"
+  ],
+  "required_time_columns": [
+    "t0_image_time",
+    "prev1_image_time",
+    "prev2_image_time",
+    "prev3_image_time",
+    "seasonal_image_time",
+    "year_image_time"
+  ],
+  "source_events": 4358,
+  "source_rows": 139456,
+  "split_rule": "train UTC event_date <= cutoff_date; test UTC event_date > cutoff_date; split grouped by plume_id",
+  "test_event_time_max": "2026-05-24 08:21:05+00:00",
+  "test_event_time_min": "2025-12-27 10:28:12+00:00",
+  "test_events": 642,
+  "test_label_counts": {
+    "0": 10272,
+    "1": 10272
+  },
+  "test_ratio_rows": 0.14850798056904926,
+  "test_rows": 20544,
+  "train_event_time_max": "2025-12-24 15:50:24+00:00",
+  "train_event_time_min": "2016-09-25 20:12:00+00:00",
+  "train_events": 3681,
+  "train_label_counts": {
+    "0": 58896,
+    "1": 58896
+  },
+  "train_ratio_rows": 0.8514920194309508,
+  "train_rows": 117792,
+  "valid_events": 4323,
+  "valid_rows": 138336
+}

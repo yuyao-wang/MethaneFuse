@@ -1,0 +1,65 @@
+{
+  "status": "ok",
+  "rows": {
+    "all": 5087,
+    "train": 4346,
+    "test": 741
+  },
+  "events": {
+    "train": 1693,
+    "test": 213,
+    "overlap": 0
+  },
+  "unique_source_files": 35609,
+  "missing_source_files": 0,
+  "point_t0_georef_rows": 4097,
+  "point_t0_x": {
+    "min": 255.9946098598266,
+    "q10": 256.10306602692583,
+    "q50": 256.4878062385251,
+    "q90": 256.8911139273972,
+    "max": 256.99996101495344
+  },
+  "point_t0_y": {
+    "min": 256.0021850527264,
+    "q10": 256.10760407099735,
+    "q50": 256.5027407181042,
+    "q90": 256.907787610637,
+    "max": 257.0016937631299
+  },
+  "point_t0_off_center": 0,
+  "source_counts": {
+    "s2_0_std_512": {
+      "S2_point_center_exact_v3": 4097,
+      "plume_raw_s2_90360_fixed_512": 961,
+      "S2_canonical_6510_local_safe_recrop_v4": 29
+    },
+    "s2_-7_std_512": {
+      "S2_point_center_exact_v3": 4097,
+      "S2_canonical_6510_local_safe_recrop_v4": 990
+    },
+    "s2_prev2_std_512": {
+      "S2_point_center_exact_v3": 4097,
+      "S2_canonical_6510_local_safe_recrop_v4": 990
+    },
+    "s2_prev3_std_512": {
+      "S2_point_center_exact_v3": 4097,
+      "S2_canonical_6510_local_safe_recrop_v4": 990
+    },
+    "s2_-90_std_512": {
+      "S2_point_center_exact_v3": 4097,
+      "plume_raw_s2_90360_fixed_512": 961,
+      "S2_canonical_6510_local_safe_recrop_v4": 29
+    },
+    "s2_-360_std_512": {
+      "S2_point_center_exact_v3": 4097,
+      "plume_raw_s2_90360_fixed_512": 961,
+      "S2_canonical_6510_local_safe_recrop_v4": 29
+    }
+  },
+  "outputs": {
+    "all": "Upgraded_dataset/s2_historical_point_center_v11/s2_v11_all_512.csv",
+    "train": "Upgraded_dataset/s2_historical_point_center_v11/s2_v11_train_512.csv",
+    "test": "Upgraded_dataset/s2_historical_point_center_v11/s2_v11_test_512.csv"
+  }
+}

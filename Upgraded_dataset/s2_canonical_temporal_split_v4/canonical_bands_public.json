@@ -1,0 +1,4026 @@
+{
+  "already_complete": 0,
+  "completed": 27581,
+  "discovery": {
+    "already_complete": 76,
+    "candidate_targets": 29310,
+    "explicitly_skipped": 76,
+    "missing_target": 0,
+    "preexisting_complete": 0,
+    "rows": 5409,
+    "sidecar_failure_targets": [],
+    "sidecar_failures": 0,
+    "unsupported_kind": 3144
+  },
+  "elapsed_seconds": 3808.99,
+  "failures": [
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20150922T184436_N0500_R027_T11SLU_20231017T001227.SAFE",
+      "plume_ids": [
+        "ang20160925t201200-A",
+        "ang20160925t201200-C"
+      ],
+      "product_name": "S2A_MSIL2A_20150922T184436_N0500_R027_T11SLU_20231017T001227.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160916T184422_N0500_R027_T11SLV_20230929T040835.SAFE",
+      "plume_ids": [
+        "ang20170913t214139-A",
+        "ang20170913t214139-B",
+        "ang20170913t214139-C"
+      ],
+      "product_name": "S2A_MSIL2A_20160916T184422_N0500_R027_T11SLV_20230929T040835.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160618T182922_N0500_R027_T11SKV_20231009T114102.SAFE",
+      "plume_ids": [
+        "ang20170615t234922-C",
+        "ang20170615t234922-D"
+      ],
+      "product_name": "S2A_MSIL2A_20160618T182922_N0500_R027_T11SKV_20231009T114102.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160909T185432_N0500_R070_T11SKV_20230929T011117.SAFE",
+      "plume_ids": [
+        "ang20170908t223352-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160909T185432_N0500_R070_T11SKV_20230929T011117.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20150922T184436_N0500_R027_T11SLV_20231017T001227.SAFE",
+      "plume_ids": [
+        "ang20161008t202359-A",
+        "ang20161008t202359-B",
+        "ang20161008t202359-C",
+        "ang20161008t202359-D",
+        "ang20161008t202359-E",
+        "ang20161008t202359-F",
+        "ang20161008t202359-G",
+        "ang20161008t202359-H",
+        "ang20161008t202359-I",
+        "ang20161008t202359-J",
+        "ang20161008t202359-K",
+        "ang20161008t202359-L",
+        "ang20161008t202359-M",
+        "ang20161008t202359-N",
+        "ang20161008t203001-A",
+        "ang20161008t203001-B",
+        "ang20161008t203001-C",
+        "ang20161008t203001-D",
+        "ang20161008t204039-A",
+        "ang20161008t204039-B",
+        "ang20161008t204039-C",
+        "ang20161008t204039-D",
+        "ang20161008t204039-E",
+        "ang20161008t204039-F",
+        "ang20161008t204039-G",
+        "ang20161008t204039-H",
+        "ang20161008t204039-I",
+        "ang20161008t204039-J",
+        "ang20161008t204039-K",
+        "ang20161008t204039-L",
+        "ang20161008t204651-A",
+        "ang20161008t204651-B",
+        "ang20161008t204651-C",
+        "ang20161008t204651-D",
+        "ang20161008t204651-E",
+        "ang20161008t205502-H",
+        "ang20161008t205502-L",
+        "ang20161008t210116-A",
+        "ang20161008t210116-B",
+        "ang20161008t210116-C",
+        "ang20161008t210604-A",
+        "ang20161008t210604-B",
+        "ang20161008t210604-C",
+        "ang20161008t210604-D",
+        "ang20161008t210604-E",
+        "ang20161008t211115-A",
+        "ang20161008t211115-B",
+        "ang20161008t211115-D",
+        "ang20161008t211115-E",
+        "ang20161008t211115-H",
+        "ang20161008t211115-I",
+        "ang20161008t211115-J",
+        "ang20161008t211637-B",
+        "ang20161008t211637-C",
+        "ang20161008t211637-D",
+        "ang20161008t211637-E",
+        "ang20161008t211637-H",
+        "ang20161008t211637-I",
+        "ang20161008t211637-J",
+        "ang20161008t211637-K",
+        "ang20161008t212326-A",
+        "ang20161008t212326-B",
+        "ang20161008t212326-C",
+        "ang20161008t212326-F",
+        "ang20161008t212816-A",
+        "ang20161008t213309-C",
+        "ang20161008t213309-D",
+        "ang20161008t213309-H",
+        "ang20161008t213309-I",
+        "ang20161008t213955-B",
+        "ang20161008t213955-C",
+        "ang20161008t213955-E",
+        "ang20161008t213955-G",
+        "ang20161008t213955-H",
+        "ang20161008t213955-J",
+        "ang20161008t213955-K",
+        "ang20161008t213955-N",
+        "ang20161008t213955-O",
+        "ang20161008t213955-P",
+        "ang20161008t213955-Q"
+      ],
+      "product_name": "S2A_MSIL2A_20150922T184436_N0500_R027_T11SLV_20231017T001227.SAFE",
+      "tasks": 80
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160827T184432_N0500_R027_T11SLU_20231005T195227.SAFE",
+      "plume_ids": [
+        "ang20160925t201200-A",
+        "ang20160925t201200-C"
+      ],
+      "product_name": "S2A_MSIL2A_20160827T184432_N0500_R027_T11SLU_20231005T195227.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160810T183922_N0500_R070_T11SKA_20230928T202753.SAFE",
+      "plume_ids": [
+        "ang20160919t182830-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160810T183922_N0500_R070_T11SKA_20230928T202753.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160830T183922_N0500_R070_T10SGF_20231006T103443.SAFE",
+      "plume_ids": [
+        "ang20160919t182830-A",
+        "ang20160919t182830-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160830T183922_N0500_R070_T10SGF_20231006T103443.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160728T182922_N0500_R027_T11SLU_20231006T103247.SAFE",
+      "plume_ids": [
+        "ang20161104t195416-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160728T182922_N0500_R027_T11SLU_20231006T103247.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160601T185432_N0500_R070_T11SKV_20231016T035708.SAFE",
+      "plume_ids": [
+        "ang20170615t230609-A",
+        "ang20170615t230609-B",
+        "ang20170615t230609-D",
+        "ang20170615t232626-A",
+        "ang20170615t233419-A",
+        "ang20170615t233419-B",
+        "ang20170615t233419-C",
+        "ang20170615t233419-D",
+        "ang20170615t233419-E",
+        "ang20170615t234140-A",
+        "ang20170615t234140-B",
+        "ang20170615t234140-C",
+        "ang20170615t234140-D",
+        "ang20170615t234140-E",
+        "ang20170615t234140-F",
+        "ang20170615t234140-G"
+      ],
+      "product_name": "S2A_MSIL2A_20160601T185432_N0500_R070_T11SKV_20231016T035708.SAFE",
+      "tasks": 16
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20151022T184002_N0500_R027_T11SLU_20231009T143009.SAFE",
+      "plume_ids": [
+        "ang20161104t195416-A"
+      ],
+      "product_name": "S2A_MSIL2A_20151022T184002_N0500_R027_T11SLU_20231009T143009.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160919T184032_N0500_R070_T11SKA_20230929T162611.SAFE",
+      "plume_ids": [
+        "ang20160919t182830-B",
+        "ang20170928t200057-A",
+        "ang20170928t200057-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160919T184032_N0500_R070_T11SKA_20230929T162611.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160618T182922_N0500_R027_T11SLU_20231009T114102.SAFE",
+      "plume_ids": [
+        "ang20160925t201200-A",
+        "ang20160925t201200-C",
+        "ang20170615t210701-A",
+        "ang20170615t210701-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160618T182922_N0500_R027_T11SLU_20231009T114102.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160916T184422_N0500_R027_T11SLU_20230929T040835.SAFE",
+      "plume_ids": [
+        "ang20160925t201200-A",
+        "ang20160925t201200-C",
+        "ang20161104t195416-A",
+        "ang20170915t190340-A",
+        "ang20170915t191722-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160916T184422_N0500_R027_T11SLU_20230929T040835.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160614T190352_N0500_R113_T10SFG_20231007T122504.SAFE",
+      "plume_ids": [
+        "ang20170618t200113-A",
+        "ang20170618t200113-E",
+        "ang20170618t201101-C",
+        "ang20170618t201101-E",
+        "ang20170618t201101-F"
+      ],
+      "product_name": "S2A_MSIL2A_20160614T190352_N0500_R113_T10SFG_20231007T122504.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160618T182922_N0500_R027_T11SLV_20231009T114102.SAFE",
+      "plume_ids": [
+        "ang20170615t220302-B",
+        "ang20170615t220302-C",
+        "ang20170615t223601-A",
+        "ang20170615t223601-C",
+        "ang20170615t223601-E",
+        "ang20170615t234922-A",
+        "ang20170615t234922-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160618T182922_N0500_R027_T11SLV_20231009T114102.SAFE",
+      "tasks": 7
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160906T182922_N0500_R027_T11SLU_20230930T043117.SAFE",
+      "plume_ids": [
+        "ang20160925t201200-A",
+        "ang20160925t201200-C"
+      ],
+      "product_name": "S2A_MSIL2A_20160906T182922_N0500_R027_T11SLU_20230930T043117.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160810T183922_N0500_R070_T10SGF_20230928T202753.SAFE",
+      "plume_ids": [
+        "ang20160919t182830-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160810T183922_N0500_R070_T10SGF_20230928T202753.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160916T184422_N0500_R027_T11SMT_20230929T040835.SAFE",
+      "plume_ids": [
+        "ang20161006t175913-A",
+        "ang20161006t180917-A",
+        "ang20161006t180917-B",
+        "ang20161006t180917-C",
+        "ang20161006t181839-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160916T184422_N0500_R027_T11SMT_20230929T040835.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160909T185432_N0500_R070_T11SLV_20230929T011117.SAFE",
+      "plume_ids": [
+        "ang20170908t195944-A",
+        "ang20170908t205824-A",
+        "ang20170908t210512-C",
+        "ang20170908t210512-D",
+        "ang20170908t210512-F",
+        "ang20170908t211246-A",
+        "ang20170908t211246-B",
+        "ang20170908t211246-C",
+        "ang20170908t211246-D",
+        "ang20170908t211901-A",
+        "ang20170908t211901-C"
+      ],
+      "product_name": "S2A_MSIL2A_20160909T185432_N0500_R070_T11SLV_20230929T011117.SAFE",
+      "tasks": 11
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160919T184032_N0500_R070_T10SGF_20230929T162611.SAFE",
+      "plume_ids": [
+        "ang20160919t182830-A",
+        "ang20170928t202037-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160919T184032_N0500_R070_T10SGF_20230929T162611.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160708T182922_N0500_R027_T11SLV_20231002T152346.SAFE",
+      "plume_ids": [
+        "ang20161008t202359-A",
+        "ang20161008t202359-B",
+        "ang20161008t202359-C",
+        "ang20161008t202359-D",
+        "ang20161008t202359-E",
+        "ang20161008t202359-F",
+        "ang20161008t202359-G",
+        "ang20161008t202359-H",
+        "ang20161008t202359-I",
+        "ang20161008t202359-J",
+        "ang20161008t202359-K",
+        "ang20161008t202359-L",
+        "ang20161008t202359-M",
+        "ang20161008t202359-N",
+        "ang20161008t203001-A",
+        "ang20161008t203001-B",
+        "ang20161008t203001-C",
+        "ang20161008t203001-D",
+        "ang20161008t204039-A",
+        "ang20161008t204039-B",
+        "ang20161008t204039-C",
+        "ang20161008t204039-D",
+        "ang20161008t204039-E",
+        "ang20161008t204039-F",
+        "ang20161008t204039-G",
+        "ang20161008t204039-H",
+        "ang20161008t204039-I",
+        "ang20161008t204039-J",
+        "ang20161008t204039-K",
+        "ang20161008t204039-L",
+        "ang20161008t204651-A",
+        "ang20161008t204651-B",
+        "ang20161008t204651-C",
+        "ang20161008t204651-D",
+        "ang20161008t204651-E",
+        "ang20161008t205502-H",
+        "ang20161008t205502-L",
+        "ang20161008t210116-A",
+        "ang20161008t210116-B",
+        "ang20161008t210116-C",
+        "ang20161008t210604-A",
+        "ang20161008t210604-B",
+        "ang20161008t210604-C",
+        "ang20161008t210604-D",
+        "ang20161008t210604-E",
+        "ang20161008t211115-A",
+        "ang20161008t211115-B",
+        "ang20161008t211115-D",
+        "ang20161008t211115-E",
+        "ang20161008t211115-H",
+        "ang20161008t211115-I",
+        "ang20161008t211115-J",
+        "ang20161008t211637-B",
+        "ang20161008t211637-C",
+        "ang20161008t211637-D",
+        "ang20161008t211637-E",
+        "ang20161008t211637-H",
+        "ang20161008t211637-I",
+        "ang20161008t211637-J",
+        "ang20161008t211637-K",
+        "ang20161008t212326-A",
+        "ang20161008t212326-B",
+        "ang20161008t212326-C",
+        "ang20161008t212326-F",
+        "ang20161008t212816-A",
+        "ang20161008t213309-C",
+        "ang20161008t213309-D",
+        "ang20161008t213309-H",
+        "ang20161008t213309-I",
+        "ang20161008t213955-B",
+        "ang20161008t213955-C",
+        "ang20161008t213955-E",
+        "ang20161008t213955-G",
+        "ang20161008t213955-H",
+        "ang20161008t213955-J",
+        "ang20161008t213955-K",
+        "ang20161008t213955-N",
+        "ang20161008t213955-O",
+        "ang20161008t213955-P",
+        "ang20161008t213955-Q"
+      ],
+      "product_name": "S2A_MSIL2A_20160708T182922_N0500_R027_T11SLV_20231002T152346.SAFE",
+      "tasks": 80
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160909T185432_N0500_R070_T11SLU_20230929T011117.SAFE",
+      "plume_ids": [
+        "ang20170905t213536-A",
+        "ang20170905t214122-A",
+        "ang20170905t214122-B",
+        "ang20170905t221016-A",
+        "ang20170908t224841-A",
+        "ang20170908t230641-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160909T185432_N0500_R070_T11SLU_20230929T011117.SAFE",
+      "tasks": 6
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160614T190352_N0500_R113_T10SGG_20231007T122504.SAFE",
+      "plume_ids": [
+        "ang20170618t223820-A",
+        "ang20170618t230731-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160614T190352_N0500_R113_T10SGG_20231007T122504.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160926T183122_N0500_R027_T11SLV_20230929T205418.SAFE",
+      "plume_ids": [
+        "ang20161008t202359-A",
+        "ang20161008t202359-B",
+        "ang20161008t202359-C",
+        "ang20161008t202359-D",
+        "ang20161008t202359-E",
+        "ang20161008t202359-F",
+        "ang20161008t202359-G",
+        "ang20161008t202359-H",
+        "ang20161008t202359-I",
+        "ang20161008t202359-J",
+        "ang20161008t202359-K",
+        "ang20161008t202359-L",
+        "ang20161008t202359-M",
+        "ang20161008t202359-N",
+        "ang20161008t203001-A",
+        "ang20161008t203001-B",
+        "ang20161008t203001-C",
+        "ang20161008t203001-D",
+        "ang20161008t204039-A",
+        "ang20161008t204039-B",
+        "ang20161008t204039-C",
+        "ang20161008t204039-D",
+        "ang20161008t204039-E",
+        "ang20161008t204039-F",
+        "ang20161008t204039-G",
+        "ang20161008t204039-H",
+        "ang20161008t204039-I",
+        "ang20161008t204039-J",
+        "ang20161008t204039-K",
+        "ang20161008t204039-L",
+        "ang20161008t204651-A",
+        "ang20161008t204651-B",
+        "ang20161008t204651-C",
+        "ang20161008t204651-D",
+        "ang20161008t204651-E",
+        "ang20161008t205502-H",
+        "ang20161008t205502-L",
+        "ang20161008t210116-A",
+        "ang20161008t210116-B",
+        "ang20161008t210116-C",
+        "ang20161008t210604-A",
+        "ang20161008t210604-B",
+        "ang20161008t210604-C",
+        "ang20161008t210604-D",
+        "ang20161008t210604-E",
+        "ang20161008t211115-A",
+        "ang20161008t211115-B",
+        "ang20161008t211115-D",
+        "ang20161008t211115-E",
+        "ang20161008t211115-H",
+        "ang20161008t211115-I",
+        "ang20161008t211115-J",
+        "ang20161008t211637-B",
+        "ang20161008t211637-C",
+        "ang20161008t211637-D",
+        "ang20161008t211637-E",
+        "ang20161008t211637-H",
+        "ang20161008t211637-I",
+        "ang20161008t211637-J",
+        "ang20161008t211637-K",
+        "ang20161008t212326-A",
+        "ang20161008t212326-B",
+        "ang20161008t212326-C",
+        "ang20161008t212326-F",
+        "ang20161008t212816-A",
+        "ang20161008t213309-C",
+        "ang20161008t213309-D",
+        "ang20161008t213309-H",
+        "ang20161008t213309-I",
+        "ang20161008t213955-B",
+        "ang20161008t213955-C",
+        "ang20161008t213955-E",
+        "ang20161008t213955-G",
+        "ang20161008t213955-H",
+        "ang20161008t213955-J",
+        "ang20161008t213955-K",
+        "ang20161008t213955-N",
+        "ang20161008t213955-O",
+        "ang20161008t213955-P",
+        "ang20161008t213955-Q"
+      ],
+      "product_name": "S2A_MSIL2A_20160926T183122_N0500_R027_T11SLV_20230929T205418.SAFE",
+      "tasks": 80
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160919T184032_N0500_R070_T11SLU_20230929T162611.SAFE",
+      "plume_ids": [
+        "ang20170915t215255-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160919T184032_N0500_R070_T11SLU_20230929T162611.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160926T183122_N0500_R027_T11SLU_20230929T205418.SAFE",
+      "plume_ids": [
+        "ang20160925t201200-A",
+        "ang20160925t201200-C",
+        "ang20161104t195416-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160926T183122_N0500_R027_T11SLU_20230929T205418.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160919T184032_N0500_R070_T11SKV_20230929T162611.SAFE",
+      "plume_ids": [
+        "ang20170928t195131-A",
+        "ang20170928t195131-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160919T184032_N0500_R070_T11SKV_20230929T162611.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161006T184422_N0500_R027_T11SLU_20230922T114844.SAFE",
+      "plume_ids": [
+        "ang20161104t195416-A",
+        "ang20171010t190508-A",
+        "ang20171010t191001-A",
+        "ang20171010t191001-D"
+      ],
+      "product_name": "S2A_MSIL2A_20161006T184422_N0500_R027_T11SLU_20230922T114844.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161013T183302_N0500_R127_T11SQU_20230923T012201.SAFE",
+      "plume_ids": [
+        "ang20171012t195433-A"
+      ],
+      "product_name": "S2A_MSIL2A_20161013T183302_N0500_R127_T11SQU_20230923T012201.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160929T185422_N0500_R070_T11SLV_20231002T061036.SAFE",
+      "plume_ids": [
+        "ang20161008t202359-A",
+        "ang20161008t202359-B",
+        "ang20161008t202359-C",
+        "ang20161008t202359-D",
+        "ang20161008t202359-E",
+        "ang20161008t202359-F",
+        "ang20161008t202359-G",
+        "ang20161008t202359-H",
+        "ang20161008t202359-I",
+        "ang20161008t202359-J",
+        "ang20161008t202359-K",
+        "ang20161008t202359-L",
+        "ang20161008t202359-M",
+        "ang20161008t202359-N",
+        "ang20161008t203001-A",
+        "ang20161008t203001-B",
+        "ang20161008t203001-C",
+        "ang20161008t203001-D",
+        "ang20161008t204039-A",
+        "ang20161008t204039-B",
+        "ang20161008t204039-C",
+        "ang20161008t204039-D",
+        "ang20161008t204039-E",
+        "ang20161008t204039-F",
+        "ang20161008t204039-G",
+        "ang20161008t204039-H",
+        "ang20161008t204039-I",
+        "ang20161008t204039-J",
+        "ang20161008t204039-K",
+        "ang20161008t204039-L",
+        "ang20161008t204651-A",
+        "ang20161008t204651-B",
+        "ang20161008t204651-C",
+        "ang20161008t204651-D",
+        "ang20161008t204651-E",
+        "ang20161008t205502-H",
+        "ang20161008t205502-L",
+        "ang20161008t210116-A",
+        "ang20161008t210116-B",
+        "ang20161008t210116-C",
+        "ang20161008t210604-A",
+        "ang20161008t210604-B",
+        "ang20161008t210604-C",
+        "ang20161008t210604-D",
+        "ang20161008t210604-E",
+        "ang20161008t211115-A",
+        "ang20161008t211115-B",
+        "ang20161008t211115-D",
+        "ang20161008t211115-E",
+        "ang20161008t211115-H",
+        "ang20161008t211115-I",
+        "ang20161008t211115-J",
+        "ang20161008t211637-B",
+        "ang20161008t211637-C",
+        "ang20161008t211637-D",
+        "ang20161008t211637-E",
+        "ang20161008t211637-H",
+        "ang20161008t211637-I",
+        "ang20161008t211637-J",
+        "ang20161008t211637-K",
+        "ang20161008t212326-A",
+        "ang20161008t212326-B",
+        "ang20161008t212326-C",
+        "ang20161008t212326-F",
+        "ang20161008t212816-A",
+        "ang20161008t213309-C",
+        "ang20161008t213309-D",
+        "ang20161008t213309-H",
+        "ang20161008t213309-I",
+        "ang20161008t213955-B",
+        "ang20161008t213955-C",
+        "ang20161008t213955-E",
+        "ang20161008t213955-G",
+        "ang20161008t213955-H",
+        "ang20161008t213955-J",
+        "ang20161008t213955-K",
+        "ang20161008t213955-N",
+        "ang20161008t213955-O",
+        "ang20161008t213955-P",
+        "ang20161008t213955-Q"
+      ],
+      "product_name": "S2A_MSIL2A_20160929T185422_N0500_R070_T11SLV_20231002T061036.SAFE",
+      "tasks": 80
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160926T183122_N0500_R027_T11SMT_20230929T205418.SAFE",
+      "plume_ids": [
+        "ang20161006t175913-A",
+        "ang20161006t180917-A",
+        "ang20161006t180917-B",
+        "ang20161006t180917-C",
+        "ang20161006t181839-B"
+      ],
+      "product_name": "S2A_MSIL2A_20160926T183122_N0500_R027_T11SMT_20230929T205418.SAFE",
+      "tasks": 10
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160922T190342_N0500_R113_T10SFH_20231005T154855.SAFE",
+      "plume_ids": [
+        "ang20171006t192328-A",
+        "ang20171006t192328-B",
+        "ang20171006t192854-A",
+        "ang20171006t192854-B",
+        "ang20171006t193531-A",
+        "ang20171006t193531-B",
+        "ang20171006t194116-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160922T190342_N0500_R113_T10SFH_20231005T154855.SAFE",
+      "tasks": 7
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161006T184422_N0500_R027_T11SLV_20230922T114844.SAFE",
+      "plume_ids": [
+        "ang20161008t202359-A",
+        "ang20161008t202359-B",
+        "ang20161008t202359-C",
+        "ang20161008t202359-D",
+        "ang20161008t202359-E",
+        "ang20161008t202359-F",
+        "ang20161008t202359-G",
+        "ang20161008t202359-H",
+        "ang20161008t202359-I",
+        "ang20161008t202359-J",
+        "ang20161008t202359-K",
+        "ang20161008t202359-L",
+        "ang20161008t202359-M",
+        "ang20161008t202359-N",
+        "ang20161008t203001-A",
+        "ang20161008t203001-B",
+        "ang20161008t203001-C",
+        "ang20161008t203001-D",
+        "ang20161008t204039-A",
+        "ang20161008t204039-B",
+        "ang20161008t204039-C",
+        "ang20161008t204039-D",
+        "ang20161008t204039-E",
+        "ang20161008t204039-F",
+        "ang20161008t204039-G",
+        "ang20161008t204039-H",
+        "ang20161008t204039-I",
+        "ang20161008t204039-J",
+        "ang20161008t204039-K",
+        "ang20161008t204039-L",
+        "ang20161008t204651-A",
+        "ang20161008t204651-B",
+        "ang20161008t204651-C",
+        "ang20161008t204651-D",
+        "ang20161008t204651-E",
+        "ang20161008t205502-H",
+        "ang20161008t205502-L",
+        "ang20161008t210116-A",
+        "ang20161008t210116-B",
+        "ang20161008t210116-C",
+        "ang20161008t210604-A",
+        "ang20161008t210604-B",
+        "ang20161008t210604-C",
+        "ang20161008t210604-D",
+        "ang20161008t210604-E",
+        "ang20161008t211115-A",
+        "ang20161008t211115-B",
+        "ang20161008t211115-D",
+        "ang20161008t211115-E",
+        "ang20161008t211115-H",
+        "ang20161008t211115-I",
+        "ang20161008t211115-J",
+        "ang20161008t211637-B",
+        "ang20161008t211637-C",
+        "ang20161008t211637-D",
+        "ang20161008t211637-E",
+        "ang20161008t211637-H",
+        "ang20161008t211637-I",
+        "ang20161008t211637-J",
+        "ang20161008t211637-K",
+        "ang20161008t212326-A",
+        "ang20161008t212326-B",
+        "ang20161008t212326-C",
+        "ang20161008t212326-F",
+        "ang20161008t212816-A",
+        "ang20161008t213309-C",
+        "ang20161008t213309-D",
+        "ang20161008t213309-H",
+        "ang20161008t213309-I",
+        "ang20161008t213955-B",
+        "ang20161008t213955-C",
+        "ang20161008t213955-E",
+        "ang20161008t213955-G",
+        "ang20161008t213955-H",
+        "ang20161008t213955-J",
+        "ang20161008t213955-K",
+        "ang20161008t213955-N",
+        "ang20161008t213955-O",
+        "ang20161008t213955-P",
+        "ang20161008t213955-Q"
+      ],
+      "product_name": "S2A_MSIL2A_20161006T184422_N0500_R027_T11SLV_20230922T114844.SAFE",
+      "tasks": 80
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161009T184302_N0500_R070_T11SLU_20230926T052457.SAFE",
+      "plume_ids": [
+        "ang20171010t193506-A",
+        "ang20171010t193506-B"
+      ],
+      "product_name": "S2A_MSIL2A_20161009T184302_N0500_R070_T11SLU_20230926T052457.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161105T183542_N0500_R027_T11SLU_20230922T083256.SAFE",
+      "plume_ids": [
+        "ang20161104t195416-A"
+      ],
+      "product_name": "S2A_MSIL2A_20161105T183542_N0500_R027_T11SLU_20230922T083256.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160922T190342_N0500_R113_T10SEH_20231005T154855.SAFE",
+      "plume_ids": [
+        "ang20171006t195044-C",
+        "ang20171006t201620-A",
+        "ang20171006t202925-A"
+      ],
+      "product_name": "S2A_MSIL2A_20160922T190342_N0500_R113_T10SEH_20231005T154855.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161002T185212_N0500_R113_T10SFG_20230922T162909.SAFE",
+      "plume_ids": [
+        "ang20171003t202537-A",
+        "ang20171006t190448-A",
+        "ang20171006t190448-B",
+        "ang20171006t190448-C",
+        "ang20171006t190448-D",
+        "ang20171006t190448-F",
+        "ang20171006t190448-G",
+        "ang20171006t190448-H",
+        "ang20171006t190448-J",
+        "ang20171006t190448-K",
+        "ang20171006t190448-L",
+        "ang20171006t191011-A",
+        "ang20171006t191011-B",
+        "ang20171006t191011-C",
+        "ang20171006t191011-D",
+        "ang20171006t191011-E",
+        "ang20171006t191011-F",
+        "ang20171006t191011-H",
+        "ang20171006t191011-K",
+        "ang20171006t191011-N"
+      ],
+      "product_name": "S2A_MSIL2A_20161002T185212_N0500_R113_T10SFG_20230922T162909.SAFE",
+      "tasks": 20
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161009T184302_N0500_R070_T11SLV_20230926T052457.SAFE",
+      "plume_ids": [
+        "ang20161008t202359-A",
+        "ang20161008t202359-B",
+        "ang20161008t202359-C",
+        "ang20161008t202359-D",
+        "ang20161008t202359-E",
+        "ang20161008t202359-F",
+        "ang20161008t202359-G",
+        "ang20161008t202359-H",
+        "ang20161008t202359-I",
+        "ang20161008t202359-J",
+        "ang20161008t202359-K",
+        "ang20161008t202359-L",
+        "ang20161008t202359-M",
+        "ang20161008t202359-N",
+        "ang20161008t203001-A",
+        "ang20161008t203001-B",
+        "ang20161008t203001-C",
+        "ang20161008t203001-D",
+        "ang20161008t204039-A",
+        "ang20161008t204039-B",
+        "ang20161008t204039-C",
+        "ang20161008t204039-D",
+        "ang20161008t204039-E",
+        "ang20161008t204039-F",
+        "ang20161008t204039-G",
+        "ang20161008t204039-H",
+        "ang20161008t204039-I",
+        "ang20161008t204039-J",
+        "ang20161008t204039-K",
+        "ang20161008t204039-L",
+        "ang20161008t204651-A",
+        "ang20161008t204651-B",
+        "ang20161008t204651-C",
+        "ang20161008t204651-D",
+        "ang20161008t204651-E",
+        "ang20161008t205502-H",
+        "ang20161008t205502-L",
+        "ang20161008t210116-A",
+        "ang20161008t210116-B",
+        "ang20161008t210116-C",
+        "ang20161008t210604-A",
+        "ang20161008t210604-B",
+        "ang20161008t210604-C",
+        "ang20161008t210604-D",
+        "ang20161008t210604-E",
+        "ang20161008t211115-A",
+        "ang20161008t211115-B",
+        "ang20161008t211115-D",
+        "ang20161008t211115-E",
+        "ang20161008t211115-H",
+        "ang20161008t211115-I",
+        "ang20161008t211115-J",
+        "ang20161008t211637-B",
+        "ang20161008t211637-C",
+        "ang20161008t211637-D",
+        "ang20161008t211637-E",
+        "ang20161008t211637-H",
+        "ang20161008t211637-I",
+        "ang20161008t211637-J",
+        "ang20161008t211637-K",
+        "ang20161008t212326-A",
+        "ang20161008t212326-B",
+        "ang20161008t212326-C",
+        "ang20161008t212326-F",
+        "ang20161008t212816-A",
+        "ang20161008t213309-C",
+        "ang20161008t213309-D",
+        "ang20161008t213309-H",
+        "ang20161008t213309-I",
+        "ang20161008t213955-B",
+        "ang20161008t213955-C",
+        "ang20161008t213955-E",
+        "ang20161008t213955-G",
+        "ang20161008t213955-H",
+        "ang20161008t213955-J",
+        "ang20161008t213955-K",
+        "ang20161008t213955-N",
+        "ang20161008t213955-O",
+        "ang20161008t213955-P",
+        "ang20161008t213955-Q",
+        "ang20171010t194108-A",
+        "ang20171010t195237-A"
+      ],
+      "product_name": "S2A_MSIL2A_20161009T184302_N0500_R070_T11SLV_20230926T052457.SAFE",
+      "tasks": 82
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20160923T183302_N0500_R127_T11SMS_20231004T234111.SAFE",
+      "plume_ids": [
+        "ang20170925t212203-A",
+        "ang20170925t212203-C",
+        "ang20170925t212940-A",
+        "ang20170925t214642-A",
+        "ang20170925t214642-B",
+        "ang20170925t214642-C",
+        "ang20170925t214642-D",
+        "ang20170925t214642-E"
+      ],
+      "product_name": "S2A_MSIL2A_20160923T183302_N0500_R127_T11SMS_20231004T234111.SAFE",
+      "tasks": 8
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20161009T184302_N0500_R070_T11SKV_20230926T052457.SAFE",
+      "plume_ids": [
+        "ang20171010t193506-C",
+        "ang20171010t195237-C",
+        "ang20171013t191520-A",
+        "ang20171013t194607-A",
+        "ang20171013t204512-A",
+        "ang20171013t205013-A",
+        "ang20171013t205013-B",
+        "ang20171013t205013-C",
+        "ang20171013t205013-D",
+        "ang20171013t205013-E",
+        "ang20171013t205013-F",
+        "ang20171013t205946-A",
+        "ang20171013t211009-A",
+        "ang20171013t211934-A",
+        "ang20171013t212517-A",
+        "ang20171013t213130-B",
+        "ang20171013t213130-C",
+        "ang20171013t213605-A",
+        "ang20171013t214049-B",
+        "ang20171013t214049-C",
+        "ang20171013t214536-A"
+      ],
+      "product_name": "S2A_MSIL2A_20161009T184302_N0500_R070_T11SKV_20230926T052457.SAFE",
+      "tasks": 21
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20171006t195044-C t0",
+      "plume_ids": [
+        "ang20171006t195044-C",
+        "ang20171006t201620-A",
+        "ang20171006t202925-A"
+      ],
+      "product_name": "S2A_MSIL2A_20171007T190351_N0500_R113_T10SEH_20230810T090127.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20200923T175051_N0500_R141_T13TEE_20230315T142022.SAFE",
+      "plume_ids": [
+        "GAO20210919t182411p0000-A",
+        "GAO20210919t182411p0000-B",
+        "GAO20210919t185950p0000-A",
+        "GAO20210919t193818p0000-A",
+        "GAO20210922t183238p0000-A",
+        "GAO20210922t183238p0000-B",
+        "GAO20210922t184257p0000-A",
+        "GAO20210922t191126p0000-A",
+        "GAO20210922t192226p0000-A",
+        "GAO20210922t193155p0000-A",
+        "GAO20210922t200529p0000-A",
+        "GAO20210922t202824p0000-A",
+        "GAO20210922t203935p0000-A",
+        "GAO20210922t203935p0000-B"
+      ],
+      "product_name": "S2A_MSIL2A_20200923T175051_N0500_R141_T13TEE_20230315T142022.SAFE",
+      "tasks": 14
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20211021t173002p0000-A year",
+      "plume_ids": [
+        "GAO20211021t172155p0000-A",
+        "GAO20211021t173002p0000-A",
+        "GAO20211021t173002p0000-B"
+      ],
+      "product_name": "S2A_MSIL2A_20201019T163321_N0500_R083_T15RYN_20230308T011710.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20211004t173359p0001-A prev3",
+      "plume_ids": [
+        "GAO20211004t173359p0001-A",
+        "GAO20211006t175951p0000-A",
+        "GAO20211006t175951p0000-B",
+        "GAO20211006t175951p0000-G",
+        "GAO20211006t181755p0000-D",
+        "GAO20211006t181755p0000-F",
+        "GAO20211006t183559p0000-H",
+        "GAO20211006t183559p0000-I",
+        "GAO20211006t183559p0000-J",
+        "GAO20211006t183559p0000-L",
+        "GAO20211006t183559p0000-M",
+        "GAO20211006t183559p0000-O",
+        "GAO20211006t183559p0000-P",
+        "GAO20211006t185434p0000-I",
+        "GAO20211006t185434p0000-K",
+        "GAO20211006t185434p0000-L",
+        "GAO20211008t174344p0000-A",
+        "GAO20211008t174344p0000-B",
+        "GAO20211008t174344p0000-C",
+        "GAO20211008t174344p0000-D",
+        "GAO20211008t174344p0000-F",
+        "GAO20211008t180032p0000-A",
+        "GAO20211008t180032p0000-C",
+        "GAO20211008t180032p0000-D",
+        "GAO20211008t180032p0000-E",
+        "GAO20211008t181755p0000-B",
+        "GAO20211008t181755p0000-C",
+        "GAO20211008t181755p0000-D",
+        "GAO20211008t181755p0000-F",
+        "GAO20211008t181755p0000-H",
+        "GAO20211008t181755p0000-I",
+        "GAO20211008t181755p0000-K"
+      ],
+      "product_name": "S2A_MSIL2A_20210929T172121_N0500_R012_T13SGR_20230126T223057.SAFE",
+      "tasks": 32
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20220318t202431-A prev3",
+      "plume_ids": [
+        "ang20220318t202431-A",
+        "ang20220318t203132-A"
+      ],
+      "product_name": "S2A_MSIL2A_20220217T183431_N0510_R027_T11SMT_20240520T054852.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20230731t130804p09016-A year",
+      "plume_ids": [
+        "emi20230731t130804p09016-A"
+      ],
+      "product_name": "S2A_MSIL2A_20220801T105631_N0510_R094_T30SUC_20240716T103744.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20230201t155152-A seasonal",
+      "plume_ids": [
+        "ang20230201t155152-A"
+      ],
+      "product_name": "S2A_MSIL2A_20221030T143731_N0510_R096_T19HBB_20240729T074651.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20230201t170953-A prev3",
+      "plume_ids": [
+        "ang20230201t170953-A",
+        "ang20230201t171405-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230118T143721_N0510_R096_T18HXE_20240809T040817.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20230201t163242-A prev3",
+      "plume_ids": [
+        "ang20230201t163242-A",
+        "ang20230201t163242-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230118T143721_N0510_R096_T19HBV_20240809T040817.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230218T070941_N0510_R106_T39RYN_20240820T105326.SAFE",
+      "plume_ids": [
+        "emi20240214t105745p07024-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230218T070941_N0510_R106_T39RYN_20240820T105326.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230218T070941_N0510_R106_T40SCH_20240820T105326.SAFE",
+      "plume_ids": [
+        "emi20230329t103702p07047-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230218T070941_N0510_R106_T40SCH_20240820T105326.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230221T071921_N0510_R006_T38PNC_20240814T120648.SAFE",
+      "plume_ids": [
+        "emi20230220t103220p07029-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230221T071921_N0510_R006_T38PNC_20240814T120648.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230228T070831_N0510_R106_T40SCH_20240820T082705.SAFE",
+      "plume_ids": [
+        "emi20230329t103702p07047-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230228T070831_N0510_R106_T40SCH_20240820T082705.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230305T180221_N0510_R041_T12SXD_20240820T012206.SAFE",
+      "plume_ids": [
+        "emi20230326t221358p15011-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230305T180221_N0510_R041_T12SXD_20240820T012206.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230311T081741_N0510_R121_T36RYV_20240817T185501.SAFE",
+      "plume_ids": [
+        "emi20230404t085844p06039-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230311T081741_N0510_R121_T36RYV_20240817T185501.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230318T095031_N0510_R079_T33SUS_20241120T225517.SAFE",
+      "plume_ids": [
+        "emi20230327t134208p09041-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230318T095031_N0510_R079_T33SUS_20241120T225517.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230321T063621_N0510_R120_T41SLB_20240827T060715.SAFE",
+      "plume_ids": [
+        "emi20230330t094934p07041-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230321T063621_N0510_R120_T41SLB_20240827T060715.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230321T063621_N0510_R120_T41SMC_20240827T060715.SAFE",
+      "plume_ids": [
+        "emi20230330t094958p07043-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230321T063621_N0510_R120_T41SMC_20240827T060715.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230325T180001_N0510_R041_T12SXD_20240825T112536.SAFE",
+      "plume_ids": [
+        "emi20230326t221358p15011-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230325T180001_N0510_R041_T12SXD_20240825T112536.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230326T054641_N0510_R048_T43TFH_20240826T013141.SAFE",
+      "plume_ids": [
+        "emi20230404t073049p05048-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230326T054641_N0510_R048_T43TFH_20240826T013141.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230327T101631_N0510_R065_T31SGR_20240827T000346.SAFE",
+      "plume_ids": [
+        "emi20230326t142844p10039-B",
+        "emi20230326t142844p10039-D"
+      ],
+      "product_name": "S2A_MSIL2A_20230327T101631_N0510_R065_T31SGR_20240827T000346.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230327T101631_N0510_R065_T32SKA_20240827T000346.SAFE",
+      "plume_ids": [
+        "emi20230326t142844p10039-A",
+        "emi20230326t142844p10039-C",
+        "emi20230326t142844p10039-E"
+      ],
+      "product_name": "S2A_MSIL2A_20230327T101631_N0510_R065_T32SKA_20240827T000346.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230405T054641_N0510_R048_T43TFH_20240826T184115.SAFE",
+      "plume_ids": [
+        "emi20230404t073049p05048-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230405T054641_N0510_R048_T43TFH_20240826T184115.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230406T183921_N0510_R070_T11SLU_20240808T061838.SAFE",
+      "plume_ids": [
+        "emi20230405t190335p13004-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230406T183921_N0510_R070_T11SLU_20240808T061838.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230406T183921_N0510_R070_T11SLV_20240808T061838.SAFE",
+      "plume_ids": [
+        "emi20230405t190335p13004-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230406T183921_N0510_R070_T11SLV_20240808T061838.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230407T180911_N0510_R084_T12TXL_20240829T015656.SAFE",
+      "plume_ids": [
+        "emi20240402t192429p13020-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230407T180911_N0510_R084_T12TXL_20240829T015656.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230410T081601_N0510_R121_T37SBR_20240826T061904.SAFE",
+      "plume_ids": [
+        "emi20230424t090818p06012-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230410T081601_N0510_R121_T37SBR_20240826T061904.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230411T160831_N0510_R140_T17SMV_20240827T130750.SAFE",
+      "plume_ids": [
+        "emi20240414t193206p13040-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230411T160831_N0510_R140_T17SMV_20240827T130750.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230414T112111_N0510_R037_T29SMC_20240904T074051.SAFE",
+      "plume_ids": [
+        "emi20230418t135016p09002-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230414T112111_N0510_R037_T29SMC_20240904T074051.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230422T071621_N0510_R006_T39RUQ_20240903T103430.SAFE",
+      "plume_ids": [
+        "emi20230426t073316p05015-B",
+        "emi20230725t113927p08036-A",
+        "emi20230725t113927p08036-C"
+      ],
+      "product_name": "S2A_MSIL2A_20230422T071621_N0510_R006_T39RUQ_20240903T103430.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230424T061631_N0510_R034_T41TQE_20240831T134448.SAFE",
+      "plume_ids": [
+        "emi20230423t064655p05023-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230424T061631_N0510_R034_T41TQE_20240831T134448.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20230731t130804p09016-A seasonal",
+      "plume_ids": [
+        "emi20230731t130804p09016-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230428T105621_N0510_R094_T30SUC_20240831T185639.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230506T083601_N0510_R064_T35RQQ_20240902T020201.SAFE",
+      "plume_ids": [
+        "emi20230818t114559p08011-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230506T083601_N0510_R064_T35RQQ_20240902T020201.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20230817t061031p04006-B seasonal",
+      "plume_ids": [
+        "emi20230817t061031p04006-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230507T062631_N0510_R077_T42UXB_20240903T152241.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230520T100031_N0510_R122_T32RLS_20240904T122534.SAFE",
+      "plume_ids": [
+        "emi20230527t133235p09034-A",
+        "emi20230527t133235p09034-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230520T100031_N0510_R122_T32RLS_20240904T122534.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230527T080611_N0510_R078_T36SYA_20240906T092535.SAFE",
+      "plume_ids": [
+        "emi20230531t102316p07043-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230527T080611_N0510_R078_T36SYA_20240906T092535.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230530T081611_N0510_R121_T36SYA_20240906T091841.SAFE",
+      "plume_ids": [
+        "emi20230531t102316p07043-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230530T081611_N0510_R121_T36SYA_20240906T091841.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230612T082601_N0510_R021_T36RUU_20240910T231702.SAFE",
+      "plume_ids": [
+        "emi20240610t140044p09026-A",
+        "emi20240610t140044p09026-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230612T082601_N0510_R021_T36RUU_20240910T231702.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20230625t124843p08031-A prev3",
+      "plume_ids": [
+        "emi20230625t124843p08031-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230611T085601_N0510_R007_T33LUD_20240913T164431.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230619T081611_N0510_R121_T36RXV_20240911T184044.SAFE",
+      "plume_ids": [
+        "emi20230623t093007p06012-A",
+        "emi20230623t093007p06012-D"
+      ],
+      "product_name": "S2A_MSIL2A_20230619T081611_N0510_R121_T36RXV_20240911T184044.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230619T081611_N0510_R121_T36SYA_20240911T184044.SAFE",
+      "plume_ids": [
+        "emi20230623t093007p06012-E"
+      ],
+      "product_name": "S2A_MSIL2A_20230619T081611_N0510_R121_T36SYA_20240911T184044.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230703T061641_N0510_R034_T41TQE_20241011T162558.SAFE",
+      "plume_ids": [
+        "emi20231003t074752p05047-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230703T061641_N0510_R034_T41TQE_20241011T162558.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230703T175921_N0510_R041_T13TBE_20241012T030513.SAFE",
+      "plume_ids": [
+        "GAO20231005t191603p0000-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230703T175921_N0510_R041_T13TBE_20241012T030513.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230704T072621_N0510_R049_T38RPN_20240913T111047.SAFE",
+      "plume_ids": [
+        "emi20231003t074203p05022-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230704T072621_N0510_R049_T38RPN_20240913T111047.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230729T100031_N0510_R122_T32SNF_20241022T011207.SAFE",
+      "plume_ids": [
+        "emi20230802t113411p08048-A",
+        "emi20240725t134807p09011-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230729T100031_N0510_R122_T32SNF_20241022T011207.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230807T070631_N0510_R106_T40SBH_20241016T065229.SAFE",
+      "plume_ids": [
+        "emi20230816t101050p07012-B",
+        "emi20230816t101050p07012-C"
+      ],
+      "product_name": "S2A_MSIL2A_20230807T070631_N0510_R106_T40SBH_20241016T065229.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230810T173051_N0510_R012_T14SKE_20241018T180618.SAFE",
+      "plume_ids": [
+        "emi20230817t201510p13010-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230810T173051_N0510_R012_T14SKE_20241018T180618.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230810T173051_N0510_R012_T13SGR_20241018T180618.SAFE",
+      "plume_ids": [
+        "GAO20230817t175345p0000-C",
+        "GAO20230817t175345p0000-D",
+        "GAO20230817t175345p0000-E",
+        "GAO20230817t180905p0000-A",
+        "GAO20230817t180905p0000-B",
+        "GAO20230817t180905p0000-E",
+        "GAO20230817t181525p0000-A",
+        "GAO20230817t181525p0000-B",
+        "GAO20230817t182218p0000-B",
+        "GAO20230817t182833p0000-A",
+        "GAO20230817t182833p0000-B",
+        "GAO20230817t182833p0000-D",
+        "GAO20230817t183514p0000-A",
+        "GAO20230817t184135p0000-B",
+        "GAO20230817t184823p0000-A",
+        "GAO20230817t184823p0000-B",
+        "GAO20230817t185548p0000-A",
+        "GAO20230817t185548p0000-B",
+        "GAO20230817t185548p0000-D",
+        "GAO20230819t192818p0000-B",
+        "GAO20230819t193458p0000-A",
+        "GAO20230819t193458p0000-G",
+        "GAO20230819t193458p0000-N",
+        "GAO20230819t193458p0000-T",
+        "GAO20230819t194058p0000-A",
+        "GAO20230819t194058p0000-B",
+        "GAO20230819t194058p0000-F",
+        "GAO20230819t194733p0000-A",
+        "GAO20230819t194733p0000-F",
+        "GAO20230819t195323p0000-C",
+        "GAO20230819t195323p0000-F",
+        "GAO20230819t195323p0000-G",
+        "GAO20230819t200018p0000-A",
+        "GAO20230819t200018p0000-B",
+        "GAO20230819t200018p0000-C",
+        "GAO20230824t173950p0000-C",
+        "GAO20230824t174552p0000-B",
+        "GAO20230824t175220p0000-A",
+        "GAO20230824t182756p0000-A",
+        "emi20230824t175349p12024-D"
+      ],
+      "product_name": "S2A_MSIL2A_20230810T173051_N0510_R012_T13SGR_20241018T180618.SAFE",
+      "tasks": 40
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230814T083601_N0510_R064_T35RQQ_20241019T051607.SAFE",
+      "plume_ids": [
+        "emi20230818t114559p08011-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230814T083601_N0510_R064_T35RQQ_20241019T051607.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230817T070631_N0510_R106_T40SBH_20241023T172945.SAFE",
+      "plume_ids": [
+        "emi20230816t101050p07012-A",
+        "emi20230816t101050p07012-D",
+        "emi20230816t101050p07012-E",
+        "emi20230816t101050p07012-F"
+      ],
+      "product_name": "S2A_MSIL2A_20230817T070631_N0510_R106_T40SBH_20241023T172945.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230817T070631_N0510_R106_T39SYC_20241023T172945.SAFE",
+      "plume_ids": [
+        "emi20230816t101050p07012-B",
+        "emi20230816t101050p07012-C"
+      ],
+      "product_name": "S2A_MSIL2A_20230817T070631_N0510_R106_T39SYC_20241023T172945.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230817T070631_N0510_R106_T40SBJ_20241023T172945.SAFE",
+      "plume_ids": [
+        "emi20230816t101050p07012-G"
+      ],
+      "product_name": "S2A_MSIL2A_20230817T070631_N0510_R106_T40SBJ_20241023T172945.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230818T100031_N0510_R122_T32RLS_20241024T224002.SAFE",
+      "plume_ids": [
+        "emi20230822t114434p08016-A",
+        "emi20230822t114434p08016-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230818T100031_N0510_R122_T32RLS_20241024T224002.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230818T100031_N0510_R122_T32SNF_20241024T224002.SAFE",
+      "plume_ids": [
+        "emi20230820t114246p08007-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230818T100031_N0510_R122_T32SNF_20241024T224002.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230821T100601_N0510_R022_T32RLS_20241024T123213.SAFE",
+      "plume_ids": [
+        "emi20230822t114434p08016-A",
+        "emi20230822t114434p08016-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230821T100601_N0510_R022_T32RLS_20241024T123213.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230821T100601_N0510_R022_T32SNF_20241024T123213.SAFE",
+      "plume_ids": [
+        "emi20230820t114246p08007-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230821T100601_N0510_R022_T32SNF_20241024T123213.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230905T092031_N0510_R093_T34RCT_20241103T082320.SAFE",
+      "plume_ids": [
+        "emi20230924t131430p09034-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230905T092031_N0510_R093_T34RCT_20241103T082320.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230905T173911_N0510_R098_T13SED_20241104T190609.SAFE",
+      "plume_ids": [
+        "GAO20230908t162824p0000-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230905T173911_N0510_R098_T13SED_20241104T190609.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230911T000231_N0510_R030_T56HKH_20240913T055611.SAFE",
+      "plume_ids": [
+        "emi20230915t042628p02007-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230911T000231_N0510_R030_T56HKH_20240913T055611.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20230922t183732p0000-A prev3",
+      "plume_ids": [
+        "GAO20230922t183732p0000-A",
+        "GAO20230922t185216p0000-A",
+        "GAO20230922t185216p0000-B",
+        "GAO20230922t185631p0000-A",
+        "GAO20230922t185631p0000-B"
+      ],
+      "product_name": "S2A_MSIL2A_20230911T175921_N0510_R041_T12SYJ_20241104T022204.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230928T175121_N0510_R141_T13TDE_20241105T213404.SAFE",
+      "plume_ids": [
+        "GAO20231004t194247p0000-A",
+        "GAO20231004t195313p0000-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230928T175121_N0510_R141_T13TDE_20241105T213404.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230929T071701_N0510_R006_T38RPN_20241027T143206.SAFE",
+      "plume_ids": [
+        "emi20231003t074203p05022-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230929T071701_N0510_R006_T38RPN_20241027T143206.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20230930T064651_N0510_R020_T41SLB_20241027T063914.SAFE",
+      "plume_ids": [
+        "emi20230929t092159p06042-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230930T064651_N0510_R020_T41SLB_20241027T063914.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231001T061651_N0510_R034_T41TQE_20241102T214926.SAFE",
+      "plume_ids": [
+        "emi20231003t074752p05047-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231001T061651_N0510_R034_T41TQE_20241102T214926.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231002T072731_N0510_R049_T38RPN_20241109T011707.SAFE",
+      "plume_ids": [
+        "emi20231003t074203p05022-A",
+        "emi20231007t060556p04010-B"
+      ],
+      "product_name": "S2A_MSIL2A_20231002T072731_N0510_R049_T38RPN_20241109T011707.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231002T090811_N0510_R050_T34RCS_20241101T094232.SAFE",
+      "plume_ids": [
+        "emi20240928t104449p07001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231002T090811_N0510_R050_T34RCS_20241101T094232.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231002T104841_N0510_R051_T30SXH_20241101T111125.SAFE",
+      "plume_ids": [
+        "tan20240930t110752c00s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231002T104841_N0510_R051_T30SXH_20241101T111125.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231002T104841_N0510_R051_T30SYE_20241101T111125.SAFE",
+      "plume_ids": [
+        "emi20240927t130748p09003-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231002T104841_N0510_R051_T30SYE_20241101T111125.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231014T080901_N0510_R078_T36SYA_20241103T081104.SAFE",
+      "plume_ids": [
+        "emi20231016t114853p08016-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231014T080901_N0510_R078_T36SYA_20241103T081104.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231017T081931_N0510_R121_T37SBR_20241101T162244.SAFE",
+      "plume_ids": [
+        "emi20231016t114853p08016-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231017T081931_N0510_R121_T37SBR_20241101T162244.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231018T074921_N0510_R135_T38SLF_20241028T091126.SAFE",
+      "plume_ids": [
+        "emi20231022t083633p06005-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231018T074921_N0510_R135_T38SLF_20241028T091126.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20231023T084021_N0510_R064_T35RPN_20241027T033850.SAFE",
+      "plume_ids": [
+        "emi20231022t101203p07012-A",
+        "emi20231022t101203p07012-B",
+        "tan20241021t090911c00s4001-B",
+        "tan20241021t090911c00s4001-C"
+      ],
+      "product_name": "S2A_MSIL2A_20231023T084021_N0510_R064_T35RPN_20241027T033850.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20240910T070621_N0511_R106_T41VNJ_20240910T113614.SAFE",
+      "plume_ids": [
+        "tan20251012t075405c01s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20240910T070621_N0511_R106_T41VNJ_20240910T113614.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20240913T053641_N0511_R005_T42QZJ_20240913T105005.SAFE",
+      "plume_ids": [
+        "tan20241216t055718c00s4001-A",
+        "tan20241216t055718c00s4001-C"
+      ],
+      "product_name": "S2A_MSIL2A_20240913T053641_N0511_R005_T42QZJ_20240913T105005.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20241007T184251_N0511_R070_T11SKU_20241007T231249.SAFE",
+      "plume_ids": [
+        "av320250109t210610-C",
+        "av320250109t210610-D",
+        "av320250109t210610-F",
+        "av320250109t212855-A",
+        "av320250109t212855-B",
+        "av320250109t212855-F",
+        "av320250109t214158-C"
+      ],
+      "product_name": "S2A_MSIL2A_20241007T184251_N0511_R070_T11SKU_20241007T231249.SAFE",
+      "tasks": 7
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250326T162701_N0511_R040_T16SGD_20250326T214114.SAFE",
+      "plume_ids": [
+        "tan20250706t170748c33s4001-A",
+        "tan20250706t170748c33s4001-B"
+      ],
+      "product_name": "S2A_MSIL2A_20250326T162701_N0511_R040_T16SGD_20250326T214114.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250413T172721_N0511_R012_T13SGR_20250414T020417.SAFE",
+      "plume_ids": [
+        "tan20250430t180543c00s4001-A",
+        "tan20250430t180543c00s4001-F",
+        "tan20250430t180543c00s4001-U"
+      ],
+      "product_name": "S2A_MSIL2A_20250413T172721_N0511_R012_T13SGR_20250414T020417.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250411T164701_N0511_R126_T15QUA_20250412T032358.SAFE",
+      "plume_ids": [
+        "tan20250410t172635c00s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20250411T164701_N0511_R126_T15QUA_20250412T032358.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250413T172721_N0511_R012_T14SKA_20250414T020417.SAFE",
+      "plume_ids": [
+        "tan20250430t180543c00s4001-B",
+        "tan20250430t180543c00s4001-C",
+        "tan20250430t180543c00s4001-D",
+        "tan20250430t180543c00s4001-E",
+        "tan20250430t180543c00s4001-G",
+        "tan20250430t180543c00s4001-H",
+        "tan20250430t180543c00s4001-I",
+        "tan20250430t180543c00s4001-J",
+        "tan20250430t180543c00s4001-K",
+        "tan20250430t180543c00s4001-P",
+        "tan20250430t180543c00s4001-R",
+        "tan20250430t180543c00s4001-T",
+        "tan20250430t180543c00s4001-V",
+        "tan20250430t180543c00s4001-W"
+      ],
+      "product_name": "S2A_MSIL2A_20250413T172721_N0511_R012_T14SKA_20250414T020417.SAFE",
+      "tasks": 14
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250413T172721_N0511_R012_T14RKV_20250414T020417.SAFE",
+      "plume_ids": [
+        "tan20250430t180543c00s4001-M"
+      ],
+      "product_name": "S2A_MSIL2A_20250413T172721_N0511_R012_T14RKV_20250414T020417.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250504T083521_N0511_R021_T37UDP_20250504T121114.SAFE",
+      "plume_ids": [
+        "tan20250831t092515c41s4001-D"
+      ],
+      "product_name": "S2A_MSIL2A_20250504T083521_N0511_R021_T37UDP_20250504T121114.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250522T075811_N0511_R135_T38SME_20250522T095014.SAFE",
+      "plume_ids": [
+        "tan20250531t082207c30s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20250522T075811_N0511_R135_T38SME_20250522T095014.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20250611t064413p04004-A prev3",
+      "plume_ids": [
+        "emi20250611t064413p04004-A"
+      ],
+      "product_name": "S2A_MSIL2A_20250606T084501_N0511_R064_T37UCP_20250606T110013.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250616T184831_N0511_R070_T11SKV_20250617T053724.SAFE",
+      "plume_ids": [
+        "av320250916t193037-A",
+        "av320250916t193037-B",
+        "av320250916t195249-C",
+        "av320250916t195249-E",
+        "av320250916t195249-F",
+        "av320250916t195249-G",
+        "av320250916t195249-L",
+        "av320250916t200346-B",
+        "av320250916t201439-J",
+        "av320250916t203628-E",
+        "av320250916t204734-A",
+        "av320250916t205827-B",
+        "av320250916t205827-C",
+        "av320250916t205827-I",
+        "av320250916t205827-J",
+        "av320250916t205827-M",
+        "tan20250623t193151c25s4001-Z"
+      ],
+      "product_name": "S2A_MSIL2A_20250616T184831_N0511_R070_T11SKV_20250617T053724.SAFE",
+      "tasks": 17
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250625T073031_N0511_R049_T39TVE_20250625T113401.SAFE",
+      "plume_ids": [
+        "tan20250925t082407c76s4001-A",
+        "tan20250925t082407c76s4001-B"
+      ],
+      "product_name": "S2A_MSIL2A_20250625T073031_N0511_R049_T39TVE_20250625T113401.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250630T082601_N0511_R121_T37SBT_20250630T103319.SAFE",
+      "plume_ids": [
+        "tan20250704t090741c57s4001-B"
+      ],
+      "product_name": "S2A_MSIL2A_20250630T082601_N0511_R121_T37SBT_20250630T103319.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250703T100711_N0511_R022_T31SGR_20250703T140914.SAFE",
+      "plume_ids": [
+        "tan20250708t110853c95s4001-B",
+        "tan20250708t110853c95s4001-L",
+        "tan20250708t110853c95s4001-N"
+      ],
+      "product_name": "S2A_MSIL2A_20250703T100711_N0511_R022_T31SGR_20250703T140914.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250719T085441_N0511_R107_T35RPN_20250719T113816.SAFE",
+      "plume_ids": [
+        "tan20251019t093701c32s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20250719T085441_N0511_R107_T35RPN_20250719T113816.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250722T072331_N0511_R006_T39RUJ_20250722T112015.SAFE",
+      "plume_ids": [
+        "tan20250729t080630c58s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20250722T072331_N0511_R006_T39RUJ_20250722T112015.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250723T083531_N0511_R021_T37UDP_20250723T104512.SAFE",
+      "plume_ids": [
+        "emi20250730t111130p07027-B"
+      ],
+      "product_name": "S2A_MSIL2A_20250723T083531_N0511_R021_T37UDP_20250723T104512.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250729T053251_N0511_R105_T44SMH_20250729T074313.SAFE",
+      "plume_ids": [
+        "tan20250810t061809c72s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20250729T053251_N0511_R105_T44SMH_20250729T074313.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250812T083521_N0511_R021_T37UDP_20250812T105117.SAFE",
+      "plume_ids": [
+        "tan20250831t092515c41s4001-D"
+      ],
+      "product_name": "S2A_MSIL2A_20250812T083521_N0511_R021_T37UDP_20250812T105117.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250813T062311_N0511_R034_T41SQC_20250813T084614.SAFE",
+      "plume_ids": [
+        "emi20250818t071105p05015-A",
+        "emi20250818t071105p05015-B"
+      ],
+      "product_name": "S2A_MSIL2A_20250813T062311_N0511_R034_T41SQC_20250813T084614.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250820T075021_N0511_R135_T35JQL_20250820T112017.SAFE",
+      "plume_ids": [
+        "tan20250901t090500c71s4001-A",
+        "tan20250901t090500c71s4001-B",
+        "tan20250901t090500c71s4001-C",
+        "tan20250901t090500c71s4001-D",
+        "tan20250901t090500c71s4001-G"
+      ],
+      "product_name": "S2A_MSIL2A_20250820T075021_N0511_R135_T35JQL_20250820T112017.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250826T095041_N0511_R079_T33UYR_20250826T112912.SAFE",
+      "plume_ids": [
+        "tan20251022t103906c23s4001-A",
+        "tan20251022t103906c23s4001-B",
+        "tan20251022t103906c23s4001-D",
+        "tan20251022t103906c23s4001-E",
+        "tan20251022t103906c23s4001-H"
+      ],
+      "product_name": "S2A_MSIL2A_20250826T095041_N0511_R079_T33UYR_20250826T112912.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250826T095041_N0511_R079_T34UCA_20250826T112912.SAFE",
+      "plume_ids": [
+        "tan20251022t103906c23s4001-C",
+        "tan20251022t103906c23s4001-F",
+        "tan20251022t103906c23s4001-G"
+      ],
+      "product_name": "S2A_MSIL2A_20250826T095041_N0511_R079_T34UCA_20250826T112912.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250904T184831_N0511_R070_T11SKV_20250904T220018.SAFE",
+      "plume_ids": [
+        "av320250916t193037-A",
+        "av320250916t193037-B",
+        "av320250916t195249-C",
+        "av320250916t195249-E",
+        "av320250916t195249-F",
+        "av320250916t195249-G",
+        "av320250916t195249-L",
+        "av320250916t200346-B",
+        "av320250916t201439-J",
+        "av320250916t203628-E",
+        "av320250916t204734-A",
+        "av320250916t205827-B",
+        "av320250916t205827-C",
+        "av320250916t205827-I",
+        "av320250916t205827-J",
+        "av320250916t205827-M",
+        "tan20250906t192935c00s4001-A",
+        "tan20250906t192935c00s4001-B"
+      ],
+      "product_name": "S2A_MSIL2A_20250904T184831_N0511_R070_T11SKV_20250904T220018.SAFE",
+      "tasks": 18
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20250918T002211_N0511_R116_T55HBU_20250918T030113.SAFE",
+      "plume_ids": [
+        "tan20251124t013305c74s4001-A",
+        "tan20251124t013305c74s4001-B",
+        "tan20251124t013305c74s4001-D"
+      ],
+      "product_name": "S2A_MSIL2A_20250918T002211_N0511_R116_T55HBU_20250918T030113.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251009T161701_N0511_R140_T17SMU_20251009T212420.SAFE",
+      "plume_ids": [
+        "tan20251031t171034c15s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20251009T161701_N0511_R140_T17SMU_20251009T212420.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251017T053241_N0511_R105_T45UVB_20251017T072518.SAFE",
+      "plume_ids": [
+        "tan20251128t061605c19s4001-A",
+        "tan20251128t061605c19s4001-B",
+        "tan20251128t061605c19s4001-E",
+        "tan20251128t061605c19s4001-I"
+      ],
+      "product_name": "S2A_MSIL2A_20251017T053241_N0511_R105_T45UVB_20251017T072518.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251017T053241_N0511_R105_T45UWA_20251017T072518.SAFE",
+      "plume_ids": [
+        "tan20251024t061109c86s4001-A",
+        "tan20251024t061109c86s4001-B",
+        "tan20251024t061109c86s4001-C",
+        "tan20251024t061109c86s4001-E",
+        "tan20251024t061109c86s4001-J",
+        "tan20251024t061109c86s4001-K"
+      ],
+      "product_name": "S2A_MSIL2A_20251017T053241_N0511_R105_T45UWA_20251017T072518.SAFE",
+      "tasks": 6
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251017T053241_N0511_R105_T45UWV_20251017T072518.SAFE",
+      "plume_ids": [
+        "tan20251024t061109c86s4001-D",
+        "tan20251024t061109c86s4001-F",
+        "tan20251024t061109c86s4001-G",
+        "tan20251024t061109c86s4001-H",
+        "tan20251024t061109c86s4001-I"
+      ],
+      "product_name": "S2A_MSIL2A_20251017T053241_N0511_R105_T45UWV_20251017T072518.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251027T171721_N0511_R112_T14SPB_20251027T204016.SAFE",
+      "plume_ids": [
+        "tan20251103t181812c90s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20251027T171721_N0511_R112_T14SPB_20251027T204016.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251031T083531_N0511_R021_T36SXH_20251031T103123.SAFE",
+      "plume_ids": [
+        "tan20251102t093624c06s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20251031T083531_N0511_R021_T36SXH_20251031T103123.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251103T170711_N0511_R069_T14QNG_20251103T203914.SAFE",
+      "plume_ids": [
+        "tan20251115t180959c03s4001-A",
+        "tan20251115t180959c03s4001-B",
+        "tan20251115t180959c03s4001-C",
+        "tan20251115t180959c03s4001-D",
+        "tan20251115t180959c03s4001-E",
+        "tan20251115t180959c03s4001-F",
+        "tan20251115t180959c03s4001-G",
+        "tan20251115t180959c03s4001-H",
+        "tan20251115t180959c03s4001-I"
+      ],
+      "product_name": "S2A_MSIL2A_20251103T170711_N0511_R069_T14QNG_20251103T203914.SAFE",
+      "tasks": 9
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251118T025151_N0511_R132_T51TUF_20251118T073111.SAFE",
+      "plume_ids": [
+        "tan20251120t035102c71s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20251118T025151_N0511_R132_T51TUF_20251118T073111.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251120T101341_N0511_R022_T32RLS_20251120T121413.SAFE",
+      "plume_ids": [
+        "tan20260220t112550c84s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20251120T101341_N0511_R022_T32RLS_20251120T121413.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251120T101341_N0511_R022_T32RMV_20251120T121413.SAFE",
+      "plume_ids": [
+        "tan20260220t112441c43s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20251120T101341_N0511_R022_T32RMV_20251120T121413.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20251227T100441_N0511_R122_T32RNR_20251227T121715.SAFE",
+      "plume_ids": [
+        "tan20260123t111639c35s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20251227T100441_N0511_R122_T32RNR_20251227T121715.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260218T101221_N0512_R122_T32RLS_20260218T142910.SAFE",
+      "plume_ids": [
+        "tan20260220t112550c84s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20260218T101221_N0512_R122_T32RLS_20260218T142910.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260218T101221_N0512_R122_T32RMV_20260218T142910.SAFE",
+      "plume_ids": [
+        "tan20260220t112441c43s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20260218T101221_N0512_R122_T32RMV_20260218T142910.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for tan20260308t070515c65s4001-A t0",
+      "plume_ids": [
+        "tan20260308t070515c65s4001-A",
+        "tan20260308t070515c65s4001-B"
+      ],
+      "product_name": "S2A_MSIL2A_20260309T054251_N0512_R005_T42QZH_20260309T140613.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260312T073031_N0512_R049_T39TXL_20260312T112810.SAFE",
+      "plume_ids": [
+        "tan20260403t082652c86s4001-A",
+        "tan20260403t082652c86s4001-C"
+      ],
+      "product_name": "S2A_MSIL2A_20260312T073031_N0512_R049_T39TXL_20260312T112810.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260327T032201_N0512_R118_T49SGB_20260327T070915.SAFE",
+      "plume_ids": [
+        "tan20260402t042837c73s4001-A",
+        "tan20260402t042837c73s4001-B",
+        "tan20260402t042837c73s4001-C",
+        "tan20260402t042837c73s4001-D",
+        "tan20260402t042837c73s4001-T",
+        "tan20260402t042837c73s4001-U",
+        "tan20260402t042837c73s4001-V",
+        "tan20260402t042837c73s4001-W",
+        "tan20260402t042837c73s4001-Y"
+      ],
+      "product_name": "S2A_MSIL2A_20260327T032201_N0512_R118_T49SGB_20260327T070915.SAFE",
+      "tasks": 9
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260418T072321_N0512_R006_T39SYD_20260418T104709.SAFE",
+      "plume_ids": [
+        "tan20260424t082511c52s4001-AA",
+        "tan20260424t082511c52s4001-AB",
+        "tan20260424t082511c52s4001-AC",
+        "tan20260424t082511c52s4001-AD",
+        "tan20260424t082511c52s4001-AE",
+        "tan20260424t082511c52s4001-AF",
+        "tan20260424t082511c52s4001-AG",
+        "tan20260424t082511c52s4001-AH",
+        "tan20260424t082511c52s4001-AI",
+        "tan20260424t082511c52s4001-AJ",
+        "tan20260424t082511c52s4001-AK",
+        "tan20260424t082511c52s4001-AL",
+        "tan20260424t082511c52s4001-AM",
+        "tan20260424t082511c52s4001-AN",
+        "tan20260424t082511c52s4001-AO",
+        "tan20260424t082511c52s4001-BG",
+        "tan20260424t082511c52s4001-BJ",
+        "tan20260424t082511c52s4001-BK",
+        "tan20260424t082511c52s4001-BL",
+        "tan20260424t082511c52s4001-BM",
+        "tan20260424t082511c52s4001-BN",
+        "tan20260424t082511c52s4001-BO",
+        "tan20260424t082511c52s4001-BP",
+        "tan20260424t082511c52s4001-BQ",
+        "tan20260424t082511c52s4001-BR",
+        "tan20260424t082511c52s4001-BS",
+        "tan20260424t082511c52s4001-BT",
+        "tan20260424t082511c52s4001-BU",
+        "tan20260424t082511c52s4001-BV",
+        "tan20260424t082511c52s4001-BW",
+        "tan20260424t082511c52s4001-BX",
+        "tan20260424t082511c52s4001-C",
+        "tan20260424t082511c52s4001-D",
+        "tan20260424t082511c52s4001-E",
+        "tan20260424t082511c52s4001-F",
+        "tan20260424t082511c52s4001-G",
+        "tan20260424t082511c52s4001-H",
+        "tan20260424t082511c52s4001-I",
+        "tan20260424t082511c52s4001-J",
+        "tan20260424t082511c52s4001-K",
+        "tan20260424t082511c52s4001-L",
+        "tan20260424t082511c52s4001-M",
+        "tan20260424t082511c52s4001-N",
+        "tan20260424t082511c52s4001-O",
+        "tan20260424t082511c52s4001-P",
+        "tan20260424t082511c52s4001-Q",
+        "tan20260424t082511c52s4001-R",
+        "tan20260424t082511c52s4001-S",
+        "tan20260424t082511c52s4001-T",
+        "tan20260424t082511c52s4001-U",
+        "tan20260424t082511c52s4001-V",
+        "tan20260424t082511c52s4001-W",
+        "tan20260424t082511c52s4001-X",
+        "tan20260424t082511c52s4001-Y",
+        "tan20260424t082511c52s4001-Z"
+      ],
+      "product_name": "S2A_MSIL2A_20260418T072321_N0512_R006_T39SYD_20260418T104709.SAFE",
+      "tasks": 55
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260418T072321_N0512_R006_T40SBJ_20260418T104709.SAFE",
+      "plume_ids": [
+        "tan20260424t082511c52s4001-A",
+        "tan20260424t082511c52s4001-AY",
+        "tan20260424t082511c52s4001-AZ",
+        "tan20260424t082511c52s4001-B",
+        "tan20260424t082511c52s4001-BA",
+        "tan20260424t082511c52s4001-BB",
+        "tan20260424t082511c52s4001-BC",
+        "tan20260424t082511c52s4001-BD",
+        "tan20260424t082511c52s4001-BE",
+        "tan20260424t082511c52s4001-BF"
+      ],
+      "product_name": "S2A_MSIL2A_20260418T072321_N0512_R006_T40SBJ_20260418T104709.SAFE",
+      "tasks": 10
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260422T052241_N0512_R062_T45UWV_20260422T083311.SAFE",
+      "plume_ids": [
+        "tan20260429t063220c40s4001-A",
+        "tan20260429t063220c40s4001-B",
+        "tan20260429t063220c40s4001-C",
+        "tan20260429t063220c40s4001-K",
+        "tan20260429t063220c40s4001-L",
+        "tan20260429t063306c65s4001-AH",
+        "tan20260429t063306c65s4001-J",
+        "tan20260429t063306c65s4001-K",
+        "tan20260429t063306c65s4001-L",
+        "tan20260429t063306c65s4001-M",
+        "tan20260429t063306c65s4001-X"
+      ],
+      "product_name": "S2A_MSIL2A_20260422T052241_N0512_R062_T45UWV_20260422T083311.SAFE",
+      "tasks": 11
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260503T181801_N0512_R084_T12TWM_20260504T043454.SAFE",
+      "plume_ids": [
+        "tan20260510t192302c16s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20260503T181801_N0512_R084_T12TWM_20260504T043454.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2A_MSIL2A_20260504T074021_N0512_R092_T40VDJ_20260504T090308.SAFE",
+      "plume_ids": [
+        "tan20260521t084436c66s4001-A",
+        "tan20260521t084436c66s4001-B"
+      ],
+      "product_name": "S2A_MSIL2A_20260504T074021_N0512_R092_T40VDJ_20260504T090308.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170615T181919_N0500_R127_T11SMS_20230913T234501.SAFE",
+      "plume_ids": [
+        "ang20170925t212203-A",
+        "ang20170925t212203-C",
+        "ang20170925t212940-A",
+        "ang20170925t214642-A",
+        "ang20170925t214642-B",
+        "ang20170925t214642-C",
+        "ang20170925t214642-D",
+        "ang20170925t214642-E"
+      ],
+      "product_name": "S2B_MSIL2A_20170615T181919_N0500_R127_T11SMS_20230913T234501.SAFE",
+      "tasks": 8
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20170928t202037-A prev2",
+      "plume_ids": [
+        "ang20170928t202037-A"
+      ],
+      "product_name": "S2B_MSIL2A_20170909T184049_N0500_R070_T10SGF_20230729T020843.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20170928t200057-A prev2",
+      "plume_ids": [
+        "ang20170928t200057-A",
+        "ang20170928t200057-B"
+      ],
+      "product_name": "S2B_MSIL2A_20170909T184049_N0500_R070_T11SKA_20230729T020843.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170916T182959_N0500_R027_T11SLU_20230804T133132.SAFE",
+      "plume_ids": [
+        "ang20170915t190340-A",
+        "ang20170915t191722-A",
+        "ang20170915t215255-B"
+      ],
+      "product_name": "S2B_MSIL2A_20170916T182959_N0500_R027_T11SLU_20230804T133132.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170919T185419_N0500_R070_T11SKV_20230804T011803.SAFE",
+      "plume_ids": [
+        "ang20170926t182523-A",
+        "ang20170926t182523-B",
+        "ang20170926t182523-C"
+      ],
+      "product_name": "S2B_MSIL2A_20170919T185419_N0500_R070_T11SKV_20230804T011803.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170919T185419_N0500_R070_T11SLU_20230804T011803.SAFE",
+      "plume_ids": [
+        "ang20170926t183035-A"
+      ],
+      "product_name": "S2B_MSIL2A_20170919T185419_N0500_R070_T11SLU_20230804T011803.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170919T185419_N0500_R070_T11SLV_20230804T011803.SAFE",
+      "plume_ids": [
+        "ang20170926t183717-B"
+      ],
+      "product_name": "S2B_MSIL2A_20170919T185419_N0500_R070_T11SLV_20230804T011803.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170922T185049_N0500_R113_T10SEH_20230830T133600.SAFE",
+      "plume_ids": [
+        "ang20171006t195044-C",
+        "ang20171006t201620-A",
+        "ang20171006t202925-A"
+      ],
+      "product_name": "S2B_MSIL2A_20170922T185049_N0500_R113_T10SEH_20230830T133600.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170922T185049_N0500_R113_T10SFH_20230830T133600.SAFE",
+      "plume_ids": [
+        "ang20171006t192328-A",
+        "ang20171006t192328-B",
+        "ang20171006t192854-A",
+        "ang20171006t192854-B",
+        "ang20171006t193531-A",
+        "ang20171006t193531-B",
+        "ang20171006t194116-A"
+      ],
+      "product_name": "S2B_MSIL2A_20170922T185049_N0500_R113_T10SFH_20230830T133600.SAFE",
+      "tasks": 7
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20170922T185049_N0500_R113_T10SFG_20230830T133600.SAFE",
+      "plume_ids": [
+        "ang20171003t202537-A",
+        "ang20171006t190448-A",
+        "ang20171006t190448-B",
+        "ang20171006t190448-C",
+        "ang20171006t190448-D",
+        "ang20171006t190448-F",
+        "ang20171006t190448-G",
+        "ang20171006t190448-H",
+        "ang20171006t190448-J",
+        "ang20171006t190448-K",
+        "ang20171006t190448-L",
+        "ang20171006t191011-A",
+        "ang20171006t191011-B",
+        "ang20171006t191011-C",
+        "ang20171006t191011-D",
+        "ang20171006t191011-E",
+        "ang20171006t191011-F",
+        "ang20171006t191011-H",
+        "ang20171006t191011-K",
+        "ang20171006t191011-N"
+      ],
+      "product_name": "S2B_MSIL2A_20170922T185049_N0500_R113_T10SFG_20230830T133600.SAFE",
+      "tasks": 20
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20171009T185419_N0500_R070_T10SGE_20230722T062709.SAFE",
+      "plume_ids": [
+        "ang20171013t204512-A",
+        "ang20171013t205013-A",
+        "ang20171013t205013-B",
+        "ang20171013t205013-C",
+        "ang20171013t205013-D",
+        "ang20171013t205013-E",
+        "ang20171013t205013-F",
+        "ang20171013t205946-A",
+        "ang20171013t211009-A",
+        "ang20171013t211934-A",
+        "ang20171013t212517-A",
+        "ang20171013t213130-B",
+        "ang20171013t213130-C",
+        "ang20171013t213605-A",
+        "ang20171013t214049-B",
+        "ang20171013t214049-C",
+        "ang20171013t214536-A"
+      ],
+      "product_name": "S2B_MSIL2A_20171009T185419_N0500_R070_T10SGE_20230722T062709.SAFE",
+      "tasks": 17
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20171009T185419_N0500_R070_T11SLU_20230722T062709.SAFE",
+      "plume_ids": [
+        "ang20171010t193506-A",
+        "ang20171010t193506-B"
+      ],
+      "product_name": "S2B_MSIL2A_20171009T185419_N0500_R070_T11SLU_20230722T062709.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for ang20171108t182106-A prev1",
+      "plume_ids": [
+        "ang20171108t182106-A",
+        "ang20171108t182106-B",
+        "ang20171108t182106-C",
+        "ang20171108t182515-A",
+        "ang20171108t182515-B"
+      ],
+      "product_name": "S2B_MSIL2A_20171026T183429_N0500_R027_T11SLU_20230918T235336.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20211021t172155p0000-A prev3",
+      "plume_ids": [
+        "GAO20211021t172155p0000-A",
+        "GAO20211021t173002p0000-A",
+        "GAO20211021t173002p0000-B"
+      ],
+      "product_name": "S2B_MSIL2A_20211012T164139_N0500_R126_T15RYN_20230127T091035.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20211029t162648p0000-A prev3",
+      "plume_ids": [
+        "GAO20211021t172155p0000-A",
+        "GAO20211021t173002p0000-A",
+        "GAO20211021t173002p0000-B",
+        "GAO20211029t161810p0000-A",
+        "GAO20211029t162145p0000-A",
+        "GAO20211029t162648p0000-A",
+        "GAO20211029t162950p0000-A",
+        "GAO20211029t163321p0000-A"
+      ],
+      "product_name": "S2B_MSIL2A_20211019T163219_N0500_R083_T15RYN_20230111T103734.SAFE",
+      "tasks": 8
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20220820T071619_N0510_R006_T38QRM_20240703T201938.SAFE",
+      "plume_ids": [
+        "emi20230824t083931p06025-A"
+      ],
+      "product_name": "S2B_MSIL2A_20220820T071619_N0510_R006_T38QRM_20240703T201938.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20230926t114119p08039-B year",
+      "plume_ids": [
+        "emi20230926t114119p08039-B"
+      ],
+      "product_name": "S2B_MSIL2A_20220927T081709_N0510_R121_T36RXV_20240720T193125.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20221020t190520p0000-A t0",
+      "plume_ids": [
+        "GAO20221020t190520p0000-A",
+        "GAO20221020t200626p0000-A",
+        "GAO20221020t202758p0000-A"
+      ],
+      "product_name": "S2B_MSIL2A_20221021T180359_N0510_R041_T13SBD_20240721T233704.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20221020t185539p0000-A t0",
+      "plume_ids": [
+        "GAO20221020t185539p0000-A"
+      ],
+      "product_name": "S2B_MSIL2A_20221021T180359_N0510_R041_T12SYJ_20240721T233704.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20221107T075029_N0510_R135_T38SME_20240804T040400.SAFE",
+      "plume_ids": [
+        "emi20230219t093943p06010-A"
+      ],
+      "product_name": "S2B_MSIL2A_20221107T075029_N0510_R135_T38SME_20240804T040400.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20221225T053239_N0510_R105_T44SMH_20240809T200952.SAFE",
+      "plume_ids": [
+        "emi20230329t090432p06027-A"
+      ],
+      "product_name": "S2B_MSIL2A_20221225T053239_N0510_R105_T44SMH_20240809T200952.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20221226T032139_N0510_R118_T49SFA_20240809T212039.SAFE",
+      "plume_ids": [
+        "emi20231222t035001p03002-C"
+      ],
+      "product_name": "S2B_MSIL2A_20221226T032139_N0510_R118_T49SFA_20240809T212039.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230108T134659_N0510_R024_T21HUB_20240809T234314.SAFE",
+      "plume_ids": [
+        "emi20230122t153151p10042-A",
+        "emi20230122t153151p10042-C",
+        "emi20230122t153151p10042-D"
+      ],
+      "product_name": "S2B_MSIL2A_20230108T134659_N0510_R024_T21HUB_20240809T234314.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230122T181649_N0510_R084_T12TXL_20240811T195929.SAFE",
+      "plume_ids": [
+        "emi20230202t193758p13011-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230122T181649_N0510_R084_T12TXL_20240811T195929.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230201T181559_N0510_R084_T12TXL_20240815T160621.SAFE",
+      "plume_ids": [
+        "emi20230202t193758p13011-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230201T181559_N0510_R084_T12TXL_20240815T160621.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230202T143729_N0510_R096_T19HCD_20240815T163314.SAFE",
+      "plume_ids": [
+        "ang20230201t184636-A",
+        "ang20230201t184636-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230202T143729_N0510_R096_T19HCD_20240815T163314.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230214T151659_N0510_R125_T19QCA_20240816T053940.SAFE",
+      "plume_ids": [
+        "emi20240223t161709p11025-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230214T151659_N0510_R125_T19QCA_20240816T053940.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20230715t210120p0000-A seasonal",
+      "plume_ids": [
+        "GAO20230715t210120p0000-A",
+        "GAO20230715t210120p0000-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230318T190119_N0510_R013_T10TFR_20240804T051509.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20230720t213013p0000-B seasonal",
+      "plume_ids": [
+        "GAO20230720t213013p0000-A",
+        "GAO20230720t213013p0000-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230318T190119_N0510_R013_T10TGR_20240804T051509.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20230424t182545p12028-B prev3",
+      "plume_ids": [
+        "emi20230424t182545p12028-B",
+        "emi20230424t182545p12028-F",
+        "emi20230424t182545p12028-G"
+      ],
+      "product_name": "S2B_MSIL2A_20230410T172859_N0510_R055_T13RFQ_20240904T070908.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230416T131249_N0510_R138_T23KLQ_20240901T214943.SAFE",
+      "plume_ids": [
+        "emi20230430t153101p10003-A",
+        "emi20230430t153101p10003-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230416T131249_N0510_R138_T23KLQ_20240901T214943.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20230614t185623p0000-A prev3",
+      "plume_ids": [
+        "GAO20230614t185623p0000-A",
+        "GAO20230614t190924p0000-C",
+        "GAO20230614t191729p0000-A",
+        "GAO20230614t191729p0000-C",
+        "GAO20230614t191729p0000-D",
+        "GAO20230614t193553p0000-B",
+        "GAO20230614t193553p0000-E",
+        "GAO20230614t193553p0000-F",
+        "GAO20230614t200443p0000-A",
+        "GAO20230614t200443p0000-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230521T183929_N0510_R070_T11SKV_20240811T000336.SAFE",
+      "tasks": 10
+    },
+    {
+      "error": "RuntimeError: empty repaired band for GAO20230614t185623p0000-B prev3",
+      "plume_ids": [
+        "GAO20230614t185623p0000-B",
+        "GAO20230614t190924p0000-A",
+        "GAO20230614t193553p0000-G"
+      ],
+      "product_name": "S2B_MSIL2A_20230521T183929_N0510_R070_T10SGE_20240811T000336.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230531T183919_N0510_R070_T11SKV_20240909T014906.SAFE",
+      "plume_ids": [
+        "GAO20230614t185623p0000-A",
+        "GAO20230614t190924p0000-C",
+        "GAO20230614t191729p0000-A",
+        "GAO20230614t191729p0000-C",
+        "GAO20230614t191729p0000-D",
+        "GAO20230614t193553p0000-B",
+        "GAO20230614t193553p0000-C",
+        "GAO20230614t193553p0000-E",
+        "GAO20230614t193553p0000-F",
+        "GAO20230614t193553p0000-H",
+        "GAO20230614t200443p0000-A",
+        "GAO20230614t200443p0000-B",
+        "GAO20230614t202253p0000-C",
+        "GAO20240608t191030p0000-C",
+        "GAO20240608t191030p0000-D",
+        "GAO20240608t191030p0000-E",
+        "GAO20240608t191715p0000-C",
+        "GAO20240608t191715p0000-E",
+        "GAO20240608t192515p0000-D",
+        "GAO20240608t200205p0000-C"
+      ],
+      "product_name": "S2B_MSIL2A_20230531T183919_N0510_R070_T11SKV_20240909T014906.SAFE",
+      "tasks": 20
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230607T100559_N0510_R022_T32RKT_20240927T135703.SAFE",
+      "plume_ids": [
+        "emi20230607t092629p06028-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230607T100559_N0510_R022_T32RKT_20240927T135703.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230616T085559_N0510_R007_T33LUD_20240909T050058.SAFE",
+      "plume_ids": [
+        "emi20230625t124843p08031-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230616T085559_N0510_R007_T33LUD_20240909T050058.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230616T171859_N0510_R012_T14RKV_20240909T161911.SAFE",
+      "plume_ids": [
+        "emi20230923t214649p14012-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230616T171859_N0510_R012_T14RKV_20240909T161911.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230624T081609_N0510_R121_T36RYV_20240926T085726.SAFE",
+      "plume_ids": [
+        "emi20230623t093007p06012-C",
+        "emi20230926t114119p08039-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230624T081609_N0510_R121_T36RYV_20240926T085726.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230801T105629_N0510_R094_T30SUC_20241018T092101.SAFE",
+      "plume_ids": [
+        "emi20230731t130804p09016-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230801T105629_N0510_R094_T30SUC_20241018T092101.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230803T063629_N0510_R120_T41TME_20241016T124147.SAFE",
+      "plume_ids": [
+        "emi20230802t082953p06048-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230803T063629_N0510_R120_T41TME_20241016T124147.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230803T063629_N0510_R120_T41SMC_20241016T124147.SAFE",
+      "plume_ids": [
+        "emi20230810t051552p04016-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230803T063629_N0510_R120_T41SMC_20241016T124147.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230808T104629_N0510_R051_T30SYE_20241021T220636.SAFE",
+      "plume_ids": [
+        "emi20230814t145126p10005-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230808T104629_N0510_R051_T30SYE_20241021T220636.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230808T104629_N0510_R051_T31TDG_20241021T220636.SAFE",
+      "plume_ids": [
+        "emi20240803t112126p08004-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230808T104629_N0510_R051_T31TDG_20241021T220636.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230817T061639_N0510_R034_T42UXB_20241023T120945.SAFE",
+      "plume_ids": [
+        "emi20230817t061031p04006-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230817T061639_N0510_R034_T42UXB_20241023T120945.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230906T000229_N0510_R030_T56HKH_20240916T030750.SAFE",
+      "plume_ids": [
+        "emi20230915t042628p02007-B"
+      ],
+      "product_name": "S2B_MSIL2A_20230906T000229_N0510_R030_T56HKH_20240916T030750.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230906T000229_N0510_R030_T56HLJ_20240916T030750.SAFE",
+      "plume_ids": [
+        "emi20230915t042628p02007-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230906T000229_N0510_R030_T56HLJ_20240916T030750.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for emi20230923t214649p14012-A t0",
+      "plume_ids": [
+        "emi20230923t214649p14012-A"
+      ],
+      "product_name": "S2B_MSIL2A_20230924T171939_N0510_R012_T14RKV_20241106T000030.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20230928T101719_N0510_R065_T31SGR_20241026T142623.SAFE",
+      "plume_ids": [
+        "emi20230929t122534p08039-A",
+        "emi20230929t122534p08039-B",
+        "emi20230929t122534p08039-C"
+      ],
+      "product_name": "S2B_MSIL2A_20230928T101719_N0510_R065_T31SGR_20241026T142623.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20231018T083849_N0510_R064_T35RPN_20241027T013535.SAFE",
+      "plume_ids": [
+        "emi20231022t101203p07012-A",
+        "emi20231022t101203p07012-B"
+      ],
+      "product_name": "S2B_MSIL2A_20231018T083849_N0510_R064_T35RPN_20241027T013535.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20231019T095019_N0510_R079_T32RNR_20241107T132232.SAFE",
+      "plume_ids": [
+        "emi20241015t132005p09021-A"
+      ],
+      "product_name": "S2B_MSIL2A_20231019T095019_N0510_R079_T32RNR_20241107T132232.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20231021T084919_N0510_R107_T35RNP_20241103T143154.SAFE",
+      "plume_ids": [
+        "emi20231022t101151p07011-A"
+      ],
+      "product_name": "S2B_MSIL2A_20231021T084919_N0510_R107_T35RNP_20241103T143154.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20240912T165849_N0511_R069_T14QMD_20240912T231404.SAFE",
+      "plume_ids": [
+        "tan20250913t180156c41s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20240912T165849_N0511_R069_T14QMD_20240912T231404.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250201T074039_N0511_R092_T37PEK_20250201T094237.SAFE",
+      "plume_ids": [
+        "tan20250215t081551c00s4001-A",
+        "tan20250215t081551c00s4001-B",
+        "tan20250215t081551c00s4001-C"
+      ],
+      "product_name": "S2B_MSIL2A_20250201T074039_N0511_R092_T37PEK_20250201T094237.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250202T171429_N0511_R112_T14RMS_20250202T203617.SAFE",
+      "plume_ids": [
+        "tan20250201t173348c00s4001-A",
+        "tan20250201t173348c00s4001-B",
+        "tan20250201t173348c00s4001-E",
+        "tan20250201t173348c00s4001-F"
+      ],
+      "product_name": "S2B_MSIL2A_20250202T171429_N0511_R112_T14RMS_20250202T203617.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250202T171429_N0511_R112_T14RMR_20250202T203617.SAFE",
+      "plume_ids": [
+        "tan20250201t173348c00s4001-C"
+      ],
+      "product_name": "S2B_MSIL2A_20250202T171429_N0511_R112_T14RMR_20250202T203617.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250211T092029_N0511_R093_T34RCT_20250211T114607.SAFE",
+      "plume_ids": [
+        "emi20250210t134943p09010-A",
+        "tan20250210t095817c00s4001-B",
+        "tan20250210t095817c00s4001-C"
+      ],
+      "product_name": "S2B_MSIL2A_20250211T092029_N0511_R093_T34RCT_20250211T114607.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250212T085009_N0511_R107_T35RPN_20250212T095930.SAFE",
+      "plume_ids": [
+        "tan20250216t090419c00s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250212T085009_N0511_R107_T35RPN_20250212T095930.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250211T143749_N0511_R096_T19HBA_20250211T182104.SAFE",
+      "plume_ids": [
+        "emi20250225t175206p12002-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250211T143749_N0511_R096_T19HBA_20250211T182104.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250304T154549_N0511_R111_T18QTE_20250304T192412.SAFE",
+      "plume_ids": [
+        "tan20250308t160249c00s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250304T154549_N0511_R111_T18QTE_20250304T192412.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250317T141709_N0511_R010_T19HET_20250317T193720.SAFE",
+      "plume_ids": [
+        "tan20250430t151737c00s4001-A",
+        "tan20250430t151737c00s4001-B",
+        "tan20260326t153947c18s4001-A",
+        "tan20260326t153947c18s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250317T141709_N0511_R010_T19HET_20250317T193720.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250413T052649_N0511_R105_T45UVA_20250413T073235.SAFE",
+      "plume_ids": [
+        "tan20250601t060447c30s4001-A",
+        "tan20250601t060447c30s4001-D",
+        "tan20250601t060447c30s4001-F",
+        "tan20250601t060447c30s4001-I",
+        "tan20250601t060447c30s4001-J",
+        "tan20250601t060447c30s4001-L",
+        "tan20250601t060447c30s4001-M",
+        "tan20250601t060447c30s4001-R",
+        "tan20250601t060447c30s4001-U",
+        "tan20250601t060447c30s4001-V",
+        "tan20250601t060447c30s4001-W"
+      ],
+      "product_name": "S2B_MSIL2A_20250413T052649_N0511_R105_T45UVA_20250413T073235.SAFE",
+      "tasks": 11
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250414T045659_N0511_R119_T44PMV_20250414T073410.SAFE",
+      "plume_ids": [
+        "tan20250423t054256c00s4001-A",
+        "tan20250423t054256c00s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250414T045659_N0511_R119_T44PMV_20250414T073410.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250504T163839_N0511_R126_T15RYP_20250504T203857.SAFE",
+      "plume_ids": [
+        "tan20260503t175708c61s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250504T163839_N0511_R126_T15RYP_20250504T203857.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250507T050659_N0511_R019_T45TUL_20250507T074549.SAFE",
+      "plume_ids": [
+        "tan20250516t055035c00s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250507T050659_N0511_R019_T45TUL_20250507T074549.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250524T063629_N0511_R120_T41SLA_20250524T090326.SAFE",
+      "plume_ids": [
+        "tan20250523t072811c30s4001-A",
+        "tan20250523t072811c30s4001-B",
+        "tan20250523t072811c30s4001-C",
+        "tan20250523t072811c30s4001-D"
+      ],
+      "product_name": "S2B_MSIL2A_20250524T063629_N0511_R120_T41SLA_20250524T090326.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250526T071619_N0511_R006_T38RQT_20250526T093718.SAFE",
+      "plume_ids": [
+        "emi20250530t081955p06013-F"
+      ],
+      "product_name": "S2B_MSIL2A_20250526T071619_N0511_R006_T38RQT_20250526T093718.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250630T080609_N0511_R078_T37SBT_20250630T103316.SAFE",
+      "plume_ids": [
+        "tan20250704t090741c57s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250630T080609_N0511_R078_T37SBT_20250630T103316.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250701T092029_N0511_R093_T34RCT_20250701T115535.SAFE",
+      "plume_ids": [
+        "tan20250630t101451c03s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250701T092029_N0511_R093_T34RCT_20250701T115535.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250704T074619_N0511_R135_T37QED_20250704T101230.SAFE",
+      "plume_ids": [
+        "tan20251006t085705c09s4001-A",
+        "tan20251006t085705c09s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250704T074619_N0511_R135_T37QED_20250704T101230.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250705T071619_N0511_R006_T38PNC_20250705T091935.SAFE",
+      "plume_ids": [
+        "tan20251007t081845c19s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250705T071619_N0511_R006_T38PNC_20250705T091935.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250705T071619_N0511_R006_T42WWE_20250705T074153.SAFE",
+      "plume_ids": [
+        "tan20250712t081841c58s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250705T071619_N0511_R006_T42WWE_20250705T074153.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250705T171859_N0511_R012_T13SGR_20250705T205335.SAFE",
+      "plume_ids": [
+        "tan20250709t181548c58s4001-A",
+        "tan20250709t181548c58s4001-B",
+        "tan20250709t181548c58s4001-C",
+        "tan20250709t181548c58s4001-D",
+        "tan20250709t181548c58s4001-E",
+        "tan20250709t181548c58s4001-F",
+        "tan20250709t181548c58s4001-G",
+        "tan20250709t181548c58s4001-H",
+        "tan20250709t181548c58s4001-K",
+        "tan20250709t181548c58s4001-L"
+      ],
+      "product_name": "S2B_MSIL2A_20250705T171859_N0511_R012_T13SGR_20250705T205335.SAFE",
+      "tasks": 10
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250705T171859_N0511_R012_T14RKV_20250705T205335.SAFE",
+      "plume_ids": [
+        "emi20250724t202713p13009-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250705T171859_N0511_R012_T14RKV_20250705T205335.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250705T171859_N0511_R012_T14SKA_20250705T205335.SAFE",
+      "plume_ids": [
+        "tan20250709t181548c58s4001-I",
+        "tan20250709t181548c58s4001-J"
+      ],
+      "product_name": "S2B_MSIL2A_20250705T171859_N0511_R012_T14SKA_20250705T205335.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250706T100559_N0511_R022_T32SKA_20250706T141856.SAFE",
+      "plume_ids": [
+        "tan20250708t110853c95s4001-A",
+        "tan20250708t110853c95s4001-B",
+        "tan20250708t110853c95s4001-C",
+        "tan20250708t110853c95s4001-E",
+        "tan20250708t110853c95s4001-F",
+        "tan20250708t110853c95s4001-I",
+        "tan20250708t110853c95s4001-L",
+        "tan20250708t110853c95s4001-M",
+        "tan20250708t110853c95s4001-N"
+      ],
+      "product_name": "S2B_MSIL2A_20250706T100559_N0511_R022_T32SKA_20250706T141856.SAFE",
+      "tasks": 9
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250706T100559_N0511_R022_T31SGR_20250706T141856.SAFE",
+      "plume_ids": [
+        "tan20250708t110853c95s4001-D",
+        "tan20250708t110853c95s4001-G",
+        "tan20250708t110853c95s4001-H"
+      ],
+      "product_name": "S2B_MSIL2A_20250706T100559_N0511_R022_T31SGR_20250706T141856.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250706T134709_N0511_R024_T21JVN_20250706T190934.SAFE",
+      "plume_ids": [
+        "tan20250710t144351c33s4001-A",
+        "tan20250710t144351c33s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250706T134709_N0511_R024_T21JVN_20250706T190934.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250706T182919_N0511_R027_T11TNJ_20250706T222751.SAFE",
+      "plume_ids": [
+        "tan20250705t191833c33s4001-A",
+        "tan20250705t191833c33s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250706T182919_N0511_R027_T11TNJ_20250706T222751.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250709T083559_N0511_R064_T35RPN_20250709T125936.SAFE",
+      "plume_ids": [
+        "tan20250713t092337c55s4001-A",
+        "tan20250713t092337c55s4001-B",
+        "tan20250713t092337c55s4001-C",
+        "tan20250713t092337c55s4001-D"
+      ],
+      "product_name": "S2B_MSIL2A_20250709T083559_N0511_R064_T35RPN_20250709T125936.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250802T081609_N0511_R121_T36RWT_20250802T104844.SAFE",
+      "plume_ids": [
+        "tan20250801t091252c58s4001-B",
+        "tan20250801t091252c58s4001-C"
+      ],
+      "product_name": "S2B_MSIL2A_20250802T081609_N0511_R121_T36RWT_20250802T104844.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250808T083559_N0511_R064_T35RPN_20250808T111148.SAFE",
+      "plume_ids": [
+        "emi20250814t115634p08015-B",
+        "emi20250814t115634p08015-C"
+      ],
+      "product_name": "S2B_MSIL2A_20250808T083559_N0511_R064_T35RPN_20250808T111148.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250808T083559_N0511_R064_T35RPP_20250808T111148.SAFE",
+      "plume_ids": [
+        "emi20250814t115634p08015-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250808T083559_N0511_R064_T35RPP_20250808T111148.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250813T093039_N0511_R136_T34TCL_20250813T115722.SAFE",
+      "plume_ids": [
+        "tan20250901t102039c84s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250813T093039_N0511_R136_T34TCL_20250813T115722.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250817T090559_N0511_R050_T34SGH_20250817T113544.SAFE",
+      "plume_ids": [
+        "tan20250823t100632c25s4001-A",
+        "tan20250823t100632c25s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250817T090559_N0511_R050_T34SGH_20250817T113544.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250902T074609_N0511_R135_T38TMM_20250902T100841.SAFE",
+      "plume_ids": [
+        "tan20250901t084712c88s4001-A",
+        "tan20250901t084712c88s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20250902T074609_N0511_R135_T38TMM_20250902T100841.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20250902T093029_N0511_R136_T34TCL_20250902T121133.SAFE",
+      "plume_ids": [
+        "tan20250901t102039c84s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20250902T093029_N0511_R136_T34TCL_20250902T121133.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251006T173119_N0511_R055_T13RFQ_20251006T211729.SAFE",
+      "plume_ids": [
+        "tan20251010t184134c50s4001-A",
+        "tan20251010t184134c50s4001-B",
+        "tan20251015t182900c05s4001-A",
+        "tan20251015t182900c05s4001-B",
+        "tan20251015t182900c05s4001-J"
+      ],
+      "product_name": "S2B_MSIL2A_20251006T173119_N0511_R055_T13RFQ_20251006T211729.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251009T160059_N0511_R097_T17SNA_20251009T211250.SAFE",
+      "plume_ids": [
+        "tan20251015t165420c91s4001-A",
+        "tan20251015t165420c91s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20251009T160059_N0511_R097_T17SNA_20251009T211250.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251013T071749_N0511_R006_T41VNJ_20251013T093905.SAFE",
+      "plume_ids": [
+        "tan20251012t075405c01s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20251013T071749_N0511_R006_T41VNJ_20251013T093905.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251017T051719_N0511_R062_T45UWV_20251017T073012.SAFE",
+      "plume_ids": [
+        "tan20251024t061109c86s4001-D",
+        "tan20251024t061109c86s4001-F",
+        "tan20251024t061109c86s4001-G",
+        "tan20251024t061109c86s4001-H",
+        "tan20251024t061109c86s4001-I"
+      ],
+      "product_name": "S2B_MSIL2A_20251017T051719_N0511_R062_T45UWV_20251017T073012.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251017T051719_N0511_R062_T45UWA_20251017T073012.SAFE",
+      "plume_ids": [
+        "tan20251024t061109c86s4001-A",
+        "tan20251024t061109c86s4001-B",
+        "tan20251024t061109c86s4001-C",
+        "tan20251024t061109c86s4001-E",
+        "tan20251024t061109c86s4001-J",
+        "tan20251024t061109c86s4001-K"
+      ],
+      "product_name": "S2B_MSIL2A_20251017T051719_N0511_R062_T45UWA_20251017T073012.SAFE",
+      "tasks": 6
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251021T031659_N0511_R118_T49TFE_20251021T070825.SAFE",
+      "plume_ids": [
+        "tan20251020t041405c07s4001-A",
+        "tan20251020t041405c07s4001-B",
+        "tan20251020t041405c07s4001-C",
+        "tan20251020t041405c07s4001-D",
+        "tan20251020t041405c07s4001-E",
+        "tan20251020t041405c07s4001-F",
+        "tan20251020t041405c07s4001-G",
+        "tan20251020t041405c07s4001-H",
+        "tan20251020t041405c07s4001-I",
+        "tan20251020t041405c07s4001-J",
+        "tan20251020t041405c07s4001-K"
+      ],
+      "product_name": "S2B_MSIL2A_20251021T031659_N0511_R118_T49TFE_20251021T070825.SAFE",
+      "tasks": 11
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251116T170509_N0511_R069_T14QMM_20251116T205250.SAFE",
+      "plume_ids": [
+        "tan20251115t180834c12s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20251116T170509_N0511_R069_T14QMM_20251116T205250.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251118T023909_N0511_R089_T51TUF_20251118T075203.SAFE",
+      "plume_ids": [
+        "tan20251120t035102c71s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20251118T023909_N0511_R089_T51TUF_20251118T075203.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251124T162519_N0511_R040_T16RDU_20251124T200754.SAFE",
+      "plume_ids": [
+        "tan20251123t172833c23s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20251124T162519_N0511_R040_T16RDU_20251124T200754.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251202T172609_N0511_R012_T14RKV_20251202T205804.SAFE",
+      "plume_ids": [
+        "tan20251208t182346c41s4001-C",
+        "tan20251208t182346c41s4001-D",
+        "tan20251208t182346c41s4001-E",
+        "tan20251208t182346c41s4001-F"
+      ],
+      "product_name": "S2B_MSIL2A_20251202T172609_N0511_R012_T14RKV_20251202T205804.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251217T163619_N0511_R083_T16SFJ_20251217T184134.SAFE",
+      "plume_ids": [
+        "tan20251216t174322c47s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20251217T163619_N0511_R083_T16SFJ_20251217T184134.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251222T141709_N0511_R010_T19HET_20251222T193720.SAFE",
+      "plume_ids": [
+        "tan20260326t153947c18s4001-A",
+        "tan20260326t153947c18s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20251222T141709_N0511_R010_T19HET_20251222T193720.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20251228T092319_N0511_R093_T34RBS_20251228T120132.SAFE",
+      "plume_ids": [
+        "tan20251227t102812c49s4001-E"
+      ],
+      "product_name": "S2B_MSIL2A_20251228T092319_N0511_R093_T34RBS_20251228T120132.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260102T165619_N0511_R026_T15RTP_20260102T204921.SAFE",
+      "plume_ids": [
+        "tan20260101t180336c05s4001-A",
+        "tan20260101t180336c05s4001-B",
+        "tan20260101t180336c05s4001-G",
+        "tan20260101t180336c05s4001-O"
+      ],
+      "product_name": "S2B_MSIL2A_20260102T165619_N0511_R026_T15RTP_20260102T204921.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260102T165619_N0511_R026_T15RTN_20260102T204921.SAFE",
+      "plume_ids": [
+        "tan20260101t180336c05s4001-I"
+      ],
+      "product_name": "S2B_MSIL2A_20260102T165619_N0511_R026_T15RTN_20260102T204921.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260129T082109_N0511_R121_T37TEK_20260129T121552.SAFE",
+      "plume_ids": [
+        "tan20260128t092801c55s4001-A",
+        "tan20260128t092801c55s4001-B",
+        "tan20260311t094010c01s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20260129T082109_N0511_R121_T37TEK_20260129T121552.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260218T100019_N0512_R122_T32RLS_20260218T142347.SAFE",
+      "plume_ids": [
+        "tan20260220t112550c84s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20260218T100019_N0512_R122_T32RLS_20260218T142347.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260218T100019_N0512_R122_T32RMV_20260218T142347.SAFE",
+      "plume_ids": [
+        "tan20260220t112441c43s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20260218T100019_N0512_R122_T32RMV_20260218T142347.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for tan20260308t070515c65s4001-A prev2",
+      "plume_ids": [
+        "tan20260308t070515c65s4001-A",
+        "tan20260308t070515c65s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20260302T053639_N0512_R005_T42QZH_20260302T093017.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260320T163859_N0512_R126_T15RYP_20260320T220414.SAFE",
+      "plume_ids": [
+        "tan20260503t175708c61s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20260320T163859_N0512_R126_T15RYP_20260320T220414.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260327T030539_N0512_R075_T49SFV_20260327T065822.SAFE",
+      "plume_ids": [
+        "tan20260326t042725c81s4001-A",
+        "tan20260326t042725c81s4001-B",
+        "tan20260326t042725c81s4001-C",
+        "tan20260326t042725c81s4001-D",
+        "tan20260326t042725c81s4001-I",
+        "tan20260326t042725c81s4001-J"
+      ],
+      "product_name": "S2B_MSIL2A_20260327T030539_N0512_R075_T49SFV_20260327T065822.SAFE",
+      "tasks": 6
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260327T030539_N0512_R075_T49SFA_20260327T065822.SAFE",
+      "plume_ids": [
+        "tan20260326t042725c81s4001-K",
+        "tan20260326t042725c81s4001-L",
+        "tan20260326t042725c81s4001-M",
+        "tan20260326t042725c81s4001-Q",
+        "tan20260326t042725c81s4001-R"
+      ],
+      "product_name": "S2B_MSIL2A_20260327T030539_N0512_R075_T49SFA_20260327T065822.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260327T030539_N0512_R075_T49SGB_20260327T065822.SAFE",
+      "plume_ids": [
+        "tan20260402t042837c73s4001-T",
+        "tan20260402t042837c73s4001-U"
+      ],
+      "product_name": "S2B_MSIL2A_20260327T030539_N0512_R075_T49SGB_20260327T065822.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260418T070619_N0512_R106_T39SYD_20260418T102342.SAFE",
+      "plume_ids": [
+        "tan20260417t082701c11s4001-A",
+        "tan20260417t082701c11s4001-AB",
+        "tan20260417t082701c11s4001-AC",
+        "tan20260417t082701c11s4001-AD",
+        "tan20260417t082701c11s4001-AE",
+        "tan20260417t082701c11s4001-AF",
+        "tan20260417t082701c11s4001-AG",
+        "tan20260417t082701c11s4001-AI",
+        "tan20260417t082701c11s4001-AJ",
+        "tan20260417t082701c11s4001-AK",
+        "tan20260417t082701c11s4001-AL",
+        "tan20260417t082701c11s4001-AM",
+        "tan20260417t082701c11s4001-AN",
+        "tan20260417t082701c11s4001-AO",
+        "tan20260417t082701c11s4001-C",
+        "tan20260417t082701c11s4001-D",
+        "tan20260417t082701c11s4001-E",
+        "tan20260417t082701c11s4001-G",
+        "tan20260417t082701c11s4001-H",
+        "tan20260417t082701c11s4001-I",
+        "tan20260417t082701c11s4001-J",
+        "tan20260417t082701c11s4001-L",
+        "tan20260417t082701c11s4001-M",
+        "tan20260417t082701c11s4001-N",
+        "tan20260417t082701c11s4001-P",
+        "tan20260417t082701c11s4001-Q",
+        "tan20260417t082701c11s4001-R",
+        "tan20260417t082701c11s4001-S",
+        "tan20260417t082701c11s4001-V",
+        "tan20260417t082701c11s4001-W",
+        "tan20260417t082701c11s4001-X",
+        "tan20260417t082701c11s4001-Y",
+        "tan20260417t082701c11s4001-Z",
+        "tan20260424t082511c52s4001-A",
+        "tan20260424t082511c52s4001-AA",
+        "tan20260424t082511c52s4001-AB",
+        "tan20260424t082511c52s4001-AC",
+        "tan20260424t082511c52s4001-AD",
+        "tan20260424t082511c52s4001-AE",
+        "tan20260424t082511c52s4001-AF",
+        "tan20260424t082511c52s4001-AG",
+        "tan20260424t082511c52s4001-AH",
+        "tan20260424t082511c52s4001-AI",
+        "tan20260424t082511c52s4001-AJ",
+        "tan20260424t082511c52s4001-AK",
+        "tan20260424t082511c52s4001-AL",
+        "tan20260424t082511c52s4001-AM",
+        "tan20260424t082511c52s4001-AN",
+        "tan20260424t082511c52s4001-AO",
+        "tan20260424t082511c52s4001-AZ",
+        "tan20260424t082511c52s4001-B",
+        "tan20260424t082511c52s4001-BA",
+        "tan20260424t082511c52s4001-BB",
+        "tan20260424t082511c52s4001-BC",
+        "tan20260424t082511c52s4001-BD",
+        "tan20260424t082511c52s4001-BE",
+        "tan20260424t082511c52s4001-BF",
+        "tan20260424t082511c52s4001-BG",
+        "tan20260424t082511c52s4001-BJ",
+        "tan20260424t082511c52s4001-BK",
+        "tan20260424t082511c52s4001-BL",
+        "tan20260424t082511c52s4001-BM",
+        "tan20260424t082511c52s4001-BN",
+        "tan20260424t082511c52s4001-BO",
+        "tan20260424t082511c52s4001-BP",
+        "tan20260424t082511c52s4001-BQ",
+        "tan20260424t082511c52s4001-BR",
+        "tan20260424t082511c52s4001-BS",
+        "tan20260424t082511c52s4001-BT",
+        "tan20260424t082511c52s4001-BU",
+        "tan20260424t082511c52s4001-BV",
+        "tan20260424t082511c52s4001-BW",
+        "tan20260424t082511c52s4001-BX",
+        "tan20260424t082511c52s4001-C",
+        "tan20260424t082511c52s4001-D",
+        "tan20260424t082511c52s4001-E",
+        "tan20260424t082511c52s4001-F",
+        "tan20260424t082511c52s4001-G",
+        "tan20260424t082511c52s4001-H",
+        "tan20260424t082511c52s4001-I",
+        "tan20260424t082511c52s4001-J",
+        "tan20260424t082511c52s4001-K",
+        "tan20260424t082511c52s4001-L",
+        "tan20260424t082511c52s4001-M",
+        "tan20260424t082511c52s4001-N",
+        "tan20260424t082511c52s4001-O",
+        "tan20260424t082511c52s4001-P",
+        "tan20260424t082511c52s4001-Q",
+        "tan20260424t082511c52s4001-R",
+        "tan20260424t082511c52s4001-S",
+        "tan20260424t082511c52s4001-T",
+        "tan20260424t082511c52s4001-U",
+        "tan20260424t082511c52s4001-V",
+        "tan20260424t082511c52s4001-W",
+        "tan20260424t082511c52s4001-X",
+        "tan20260424t082511c52s4001-Y",
+        "tan20260424t082511c52s4001-Z"
+      ],
+      "product_name": "S2B_MSIL2A_20260418T070619_N0512_R106_T39SYD_20260418T102342.SAFE",
+      "tasks": 97
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260418T070619_N0512_R106_T40SBJ_20260418T102342.SAFE",
+      "plume_ids": [
+        "tan20260424t082511c52s4001-AX",
+        "tan20260424t082511c52s4001-AY"
+      ],
+      "product_name": "S2B_MSIL2A_20260418T070619_N0512_R106_T40SBJ_20260418T102342.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260429T151719_N0512_R125_T18LTM_20260429T185548.SAFE",
+      "plume_ids": [
+        "tan20260428t165002c78s4001-A",
+        "tan20260428t165002c78s4001-B"
+      ],
+      "product_name": "S2B_MSIL2A_20260429T151719_N0512_R125_T18LTM_20260429T185548.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260505T051649_N0512_R062_T45TUL_20260505T090134.SAFE",
+      "plume_ids": [
+        "tan20260524t064556c35s4001-I"
+      ],
+      "product_name": "S2B_MSIL2A_20260505T051649_N0512_R062_T45TUL_20260505T090134.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2B_MSIL2A_20260503T161829_N0512_R040_T16SGJ_20260503T200219.SAFE",
+      "plume_ids": [
+        "tan20260517t174534c19s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20260503T161829_N0512_R040_T16SGJ_20260503T200219.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241105T174321_N0511_R055_T13RFQ_20260705T034211.SAFE",
+      "plume_ids": [
+        "tan20241109t174753c00s4001-D",
+        "tan20241109t174753c00s4001-E",
+        "tan20241109t174753c00s4001-F",
+        "tan20241109t174753c00s4001-G",
+        "tan20241109t174753c00s4001-H",
+        "tan20241109t174753c00s4001-I"
+      ],
+      "product_name": "S2C_MSIL2A_20241105T174321_N0511_R055_T13RFQ_20260705T034211.SAFE",
+      "tasks": 6
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241111T145901_N0511_R139_T19JBG_20260701T165335.SAFE",
+      "plume_ids": [
+        "tan20251107t155501c20s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241111T145901_N0511_R139_T19JBG_20260701T165335.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241116T085211_N0511_R064_T35RPN_20260627T090946.SAFE",
+      "plume_ids": [
+        "tan20250216t090419c00s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20241116T085211_N0511_R064_T35RPN_20260627T090946.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241116T171251_N0511_R069_T14QNG_20260628T015535.SAFE",
+      "plume_ids": [
+        "tan20251115t180959c03s4001-A",
+        "tan20251115t180959c03s4001-B",
+        "tan20251115t180959c03s4001-C",
+        "tan20251115t180959c03s4001-D",
+        "tan20251115t180959c03s4001-E",
+        "tan20251115t180959c03s4001-F",
+        "tan20251115t180959c03s4001-G",
+        "tan20251115t180959c03s4001-H",
+        "tan20251115t180959c03s4001-I"
+      ],
+      "product_name": "S2C_MSIL2A_20241116T171251_N0511_R069_T14QNG_20260628T015535.SAFE",
+      "tasks": 9
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241118T110621_N0511_R094_T30SXJ_20260627T121659.SAFE",
+      "plume_ids": [
+        "tan20241202t111258c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241118T110621_N0511_R094_T30SXJ_20260627T121659.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241117T182351_N0511_R084_T12SVB_20260626T134016.SAFE",
+      "plume_ids": [
+        "tan20241121t183727c00s4001-B",
+        "tan20241203t182808c00s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20241117T182351_N0511_R084_T12SVB_20260626T134016.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241118T144901_N0511_R096_T19HBA_20260628T061755.SAFE",
+      "plume_ids": [
+        "tan20251114t155705c41s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241118T144901_N0511_R096_T19HBA_20260628T061755.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241120T183351_N0511_R127_T11SMR_20260626T082403.SAFE",
+      "plume_ids": [
+        "tan20250222t190418c00s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20241120T183351_N0511_R127_T11SMR_20260626T082403.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241123T102221_N0511_R022_T32RKT_20260621T162643.SAFE",
+      "plume_ids": [
+        "tan20250302t103925c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241123T102221_N0511_R022_T32RKT_20260621T162643.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241123T102221_N0511_R022_T31SGR_20260621T162643.SAFE",
+      "plume_ids": [
+        "tan20250225t105102c00s4001-A",
+        "tan20250225t105102c00s4001-C",
+        "tan20250225t105102c00s4001-D",
+        "tan20250225t105102c00s4001-F",
+        "tan20250225t105102c00s4001-H",
+        "tan20250225t105102c00s4001-I",
+        "tan20250225t105102c00s4001-K",
+        "tan20250225t105102c00s4001-M",
+        "tan20250225t105102c00s4001-N"
+      ],
+      "product_name": "S2C_MSIL2A_20241123T102221_N0511_R022_T31SGR_20260621T162643.SAFE",
+      "tasks": 9
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241123T170311_N0511_R026_T16SBJ_20260701T155222.SAFE",
+      "plume_ids": [
+        "tan20251127t175301c97s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241123T170311_N0511_R026_T16SBJ_20260701T155222.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241123T102221_N0511_R022_T32SKA_20260621T162643.SAFE",
+      "plume_ids": [
+        "tan20250225t105102c00s4001-B",
+        "tan20250225t105102c00s4001-E",
+        "tan20250225t105102c00s4001-G"
+      ],
+      "product_name": "S2C_MSIL2A_20241123T102221_N0511_R022_T32SKA_20260621T162643.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241125T092021_N0511_R050_T34SGH_20260622T221445.SAFE",
+      "plume_ids": [
+        "tan20260108t101617c87s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241125T092021_N0511_R050_T34SGH_20260622T221445.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241206T034201_N0511_R061_T49SCC_20260608T190028.SAFE",
+      "plume_ids": [
+        "tan20250307t041040c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241206T034201_N0511_R061_T49SCC_20260608T190028.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241206T170741_N0511_R069_T14QMG_20260605T002549.SAFE",
+      "plume_ids": [
+        "tan20250310t174950c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241206T170741_N0511_R069_T14QMG_20260605T002549.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241130T083101_N0511_R121_T37SBT_20260613T180102.SAFE",
+      "plume_ids": [
+        "tan20251126t091409c47s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241130T083101_N0511_R121_T37SBT_20260613T180102.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241206T184821_N0511_R070_T11SKU_20260608T094153.SAFE",
+      "plume_ids": [
+        "av320250109t210610-C",
+        "av320250109t210610-D",
+        "av320250109t210610-F",
+        "av320250109t212855-A",
+        "av320250109t212855-B",
+        "av320250109t212855-F",
+        "av320250109t214158-C"
+      ],
+      "product_name": "S2C_MSIL2A_20241206T184821_N0511_R070_T11SKU_20260608T094153.SAFE",
+      "tasks": 7
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241207T031151_N0511_R075_T49SFV_20260528T103812.SAFE",
+      "plume_ids": [
+        "tan20251206t040924c59s4001-K",
+        "tan20251206t040924c59s4001-L",
+        "tan20251206t040924c59s4001-M"
+      ],
+      "product_name": "S2C_MSIL2A_20241207T031151_N0511_R075_T49SFV_20260528T103812.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241206T184821_N0511_R070_T11SKV_20260608T094153.SAFE",
+      "plume_ids": [
+        "av320250109t201915-A",
+        "av320250109t201915-D",
+        "av320250109t203204-A",
+        "av320250109t203204-C",
+        "av320250109t203204-D",
+        "av320250109t203204-E",
+        "av320250109t204312-A",
+        "av320250109t204312-E",
+        "av320250109t205535-A",
+        "av320250109t205535-B",
+        "av320250109t210610-A",
+        "av320250109t210610-B",
+        "av320250109t210610-E",
+        "av320250109t211902-A",
+        "av320250109t211902-B",
+        "av320250109t211902-C",
+        "av320250109t211902-E",
+        "av320250109t212855-C",
+        "av320250109t212855-E"
+      ],
+      "product_name": "S2C_MSIL2A_20241206T184821_N0511_R070_T11SKV_20260608T094153.SAFE",
+      "tasks": 19
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241207T031151_N0511_R075_T49SFA_20260528T103812.SAFE",
+      "plume_ids": [
+        "tan20251206t040815c69s4001-AA",
+        "tan20251206t040815c69s4001-AB",
+        "tan20251206t040815c69s4001-AC",
+        "tan20251206t040815c69s4001-AD",
+        "tan20251206t040815c69s4001-AE",
+        "tan20251206t040815c69s4001-AF",
+        "tan20251206t040815c69s4001-AG",
+        "tan20251206t040815c69s4001-AH",
+        "tan20251206t040815c69s4001-AI",
+        "tan20251206t040815c69s4001-AJ",
+        "tan20251206t040815c69s4001-AM",
+        "tan20251206t040815c69s4001-AN",
+        "tan20251206t040815c69s4001-AQ",
+        "tan20251206t040815c69s4001-AS",
+        "tan20251206t040815c69s4001-AV",
+        "tan20251206t040815c69s4001-AW",
+        "tan20251206t040815c69s4001-AX",
+        "tan20251206t040815c69s4001-AY",
+        "tan20251206t040815c69s4001-AZ",
+        "tan20251206t040815c69s4001-BK",
+        "tan20251206t040815c69s4001-BO",
+        "tan20251206t040815c69s4001-BP",
+        "tan20251206t040815c69s4001-BS",
+        "tan20251206t040815c69s4001-W",
+        "tan20251206t040815c69s4001-X",
+        "tan20251206t040815c69s4001-Y",
+        "tan20251206t040815c69s4001-Z",
+        "tan20251206t040924c59s4001-B",
+        "tan20251206t040924c59s4001-C",
+        "tan20251206t040924c59s4001-F",
+        "tan20251206t040924c59s4001-G",
+        "tan20251206t040924c59s4001-J",
+        "tan20251206t040924c59s4001-T"
+      ],
+      "product_name": "S2C_MSIL2A_20241207T031151_N0511_R075_T49SFA_20260528T103812.SAFE",
+      "tasks": 33
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241209T171751_N0511_R112_T14RMS_20260603T231130.SAFE",
+      "plume_ids": [
+        "tan20251208t182503c20s4001-D"
+      ],
+      "product_name": "S2C_MSIL2A_20241209T171751_N0511_R112_T14RMS_20260603T231130.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241207T031151_N0511_R075_T49SGB_20260528T103812.SAFE",
+      "plume_ids": [
+        "tan20251206t040815c69s4001-AO"
+      ],
+      "product_name": "S2C_MSIL2A_20241207T031151_N0511_R075_T49SGB_20260528T103812.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241210T064321_N0511_R120_T41TLF_20260521T224203.SAFE",
+      "plume_ids": [
+        "tan20250314t071736c00s4001-C",
+        "tan20250314t071736c00s4001-E",
+        "tan20250314t071736c00s4001-G"
+      ],
+      "product_name": "S2C_MSIL2A_20241210T064321_N0511_R120_T41TLF_20260521T224203.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241209T171751_N9905_R112_T14RMS_20241209T211612.SAFE",
+      "plume_ids": [
+        "tan20251208t182503c20s4001-F"
+      ],
+      "product_name": "S2C_MSIL2A_20241209T171751_N9905_R112_T14RMS_20241209T211612.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241210T064321_N9905_R120_T41TLF_20241210T102612.SAFE",
+      "plume_ids": [
+        "tan20250314t071736c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241210T064321_N9905_R120_T41TLF_20241210T102612.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241208T143811_N0511_R096_T18HYE_20260524T020220.SAFE",
+      "plume_ids": [
+        "tan20241222t145812c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241208T143811_N0511_R096_T18HYE_20260524T020220.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241210T100441_N0511_R122_T32RNR_20260521T070232.SAFE",
+      "plume_ids": [
+        "tan20241224t101944c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241210T100441_N0511_R122_T32RNR_20260521T070232.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241210T002121_N0511_R116_T55KFR_20260529T192943.SAFE",
+      "plume_ids": [
+        "emi20250123t010414p16028-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241210T002121_N0511_R116_T55KFR_20260529T192943.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241210T164741_N9905_R126_T15QUA_20241210T203955.SAFE",
+      "plume_ids": [
+        "tan20250410t172635c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241210T164741_N9905_R126_T15QUA_20241210T203955.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241210T164741_N0511_R126_T15QVV_20260520T092234.SAFE",
+      "plume_ids": [
+        "tan20251216t174812c17s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20241210T164741_N0511_R126_T15QVV_20260520T092234.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241210T164741_N9905_R126_T15QVV_20241210T203955.SAFE",
+      "plume_ids": [
+        "tan20251216t174812c17s4001-C"
+      ],
+      "product_name": "S2C_MSIL2A_20241210T164741_N9905_R126_T15QVV_20241210T203955.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241211T075351_N0511_R135_T38SME_20260512T165620.SAFE",
+      "plume_ids": [
+        "tan20241225t080702c00s4001-A",
+        "tan20241225t080702c00s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20241211T075351_N0511_R135_T38SME_20260512T165620.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241211T175811_N0511_R141_T12RXP_20260519T190108.SAFE",
+      "plume_ids": [
+        "tan20251207t190449c98s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241211T175811_N0511_R141_T12RXP_20260519T190108.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241212T054301_N0511_R005_T42QZJ_20260511T153404.SAFE",
+      "plume_ids": [
+        "tan20241216t055718c00s4001-A",
+        "tan20241216t055718c00s4001-B",
+        "tan20241216t055718c00s4001-C"
+      ],
+      "product_name": "S2C_MSIL2A_20241212T054301_N0511_R005_T42QZJ_20260511T153404.SAFE",
+      "tasks": 3
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241212T104511_N9905_R008_T31SCV_20241212T144212.SAFE",
+      "plume_ids": [
+        "tan20251211t114242c32s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20241212T104511_N9905_R008_T31SCV_20241212T144212.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241213T033211_N0511_R018_T49SED_20260502T003831.SAFE",
+      "plume_ids": [
+        "tan20250106t034636c00s4001-H"
+      ],
+      "product_name": "S2C_MSIL2A_20241213T033211_N0511_R018_T49SED_20260502T003831.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241214T000251_N0511_R030_T56HKH_20260428T162448.SAFE",
+      "plume_ids": [
+        "tan20251218t010830c83s4001-A",
+        "tan20251218t010830c83s4001-B",
+        "tan20251218t010830c83s4001-C",
+        "tan20251218t010830c83s4001-D",
+        "tan20251218t010830c83s4001-G"
+      ],
+      "product_name": "S2C_MSIL2A_20241214T000251_N0511_R030_T56HKH_20260428T162448.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241216T170751_N0511_R069_T15SUD_20260422T045658.SAFE",
+      "plume_ids": [
+        "tan20251215t182306c52s4001-A",
+        "tan20251215t182306c52s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20241216T170751_N0511_R069_T15SUD_20260422T045658.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241216T170751_N0511_R069_T14QMG_20260422T045658.SAFE",
+      "plume_ids": [
+        "tan20251220t181610c39s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241216T170751_N0511_R069_T14QMG_20260422T045658.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20241217T163741_N0511_R083_T16SFJ_20260412T111610.SAFE",
+      "plume_ids": [
+        "tan20251216t174322c47s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20241217T163741_N0511_R083_T16SFJ_20260412T111610.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250130T075221_N0511_R135_T37QED_20250130T112712.SAFE",
+      "plume_ids": [
+        "tan20250208t081427c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20250130T075221_N0511_R135_T37QED_20250130T112712.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250130T075221_N0511_R135_T38SLF_20250130T111713.SAFE",
+      "plume_ids": [
+        "tan20250203t082443c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20250130T075221_N0511_R135_T38SLF_20250130T111713.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250131T021951_N0511_R003_T52TFR_20250131T051511.SAFE",
+      "plume_ids": [
+        "tan20250221t023341c00s4001-A",
+        "tan20250221t023341c00s4001-B",
+        "tan20250221t023341c00s4001-C",
+        "tan20250221t023341c00s4001-D",
+        "tan20250221t023341c00s4001-E"
+      ],
+      "product_name": "S2C_MSIL2A_20250131T021951_N0511_R003_T52TFR_20250131T051511.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250211T101201_N0511_R022_T32RKT_20250211T154112.SAFE",
+      "plume_ids": [
+        "tan20250302t103925c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20250211T101201_N0511_R022_T32RKT_20250211T154112.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250220T072531_N0511_R006_T39RUQ_20250220T170710.SAFE",
+      "plume_ids": [
+        "emi20250219t081443p06006-B"
+      ],
+      "product_name": "S2C_MSIL2A_20250220T072531_N0511_R006_T39RUQ_20250220T170710.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for tan20260308t070515c65s4001-A year",
+      "plume_ids": [
+        "tan20260308t070515c65s4001-A",
+        "tan20260308t070515c65s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20250312T053701_N0511_R005_T42QZH_20250312T104508.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250413T000241_N0511_R030_T56JNR_20250413T040113.SAFE",
+      "plume_ids": [
+        "tan20250417t003151c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20250413T000241_N0511_R030_T56JNR_20250413T040113.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250413T161851_N0511_R040_T16RFV_20250413T212014.SAFE",
+      "plume_ids": [
+        "tan20250504t170015c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20250413T161851_N0511_R040_T16RFV_20250413T212014.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20250501T191141_N0511_R013_T10TDQ_20250501T220011.SAFE",
+      "plume_ids": [
+        "tan20250430t193530c00s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20250501T191141_N0511_R013_T10TDQ_20250501T220011.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20251012T135711_N0511_R067_T20JQL_20251012T191719.SAFE",
+      "plume_ids": [
+        "tan20260129t152107c81s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20251012T135711_N0511_R067_T20JQL_20251012T191719.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20251013T163241_N0511_R083_T16RCV_20251013T195717.SAFE",
+      "plume_ids": [
+        "tan20251012t172211c61s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20251013T163241_N0511_R083_T16RCV_20251013T195717.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20251013T163241_N0511_R083_T16SDB_20251013T195717.SAFE",
+      "plume_ids": [
+        "tan20251012t172136c30s4001-A",
+        "tan20251012t172136c30s4001-O"
+      ],
+      "product_name": "S2C_MSIL2A_20251013T163241_N0511_R083_T16SDB_20251013T195717.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20251014T062501_N0511_R091_T40KEC_20251014T083314.SAFE",
+      "plume_ids": [
+        "tan20251018t072300c77s4001-A",
+        "tan20251122t072719c47s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20251014T062501_N0511_R091_T40KEC_20251014T083314.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for tan20260308t070515c65s4001-A seasonal",
+      "plume_ids": [
+        "tan20260308t070515c65s4001-A",
+        "tan20260308t070515c65s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20251207T054231_N0511_R005_T42QZH_20251207T092711.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20260130T135701_N0511_R067_T20JQL_20260130T172513.SAFE",
+      "plume_ids": [
+        "tan20260129t152107c81s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20260130T135701_N0511_R067_T20JQL_20260130T172513.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20260224T060831_N0512_R134_T42RTN_20260224T091909.SAFE",
+      "plume_ids": [
+        "tan20260310t071811c37s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20260224T060831_N0512_R134_T42RTN_20260224T091909.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: empty repaired band for tan20260308t070515c65s4001-A prev3",
+      "plume_ids": [
+        "tan20260308t070515c65s4001-A",
+        "tan20260308t070515c65s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20260225T053811_N0512_R005_T42QZH_20260225T103810.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: empty repaired band for tan20260308t070515c65s4001-A prev1",
+      "plume_ids": [
+        "tan20260308t070515c65s4001-A",
+        "tan20260308t070515c65s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20260307T053701_N0512_R005_T42QZH_20260307T103208.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20260407T050651_N0512_R019_T43PGQ_20260407T103956.SAFE",
+      "plume_ids": [
+        "tan20260406t063500c37s4001-A",
+        "tan20260406t063500c37s4001-B",
+        "tan20260406t063500c37s4001-C",
+        "tan20260406t063500c37s4001-D",
+        "tan20260406t063500c37s4001-E"
+      ],
+      "product_name": "S2C_MSIL2A_20260407T050651_N0512_R019_T43PGQ_20260407T103956.SAFE",
+      "tasks": 5
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20260407T050651_N0512_R019_T43PFP_20260407T103956.SAFE",
+      "plume_ids": [
+        "tan20260406t063558c50s4001-A",
+        "tan20260406t063558c50s4001-B"
+      ],
+      "product_name": "S2C_MSIL2A_20260407T050651_N0512_R019_T43PFP_20260407T103956.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20260407T082601_N0512_R021_T37TCF_20260407T140059.SAFE",
+      "plume_ids": [
+        "tan20260406t093434c80s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20260407T082601_N0512_R021_T37TCF_20260407T140059.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20260420T083651_N0512_R064_T36TVK_20260420T140925.SAFE",
+      "plume_ids": [
+        "tan20260424t095844c03s4001-A"
+      ],
+      "product_name": "S2C_MSIL2A_20260420T083651_N0512_R064_T36TVK_20260420T140925.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: no public AWS Sentinel-2 L2A item matches S2C_MSIL2A_20260430T052031_N0512_R062_T45TUL_20260430T103409.SAFE",
+      "plume_ids": [
+        "tan20260524t064556c35s4001-I"
+      ],
+      "product_name": "S2C_MSIL2A_20260430T052031_N0512_R062_T45TUL_20260430T103409.SAFE",
+      "tasks": 1
+    }
+  ],
+  "manifest": "Upgraded_dataset/s2_canonical_temporal_split_v4/s2_cdse_legacy512_all_cutoff_2025-11-24.csv",
+  "repaired": 27581
+}

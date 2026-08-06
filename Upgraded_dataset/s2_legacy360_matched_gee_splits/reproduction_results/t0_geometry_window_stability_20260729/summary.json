@@ -1,0 +1,62 @@
+{
+  "narrow_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/reproduction_results/t0_geometry_audit_full_20260729/per_plume_geometry.csv",
+  "wide_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/reproduction_results/t0_geometry_audit_full_radius18_20260729/per_plume_geometry.csv",
+  "plumes": 2524,
+  "stability_definition": "Euclidean difference between narrow- and wide-window subpixel shifts <= 1.0 px",
+  "stable_plumes": 2251,
+  "unstable_plumes": 273,
+  "stable_fraction": 0.8918383518225039,
+  "window_shift_delta_px": {
+    "min": 0.0,
+    "p10": 0.0,
+    "median": 0.0,
+    "p90": 4.960020325924988,
+    "p95": 20.32874786967044,
+    "max": 41.65434519906385,
+    "mean": 1.997234337661575
+  },
+  "stable_narrow_shift_magnitude_px": {
+    "min": 0.009985973004445,
+    "p10": 0.5236989619524577,
+    "median": 1.4711988382454884,
+    "p90": 3.613798242695367,
+    "p95": 5.355496628875275,
+    "max": 15.89729112841704,
+    "mean": 2.049510248099512
+  },
+  "stable_narrow_shift_magnitude_m": {
+    "min": 0.0998597300444507,
+    "p10": 5.236989619524577,
+    "median": 14.711988382454884,
+    "p90": 36.13798242695367,
+    "p95": 53.55496628875275,
+    "max": 158.9729112841704,
+    "mean": 20.495102480995122
+  },
+  "stable_improvement_fraction": {
+    "mae_dn": 0.739227010217681,
+    "rmse_robust_z": 0.7361172812083518,
+    "median_band_correlation": 0.7347845402043536
+  },
+  "search_peak_correlation": {
+    "stable": {
+      "min": 0.141476340983829,
+      "p10": 0.235640779354453,
+      "median": 0.3793399019616014,
+      "p90": 0.5770773045591862,
+      "p95": 0.6461930946807326,
+      "max": 0.9894836686117844,
+      "mean": 0.39631593873143156
+    },
+    "unstable": {
+      "min": 0.0991970056743364,
+      "p10": 0.12446871975258134,
+      "median": 0.1711273982442538,
+      "p90": 0.3399507180329607,
+      "p95": 0.4025216786101976,
+      "max": 0.562802720499648,
+      "mean": 0.20292162637268424
+    }
+  },
+  "repair_input_recommendation": "Use narrow-window shifts only where registration_stable=true; route unstable plumes to geotransform-based or manual review."
+}

@@ -1,0 +1,70 @@
+{
+  "available_product_names": 19281,
+  "catalog_rows": 6510,
+  "complete_rows": 5409,
+  "current_rows": 4332,
+  "incomplete_rows": 1101,
+  "metadata_rows": 6510,
+  "missing_counts": {
+    "prev1": 1067,
+    "prev2": 1056,
+    "prev3": 1057,
+    "seasonal": 576,
+    "t0": 576,
+    "year": 567
+  },
+  "planned_local_recrops": {
+    "prev1": 44,
+    "prev2": 33,
+    "prev3": 34,
+    "seasonal": 26,
+    "t0": 26,
+    "year": 17
+  },
+  "product_root_counts": {
+    "/diniuvol/yuyao/s2_cdse_point_repair_cache": 6,
+    "/diniuvol/yuyao/s2_early_boundary_products": 2,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/data_download/raw_data_dir_s2": 4680,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/data_download/raw_data_dir_s2_-7": 919,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/raw_data_dir_S2": 3839,
+    "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/raw_data_dir_s2_90360": 10612,
+    "/mnt/engg-niulab/yuyao/sensors_raw_data/S2/raw_data_dir_s2": 4329
+  },
+  "projected_complete_rows": 5487,
+  "recrop_rows": 78,
+  "source_counts": {
+    "prev1": {
+      "local_safe_point_recrop_v4": 1111,
+      "missing": 1067,
+      "point_exact_v3_harmonized": 4332
+    },
+    "prev2": {
+      "local_safe_point_recrop_v4": 1122,
+      "missing": 1056,
+      "point_exact_v3_harmonized": 4332
+    },
+    "prev3": {
+      "local_safe_point_recrop_v4": 1121,
+      "missing": 1057,
+      "point_exact_v3_harmonized": 4332
+    },
+    "seasonal": {
+      "legacy_gee_correct_512": 1533,
+      "local_safe_point_recrop_v4": 69,
+      "missing": 576,
+      "point_exact_v3_harmonized": 4332
+    },
+    "t0": {
+      "legacy_gee_correct_512": 1533,
+      "local_safe_point_recrop_v4": 69,
+      "missing": 576,
+      "point_exact_v3_harmonized": 4332
+    },
+    "year": {
+      "legacy_gee_correct_512": 1533,
+      "local_safe_point_recrop_v4": 78,
+      "missing": 567,
+      "point_exact_v3_harmonized": 4332
+    }
+  }
+}

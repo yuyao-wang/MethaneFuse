@@ -1,0 +1,68 @@
+{
+  "overlap_plumes": 4097,
+  "day_match_counts": {
+    "t0": 4097,
+    "prev1": 4096,
+    "prev2": 4096,
+    "prev3": 4096,
+    "seasonal": 4087,
+    "year": 4059
+  },
+  "sample_pairs": 72,
+  "by_slot": {
+    "prev1": {
+      "pairs": 12,
+      "gee_zero_mean": 0.0855,
+      "v14_zero_mean": 0.1667,
+      "gee_median": 2992.5,
+      "v14_median": 3823.0,
+      "pixel_corr_median": 0.4394,
+      "pixel_corr_min": 0.1555
+    },
+    "prev2": {
+      "pairs": 12,
+      "gee_zero_mean": 0.1263,
+      "v14_zero_mean": 0.1667,
+      "gee_median": 2449.5,
+      "v14_median": 3222.5,
+      "pixel_corr_median": 0.411,
+      "pixel_corr_min": 0.1947
+    },
+    "prev3": {
+      "pairs": 12,
+      "gee_zero_mean": 0.2116,
+      "v14_zero_mean": 0.1667,
+      "gee_median": 2685.5,
+      "v14_median": 3646.75,
+      "pixel_corr_median": 0.4385,
+      "pixel_corr_min": 0.1186
+    },
+    "seasonal": {
+      "pairs": 12,
+      "gee_zero_mean": 0.013,
+      "v14_zero_mean": 0.1667,
+      "gee_median": 2755.0,
+      "v14_median": 3524.0,
+      "pixel_corr_median": 0.5785,
+      "pixel_corr_min": 0.1553
+    },
+    "t0": {
+      "pairs": 12,
+      "gee_zero_mean": 0.1825,
+      "v14_zero_mean": 0.1805,
+      "gee_median": 2429.0,
+      "v14_median": 3344.0,
+      "pixel_corr_median": 0.4154,
+      "pixel_corr_min": 0.3003
+    },
+    "year": {
+      "pairs": 12,
+      "gee_zero_mean": 0.0842,
+      "v14_zero_mean": 0.1667,
+      "gee_median": 2309.25,
+      "v14_median": 3511.0,
+      "pixel_corr_median": 0.4272,
+      "pixel_corr_min": 0.1362
+    }
+  }
+}

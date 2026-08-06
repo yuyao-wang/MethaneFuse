@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-07-24T09:55:37Z",
+  "source_table": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/s2_v8_all_512.csv",
+  "output_table": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_bounds_native_v9/s2_v9_prepared.csv",
+  "target_root": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_historical_bounds_native_v9",
+  "cache_root": "/diniuvol/yuyao/s2_v9_direct_stage",
+  "rows": 5313,
+  "direct_counts": {
+    "t0": 961,
+    "prev1": 0,
+    "prev2": 0,
+    "prev3": 0,
+    "seasonal": 999,
+    "year": 999
+  },
+  "direct_tasks": 2959,
+  "finished_at": "2026-07-24T10:02:33Z",
+  "copied": 2959,
+  "reused": 0,
+  "copied_bytes": 36765258518
+}

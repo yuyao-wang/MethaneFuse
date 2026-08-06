@@ -1,0 +1,47 @@
+{
+  "all6_complete_before_recrop": 0,
+  "candidate_rows": 12193,
+  "conflicting_product_groups": 7,
+  "download_manifest": "/home/yuyao/methane_train/Upgrade_data_pipeline/csv/s2_download_manifest.csv",
+  "has_legacy3": 4064,
+  "has_prev123_products": 0,
+  "legacy_512_root": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/Dataset/plume_raw_s2_90360_fixed_512",
+  "legacy_rows": 4066,
+  "legacy_unique_ids": 4066,
+  "missing_by_timepoint": {
+    "prev1": {
+      "legacy_file_missing": 0,
+      "product_missing": 4066,
+      "recrop_missing": 4066
+    },
+    "prev2": {
+      "legacy_file_missing": 0,
+      "product_missing": 2823,
+      "recrop_missing": 4066
+    },
+    "prev3": {
+      "legacy_file_missing": 0,
+      "product_missing": 2825,
+      "recrop_missing": 4066
+    },
+    "seasonal": {
+      "legacy_file_missing": 0,
+      "product_missing": 0,
+      "recrop_missing": 0
+    },
+    "t0": {
+      "legacy_file_missing": 2,
+      "product_missing": 0,
+      "recrop_missing": 0
+    },
+    "year": {
+      "legacy_file_missing": 0,
+      "product_missing": 0,
+      "recrop_missing": 0
+    }
+  },
+  "recrop_root": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_legacy_prev123_point_center_exact_v4",
+  "selected_product_rows": 2484,
+  "source_complete": 0,
+  "source_table": "/home/yuyao/methane_train/Upgrade_data_pipeline/csv/s2_6time_legacy_rebuild/s2_6time_legacy_exact_sources.csv"
+}

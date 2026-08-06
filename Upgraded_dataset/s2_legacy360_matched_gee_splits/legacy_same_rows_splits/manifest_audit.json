@@ -1,0 +1,110 @@
+{
+  "new_split_root": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits",
+  "legacy_cohort_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/cohort_all.csv",
+  "output_root": "Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_splits",
+  "paired_new_output_root": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits",
+  "legacy_cohort_file_verification": {
+    "unique_paths": 223767,
+    "valid_nonempty_paths": 223763,
+    "missing_or_empty_paths": 4,
+    "missing_or_empty_examples": [
+      "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_0.tif",
+      "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_360.tif",
+      "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000410/s2_90.tif",
+      "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/crops/group_00000450/s2_360.tif"
+    ],
+    "total_bytes": 539418128686
+  },
+  "invalid_legacy_ids_excluded_from_both_sides": [
+    410,
+    450
+  ],
+  "splits": {
+    "row_random_80_20": {
+      "train": {
+        "new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/row_random_80_20/train.csv",
+        "paired_new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/row_random_80_20/train.csv",
+        "legacy_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_splits/row_random_80_20/train.csv",
+        "rows": 56671,
+        "dropped_invalid_legacy_ids": [
+          410
+        ],
+        "plumes": 2517,
+        "events": 943,
+        "labels": {
+          "0": 27849,
+          "1": 28822
+        },
+        "sample_sequence_sha256": "dfa1e434cf51ec74ea530716bb9276f34cb3a04fead4b9fba2d747abf04a87bc",
+        "paired_new_sample_sequence_sha256": "dfa1e434cf51ec74ea530716bb9276f34cb3a04fead4b9fba2d747abf04a87bc",
+        "legacy_path_sequence_sha256": "469473ac05ff2c056056139f1e4c22907937402004ec4a44eda3a9103893450e",
+        "new_path_sequence_sha256": "841c899da20fb60b57680c6a3969e19b2950438275aff6e5dfb9a958e37c840e"
+      },
+      "test": {
+        "new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/row_random_80_20/test.csv",
+        "paired_new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/row_random_80_20/test.csv",
+        "legacy_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_splits/row_random_80_20/test.csv",
+        "rows": 14160,
+        "dropped_invalid_legacy_ids": [
+          450
+        ],
+        "plumes": 2387,
+        "events": 900,
+        "labels": {
+          "0": 6971,
+          "1": 7189
+        },
+        "sample_sequence_sha256": "fae3f669497f3ad9af14100b376e42096349b340755575d097e816de19c198cf",
+        "paired_new_sample_sequence_sha256": "fae3f669497f3ad9af14100b376e42096349b340755575d097e816de19c198cf",
+        "legacy_path_sequence_sha256": "4e1d1fad864a8f23fa596cfc8a052d98770f816290b117a38ec27a8f019416e0",
+        "new_path_sequence_sha256": "38a8aa90cd775be236f12b8b9116b0854f7783879f0565727e09fbfc717d6d59"
+      }
+    },
+    "event_disjoint_80_20": {
+      "train": {
+        "new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/event_disjoint_80_20/train.csv",
+        "paired_new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/event_disjoint_80_20/train.csv",
+        "legacy_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_splits/event_disjoint_80_20/train.csv",
+        "rows": 56948,
+        "dropped_invalid_legacy_ids": [],
+        "plumes": 2020,
+        "events": 760,
+        "labels": {
+          "0": 28046,
+          "1": 28902
+        },
+        "sample_sequence_sha256": "5cdaeb44464a3aab2f23efb83a6b8173fe1b64ef0b80c3ce85716dd5825089fe",
+        "paired_new_sample_sequence_sha256": "5cdaeb44464a3aab2f23efb83a6b8173fe1b64ef0b80c3ce85716dd5825089fe",
+        "legacy_path_sequence_sha256": "fad849fe25c49544396164bbe70aec260357c8c32573a63222268931cce771ef",
+        "new_path_sequence_sha256": "122a2494fcb73732dc12dc05a82411a692c139d33e1d9147f5ec65742d074a95"
+      },
+      "test": {
+        "new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/matched_gee_crops36_splits/event_disjoint_80_20/test.csv",
+        "paired_new_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_same_rows_splits/event_disjoint_80_20/test.csv",
+        "legacy_csv": "Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_same_rows_splits/event_disjoint_80_20/test.csv",
+        "rows": 13883,
+        "dropped_invalid_legacy_ids": [
+          410,
+          450
+        ],
+        "plumes": 504,
+        "events": 187,
+        "labels": {
+          "0": 6774,
+          "1": 7109
+        },
+        "sample_sequence_sha256": "5852ec07feae4bf8bb165927ceb5ae28c6fed3db51c8f9d4a01fbf05ce09980f",
+        "paired_new_sample_sequence_sha256": "5852ec07feae4bf8bb165927ceb5ae28c6fed3db51c8f9d4a01fbf05ce09980f",
+        "legacy_path_sequence_sha256": "e034c546f073ee038fc52a970e872179eb31ea25bc7e1cd801034496595e19de",
+        "new_path_sequence_sha256": "0615938143a60052d70a97d1b73d95bffce757808fc17a359005d0e8ae3147d3"
+      }
+    }
+  },
+  "file_verification": {
+    "unique_paths": 212493,
+    "valid_nonempty_paths": 212493,
+    "missing_or_empty_paths": 0,
+    "missing_or_empty_examples": [],
+    "total_bytes": 512249787626
+  }
+}

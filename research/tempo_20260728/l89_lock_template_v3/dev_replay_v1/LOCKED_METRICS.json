@@ -1,0 +1,81 @@
+{
+  "cache_alignment": {
+    "events": 124,
+    "mask_gap_quality_exact": true,
+    "ordered_id_plume_event_label_exact": true,
+    "p5_first_768_exact": true,
+    "role_names": [
+      "t0",
+      "prev1",
+      "prev2",
+      "prev3",
+      "seasonal",
+      "year"
+    ],
+    "rows": 9614
+  },
+  "candidate_id": "p5_plus_d1_fixed",
+  "d1_seeds": [
+    20260727,
+    20260728,
+    20260729
+  ],
+  "d1_within_family_logit_weights": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "development_regression": {
+    "absolute_errors": {
+      "all_negative_fp_mass": 0.0,
+      "event_balanced_ap": 3.553669708500351e-07,
+      "event_balanced_auc": 6.36729843295214e-08,
+      "event_balanced_macro_f1_selected": 5.9035419221920016e-05,
+      "event_balanced_positive_f1_selected": 8.424902254311473e-05,
+      "row_ap": 1.2835737406291514e-07,
+      "row_auc": 1.1102230246251565e-16
+    },
+    "passed": true,
+    "tolerance": 0.0001
+  },
+  "fusion_weights": {
+    "d1": 0.5,
+    "p5": 0.5
+  },
+  "metrics": {
+    "all_negative_event_any_fp_rate": 0.6666666666666666,
+    "all_negative_event_any_fp_rate_at_0_5": 0.5555555555555556,
+    "all_negative_event_count": 27,
+    "all_negative_events_with_any_fp": 18,
+    "all_negative_events_with_any_fp_at_0_5": 15,
+    "all_negative_fp_mass": 3.931439393939394,
+    "all_negative_fp_mass_at_0_5": 2.42405303030303,
+    "all_negative_fp_rate_mean": 0.14560886644219978,
+    "all_negative_fp_rows": 81,
+    "all_negative_fp_rows_at_0_5": 47,
+    "all_negative_max_probability_mean": 0.47703796989314146,
+    "all_negative_mean_probability": 0.11705448893508431,
+    "event_balanced_ap": 0.7729428044723241,
+    "event_balanced_auc": 0.8535050651044966,
+    "event_balanced_macro_f1_at_0_5": 0.7603627120358387,
+    "event_balanced_macro_f1_selected": 0.7771604471215546,
+    "event_balanced_positive_f1_at_0_5": 0.6797400220315531,
+    "event_balanced_positive_f1_selected": 0.7243725662169794,
+    "events": 124,
+    "positive_event_any_detection_recall": 0.9587628865979382,
+    "positive_event_any_detection_recall_at_0_5": 0.9072164948453608,
+    "positive_event_count": 97,
+    "probability_mean": 0.3389665517657591,
+    "probability_std": 0.3624330286108391,
+    "row_ap": 0.7614377683723181,
+    "row_auc": 0.8036128873303997,
+    "row_macro_f1_selected": 0.7396504333219425,
+    "row_positive_f1_selected": 0.7084268998936296,
+    "rows": 9614,
+    "selected_threshold": 0.2426486375036714
+  },
+  "schema_version": "tempo-l89-outer-result-v1",
+  "selection_performed": false,
+  "threshold": 0.2426486375036714,
+  "threshold_refit": false
+}

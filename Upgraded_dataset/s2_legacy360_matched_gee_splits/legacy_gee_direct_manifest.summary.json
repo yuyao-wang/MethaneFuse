@@ -1,0 +1,15 @@
+{
+  "input_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/gee_export_input.csv",
+  "raw_root": "/diniuvol/yuyao/s2_legacy360_matched_gee_raw_exact",
+  "manifest": "/home/yuyao/panopticon/Upgraded_dataset/s2_legacy360_matched_gee_splits/legacy_gee_direct_manifest.csv",
+  "plumes": 2597,
+  "timepoints": [
+    "t0",
+    "seasonal",
+    "year"
+  ],
+  "latest_status": {
+    "downloaded": 7591,
+    "skip_existing_valid": 200
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "checkpoint": {
+    "best_test_accuracy": 0.8934064464357363,
+    "best_train_accuracy": 0.8855537855286325,
+    "epoch": 2,
+    "global_step": 3728,
+    "path": "/transferdiniu2/yuyao/checkpoints/360m_single4_retrain_20260422_185153/s2/ckpt_best_test.pth",
+    "sha256": "ade1f2331757171c00ffc66c0b33aac2b9c11c661dfeb469b81e3c8c76575afe",
+    "training_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/manifest_time_train.csv",
+    "validation_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m/manifest_time_test.csv"
+  },
+  "input_contract": {
+    "audits": [],
+    "concatenated_shape": [
+      36,
+      224,
+      224
+    ],
+    "eval_csv": "/home/yuyao/panopticon/data/controlled_release_test/band_time_probe_legacy360_v1/manifest_all_modes.csv",
+    "eval_csv_sha256": "769b18bc15b08c63b515f32b256126d45de48061ccad39af33f0d6f7c615fc29",
+    "excluded_dataset_suffix": "_518",
+    "normalization": "legacy S2 PRECOMPUTED_STATS on stored DN",
+    "pad_to_multiple": 14,
+    "per_frame_shape": [
+      12,
+      224,
+      224
+    ],
+    "precision": "float32",
+    "scale_to_unit": false,
+    "temporal_order": [
+      "t0",
+      "t-90",
+      "t-360"
+    ],
+    "temporal_path_columns": [
+      "s2_0_path",
+      "s2_90_path",
+      "s2_360_path"
+    ],
+    "validation_mode": "standalone_manifest_structure"
+  },
+  "metrics": {
+    "accuracy": 0.4434782608695652,
+    "auroc": 0.41975308641975306,
+    "average_precision": 0.3326039665340089,
+    "balanced_accuracy": 0.4925925925925926,
+    "f1": 0.5025906735751295,
+    "fn": 38,
+    "fp": 154,
+    "fpr": 0.7333333333333333,
+    "negative_probability_mean": 0.7199830412864685,
+    "negative_probability_median": 0.9350513219833374,
+    "negatives": 210,
+    "positive_probability_mean": 0.6968110203742981,
+    "positive_probability_median": 0.9181532263755798,
+    "positives": 135,
+    "precision": 0.38645418326693226,
+    "recall": 0.7185185185185186,
+    "samples": 345,
+    "specificity": 0.26666666666666666,
+    "threshold": 0.5,
+    "tn": 56,
+    "tp": 97
+  },
+  "model_kind": "local_s2_only_panopticon_vitb14_cls",
+  "predictions_csv": "/home/yuyao/panopticon/results/eval/s2_legacy360_band_time_probe_s2only_latest_predictions.csv",
+  "scale_m": 360
+}

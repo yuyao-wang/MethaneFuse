@@ -1,0 +1,15 @@
+{
+  "rows": 2,
+  "tasks": 12,
+  "groups": 7,
+  "skipped_missing_product": 0,
+  "repaired_tasks": 0,
+  "status_counts": {
+    "stac_exact": 1,
+    "local_exact": 11
+  },
+  "minimum_tile_margin_pixels": 68.0,
+  "maximum_center_offset_pixels": 0.7555956693249755,
+  "elapsed_seconds": 7.2572877407073975,
+  "failures": []
+}

@@ -1,0 +1,144 @@
+{
+  "created_at": "2026-07-24T07:05:09Z",
+  "dropped_event_groups": [
+    "GAO20211021t172155p0000",
+    "GAO20211021t173002p0000",
+    "tan20250810t142021c88s4001",
+    "tan20250913t085045c81s4001",
+    "tan20260308t070515c65s4001"
+  ],
+  "dropped_plume_ids": [
+    "GAO20211021t172155p0000-A",
+    "GAO20211021t173002p0000-A",
+    "GAO20211021t173002p0000-B",
+    "tan20250810t142021c88s4001-A",
+    "tan20250913t085045c81s4001-A",
+    "tan20250913t085045c81s4001-B",
+    "tan20250913t085045c81s4001-C",
+    "tan20260308t070515c65s4001-A",
+    "tan20260308t070515c65s4001-B"
+  ],
+  "failure_count": 17,
+  "failures": [
+    {
+      "error": "ValueError: empty model bands [0, 11]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/GAO20211021t173002p0000-A/s2_prev3.tif",
+      "plume_id": "GAO20211021t173002p0000-A",
+      "row_index": "899",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/GAO20211021t173002p0000-A/s2_prev3.tif",
+      "timepoint": "prev3"
+    },
+    {
+      "error": "ValueError: empty model bands [0, 11]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/GAO20211021t173002p0000-B/s2_prev3.tif",
+      "plume_id": "GAO20211021t173002p0000-B",
+      "row_index": "900",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/GAO20211021t173002p0000-B/s2_prev3.tif",
+      "timepoint": "prev3"
+    },
+    {
+      "error": "ValueError: empty model bands [0, 11]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/GAO20211021t172155p0000-A/s2_prev3.tif",
+      "plume_id": "GAO20211021t172155p0000-A",
+      "row_index": "898",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/GAO20211021t172155p0000-A/s2_prev3.tif",
+      "timepoint": "prev3"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/tan20250810t142021c88s4001-A/s2_prev3.tif",
+      "plume_id": "tan20250810t142021c88s4001-A",
+      "row_index": "4104",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/tan20250810t142021c88s4001-A/s2_prev3.tif",
+      "timepoint": "prev3"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev2/tan20250913t085045c81s4001-C/s2_prev2.tif",
+      "plume_id": "tan20250913t085045c81s4001-C",
+      "row_index": "4249",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev2/tan20250913t085045c81s4001-C/s2_prev2.tif",
+      "timepoint": "prev2"
+    },
+    {
+      "error": "ValueError: empty model bands [0, 11]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/year/tan20260308t070515c65s4001-A/s2_-360.tif",
+      "plume_id": "tan20260308t070515c65s4001-A",
+      "row_index": "4973",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/year/tan20260308t070515c65s4001-A/s2_-360.tif",
+      "timepoint": "year"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/seasonal/tan20260308t070515c65s4001-A/s2_-90.tif",
+      "plume_id": "tan20260308t070515c65s4001-A",
+      "row_index": "4973",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/seasonal/tan20260308t070515c65s4001-A/s2_-90.tif",
+      "timepoint": "seasonal"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/tan20260308t070515c65s4001-A/s2.tif",
+      "plume_id": "tan20260308t070515c65s4001-A",
+      "row_index": "4973",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/tan20260308t070515c65s4001-A/s2.tif",
+      "timepoint": "t0"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/tan20260308t070515c65s4001-B/s2_prev3.tif",
+      "plume_id": "tan20260308t070515c65s4001-B",
+      "row_index": "4974",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/tan20260308t070515c65s4001-B/s2_prev3.tif",
+      "timepoint": "prev3"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev1/tan20260308t070515c65s4001-B/s2_-7.tif",
+      "plume_id": "tan20260308t070515c65s4001-B",
+      "row_index": "4974",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev1/tan20260308t070515c65s4001-B/s2_-7.tif",
+      "timepoint": "prev1"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/tan20260308t070515c65s4001-A/s2_prev3.tif",
+      "plume_id": "tan20260308t070515c65s4001-A",
+      "row_index": "4973",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev3/tan20260308t070515c65s4001-A/s2_prev3.tif",
+      "timepoint": "prev3"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/tan20260308t070515c65s4001-B/s2.tif",
+      "plume_id": "tan20260308t070515c65s4001-B",
+      "row_index": "4974",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/t0/tan20260308t070515c65s4001-B/s2.tif",
+      "timepoint": "t0"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/seasonal/tan20260308t070515c65s4001-B/s2_-90.tif",
+      "plume_id": "tan20260308t070515c65s4001-B",
+      "row_index": "4974",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/seasonal/tan20260308t070515c65s4001-B/s2_-90.tif",
+      "timepoint": "seasonal"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev2/tan20260308t070515c65s4001-A/s2_prev2.tif",
+      "plume_id": "tan20260308t070515c65s4001-A",
+      "row_index": "4973",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev2/tan20260308t070515c65s4001-A/s2_prev2.tif",
+      "timepoint": "prev2"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev2/tan20260308t070515c65s4001-B/s2_prev2.tif",
+      "plume_id": "tan20260308t070515c65s4001-B",
+      "row_index": "4974",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev2/tan20260308t070515c65s4001-B/s2_prev2.tif",
+      "timepoint": "prev2"
+    },
+    {
+      "error": "ValueError: empty model bands [0, 11]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/year/tan20260308t070515c65s4001-B/s2_-360.tif",
+      "plume_id": "tan20260308t070515c65s4001-B",
+      "row_index": "4974",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/year/tan20260308t070515c65s4001-B/s2_-360.tif",
+      "timepoint": "year"
+    },
+    {
+      "error": "ValueError: empty model bands [0]: /mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev1/tan20260308t070515c65s4001-A/s2_-7.tif",
+      "plume_id": "tan20260308t070515c65s4001-A",
+      "row_index": "4973",
+      "source_path": "/mnt/engg-niulab/yuyao/sensors_raw_data/S2_point_center_exact_v3/prev1/tan20260308t070515c65s4001-A/s2_-7.tif",
+      "timepoint": "prev1"
+    }
+  ],
+  "task_count": 8651
+}

@@ -1,0 +1,105 @@
+{
+  "train_events": 876,
+  "test_events": 166,
+  "test_rows": 10998,
+  "train_nn_km": {
+    "median": 3.309900238282406,
+    "p75": 22.554070049654843,
+    "p90": 101.504680926308,
+    "p95": 252.90703948133276,
+    "p99": 786.3170642356209,
+    "max": 2289.4382704920104
+  },
+  "filters": {
+    "p95_train_nn_km": {
+      "threshold_km": 252.90703948133276,
+      "kept_rows": 8922,
+      "removed_rows": 2076,
+      "kept_events": 121,
+      "removed_events": 45,
+      "removed_event_examples": [
+        "tan20250814t081013c92s4001|2025-08-14T08:10:13Z",
+        "tan20250816t175805c89s4001|2025-08-16T17:58:05Z",
+        "tan20250820t152927c17s4001|2025-08-20T15:29:27Z",
+        "tan20250824t171806c83s4001|2025-08-24T17:18:06Z",
+        "tan20250831t172047c70s4001|2025-08-31T17:20:47Z",
+        "tan20250907t185122c25s4001|2025-09-07T18:51:22Z",
+        "tan20250913t085200c02s4001|2025-09-13T08:52:00Z",
+        "tan20250922t180834c89s4001|2025-09-22T18:08:34Z",
+        "tan20251002t113418c72s4001|2025-10-02T11:34:18Z",
+        "tan20251019t185820c43s4001|2025-10-19T18:58:20Z"
+      ],
+      "csv": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_geo_outlier_test_filters/L89_temporal_test_geo_inlier_p95_train_nn_km.csv",
+      "label_counts_kept": {
+        "0": 4858,
+        "1": 4064
+      }
+    },
+    "p99_train_nn_km": {
+      "threshold_km": 786.3170642356209,
+      "kept_rows": 10534,
+      "removed_rows": 464,
+      "kept_events": 155,
+      "removed_events": 11,
+      "removed_event_examples": [
+        "tan20250824t171806c83s4001|2025-08-24T17:18:06Z",
+        "tan20250913t085200c02s4001|2025-09-13T08:52:00Z",
+        "tan20251019t185820c43s4001|2025-10-19T18:58:20Z",
+        "tan20251105t025809c59s4001|2025-11-05T02:58:09Z",
+        "tan20251205t031525c07s4001|2025-12-05T03:15:25Z",
+        "tan20251205t171941c72s4001|2025-12-05T17:19:41Z",
+        "tan20260118t113443c78s4001|2026-01-18T11:34:43Z",
+        "tan20260225t033931c28s4001|2026-02-25T03:39:31Z",
+        "tan20260323t050100c36s4001|2026-03-23T05:01:00Z",
+        "tan20260329t150809c78s4001|2026-03-29T15:08:09Z"
+      ],
+      "csv": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_geo_outlier_test_filters/L89_temporal_test_geo_inlier_p99_train_nn_km.csv",
+      "label_counts_kept": {
+        "0": 5766,
+        "1": 4768
+      }
+    },
+    "fixed_500km": {
+      "threshold_km": 500.0,
+      "kept_rows": 10118,
+      "removed_rows": 880,
+      "kept_events": 145,
+      "removed_events": 21,
+      "removed_event_examples": [
+        "tan20250814t081013c92s4001|2025-08-14T08:10:13Z",
+        "tan20250820t152927c17s4001|2025-08-20T15:29:27Z",
+        "tan20250824t171806c83s4001|2025-08-24T17:18:06Z",
+        "tan20250831t172047c70s4001|2025-08-31T17:20:47Z",
+        "tan20250913t085200c02s4001|2025-09-13T08:52:00Z",
+        "tan20251019t185820c43s4001|2025-10-19T18:58:20Z",
+        "tan20251105t025809c59s4001|2025-11-05T02:58:09Z",
+        "tan20251107t062156c75s4001|2025-11-07T06:21:56Z",
+        "tan20251122t085053c41s4001|2025-11-22T08:50:53Z",
+        "tan20251124t152954c49s4001|2025-11-24T15:29:54Z"
+      ],
+      "csv": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_geo_outlier_test_filters/L89_temporal_test_geo_inlier_fixed_500km.csv",
+      "label_counts_kept": {
+        "0": 5526,
+        "1": 4592
+      }
+    },
+    "fixed_1000km": {
+      "threshold_km": 1000.0,
+      "kept_rows": 10838,
+      "removed_rows": 160,
+      "kept_events": 162,
+      "removed_events": 4,
+      "removed_event_examples": [
+        "tan20251105t025809c59s4001|2025-11-05T02:58:09Z",
+        "tan20260118t113443c78s4001|2026-01-18T11:34:43Z",
+        "tan20260225t033931c28s4001|2026-02-25T03:39:31Z",
+        "tan20260414t025506c42s4001|2026-04-14T02:55:06Z"
+      ],
+      "csv": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_geo_outlier_test_filters/L89_temporal_test_geo_inlier_fixed_1000km.csv",
+      "label_counts_kept": {
+        "0": 5926,
+        "1": 4912
+      }
+    }
+  }
+}

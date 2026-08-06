@@ -1,0 +1,318 @@
+{
+  "finding": {
+    "main": "The current pure-GEE benchmark is the new_all6_gee complement cohort, not the old legacy cohort used by the near-0.90 experiment.",
+    "not_six_time": "Controlled t0-only, legacy-3-time, and 6-time runs on the same new split all peak near 0.81 best-threshold F1.",
+    "not_event_leakage_main_cause": "The old checkpoint remains near 0.90 F1 on test rows whose canonical events never occur in old training.",
+    "secondary_protocol_differences": [
+      "old crop is 360 m (36 native S2 pixels) while current crop is 320 m (32 pixels)",
+      "old and current train/test populations and cutoffs differ",
+      "current concat_channels fusion discards explicit visit identity"
+    ]
+  },
+  "provenance": {
+    "old_crop_launch_evidence": {
+      "git_repo": "/home/yuyao/methane_train",
+      "git_commit": "b955193",
+      "script": "run.sh",
+      "output_root": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_360m",
+      "argument": "--query_size_m 360",
+      "s2_native_pixels": 36,
+      "s2_gsd_m": 10,
+      "target_pixels": 224
+    },
+    "new_crop_config": {
+      "script": "/home/yuyao/panopticon/Upgraded_dataset/s2_gee_legacy_notebook_6time.py",
+      "input_csv": "/home/yuyao/methane_train/Upgrade_data_pipeline/csv/s2_6time_legacy_rebuild/s2_6time_new_all6_gee_export_input.csv",
+      "cohort_counts": {
+        "new_all6_gee": 4450
+      },
+      "s2_native_pixels": 32,
+      "s2_gsd_m": 10,
+      "target_pixels": 224
+    },
+    "gee_export_loop": {
+      "script": "/home/yuyao/methane_train/Upgrade_data_pipeline/code/S2_preprocess/run_s2_new_gee_export_loop.sh",
+      "input_csv": "/home/yuyao/methane_train/Upgrade_data_pipeline/csv/s2_6time_legacy_rebuild/s2_6time_new_all6_gee_export_input.csv",
+      "rows": 4450
+    }
+  },
+  "cohort_comparison": {
+    "old_legacy_source_plumes": 4066,
+    "old_near90_trained_plumes": 2597,
+    "new_gee_source_plumes": 4450,
+    "new_gee_retained_plumes": 4263,
+    "exact_plume_overlap_old_source_vs_new_source": 0,
+    "casefold_plume_overlap_old_source_vs_new_source": 0,
+    "exact_plume_overlap_old_trained_vs_new_retained": 0,
+    "canonical_event_overlap_old_source_vs_new_source": 10,
+    "canonical_event_overlap_examples": [
+      "GAO20200714t172448p0000",
+      "GAO20200724t155931p0000",
+      "GAO20200724t161329p0000",
+      "GAO20200724t165348p0000",
+      "GAO20200807t163414p0000",
+      "GAO20211007t161356p0000",
+      "GAO20240420t182155p0000",
+      "ang20200715t172416",
+      "av320250803t160107",
+      "emi20231010t052236p04020"
+    ],
+    "old_source_date_range": {
+      "min": "2016-09-16T22:15:43+00:00",
+      "max": "2025-10-23T19:21:33+00:00"
+    },
+    "new_source_date_range": {
+      "min": "2016-09-25T20:12:00+00:00",
+      "max": "2026-05-24T08:21:05+00:00"
+    }
+  },
+  "old_near90_benchmark": {
+    "train": {
+      "rows": 59635,
+      "plumes": 2071,
+      "events": 865,
+      "labels": {
+        "0": 29339,
+        "1": 30296
+      },
+      "date_range": {
+        "min": "2016-09-16T22:15:43+00:00",
+        "max": "2025-10-03T18:40:27+00:00"
+      }
+    },
+    "test": {
+      "rows": 14954,
+      "plumes": 526,
+      "events": 361,
+      "labels": {
+        "0": 7397,
+        "1": 7557
+      },
+      "date_range": {
+        "min": "2016-10-06T18:09:17+00:00",
+        "max": "2025-10-02T17:45:22+00:00"
+      }
+    },
+    "train_test_event_overlap": 266,
+    "test_rows_from_overlapping_events": 12319,
+    "test_rows_from_nonoverlapping_events": 2635,
+    "overlap_event_checkpoint_fp32": {
+      "accuracy": 0.8913061125091323,
+      "f1": 0.8942922554669614,
+      "auroc": 0.9561534565545927,
+      "recall": 0.9042145593869731,
+      "fpr": 0.12204789430222956,
+      "tp": 5664,
+      "tn": 5316,
+      "fp": 739,
+      "fn": 600
+    },
+    "nonoverlap_event_checkpoint_fp32": {
+      "accuracy": 0.9032258064516129,
+      "f1": 0.9014302280633939,
+      "auroc": 0.9534344827904158,
+      "recall": 0.9010819165378671,
+      "fpr": 0.0947054436987323,
+      "tp": 1166,
+      "tn": 1214,
+      "fp": 127,
+      "fn": 128
+    },
+    "crop_offset_summary": {
+      "0": {
+        "rows": 36736,
+        "dx_pixels": {
+          "min": -238.0,
+          "p25": -121.0,
+          "median": -1.0,
+          "p75": 118.0,
+          "max": 237.0,
+          "mean": -1.2027983449477353
+        },
+        "dy_pixels": {
+          "min": -238.0,
+          "p25": -114.0,
+          "median": 8.0,
+          "p75": 123.0,
+          "max": 237.0,
+          "mean": 3.817998693379791
+        },
+        "radial_pixels": {
+          "min": 14.035668847618199,
+          "p25": 134.96573615426442,
+          "median": 190.3943276465977,
+          "p75": 232.2154172315008,
+          "max": 334.46225497057213,
+          "mean": 182.59174067640618
+        },
+        "radial_meters": {
+          "min": 140.356688476182,
+          "p25": 1349.6573615426441,
+          "median": 1903.943276465977,
+          "p75": 2322.154172315008,
+          "max": 3344.622549705721,
+          "mean": 1825.9174067640615
+        }
+      },
+      "1": {
+        "rows": 37853,
+        "dx_pixels": {
+          "min": -17.0,
+          "p25": -9.0,
+          "median": 0.0,
+          "p75": 9.0,
+          "max": 17.0,
+          "mean": 0.00726494597521993
+        },
+        "dy_pixels": {
+          "min": -17.0,
+          "p25": -9.0,
+          "median": 0.0,
+          "p75": 9.0,
+          "max": 17.0,
+          "mean": 0.0977465458484136
+        },
+        "radial_pixels": {
+          "min": 0.0,
+          "p25": 9.899494936611665,
+          "median": 14.0,
+          "p75": 17.08800749063506,
+          "max": 24.041630560342615,
+          "mean": 13.360013803403824
+        },
+        "radial_meters": {
+          "min": 0.0,
+          "p25": 98.99494936611666,
+          "median": 140.0,
+          "p75": 170.88007490635061,
+          "max": 240.41630560342614,
+          "mean": 133.60013803403825
+        }
+      }
+    }
+  },
+  "current_pure_gee_benchmark": {
+    "train": {
+      "rows": 103122,
+      "plumes": 3612,
+      "events": 1406,
+      "labels": {
+        "0": 51224,
+        "1": 51898
+      },
+      "date_range": {
+        "min": "2016-09-25T20:12:00+00:00",
+        "max": "2025-12-22T14:00:16+00:00"
+      }
+    },
+    "test": {
+      "rows": 18245,
+      "plumes": 651,
+      "events": 171,
+      "labels": {
+        "0": 9080,
+        "1": 9165
+      },
+      "date_range": {
+        "min": "2025-12-24T04:38:14+00:00",
+        "max": "2026-05-24T08:21:05+00:00"
+      }
+    },
+    "train_test_event_overlap": 0,
+    "crop_offset_summary": {
+      "0": {
+        "rows": 60304,
+        "dx_pixels": {
+          "min": -240.0,
+          "p25": -118.0,
+          "median": 4.0,
+          "p75": 123.0,
+          "max": 240.0,
+          "mean": 2.4308669408331123
+        },
+        "dy_pixels": {
+          "min": -240.0,
+          "p25": -123.0,
+          "median": -3.0,
+          "p75": 118.0,
+          "max": 240.0,
+          "mean": -1.7905445741576014
+        },
+        "radial_pixels": {
+          "min": 12.041594578792296,
+          "p25": 135.50645741070792,
+          "median": 191.75505208468434,
+          "p75": 235.02233929873523,
+          "max": 339.4112549695428,
+          "mean": 184.32044878021117
+        },
+        "radial_meters": {
+          "min": 120.41594578792296,
+          "p25": 1355.0645741070794,
+          "median": 1917.5505208468435,
+          "p75": 2350.2233929873523,
+          "max": 3394.1125496954282,
+          "mean": 1843.2044878021115
+        }
+      },
+      "1": {
+        "rows": 61063,
+        "dx_pixels": {
+          "min": -11.0,
+          "p25": -3.0,
+          "median": 0.0,
+          "p75": 3.0,
+          "max": 11.0,
+          "mean": -0.018046935132568005
+        },
+        "dy_pixels": {
+          "min": -11.0,
+          "p25": -3.0,
+          "median": 0.0,
+          "p75": 3.0,
+          "max": 11.0,
+          "mean": 0.021240358318457987
+        },
+        "radial_pixels": {
+          "min": 0.0,
+          "p25": 3.605551275463989,
+          "median": 5.0990195135927845,
+          "p75": 6.324555320336759,
+          "max": 15.556349186104045,
+          "mean": 4.961806812512982
+        },
+        "radial_meters": {
+          "min": 0.0,
+          "p25": 36.05551275463989,
+          "median": 50.99019513592785,
+          "p75": 63.24555320336759,
+          "max": 155.56349186104046,
+          "mean": 49.618068125129845
+        }
+      }
+    }
+  },
+  "same_split_temporal_ablation": {
+    "t0_only": {
+      "epoch": 2,
+      "train_f1": 0.8839370377394272,
+      "test_fixed_f1": 0.796736913664174,
+      "test_best_f1": 0.8117505367335183,
+      "test_auroc": 0.8800717270981588
+    },
+    "legacy_3time": {
+      "epoch": 3,
+      "train_f1": 0.9357008746190643,
+      "test_fixed_f1": 0.7859265422560323,
+      "test_best_f1": 0.8147115036933726,
+      "test_auroc": 0.8844951585109988
+    },
+    "six_time": {
+      "epoch": 2,
+      "train_f1": 0.8864599894011659,
+      "test_fixed_f1": 0.7904987574409063,
+      "test_best_f1": 0.8123502794783071,
+      "test_auroc": 0.8796720609193662
+    }
+  }
+}

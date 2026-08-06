@@ -1,0 +1,216 @@
+{
+  "created_utc": "2026-07-28T09:38:50.189843+00:00",
+  "protocol": {
+    "candidate_id": "p5_plus_d1_fixed",
+    "components": {
+      "d1": {
+        "adapter": "builtin_l89_d1_v1",
+        "arm": "d1_gated_delta",
+        "checkpoints": [
+          {
+            "bytes": 7757836,
+            "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260727/d1_gated_delta_best_event_ap.pt",
+            "role": "D1 seed 20260727 checkpoint",
+            "sha256": "9da6acb5216139ccc68fe7eac65cd4074d0bb095629e651bb4333f230177c17a"
+          },
+          {
+            "bytes": 7757836,
+            "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260728/d1_gated_delta_best_event_ap.pt",
+            "role": "D1 seed 20260728 checkpoint",
+            "sha256": "d8a0c149ff029797b389d1142161d1ba6bfd38590fae9b2daeb1a2e3f451d288"
+          },
+          {
+            "bytes": 7757836,
+            "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260729/d1_gated_delta_best_event_ap.pt",
+            "role": "D1 seed 20260729 checkpoint",
+            "sha256": "72f82bb16c8495a95c8f6acf7e6c890f30702dfa8539b02732a15af6d1b78255"
+          }
+        ],
+        "d1_config": {
+          "bytes": 2632,
+          "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/run_config.json",
+          "role": "D1 run config",
+          "sha256": "01e33bca153e4296ea930bfa2a4df94edc28e0a750eae6b77814b9a55c52a719"
+        },
+        "p0_checkpoint": {
+          "bytes": 6104923,
+          "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/downstream_event_balanced_seed20260728/p0/checkpoint_best_event_balanced_ap.pt",
+          "role": "frozen P0 checkpoint",
+          "sha256": "e5924ecff3db6ed9fe99105d355e082229b3c8d3a15a15da715e2bf0d2a5fe56"
+        },
+        "seeds": [
+          20260727,
+          20260728,
+          20260729
+        ],
+        "within_family_logit_weights": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ]
+      },
+      "p5": {
+        "adapter": "builtin_event_balanced_p5_v1",
+        "checkpoint": {
+          "bytes": 6104923,
+          "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/downstream_event_balanced_seed20260728/p5/checkpoint_best_event_balanced_ap.pt",
+          "role": "frozen P5 checkpoint",
+          "sha256": "5a10899243183d64eebb939f50b3dc2b6a54364f781c7691efc91e2a5f46d70c"
+        },
+        "head_config": {
+          "bytes": 9952,
+          "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/downstream_event_balanced_seed20260728/run_config.json",
+          "role": "P0/P5 head run config",
+          "sha256": "a88ecec87ffced01794129bbd0ad8f99b5f700c8bc1c657b6a13aabcc32d47aa"
+        }
+      }
+    },
+    "evaluator_script_version": "tempo-l89-outer-locked-evaluator-v1",
+    "expected_development_metrics": {
+      "all_negative_event_any_fp_rate": 0.6666666666666666,
+      "all_negative_event_any_fp_rate_at_0_5": 0.5555555555555556,
+      "all_negative_event_count": 27,
+      "all_negative_events_with_any_fp": 18,
+      "all_negative_events_with_any_fp_at_0_5": 15,
+      "all_negative_fp_mass": 3.931439393939394,
+      "all_negative_fp_mass_at_0_5": 2.42405303030303,
+      "all_negative_fp_rate_mean": 0.14560886644219978,
+      "all_negative_fp_rows": 81,
+      "all_negative_fp_rows_at_0_5": 47,
+      "all_negative_max_probability_mean": 0.4770379674635657,
+      "all_negative_mean_probability": 0.11705449001550809,
+      "event_balanced_ap": 0.772943159839295,
+      "event_balanced_auc": 0.853505128777481,
+      "event_balanced_macro_f1_at_0_5": 0.7603627120358387,
+      "event_balanced_macro_f1_selected": 0.7772194825407766,
+      "event_balanced_positive_f1_at_0_5": 0.6797400220315531,
+      "event_balanced_positive_f1_selected": 0.7244568152395225,
+      "events": 124,
+      "positive_event_any_detection_recall": 0.9587628865979382,
+      "positive_event_any_detection_recall_at_0_5": 0.9072164948453608,
+      "positive_event_count": 97,
+      "probability_mean": 0.3389665521842472,
+      "probability_std": 0.3624330299052707,
+      "row_ap": 0.7614378967296922,
+      "row_auc": 0.8036128873303998,
+      "row_macro_f1_selected": 0.7397625507053136,
+      "row_positive_f1_selected": 0.7085795320255259,
+      "rows": 9614,
+      "selected_threshold": 0.2426486375036714
+    },
+    "fusion": {
+      "operator": "fixed_weight_logit_sum",
+      "selected_threshold": 0.2426486375036714,
+      "threshold_comparator": ">=",
+      "threshold_search_on_outer": false,
+      "weight_search_on_outer": false,
+      "weights": {
+        "d1": 0.5,
+        "p5": 0.5
+      }
+    },
+    "locked_artifacts": [
+      {
+        "bytes": 25222,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260728/tempo_l89_patch_p0_dim128_v1/audits/scalar_multiseed_fixed_v1/fixed_multiseed_audit.json",
+        "role": "development decision audit",
+        "sha256": "15929cd2ce313213971498279a660da099c46ed41c99e38096253b7287915394"
+      },
+      {
+        "bytes": 9952,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/downstream_event_balanced_seed20260728/run_config.json",
+        "role": "P0/P5 head run config",
+        "sha256": "a88ecec87ffced01794129bbd0ad8f99b5f700c8bc1c657b6a13aabcc32d47aa"
+      },
+      {
+        "bytes": 6104923,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/downstream_event_balanced_seed20260728/p0/checkpoint_best_event_balanced_ap.pt",
+        "role": "frozen P0 checkpoint",
+        "sha256": "e5924ecff3db6ed9fe99105d355e082229b3c8d3a15a15da715e2bf0d2a5fe56"
+      },
+      {
+        "bytes": 6104923,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/downstream_event_balanced_seed20260728/p5/checkpoint_best_event_balanced_ap.pt",
+        "role": "frozen P5 checkpoint",
+        "sha256": "5a10899243183d64eebb939f50b3dc2b6a54364f781c7691efc91e2a5f46d70c"
+      },
+      {
+        "bytes": 2632,
+        "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/run_config.json",
+        "role": "D1 run config",
+        "sha256": "01e33bca153e4296ea930bfa2a4df94edc28e0a750eae6b77814b9a55c52a719"
+      },
+      {
+        "bytes": 7757836,
+        "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260727/d1_gated_delta_best_event_ap.pt",
+        "role": "D1 seed 20260727 checkpoint",
+        "sha256": "9da6acb5216139ccc68fe7eac65cd4074d0bb095629e651bb4333f230177c17a"
+      },
+      {
+        "bytes": 7757836,
+        "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260728/d1_gated_delta_best_event_ap.pt",
+        "role": "D1 seed 20260728 checkpoint",
+        "sha256": "d8a0c149ff029797b389d1142161d1ba6bfd38590fae9b2daeb1a2e3f451d288"
+      },
+      {
+        "bytes": 7757836,
+        "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260729/d1_gated_delta_best_event_ap.pt",
+        "role": "D1 seed 20260729 checkpoint",
+        "sha256": "72f82bb16c8495a95c8f6acf7e6c890f30702dfa8539b02732a15af6d1b78255"
+      },
+      {
+        "bytes": 92365189,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/cache/l89_ragged_cls_v1/val.pt",
+        "role": "base development cache",
+        "sha256": "a47611f25e3670af31199b9b99a07e5ca1e0b9ba67b98133411018769d8993ca"
+      },
+      {
+        "bytes": 180968965,
+        "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/cache/p5/val.pt",
+        "role": "P5 development cache",
+        "sha256": "105cb3c3ca3da97d743f87df1ad38070f683eaa2d47ee9919e40d9e55fb2231a"
+      },
+      {
+        "bytes": 45702,
+        "path": "/home/yuyao/panopticon/research/tempo_20260728/tempo_l89_outer_locked_evaluator.py",
+        "role": "locked evaluator source",
+        "sha256": "458f6c5bb2bcbdc89cd8796a7b0bf1a0f66869705f55376b694fb390ac9419ae"
+      }
+    ],
+    "metric_policy": {
+      "canonical_event_equal_total_weight": true,
+      "primary": [
+        "event_balanced_positive_f1_selected",
+        "event_balanced_macro_f1_selected"
+      ],
+      "ranking": [
+        "event_balanced_ap",
+        "event_balanced_auc"
+      ],
+      "selection_performed_on_outer": false
+    },
+    "optional_component": null,
+    "outer_input": {
+      "base_cache_shape": "[N,6,768]",
+      "implemented_mode": "precomputed_aligned_cache_pair",
+      "p5_cache_shape": "[N,6,1536]",
+      "p5_first_768_must_equal_base": true,
+      "raw_csv_extraction": "disabled until an exact extractor implementation and command are added to a new final lock",
+      "source_passes_per_cache": 1
+    },
+    "prohibitions": [
+      "no outer threshold fitting",
+      "no outer checkpoint or epoch selection",
+      "no outer ensemble-weight fitting",
+      "no outer calibration",
+      "no subgroup selection",
+      "no repeat under the same output intent",
+      "no raw CSV input in evaluator v1"
+    ],
+    "schema_version": "tempo-l89-outer-protocol-v1"
+  },
+  "protocol_sha256": "78d688f0223f0bb1e0c9e1b9ec5e2114e7d9f21fc5312e1d895646c7c8fb3bf8",
+  "schema_version": "tempo-l89-outer-lock-manifest-v1",
+  "status": "development_template_not_authorizable",
+  "test_or_sealed_or_holdout_read": false
+}

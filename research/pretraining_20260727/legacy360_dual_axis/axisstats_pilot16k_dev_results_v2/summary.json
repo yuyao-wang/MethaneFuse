@@ -1,0 +1,138 @@
+{
+  "candidate_count": 15,
+  "comparison_to_reference": {
+    "ap_delta": 1.2626900636192318e-09,
+    "auc_delta": 1.1102230246251565e-16,
+    "axisstats_improves_reference": false,
+    "best_binary_f1_delta": 0.0,
+    "reference": "reference_universal_base"
+  },
+  "created_utc": "2026-07-28T01:21:15.039953+00:00",
+  "features": {
+    "base": 62,
+    "full": 130
+  },
+  "fitted_candidate_count": 13,
+  "grid": "small",
+  "max_iter": 100,
+  "reference_metrics": {
+    "reference_hybrid_base": {
+      "ap": 0.9497494480878447,
+      "auc": 0.9498896951374489,
+      "best_binary_f1": 0.8903122497998399,
+      "best_macro_f1": 0.879651473939301,
+      "best_predicted_positive_rate": 0.5590682196339434,
+      "best_threshold": 0.36922060945930485,
+      "eligible_for_model_lock": false,
+      "family": "reference",
+      "feature_set": "fused_logit",
+      "fixed_balanced_accuracy": 0.8790003309675061,
+      "fixed_binary_f1": 0.8818342151675485,
+      "fixed_macro_f1": 0.8777665461543832,
+      "fixed_predicted_positive_rate": 0.5037635686554156,
+      "n_iter": 0,
+      "name": "reference_hybrid_base",
+      "parameters": {},
+      "positives": 6683,
+      "rows": 12621
+    },
+    "reference_universal_base": {
+      "ap": 0.9548278151093701,
+      "auc": 0.954632000369724,
+      "best_binary_f1": 0.8979264018691588,
+      "best_macro_f1": 0.8884227540265593,
+      "best_predicted_positive_rate": 0.5556611995879883,
+      "best_threshold": 0.3622090063440342,
+      "eligible_for_model_lock": false,
+      "family": "reference",
+      "feature_set": "fused_logit",
+      "fixed_balanced_accuracy": 0.8838358105833701,
+      "fixed_binary_f1": 0.8869857776418413,
+      "fixed_macro_f1": 0.8827398470583425,
+      "fixed_predicted_positive_rate": 0.5066951905554234,
+      "n_iter": 0,
+      "name": "reference_universal_base",
+      "parameters": {},
+      "positives": 6683,
+      "rows": 12621
+    }
+  },
+  "rows": {
+    "dev": 12621,
+    "train": 15973
+  },
+  "schema_version": "legacy360-axisstats-control-v1",
+  "sealed_test_read": false,
+  "seed": 42,
+  "selection_lock": "/home/yuyao/panopticon/research/pretraining_20260727/legacy360_dual_axis/axisstats_pilot16k_dev_results_v2/selection_lock.json",
+  "threads": 8,
+  "winner": {
+    "ap": 0.9548278163720602,
+    "auc": 0.9546320003697241,
+    "best_binary_f1": 0.8979264018691588,
+    "best_macro_f1": 0.8884227540265593,
+    "best_predicted_positive_rate": 0.5556611995879883,
+    "best_threshold": 0.48300340381507895,
+    "eligible_for_model_lock": true,
+    "family": "logistic_regression",
+    "feature_set": "universal_fused",
+    "fixed_balanced_accuracy": 0.887119429576722,
+    "fixed_binary_f1": 0.8970070422535211,
+    "fixed_macro_f1": 0.8880384048476908,
+    "fixed_predicted_positive_rate": 0.5505902860312178,
+    "n_iter": 7,
+    "name": "logreg_universal_fused_c0p03",
+    "parameters": {
+      "C": 0.03
+    },
+    "positives": 6683,
+    "rows": 12621,
+    "selected_feature_count": 1
+  },
+  "winner_by_sensor": {
+    "emit": {
+      "ap": 0.9484998566980847,
+      "auc": 0.9325496706806595,
+      "balanced_accuracy": 0.838792231237725,
+      "binary_f1": 0.8768115942028986,
+      "macro_f1": 0.8436982762100844,
+      "positives": 2128,
+      "predicted_positive_rate": 0.6278814489571899,
+      "rows": 3644,
+      "threshold": 0.48300340381507895
+    },
+    "l89": {
+      "ap": 0.9513701729117093,
+      "auc": 0.9535342880679144,
+      "balanced_accuracy": 0.89708305561839,
+      "binary_f1": 0.9014883061658399,
+      "macro_f1": 0.8973237072720053,
+      "positives": 2095,
+      "predicted_positive_rate": 0.5255653883972468,
+      "rows": 4068,
+      "threshold": 0.48300340381507895
+    },
+    "s2": {
+      "ap": 0.9694461183861237,
+      "auc": 0.9752859158161239,
+      "balanced_accuracy": 0.9279899021050768,
+      "binary_f1": 0.9318646734854446,
+      "macro_f1": 0.9283390045669973,
+      "positives": 3073,
+      "predicted_positive_rate": 0.5418524021792966,
+      "rows": 6057,
+      "threshold": 0.48300340381507895
+    },
+    "s5p": {
+      "ap": 0.9463951190838623,
+      "auc": 0.9365517056972443,
+      "balanced_accuracy": 0.853300678334896,
+      "binary_f1": 0.8757729061270376,
+      "macro_f1": 0.8552387342901455,
+      "positives": 871,
+      "predicted_positive_rate": 0.582798459563543,
+      "rows": 1558,
+      "threshold": 0.48300340381507895
+    }
+  }
+}

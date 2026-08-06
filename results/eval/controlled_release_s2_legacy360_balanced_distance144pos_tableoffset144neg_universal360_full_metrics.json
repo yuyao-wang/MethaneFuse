@@ -1,0 +1,46 @@
+{
+  "accuracy": 0.5347222222222222,
+  "auroc": 0.6046971450617284,
+  "average_precision": 0.5890670802875242,
+  "balanced_accuracy": 0.5347222222222222,
+  "confusion_matrix": {
+    "fn": 7,
+    "fp": 127,
+    "tn": 17,
+    "tp": 137
+  },
+  "count": 288,
+  "decision_rule": "original two-class logit argmax",
+  "f1": 0.6715686274509803,
+  "fpr": 0.8819444444444444,
+  "manifest": "/home/yuyao/panopticon/data/controlled_release_test/legacy360_shared_materializer_v1/balanced_distance144pos_tableoffset144neg/manifest.csv",
+  "negative_count": 144,
+  "positive_count": 144,
+  "posthoc_best_youden": {
+    "balanced_accuracy": 0.611111111111111,
+    "fpr": 0.4791666666666667,
+    "threshold": 0.88671875,
+    "tpr": 0.7013888888888888
+  },
+  "precision": 0.5189393939393939,
+  "predictions": "/home/yuyao/panopticon/results/eval/controlled_release_s2_legacy360_balanced_distance144pos_tableoffset144neg_universal360_predictions.csv",
+  "recall": 0.9513888888888888,
+  "score_summary": {
+    "negative": {
+      "max": 0.96923828125,
+      "mean": 0.7983791563245985,
+      "median": 0.88330078125,
+      "min": 0.01861572265625,
+      "q25": 0.8135986328125,
+      "q75": 0.9342041015625
+    },
+    "positive": {
+      "max": 0.97216796875,
+      "mean": 0.862913555569119,
+      "median": 0.9091796875,
+      "min": 0.033966064453125,
+      "q25": 0.8682861328125,
+      "q75": 0.9361572265625
+    }
+  }
+}

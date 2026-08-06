@@ -1,0 +1,22 @@
+{
+  "rows": 4450,
+  "tasks": 26614,
+  "groups": 7809,
+  "skipped_missing_product": 86,
+  "repaired_tasks": 3696,
+  "status_counts": {
+    "stac_exact": 6231,
+    "local_exact": 15739,
+    "local_point_repaired": 1892,
+    "local_mosaic_repaired": 405,
+    "stac_point_repaired": 1474,
+    "stac_mosaic_repaired": 178,
+    "stac_grid_only": 322,
+    "cdse_point_repaired": 370,
+    "remote_original_strict_pending": 3
+  },
+  "minimum_tile_margin_pixels": -1000000.0,
+  "maximum_center_offset_pixels": 1000000.0,
+  "elapsed_seconds": 2706.990203857422,
+  "failures": []
+}

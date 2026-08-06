@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/home/yuyao/panopticon/checkpoints/stage2_classification_120m.pt",
+  "count": 12,
+  "eval_csv": "/home/yuyao/panopticon/data/controlled_release_test/model_ready_120m/s2_catalog/s2_model_manifest.csv",
+  "loss": 0.1766278569897016,
+  "overall": {
+    "acc": 1.0,
+    "auroc": null,
+    "count": 12.0,
+    "fpr": null,
+    "recall": 1.0
+  }
+}

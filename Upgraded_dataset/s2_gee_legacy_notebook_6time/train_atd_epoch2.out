@@ -1,0 +1,20 @@
+/home/yuyao/panopticon/thirdparty/dinov2/layers/swiglu_ffn.py:45: UserWarning: xFormers is disabled (SwiGLU)
+  warnings.warn("xFormers is disabled (SwiGLU)")
+/home/yuyao/panopticon/thirdparty/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/home/yuyao/panopticon/thirdparty/dinov2/layers/attention.py:30: UserWarning: xFormers is disabled (Attention)
+  warnings.warn("xFormers is disabled (Attention)")
+/home/yuyao/panopticon/thirdparty/dinov2/layers/attention.py:34: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/home/yuyao/panopticon/thirdparty/dinov2/layers/block.py:35: UserWarning: xFormers is disabled (Block)
+  warnings.warn("xFormers is disabled (Block)")
+/home/yuyao/panopticon/thirdparty/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+[Stats] Resuming with saved train-only stats from /diniuvol/yuyao/checkpoints/s2_gee_legacy_notebook_6time/s2_gee_legacy_notebook_6time_all12_concat_gate3/normalization_stats.json: mean=[1032.3529052734375, 1246.631103515625, 1651.086181640625, 2083.74169921875, 2424.177001953125, 2778.046142578125, 2974.722412109375, 3052.40380859375, 3142.613037109375, 3210.62939453125, 3564.61181640625, 3009.24560546875] std=[885.4021606445312, 934.8335571289062, 1008.2750244140625, 1244.357421875, 1256.1602783203125, 1119.9061279296875, 1130.4498291015625, 1132.1502685546875, 1117.602783203125, 1284.83349609375, 1435.4813232421875, 1439.2462158203125]
+Using device=cuda:0, train_samples=103122, test_samples=18245, source_timepoints=6, model_timepoints=6, input_mode=raw, residual_slots=('path_prev1', 'path_year'), channels=12, temporal_fusion=concat_channels, train_backbone=True, cache=off
+Loading checkpoint from /home/yuyao/panopticon/weights/panopticon_vitb14_teacher.pth
+Resumed from /diniuvol/yuyao/checkpoints/s2_gee_legacy_notebook_6time/s2_gee_legacy_notebook_6time_all12_concat_gate3/ckpt_latest.pth at epoch 1
+Epoch 2 step 100/3223 train_loss=0.3938 train_acc=0.8481 train_f1=0.8510
+Epoch 2 step 200/3223 train_loss=0.4002 train_acc=0.8473 train_f1=0.8505
+Epoch 2 step 300/3223 train_loss=0.3990 train_acc=0.8475 train_f1=0.8509
+Epoch 2 step 400/3223 train_loss=0.3975 train_acc=0.8484 train_f1=0.8517

@@ -1,0 +1,98 @@
+{
+  "args": {
+    "train_csv": "Upgraded_dataset/s2_historical_point_center_v11/pre_harmonize_local_split/train.csv",
+    "test_csv": "Upgraded_dataset/s2_historical_point_center_v11/pre_harmonize_local_split/test.csv",
+    "mode": "current",
+    "timepoints": "t0",
+    "band_indices": "0,1,2,3,4,5,6,7,10,11",
+    "center_box": 0,
+    "max_train_samples": 12000,
+    "max_test_samples": 5000,
+    "batch_size": 512,
+    "epochs": 3,
+    "num_workers": 16,
+    "local_cache_dir": "",
+    "cache_workers": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "seed": 20260723,
+    "device": "cuda:0",
+    "output": "Upgraded_dataset/diagnostics/s2_preharmonize_v11split_t0_resnet18_3epoch.json"
+  },
+  "train_rows": 12000,
+  "test_rows": 5000,
+  "history": [
+    {
+      "epoch": 1,
+      "seconds": 42.97,
+      "train": {
+        "accuracy": 0.6145,
+        "f1": 0.6078331637843337,
+        "auroc": 0.6382149444444444,
+        "tp": 3585,
+        "tn": 3789,
+        "fp": 2211,
+        "fn": 2415,
+        "loss": 0.7461881566047669
+      },
+      "test": {
+        "accuracy": 0.4958,
+        "f1": 0.0721383879278616,
+        "auroc": 0.5224618400000001,
+        "tp": 98,
+        "tn": 2381,
+        "fp": 119,
+        "fn": 2402,
+        "loss": 1.0751678911209106
+      }
+    },
+    {
+      "epoch": 2,
+      "seconds": 1.94,
+      "train": {
+        "accuracy": 0.6721666666666667,
+        "f1": 0.6621435932669186,
+        "auroc": 0.7221793888888889,
+        "tp": 3855,
+        "tn": 4211,
+        "fp": 1789,
+        "fn": 2145,
+        "loss": 0.6184843673706054
+      },
+      "test": {
+        "accuracy": 0.6064,
+        "f1": 0.5736568457538995,
+        "auroc": 0.65357832,
+        "tp": 1324,
+        "tn": 1708,
+        "fp": 792,
+        "fn": 1176,
+        "loss": 0.6774528195381164
+      }
+    },
+    {
+      "epoch": 3,
+      "seconds": 2.06,
+      "train": {
+        "accuracy": 0.6914166666666667,
+        "f1": 0.6863193562049978,
+        "auroc": 0.7490709166666666,
+        "tp": 4051,
+        "tn": 4246,
+        "fp": 1754,
+        "fn": 1949,
+        "loss": 0.5959129230181376
+      },
+      "test": {
+        "accuracy": 0.589,
+        "f1": 0.5343303874915024,
+        "auroc": 0.63733176,
+        "tp": 1179,
+        "tn": 1766,
+        "fp": 734,
+        "fn": 1321,
+        "loss": 0.698729487323761
+      }
+    }
+  ]
+}

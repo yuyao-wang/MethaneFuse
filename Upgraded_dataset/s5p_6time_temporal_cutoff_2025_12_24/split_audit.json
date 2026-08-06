@@ -1,0 +1,30 @@
+{
+  "input_csv": "/home/yuyao/methane_train/Upgrade_data_pipeline/csv/s5p_6time_samples.csv",
+  "cutoff_inclusive_utc_date": "2025-12-24",
+  "split_rule": "train UTC plume_time date <= cutoff_date; test UTC plume_time date > cutoff_date; split grouped by plume_id",
+  "source_rows": 28558,
+  "source_plume_ids": 14757,
+  "source_label_counts": {
+    "0": 13801,
+    "1": 14757
+  },
+  "train_csv": "/home/yuyao/panopticon/Upgraded_dataset/s5p_6time_temporal_cutoff_2025_12_24/s5p_6time_train.csv",
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/s5p_6time_temporal_cutoff_2025_12_24/s5p_6time_test.csv",
+  "train_rows": 25345,
+  "test_rows": 3213,
+  "train_plume_ids": 13077,
+  "test_plume_ids": 1680,
+  "train_label_counts": {
+    "0": 12268,
+    "1": 13077
+  },
+  "test_label_counts": {
+    "0": 1533,
+    "1": 1680
+  },
+  "event_leakage_count": 0,
+  "train_plume_time_min": "2019-10-10 14:58:54+00:00",
+  "train_plume_time_max": "2025-12-24 18:41:35+00:00",
+  "test_plume_time_min": "2025-12-25 08:39:20+00:00",
+  "test_plume_time_max": "2026-05-24 17:45:24+00:00"
+}

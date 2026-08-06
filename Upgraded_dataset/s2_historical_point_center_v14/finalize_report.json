@@ -1,0 +1,23 @@
+{
+  "mode": "finalize",
+  "rows": {
+    "all": 5087,
+    "train": 4346,
+    "test": 741,
+    "recropped": 4097,
+    "trusted_legacy": 990
+  },
+  "events": {
+    "train": 1693,
+    "test": 213,
+    "overlap": 0
+  },
+  "checked_files": 30522,
+  "missing_files": 0,
+  "outputs": {
+    "all": "Upgraded_dataset/s2_historical_point_center_v14/s2_v14_all_512.csv",
+    "train": "Upgraded_dataset/s2_historical_point_center_v14/s2_v14_train_512.csv",
+    "test": "Upgraded_dataset/s2_historical_point_center_v14/s2_v14_test_512.csv",
+    "point_rows_reconciled": "Upgraded_dataset/s2_historical_point_center_v14/point_rows_reconciled.csv"
+  }
+}

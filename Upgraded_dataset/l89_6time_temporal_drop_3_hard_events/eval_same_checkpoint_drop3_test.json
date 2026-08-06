@@ -1,0 +1,15 @@
+{
+  "count": 8950,
+  "acc": 0.7642458100558659,
+  "f1": 0.7080796900940786,
+  "recall": 0.6372011952191236,
+  "fpr": 0.1323469801378192,
+  "auroc": 0.8435463153466394,
+  "tp": 2559,
+  "fp": 653,
+  "fn": 1457,
+  "tn": 4281,
+  "loss": 0.5174267822404147,
+  "checkpoint": "/home/yuyao/panopticon/checkpoints/l89_ablation_20260722/l89_drop3_full_bands/ckpt_best_test.pth",
+  "test_csv": "/home/yuyao/panopticon/Upgraded_dataset/l89_6time_temporal_drop_3_hard_events/L89_temporal_test_drop_3_hard_events.csv"
+}

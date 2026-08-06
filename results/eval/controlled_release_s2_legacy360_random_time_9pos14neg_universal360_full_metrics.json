@@ -1,0 +1,71 @@
+{
+  "dataset": {
+    "manifest": "/home/yuyao/panopticon/data/controlled_release_test/temporal_random_negatives/legacy360_torch_exact/combined_9pos_14neg_manifest.csv",
+    "negative_semantics": "outside published controlled-release campaign; no known controlled release; not a metered-zero guarantee",
+    "positives": 9,
+    "negatives": 14,
+    "negative_sites": {
+      "Casa Grande, Arizona": 7,
+      "Ehrenberg, Arizona": 7
+    },
+    "selection_seed": 20260731
+  },
+  "decision_rule": {
+    "kind": "original two-class logit argmax",
+    "fitted_threshold_present": false,
+    "probability_equivalent_threshold": 0.5,
+    "test_set_threshold_tuning": false
+  },
+  "overall": {
+    "samples": 23,
+    "tp": 9,
+    "fn": 0,
+    "tn": 0,
+    "fp": 14,
+    "accuracy": 0.391304347826087,
+    "balanced_accuracy": 0.5,
+    "precision": 0.391304347826087,
+    "recall": 1.0,
+    "fpr": 1.0,
+    "f1": 0.5625,
+    "auroc": 0.75,
+    "average_precision": 0.6631172839506174,
+    "positive_probability_mean": 0.9196506076388888,
+    "positive_probability_median": 0.92822265625,
+    "negative_probability_mean": 0.8885323660714286,
+    "negative_probability_median": 0.8837890625,
+    "negative_probability_min": 0.8349609375,
+    "negative_probability_max": 0.9453125
+  },
+  "site_paired": {
+    "Ehrenberg, Arizona": {
+      "positives": 2,
+      "negatives": 7,
+      "positive_probability_mean": 0.88623046875,
+      "negative_probability_mean": 0.8491908482142857,
+      "positive_probability_range": [0.8720703125, 0.900390625],
+      "negative_probability_range": [0.8349609375, 0.857421875],
+      "auroc": 1.0,
+      "fpr_at_original_rule": 1.0
+    },
+    "Casa Grande, Arizona": {
+      "positives": 4,
+      "negatives": 7,
+      "positive_probability_mean": 0.9234619140625,
+      "negative_probability_mean": 0.9278738839285714,
+      "positive_probability_range": [0.86328125, 0.9453125],
+      "negative_probability_range": [0.91015625, 0.9453125],
+      "auroc": 0.6607142857142858,
+      "fpr_at_original_rule": 1.0
+    }
+  },
+  "posthoc_diagnostic_only": {
+    "youden_threshold": 0.86328125,
+    "tpr": 1.0,
+    "fpr": 0.5,
+    "balanced_accuracy": 0.75,
+    "warning": "Selected on the test set; not a valid deployment threshold."
+  },
+  "input_contract_audit": "/home/yuyao/panopticon/data/controlled_release_test/temporal_random_negatives/legacy360_torch_exact/channel_contract_audit.json",
+  "prediction_file": "/home/yuyao/panopticon/results/eval/controlled_release_s2_legacy360_random_time_9pos14neg_universal360_predictions.csv"
+}

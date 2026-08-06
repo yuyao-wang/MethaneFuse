@@ -1,0 +1,31 @@
+{
+  "canonical_rows": 5409,
+  "created_at": "2026-07-24T05:16:50Z",
+  "drop_reasons": {
+    "historical_cdse0_t0_missing": 49
+  },
+  "dropped_rows": 49,
+  "dropped_table": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/s2_v8_dropped_wrong_t0.csv",
+  "policy_counts": {
+    "prev1:recrop_or_restore": 5360,
+    "prev2:recrop_or_restore": 5360,
+    "prev3:recrop_or_restore": 5360,
+    "seasonal:historical_gee_direct": 1037,
+    "seasonal:recrop_or_restore": 4323,
+    "t0:historical_cdse0_t0": 999,
+    "t0:recrop_or_restore": 4361,
+    "year:historical_gee_direct": 1037,
+    "year:recrop_or_restore": 4323
+  },
+  "prepared_rows": 5360,
+  "prepared_table": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_exact_v8/s2_v8_recrop_sources.csv",
+  "product_counts": {
+    "prev1:has_product": 5360,
+    "prev2:has_product": 5360,
+    "prev3:has_product": 5360,
+    "seasonal:has_product": 4323,
+    "t0:has_product": 4361,
+    "year:has_product": 4323
+  },
+  "target_root": "/mnt/engg-niulab/yuyao/preprocessed_512/S2_6time_historical_exact_v8"
+}

@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "artifact_type": "validation_only_temporal_coherence_research_summary",
+  "created_utc": "2026-07-27",
+  "sealed_test_read_by_latest_temporal_experiments": false,
+  "headline_claim_status": "provisional_validation_result_not_sota",
+  "provisional_method_name": "TransientQuery",
+  "method_description": "Current acquisition remains the sole decision query; unique role-tagged historical acquisitions enter only as masked cross-attention context.",
+  "three_seed_results": {
+    "l89": {
+      "t0_masked": {
+        "ap_mean": 0.724270841,
+        "ap_sample_sd": 0.011171151,
+        "auc_mean": 0.767008857,
+        "auc_sample_sd": 0.010414774,
+        "macro_f1_at_0_5_mean": 0.702226033,
+        "macro_f1_at_0_5_sample_sd": 0.011012717
+      },
+      "role_only": {
+        "ap_mean": 0.765151010,
+        "ap_sample_sd": 0.009934940,
+        "auc_mean": 0.803679529,
+        "auc_sample_sd": 0.009245803,
+        "macro_f1_at_0_5_mean": 0.732275000,
+        "macro_f1_at_0_5_sample_sd": 0.010522791
+      },
+      "delta_time": {
+        "ap_mean": 0.761870047,
+        "ap_sample_sd": 0.011754504,
+        "auc_mean": 0.797899110,
+        "auc_sample_sd": 0.012406820,
+        "macro_f1_at_0_5_mean": 0.722151523,
+        "macro_f1_at_0_5_sample_sd": 0.016422549
+      },
+      "history_shuffle_train": {
+        "ap_mean": 0.718204938,
+        "ap_sample_sd": 0.004580068,
+        "auc_mean": 0.766091790,
+        "auc_sample_sd": 0.010021352,
+        "macro_f1_at_0_5_mean": 0.699775517,
+        "macro_f1_at_0_5_sample_sd": 0.005892462
+      },
+      "role_only_minus_t0_masked": {
+        "ap": 0.040880169,
+        "auc": 0.036670672,
+        "macro_f1_at_0_5": 0.030048967
+      },
+      "role_only_minus_history_shuffle_train": {
+        "ap": 0.046946072
+      },
+      "event_cluster_bootstrap_ap_role_minus_t0": [
+        {
+          "seed": 20260727,
+          "delta": 0.042770,
+          "ci_95": [0.027069, 0.061524]
+        },
+        {
+          "seed": 20260728,
+          "delta": 0.041047,
+          "ci_95": [0.025509, 0.058830]
+        },
+        {
+          "seed": 20260729,
+          "delta": 0.038824,
+          "ci_95": [0.021039, 0.058500]
+        }
+      ],
+      "decision": "promote_role_only_as_temporal_head_candidate_but_not_as_pretraining"
+    },
+    "emit": {
+      "t0_masked": {
+        "ap_mean": 0.762661144,
+        "ap_sample_sd": 0.005438099,
+        "auc_mean": 0.814410209,
+        "auc_sample_sd": 0.004070680,
+        "macro_f1_at_0_5_mean": 0.736839340,
+        "macro_f1_at_0_5_sample_sd": 0.009048092
+      },
+      "role_only": {
+        "ap_mean": 0.785823667,
+        "ap_sample_sd": 0.003988519,
+        "auc_mean": 0.828723050,
+        "auc_sample_sd": 0.003964955,
+        "macro_f1_at_0_5_mean": 0.747473145,
+        "macro_f1_at_0_5_sample_sd": 0.001780694
+      },
+      "delta_time": {
+        "ap_mean": 0.780331175,
+        "ap_sample_sd": 0.001626413,
+        "auc_mean": 0.824683577,
+        "auc_sample_sd": 0.001736826,
+        "macro_f1_at_0_5_mean": 0.740731937,
+        "macro_f1_at_0_5_sample_sd": 0.011278834
+      },
+      "history_shuffle_train": {
+        "ap_mean": 0.758382040,
+        "ap_sample_sd": 0.001258042,
+        "auc_mean": 0.812943310,
+        "auc_sample_sd": 0.005197800,
+        "macro_f1_at_0_5_mean": 0.719202747,
+        "macro_f1_at_0_5_sample_sd": 0.023637371
+      },
+      "role_only_minus_t0_masked": {
+        "ap": 0.023162523,
+        "auc": 0.014312841,
+        "macro_f1_at_0_5": 0.010633805
+      },
+      "role_only_minus_history_shuffle_train": {
+        "ap": 0.027441627
+      },
+      "event_cluster_bootstrap_ap_role_minus_t0": [
+        {
+          "seed": 20260727,
+          "delta": 0.019499891,
+          "ci_95": [-0.001959779, 0.042179892]
+        },
+        {
+          "seed": 20260728,
+          "delta": 0.017985896,
+          "ci_95": [-0.003238850, 0.039360655]
+        },
+        {
+          "seed": 20260729,
+          "delta": 0.032001784,
+          "ci_95": [0.010602613, 0.052371574]
+        }
+      ],
+      "decision": "cross_sensor_directional_replication_with_mixed_single_seed_cluster_ci"
+    },
+    "s5p_approximate_native_grid": {
+      "t0_masked_ap_mean": 0.565490945,
+      "role_only_ap_mean": 0.577494051,
+      "delta_time_ap_mean": 0.576504254,
+      "history_shuffle_train_ap_mean": 0.560186435,
+      "role_only_minus_t0_masked_ap": 0.012003106,
+      "decision": "directional_only_do_not_use_as_headline"
+    }
+  },
+  "macro_over_l89_emit_s5p": {
+    "t0_masked_ap": 0.684141,
+    "role_only_ap": 0.709490,
+    "role_only_minus_t0_masked_ap": 0.025349,
+    "role_only_minus_history_shuffle_train_ap": 0.030565,
+    "role_only_minus_t0_masked_auc": 0.020438,
+    "role_only_minus_t0_masked_macro_f1": 0.016239
+  },
+  "negative_pretraining_and_readout_results": {
+    "shared_unmasked_mae_macro_ap_delta": -0.008082,
+    "shared_validity_masked_mae_macro_ap_delta": -0.009804,
+    "l89_cross_fitted_predictor_validation_cosine_dim256": 0.849615,
+    "l89_innovation_only_ap_delta_vs_t0_two_seed_mean": -0.053410,
+    "l89_t0_plus_innovation_ap_delta_vs_t0_two_seed_mean": -0.015181,
+    "l89_correspondence_pretext_final_accuracy": 0.965364,
+    "l89_correspondence_ap_delta_vs_scratch_10pct_labels": -0.046602,
+    "l89_correspondence_ap_delta_vs_scratch_100pct_labels": -0.022857
+  },
+  "preregistered_gate_decisions": {
+    "l89_delta_time": "fail_did_not_beat_role_only",
+    "emit_delta_time_all_three_seeds": "fail_did_not_beat_role_only",
+    "correspondence_pretraining": "stop_do_not_promote",
+    "innovation_readout": "stop_do_not_promote"
+  },
+  "s2_protocol_note": {
+    "included_in_latest_temporal_model_selection": false,
+    "reason": "An early broad read-only search displayed rows from a different all-rows source containing test markers. The target temporal test manifest was not opened and no row value or metric was used. Clean 512-source recropping and a fresh split are required."
+  },
+  "authoritative_story": "research/pretraining_20260727/JOURNAL_STORY_20260727.md"
+}

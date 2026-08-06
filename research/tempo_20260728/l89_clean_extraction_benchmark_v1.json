@@ -1,0 +1,95 @@
+{
+  "schema_version": "l89-clean-extraction-benchmark-v1",
+  "timestamp_utc": "2026-07-28T10:49:00Z",
+  "purpose": "Freeze a safe, reproducible, throughput-efficient base CLS extraction batch before the formal train-only replicate.",
+  "data_scope": {
+    "source": "train-only inner manifests; deterministic fully-local smoke subsets",
+    "rows_per_run": 512,
+    "timepoints_per_row": 6,
+    "test_or_sealed_or_holdout_access": false
+  },
+  "hardware": {
+    "physical_gpu": 0,
+    "gpu_total_mib": 81152,
+    "physical_gpu_1_used": false,
+    "cpu_threads_available": 32
+  },
+  "fixed_common_settings": {
+    "weights_sha256": "55024f411a7f383ed1a646d9b833b65683a4443846603fc7d37591d5afe9d26e",
+    "amp_dtype": "bfloat16",
+    "storage_dtype": "float16",
+    "num_workers": 6,
+    "prefetch_factor": 1,
+    "persistent_workers": true
+  },
+  "benchmarks": [
+    {
+      "batch_size": 64,
+      "manifest_split": "train",
+      "input_contract_sha256": "2a61a3dd00f0b74f64f45a7224b36650a58378ebe3baf65c95f3ff1bf9bb8fdb",
+      "elapsed_seconds": 57.4,
+      "read_errors": 0,
+      "feature_sha256": "77da366d6f48cafb52819a1b0c477db3bf9828559dde81a653c10e1724c14234"
+    },
+    {
+      "batch_size": 128,
+      "manifest_split": "train",
+      "input_contract_sha256": "2a61a3dd00f0b74f64f45a7224b36650a58378ebe3baf65c95f3ff1bf9bb8fdb",
+      "elapsed_seconds": 66.3,
+      "read_errors": 0,
+      "feature_sha256": "1ddedd33324ebbd830244e5a841a324ab39ffc015f9c6738e4df86a96184b473"
+    },
+    {
+      "batch_size": 256,
+      "manifest_split": "dev",
+      "input_contract_sha256": "41db234b0048c70c4e4548842dd51ac8f0fcd46cd11fc12527c3a54a8438b24b",
+      "elapsed_seconds": 122.6,
+      "read_errors": 0,
+      "system_memory_peak_gib": 16.3,
+      "feature_sha256": "6f3ca480a47d5407ec9daee72a9d8852eb01f3e1be02c2378285f0b24047c776"
+    }
+  ],
+  "repeatability_check": {
+    "batch_size": 64,
+    "same_manifest_and_order": true,
+    "ids_equal": true,
+    "masks_equal": true,
+    "features_bit_exact": true,
+    "max_abs_feature_difference": 0.0,
+    "repeat_feature_sha256": "77da366d6f48cafb52819a1b0c477db3bf9828559dde81a653c10e1724c14234",
+    "warm_cache_elapsed_seconds": 36.9
+  },
+  "cross_gpu_check": {
+    "source_gpu": 0,
+    "replay_gpu": 1,
+    "gpu_model_equal": true,
+    "batch_size": 64,
+    "same_manifest_and_order": true,
+    "ids_equal": true,
+    "masks_equal": true,
+    "features_bit_exact": true,
+    "max_abs_feature_difference": 0.0,
+    "gpu0_feature_sha256": "77da366d6f48cafb52819a1b0c477db3bf9828559dde81a653c10e1724c14234",
+    "gpu1_feature_sha256": "77da366d6f48cafb52819a1b0c477db3bf9828559dde81a653c10e1724c14234"
+  },
+  "batch_size_sensitivity": {
+    "comparison": "batch 64 versus batch 128 on the same ordered 512 rows",
+    "max_abs_feature_difference": 0.1875,
+    "mean_abs_feature_difference": 0.007637318689376116,
+    "interpretation": "BF16 kernel batching is numerically batch-sensitive, so the formal batch must be frozen before extraction."
+  },
+  "decision": {
+    "formal_batch_size": 64,
+    "formal_num_workers_per_process": 6,
+    "formal_prefetch_factor": 1,
+    "formal_device_mapping_when_both_gpus_are_free": {
+      "train": 0,
+      "development": 1
+    },
+    "fallback_device_mapping": {
+      "train": 0,
+      "development": 0
+    },
+    "reason": "Fastest cold 512-row run among the audited settings, bit-exact on both a same-GPU repeat and a same-model cross-GPU replay, and avoids the large first-batch CPU/IO penalty observed at 256."
+  }
+}

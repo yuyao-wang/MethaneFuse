@@ -1,0 +1,38 @@
+{
+  "train_rows": 103122,
+  "test_rows": 18245,
+  "train_plumes": 3612,
+  "test_plumes": 651,
+  "train_events": 1406,
+  "test_events": 171,
+  "event_overlap_count": 0,
+  "plume_overlap_count": 0,
+  "event_overlap_examples": [],
+  "plume_overlap_examples": [],
+  "checked_path_rows": 1000,
+  "missing_path_count": 0,
+  "train_label_counts": {
+    "0": 51224,
+    "1": 51898
+  },
+  "test_label_counts": {
+    "0": 9080,
+    "1": 9165
+  },
+  "positive_zero_mask_rows": 0,
+  "negative_nonzero_mask_rows": 0,
+  "gee_band_order": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "B8",
+    "B8A",
+    "B9",
+    "B11",
+    "B12"
+  ]
+}

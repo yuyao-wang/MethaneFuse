@@ -1,0 +1,11 @@
+{
+  "train_s2_rows": 59635,
+  "test_s2_rows": 14954,
+  "train_events": 865,
+  "test_events": 361,
+  "overlap_events": 266,
+  "test_overlap_rows": 12319,
+  "test_overlap_fraction": 0.8237929650929517,
+  "test_overlap_plumes": 423,
+  "test_total_plumes": 526
+}

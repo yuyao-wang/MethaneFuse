@@ -1,0 +1,241 @@
+{
+  "args": {
+    "amp_dtype": "bfloat16",
+    "cache_root": "/diniuvol/yuyao/methanefuse_research_20260727/cache/copernicusfm_s5p_probe",
+    "checkpoint": "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM/weights/CopernicusFM_ViT_base_varlang_e100.pth",
+    "device": "cuda:0",
+    "epochs": 3,
+    "eval_csv": "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/s5p/val.csv",
+    "extract_batch_size": 16,
+    "head_batch_size": 256,
+    "head_lr": 0.001,
+    "max_eval": 2048,
+    "max_train": 2048,
+    "num_workers": 1,
+    "output_json": "/home/yuyao/panopticon/research/pretraining_20260727/copernicusfm_s5p_screen_result.json",
+    "progress_every": 20,
+    "promotion_ap": 0.644,
+    "recompute_stats": false,
+    "repo": "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM",
+    "seed": 20260727,
+    "stats_workers": 1,
+    "train_csv": "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/s5p/train.csv",
+    "variable_embeddings": "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM/weights/varname_embed_llama3.2_1B.pt",
+    "weight_decay": 0.0001
+  },
+  "backbone": {
+    "architecture": "official vit_base_patch16, global_pool=False",
+    "checkpoint": {
+      "mtime_ns": 1785140129419089999,
+      "path": "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM/weights/CopernicusFM_ViT_base_varlang_e100.pth",
+      "size": 557931327
+    },
+    "missing_keys": [
+      "norm.weight",
+      "norm.bias"
+    ],
+    "parameters": 139452544,
+    "repo": "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM",
+    "unexpected_keys": []
+  },
+  "best": {
+    "epoch": 1,
+    "eval": {
+      "ap": 0.572045779750897,
+      "auroc": 0.566065788269043,
+      "best_threshold": 0.42591243982315063,
+      "confusion": {
+        "fn": 1,
+        "fp": 1017,
+        "tn": 7,
+        "tp": 1023
+      },
+      "f1": 0.6677545691906005,
+      "f1_at_0_5": 0.5815170008718396,
+      "precision": 0.5014705882352941,
+      "recall": 0.9990234375,
+      "rows": 2048
+    },
+    "train_loss": 0.7327986881136894
+  },
+  "command": [
+    "/home/yuyao/miniconda3/envs/train/bin/python",
+    "research/pretraining_20260727/copernicusfm_s5p_probe.py",
+    "--train_csv",
+    "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/s5p/train.csv",
+    "--eval_csv",
+    "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/s5p/val.csv",
+    "--repo",
+    "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM",
+    "--checkpoint",
+    "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM/weights/CopernicusFM_ViT_base_varlang_e100.pth",
+    "--variable_embeddings",
+    "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM/weights/varname_embed_llama3.2_1B.pt",
+    "--cache_root",
+    "/diniuvol/yuyao/methanefuse_research_20260727/cache/copernicusfm_s5p_probe",
+    "--output_json",
+    "/home/yuyao/panopticon/research/pretraining_20260727/copernicusfm_s5p_screen_result.json",
+    "--max_train",
+    "2048",
+    "--max_eval",
+    "2048",
+    "--seed",
+    "20260727",
+    "--stats_workers",
+    "1",
+    "--num_workers",
+    "1",
+    "--extract_batch_size",
+    "16",
+    "--head_batch_size",
+    "256",
+    "--epochs",
+    "3",
+    "--amp_dtype",
+    "bfloat16",
+    "--device",
+    "cuda:0",
+    "--progress_every",
+    "20",
+    "--promotion_ap",
+    "0.644"
+  ],
+  "feature_cache": {
+    "eval": "/diniuvol/yuyao/methanefuse_research_20260727/cache/copernicusfm_s5p_probe/1e69e3b0f781bbed/eval_features.pt",
+    "train": "/diniuvol/yuyao/methanefuse_research_20260727/cache/copernicusfm_s5p_probe/1e69e3b0f781bbed/train_features.pt"
+  },
+  "head_checkpoint": "/home/yuyao/panopticon/research/pretraining_20260727/copernicusfm_s5p_screen_result_head_best.pt",
+  "history": [
+    {
+      "epoch": 1,
+      "eval": {
+        "ap": 0.572045779750897,
+        "auroc": 0.566065788269043,
+        "best_threshold": 0.42591243982315063,
+        "confusion": {
+          "fn": 1,
+          "fp": 1017,
+          "tn": 7,
+          "tp": 1023
+        },
+        "f1": 0.6677545691906005,
+        "f1_at_0_5": 0.5815170008718396,
+        "precision": 0.5014705882352941,
+        "recall": 0.9990234375,
+        "rows": 2048
+      },
+      "train_loss": 0.7327986881136894
+    },
+    {
+      "epoch": 2,
+      "eval": {
+        "ap": 0.5636701907134576,
+        "auroc": 0.5695619583129883,
+        "best_threshold": 0.5635470747947693,
+        "confusion": {
+          "fn": 5,
+          "fp": 1008,
+          "tn": 16,
+          "tp": 1019
+        },
+        "f1": 0.6679790026246719,
+        "f1_at_0_5": 0.6666666666666666,
+        "precision": 0.5027133695115935,
+        "recall": 0.9951171875,
+        "rows": 2048
+      },
+      "train_loss": 0.7219434008002281
+    },
+    {
+      "epoch": 3,
+      "eval": {
+        "ap": 0.5589025551774462,
+        "auroc": 0.568629264831543,
+        "best_threshold": 0.3268296420574188,
+        "confusion": {
+          "fn": 0,
+          "fp": 1021,
+          "tn": 3,
+          "tp": 1024
+        },
+        "f1": 0.6673183447376996,
+        "f1_at_0_5": 0.524896265560166,
+        "precision": 0.5007334963325183,
+        "recall": 1.0,
+        "rows": 2048
+      },
+      "train_loss": 0.6923249512910843
+    }
+  ],
+  "manifest_audit": {
+    "eval_csv": "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/s5p/val.csv",
+    "full_rows": {
+      "eval": 3805,
+      "train": 18772
+    },
+    "plume_id_overlap": 0,
+    "selected_labels": {
+      "eval": {
+        "0": 1024,
+        "1": 1024
+      },
+      "train": {
+        "0": 1024,
+        "1": 1024
+      }
+    },
+    "selected_rows": {
+      "eval": 2048,
+      "train": 2048
+    },
+    "selected_unique_plumes": {
+      "eval": 1509,
+      "train": 1942
+    },
+    "selection": "exactly half of each label, deterministic pandas sample",
+    "selection_seed": 20260727,
+    "train_csv": "/diniuvol/yuyao/methanefuse_research_20260727/manifests_staged/s5p/train.csv"
+  },
+  "metadata_policy": "all NaN, invoking official unknown metadata tokens",
+  "proxy_embedding": {
+    "component_norms": [
+      67.17489624023438,
+      62.597137451171875,
+      61.259056091308594,
+      64.2375259399414
+    ],
+    "dimension": 2048,
+    "keys": [
+      "Sentinel 5P Carbon Monoxide",
+      "Sentinel 5P Nitrogen Dioxide",
+      "Sentinel 5P Sulfur Dioxide",
+      "Sentinel 5P Ozone"
+    ],
+    "policy": "predeclared arithmetic mean; never validation-selected",
+    "proxy_norm": 62.34727096557617,
+    "source": {
+      "mtime_ns": 1785140132236140292,
+      "path": "/diniuvol/yuyao/methanefuse_research_20260727/external/Copernicus-FM/Copernicus-FM/weights/varname_embed_llama3.2_1B.pt",
+      "size": 116962
+    }
+  },
+  "run_key": "1e69e3b0f781bbed27c8cd26e9204af73b172618bf4011814beb6e46e87fd70a",
+  "run_root": "/diniuvol/yuyao/methanefuse_research_20260727/cache/copernicusfm_s5p_probe/1e69e3b0f781bbed",
+  "screen_decision": {
+    "copernicusfm_best_ap": 0.572045779750897,
+    "decision": "stop_below_panopticon_baseline",
+    "difference": -0.07195422024910303,
+    "full_run_launched": false,
+    "panopticon_validation_ap": 0.644
+  },
+  "status": "complete",
+  "temporal_head": "per-frame frozen embedding; concatenate temporal mean and max; LayerNorm + Linear(2)",
+  "training_stats": {
+    "files": 2048,
+    "finite_count": 593831200,
+    "mean": 1896.8299946436198,
+    "path": "/diniuvol/yuyao/methanefuse_research_20260727/cache/copernicusfm_s5p_probe/1e69e3b0f781bbed/train_stats.json",
+    "source": "selected balanced training rows only",
+    "std": 37.75653730339277
+  }
+}

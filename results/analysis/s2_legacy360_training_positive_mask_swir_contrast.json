@@ -1,0 +1,57 @@
+{
+  "contrast_definition": "(mask mean - local dilated-ring mean) / local ring std",
+  "features": {
+    "b11": {
+      "count": 509,
+      "paired_true_minus_shifted_mean": 0.3704570068034564,
+      "paired_true_vs_shifted_p": 3.152630080476673e-13,
+      "shifted_mean": -0.08100357014735532,
+      "shifted_median": -0.0781358057320931,
+      "true_fraction_abs_gt_0p5": 0.43222003929273084,
+      "true_fraction_positive": 0.6522593320235757,
+      "true_mean": 0.28945343665610107,
+      "true_median": 0.17930665897910295,
+      "true_vs_zero_p": 6.502122719190695e-13
+    },
+    "b12": {
+      "count": 509,
+      "paired_true_minus_shifted_mean": 0.4224269187139819,
+      "paired_true_vs_shifted_p": 1.055186307006162e-15,
+      "shifted_mean": -0.08140035244964763,
+      "shifted_median": -0.08534493674332708,
+      "true_fraction_abs_gt_0p5": 0.43222003929273084,
+      "true_fraction_positive": 0.6660117878192534,
+      "true_mean": 0.3410265662643342,
+      "true_median": 0.2106709681640156,
+      "true_vs_zero_p": 5.643685726185592e-16
+    },
+    "swir_nd": {
+      "count": 509,
+      "paired_true_minus_shifted_mean": -0.18134943501631928,
+      "paired_true_vs_shifted_p": 5.860964073090406e-05,
+      "shifted_mean": 0.03473939367514127,
+      "shifted_median": 0.037282188192552405,
+      "true_fraction_abs_gt_0p5": 0.39096267190569745,
+      "true_fraction_positive": 0.4165029469548134,
+      "true_mean": -0.146610041341178,
+      "true_median": -0.12802091611598762,
+      "true_vs_zero_p": 1.9879620825668367e-05
+    },
+    "visible": {
+      "count": 509,
+      "paired_true_minus_shifted_mean": 0.5463854141007957,
+      "paired_true_vs_shifted_p": 5.187398656530988e-24,
+      "shifted_mean": -0.06247863384261114,
+      "shifted_median": -0.11703511409157882,
+      "true_fraction_abs_gt_0p5": 0.4911591355599214,
+      "true_fraction_positive": 0.7151277013752456,
+      "true_mean": 0.48390678025818445,
+      "true_median": 0.33495666337192054,
+      "true_vs_zero_p": 4.465765557404292e-27
+    }
+  },
+  "mask_nonempty": 512,
+  "null": "same mask rolled +73 rows and +91 columns with wraparound",
+  "rows": 512,
+  "swir_nd_definition": "(B11 - B12) / max(B11 + B12, 1)"
+}

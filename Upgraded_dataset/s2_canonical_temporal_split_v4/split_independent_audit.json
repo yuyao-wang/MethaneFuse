@@ -1,0 +1,11 @@
+{
+  "event_overlap": 0,
+  "failures": [],
+  "kind": "split",
+  "plume_overlap": 0,
+  "test_events": 220,
+  "test_rows": 808,
+  "train_events": 1760,
+  "train_ratio": 0.8506193381401368,
+  "train_rows": 4601
+}

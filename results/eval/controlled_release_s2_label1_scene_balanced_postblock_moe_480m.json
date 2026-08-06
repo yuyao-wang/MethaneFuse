@@ -1,0 +1,36 @@
+{
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/multi_sensor_moe_adapter/moe_postblock_stageB_from_shared_stageA/ckpt_best_test.pth",
+  "checkpoint_best_test_accuracy": 0.579269557999585,
+  "checkpoint_epoch": 7,
+  "decision_rule": {
+    "kind": "two_class_logit_argmax",
+    "probability_equivalent_threshold": 0.5,
+    "source": "original training/evaluation code; no fitted threshold stored"
+  },
+  "eval_csv": "/home/yuyao/panopticon/data/controlled_release_test/label1_legacy_balanced_480m/manifest.csv",
+  "metrics": {
+    "accuracy": 0.5182291666666666,
+    "auroc": 0.6142035590277778,
+    "average_precision": 0.5578224322618395,
+    "balanced_accuracy": 0.5182291666666667,
+    "f1": 0.2965779467680608,
+    "fn": 153,
+    "fp": 32,
+    "fpr": 0.16666666666666666,
+    "negative_probability_mean": 0.3135690689086914,
+    "negatives": 192,
+    "positive_probability_mean": 0.36943626403808594,
+    "positives": 192,
+    "precision": 0.5492957746478874,
+    "recall": 0.203125,
+    "samples": 384,
+    "specificity": 0.8333333333333334,
+    "tn": 160,
+    "tp": 39
+  },
+  "predictions_csv": "/home/yuyao/panopticon/results/eval/controlled_release_s2_label1_scene_balanced_postblock_moe_480m_predictions.csv",
+  "row_fusion_mode": "max",
+  "training_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_480m/manifest_time_train.csv",
+  "validation_csv": "/mnt/engg-leung/Research_No9_Methane_Emissions/Yuyao/finalDataset_query/legacy_param_480m/manifest_time_test.csv",
+  "variant": "postblock_moe"
+}

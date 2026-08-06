@@ -1,0 +1,131 @@
+{
+  "already_complete": 0,
+  "completed": 1605,
+  "discovery": {
+    "already_complete": 27664,
+    "candidate_targets": 29310,
+    "explicitly_skipped": 76,
+    "missing_target": 0,
+    "preexisting_complete": 0,
+    "rows": 5409,
+    "sidecar_failure_targets": [],
+    "sidecar_failures": 0,
+    "unsupported_kind": 3144
+  },
+  "elapsed_seconds": 1031.8,
+  "failures": [
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(37637b91-d4ff-4dcb-947d-055599395ad9)/Nodes(S2A_MSIL2A_20160906T182922_N0500_R027_T11SLU_20230930T043117.SAFE)/Nodes(GRANULE)/Nodes(L2A_T11SLU_A006316_20160906T183814)/Nodes(IMG_DATA)/Nodes(R10m)/Nodes(T11SLU_20160906T182922_B08_10m.jp2)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "ang20160925t201200-A",
+        "ang20160925t201200-C"
+      ],
+      "product_name": "S2A_MSIL2A_20160906T182922_N0500_R027_T11SLU_20230930T043117.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(7bf56077-9e25-40de-970b-e6cad4c057ae)/Nodes(S2A_MSIL2A_20200923T175051_N0500_R141_T13TEE_20230315T142022.SAFE)/Nodes(MTD_MSIL2A.xml)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "GAO20210919t182411p0000-A",
+        "GAO20210919t182411p0000-B",
+        "GAO20210919t185950p0000-A",
+        "GAO20210919t193818p0000-A",
+        "GAO20210922t183238p0000-A",
+        "GAO20210922t183238p0000-B",
+        "GAO20210922t184257p0000-A",
+        "GAO20210922t191126p0000-A",
+        "GAO20210922t192226p0000-A",
+        "GAO20210922t193155p0000-A",
+        "GAO20210922t200529p0000-A",
+        "GAO20210922t202824p0000-A",
+        "GAO20210922t203935p0000-A",
+        "GAO20210922t203935p0000-B"
+      ],
+      "product_name": "S2A_MSIL2A_20200923T175051_N0500_R141_T13TEE_20230315T142022.SAFE",
+      "tasks": 14
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(f7eca5c8-70af-41be-ab7b-bbc51060e8a5)/Nodes(S2A_MSIL2A_20230818T100031_N0510_R122_T32SNF_20241024T224002.SAFE)/Nodes(GRANULE)/Nodes(L2A_T32SNF_A042590_20230818T100951)/Nodes(IMG_DATA)/Nodes(R10m)/Nodes(T32SNF_20230818T100031_B08_10m.jp2)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "emi20230820t114246p08007-A"
+      ],
+      "product_name": "S2A_MSIL2A_20230818T100031_N0510_R122_T32SNF_20241024T224002.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(aa4bf0c8-4647-48cf-be92-70178ddbaf40)/Nodes(S2A_MSIL2A_20231014T080901_N0510_R078_T36SYA_20241103T081104.SAFE)/Nodes(MTD_MSIL2A.xml)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "emi20231016t114853p08016-A"
+      ],
+      "product_name": "S2A_MSIL2A_20231014T080901_N0510_R078_T36SYA_20241103T081104.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(1421f66f-1322-44fe-8829-4e9e86340c93)/Nodes(S2A_MSIL2A_20250413T172721_N0511_R012_T14SKA_20250414T020417.SAFE)/Nodes(MTD_MSIL2A.xml)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "tan20250430t180543c00s4001-B",
+        "tan20250430t180543c00s4001-C",
+        "tan20250430t180543c00s4001-D",
+        "tan20250430t180543c00s4001-E",
+        "tan20250430t180543c00s4001-G",
+        "tan20250430t180543c00s4001-H",
+        "tan20250430t180543c00s4001-I",
+        "tan20250430t180543c00s4001-J",
+        "tan20250430t180543c00s4001-K",
+        "tan20250430t180543c00s4001-P",
+        "tan20250430t180543c00s4001-R",
+        "tan20250430t180543c00s4001-T",
+        "tan20250430t180543c00s4001-V",
+        "tan20250430t180543c00s4001-W"
+      ],
+      "product_name": "S2A_MSIL2A_20250413T172721_N0511_R012_T14SKA_20250414T020417.SAFE",
+      "tasks": 14
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(61dfd68b-3ab6-465f-b3b0-a26221e959c9)/Nodes(S2A_MSIL2A_20240913T053641_N0511_R005_T42QZJ_20240913T105005.SAFE)/Nodes(GRANULE)/Nodes(L2A_T42QZJ_A048193_20240913T054812)/Nodes(IMG_DATA)/Nodes(R60m)/Nodes(T42QZJ_20240913T053641_B09_60m.jp2)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "tan20241216t055718c00s4001-A",
+        "tan20241216t055718c00s4001-C"
+      ],
+      "product_name": "S2A_MSIL2A_20240913T053641_N0511_R005_T42QZJ_20240913T105005.SAFE",
+      "tasks": 2
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(272d2c2e-338e-4ca0-ac24-8a46dba80d6d)/Nodes(S2A_MSIL2A_20251017T053241_N0511_R105_T45UVB_20251017T072518.SAFE)/Nodes(GRANULE)/Nodes(L2A_T45UVB_A053899_20251017T053241)/Nodes(IMG_DATA)/Nodes(R60m)/Nodes(T45UVB_20251017T053241_B09_60m.jp2)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "tan20251128t061605c19s4001-A",
+        "tan20251128t061605c19s4001-B",
+        "tan20251128t061605c19s4001-E",
+        "tan20251128t061605c19s4001-I"
+      ],
+      "product_name": "S2A_MSIL2A_20251017T053241_N0511_R105_T45UVB_20251017T072518.SAFE",
+      "tasks": 4
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(9e336cb3-b7ca-4ac6-9996-36e71e80d3d8)/Nodes(S2A_MSIL2A_20250729T053251_N0511_R105_T44SMH_20250729T074313.SAFE)/Nodes(GRANULE)/Nodes(L2A_T44SMH_A052755_20250729T053246)/Nodes(IMG_DATA)/Nodes(R60m)/Nodes(T44SMH_20250729T053251_B09_60m.jp2)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "tan20250810t061809c72s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20250729T053251_N0511_R105_T44SMH_20250729T074313.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(abe732ee-793e-4881-b1f0-3b4bcfdf7f69)/Nodes(S2A_MSIL2A_20260218T101221_N0512_R122_T32RMV_20260218T142910.SAFE)/Nodes(GRANULE)/Nodes(L2A_T32RMV_A055675_20260218T101218)/Nodes(IMG_DATA)/Nodes(R20m)/Nodes(T32RMV_20260218T101221_B8A_20m.jp2)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "tan20260220t112441c43s4001-A"
+      ],
+      "product_name": "S2A_MSIL2A_20260218T101221_N0512_R122_T32RMV_20260218T142910.SAFE",
+      "tasks": 1
+    },
+    {
+      "error": "RuntimeError: CDSE Nodes request failed after 4 attempts for https://catalogue.dataspace.copernicus.eu/odata/v1/Products(9874d2be-cddd-498d-a056-06c7eb13a680)/Nodes(S2B_MSIL2A_20251124T162519_N0511_R040_T16RDU_20251124T200754.SAFE)/Nodes(GRANULE)/Nodes(L2A_T16RDU_A045540_20251124T163317)/Nodes(IMG_DATA)/Nodes(R60m)/Nodes(T16RDU_20251124T162519_B09_60m.jp2)/$value: CDSE Nodes rate limited",
+      "plume_ids": [
+        "tan20251123t172833c23s4001-A"
+      ],
+      "product_name": "S2B_MSIL2A_20251124T162519_N0511_R040_T16RDU_20251124T200754.SAFE",
+      "tasks": 1
+    }
+  ],
+  "manifest": "Upgraded_dataset/s2_canonical_temporal_split_v4/s2_cdse_legacy512_all_cutoff_2025-11-24.csv",
+  "repaired": 1605
+}

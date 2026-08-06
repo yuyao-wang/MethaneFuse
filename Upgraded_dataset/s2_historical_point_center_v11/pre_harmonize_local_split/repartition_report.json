@@ -1,0 +1,56 @@
+{
+  "local_root": "/diniuvol/yuyao/s2_6time_point_center_corrected_32",
+  "target_train_512_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_point_center_v11/s2_v11_train_512.csv",
+  "target_test_512_csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_point_center_v11/s2_v11_test_512.csv",
+  "source_rows": 136512,
+  "source_plumes": 4266,
+  "selected_rows": 129504,
+  "selected_plumes": 4047,
+  "target_plumes": 5087,
+  "missing_target_plumes": 1040,
+  "missing_target_plume_examples": [
+    "GAO20191020t151740p0000-A",
+    "GAO20191020t153619p0000-A",
+    "GAO20191020t153619p0000-B",
+    "GAO20191020t153619p0000-C",
+    "GAO20191020t153619p0000-D",
+    "GAO20191020t155133p0000-A",
+    "GAO20191020t161013p0000-A",
+    "GAO20191020t161013p0000-B",
+    "GAO20191020t163829p0000-A",
+    "GAO20191020t163829p0000-B",
+    "GAO20191020t163829p0000-C",
+    "GAO20191020t163829p0000-D",
+    "GAO20191020t165717p0000-A",
+    "GAO20191020t165717p0000-B",
+    "GAO20191020t165717p0000-C",
+    "GAO20191020t165717p0000-D",
+    "GAO20191020t165717p0000-E",
+    "GAO20191020t165717p0000-F",
+    "GAO20191020t173137p0000-A",
+    "GAO20191020t173137p0000-B"
+  ],
+  "event_group_overlap": 0,
+  "splits": {
+    "train": {
+      "csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_point_center_v11/pre_harmonize_local_split/train.csv",
+      "rows": 106048,
+      "plumes": 3314,
+      "events": 1303,
+      "labels": {
+        "0": 53024,
+        "1": 53024
+      }
+    },
+    "test": {
+      "csv": "/home/yuyao/panopticon/Upgraded_dataset/s2_historical_point_center_v11/pre_harmonize_local_split/test.csv",
+      "rows": 23456,
+      "plumes": 733,
+      "events": 212,
+      "labels": {
+        "0": 11728,
+        "1": 11728
+      }
+    }
+  }
+}

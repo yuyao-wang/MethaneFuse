@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/transferdiniu2/yuyao/checkpoints/universal_480m/query dataset 480m/ckpt_best_test.pth",
+  "count": 57,
+  "eval_csv": "data/controlled_release_test/combined_original_labels_legacy480_exact/s2_model_manifest.csv",
+  "loss": 3.0655100931201065,
+  "overall": {
+    "acc": 0.24561403508771928,
+    "auroc": 0.4583333333333333,
+    "count": 57.0,
+    "fpr": 0.9555555555555556,
+    "recall": 1.0
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "audit_type": "fixed-posthoc-three-expert-ceiling-development-only",
+  "canonical_event_cluster_bootstrap": {
+    "candidate_minus_reference": {
+      "all_negative_fp_mass": {
+        "better_direction": "lower",
+        "candidate_win_probability": 0.9994,
+        "ci_95_high": -0.1875,
+        "ci_95_low": -1.2432386363636372,
+        "point_delta": -0.6454545454545455,
+        "ties_probability": 0.0006
+      },
+      "event_balanced_ap": {
+        "better_direction": "higher",
+        "candidate_win_probability": 0.7252,
+        "ci_95_high": 0.007595395858290607,
+        "ci_95_low": -0.0039183951589642245,
+        "point_delta": 0.0016760272128316656,
+        "ties_probability": 0.0
+      },
+      "event_balanced_auc": {
+        "better_direction": "higher",
+        "candidate_win_probability": 0.8974,
+        "ci_95_high": 0.005849404577536492,
+        "ci_95_low": -0.001142870793595313,
+        "point_delta": 0.002196331024899023,
+        "ties_probability": 0.0
+      },
+      "event_balanced_macro_f1_selected": {
+        "better_direction": "higher",
+        "candidate_win_probability": 0.9376,
+        "ci_95_high": 0.013381822109254553,
+        "ci_95_low": -0.0016908589206457822,
+        "point_delta": 0.005769081975177559,
+        "ties_probability": 0.0
+      },
+      "event_balanced_positive_f1_selected": {
+        "better_direction": "higher",
+        "candidate_win_probability": 0.5834,
+        "ci_95_high": 0.01034158315892659,
+        "ci_95_low": -0.008739013740919352,
+        "point_delta": 0.0008356158673813452,
+        "ties_probability": 0.0
+      }
+    },
+    "fp_mass_definition": "multiplicity-weighted sum of within-event hard-FP row rates over sampled all-negative canonical events",
+    "replicates": 5000,
+    "seed": 2026072807,
+    "thresholds_refit_per_replicate": false,
+    "unit": "canonical_event_cluster"
+  },
+  "canonical_events": 124,
+  "ceiling_screen": {
+    "ap_strictly_better": true,
+    "immediate_reject_if_either_not_better": true,
+    "macro_f1_strictly_better": true,
+    "passed": true,
+    "rule": "candidate must have strictly higher point event-balanced row AP and macro-F1 than the P5+D1 reference"
+  },
+  "d1_seeds": [
+    20260727,
+    20260728,
+    20260729
+  ],
+  "d7_seeds": [
+    20260728
+  ],
+  "fixed_expert_weights": {
+    "p5_d1_d7_equal_thirds_posthoc_ceiling": {
+      "d1_three_seed_ensemble": 0.3333333333333333,
+      "d7_seed20260728": 0.3333333333333333,
+      "p5": 0.3333333333333333
+    },
+    "p5_d1_equal_logit_reference": {
+      "d1_three_seed_ensemble": 0.5,
+      "p5": 0.5
+    }
+  },
+  "fixed_logit_formulas": {
+    "p5_d1_d7_equal_thirds_posthoc_ceiling": "(logit(P5) + mean_seed(logit(D1)) + logit(D7_seed20260728))/3",
+    "p5_d1_equal_logit_reference": "0.5*logit(P5) + 0.5*mean_seed(logit(D1))"
+  },
+  "identity_contract": {
+    "labels_exact": true,
+    "ordered_event_id_exact": true,
+    "ordered_id_exact": true
+  },
+  "point_metrics": {
+    "p5_d1_d7_equal_thirds_posthoc_ceiling": {
+      "all_negative_event_any_fp_rate": 0.5925925925925926,
+      "all_negative_event_any_fp_rate_at_0_5": 0.48148148148148145,
+      "all_negative_event_count": 27,
+      "all_negative_events_with_any_fp": 16,
+      "all_negative_events_with_any_fp_at_0_5": 13,
+      "all_negative_fp_mass": 3.2859848484848486,
+      "all_negative_fp_mass_at_0_5": 2.14280303030303,
+      "all_negative_fp_rate_mean": 0.12170314253647588,
+      "all_negative_fp_rows": 67,
+      "all_negative_fp_rows_at_0_5": 41,
+      "all_negative_max_probability_mean": 0.49068516412964797,
+      "all_negative_mean_probability": 0.11677870734508297,
+      "event_balanced_ap": 0.774619190793015,
+      "event_balanced_auc": 0.855701464351799,
+      "event_balanced_macro_f1_at_0_5": 0.7663459403105073,
+      "event_balanced_macro_f1_selected": 0.7829885645159541,
+      "event_balanced_positive_f1_at_0_5": 0.6881063986992246,
+      "event_balanced_positive_f1_selected": 0.7252924311069039,
+      "events": 124,
+      "positive_event_any_detection_recall": 0.9484536082474226,
+      "positive_event_any_detection_recall_at_0_5": 0.9175257731958762,
+      "positive_event_count": 97,
+      "probability_mean": 0.3454767991728076,
+      "probability_std": 0.36715440839608227,
+      "row_ap": 0.7633410161743406,
+      "row_auc": 0.8079692083791712,
+      "row_macro_f1_selected": 0.7470057845959519,
+      "row_positive_f1_selected": 0.7095592723721157,
+      "rows": 9614,
+      "selected_threshold": 0.31901469299279656
+    },
+    "p5_d1_equal_logit_reference": {
+      "all_negative_event_any_fp_rate": 0.6666666666666666,
+      "all_negative_event_any_fp_rate_at_0_5": 0.5555555555555556,
+      "all_negative_event_count": 27,
+      "all_negative_events_with_any_fp": 18,
+      "all_negative_events_with_any_fp_at_0_5": 15,
+      "all_negative_fp_mass": 3.931439393939394,
+      "all_negative_fp_mass_at_0_5": 2.42405303030303,
+      "all_negative_fp_rate_mean": 0.14560886644219978,
+      "all_negative_fp_rows": 81,
+      "all_negative_fp_rows_at_0_5": 47,
+      "all_negative_max_probability_mean": 0.4770379658112341,
+      "all_negative_mean_probability": 0.11705449006249606,
+      "event_balanced_ap": 0.7729431635801833,
+      "event_balanced_auc": 0.8535051333268999,
+      "event_balanced_macro_f1_at_0_5": 0.7603627120358387,
+      "event_balanced_macro_f1_selected": 0.7772194825407766,
+      "event_balanced_positive_f1_at_0_5": 0.6797400220315531,
+      "event_balanced_positive_f1_selected": 0.7244568152395225,
+      "events": 124,
+      "positive_event_any_detection_recall": 0.9587628865979382,
+      "positive_event_any_detection_recall_at_0_5": 0.9072164948453608,
+      "positive_event_count": 97,
+      "probability_mean": 0.33896655233732875,
+      "probability_std": 0.36243303005943467,
+      "row_ap": 0.7614379266616749,
+      "row_auc": 0.8036129314053201,
+      "row_macro_f1_selected": 0.7397625507053136,
+      "row_positive_f1_selected": 0.7085795320255259,
+      "rows": 9614,
+      "selected_threshold": 0.24264864464595534
+    }
+  },
+  "post_hoc_exploratory": true,
+  "promotion": {
+    "decision": "reject",
+    "eligible": false,
+    "reason": "D7 already failed its predeclared promotion gate; this post-hoc ceiling audit cannot reverse that decision regardless of point metrics."
+  },
+  "provenance": {
+    "d1_seed_20260727": {
+      "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260727/d1_gated_delta_best_event_ap_predictions.csv",
+      "sha256": "55d579e16a1f850de7809c95c391ded13677d1b670311bb6d098dfaa01ce2f5d"
+    },
+    "d1_seed_20260728": {
+      "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260728/d1_gated_delta_best_event_ap_predictions.csv",
+      "sha256": "8c8323c40349ef5c7488e9674db85ed1dc240aed7860fdaa0b31bab244ddd1c7"
+    },
+    "d1_seed_20260729": {
+      "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d1_multiseed_fixed/seed_20260729/d1_gated_delta_best_event_ap_predictions.csv",
+      "sha256": "e9d03791a08a23e355963482fca26a9fd7213dc2dc2b46561ebaab3e1d1371a2"
+    },
+    "d7_seed_20260728": {
+      "path": "/diniuvol/yuyao/methanefuse_tempo_20260728/l89_global_v1/eventbase_d7_sparse_slowfast_seed20260728_v1/seed_20260728/d7_sparse_slowfast_best_event_ap_predictions.csv",
+      "sha256": "6448fb0a651c3f9714c786bf1d1cf272c8c049dacabc9ec335d14cd0c62e9f66"
+    },
+    "p5": {
+      "path": "/diniuvol/yuyao/methanefuse_research_20260727/rctp_l89_sidecar_fallback_v1/downstream_event_balanced_seed20260728/p5/validation_best_event_balanced_ap_predictions.csv",
+      "sha256": "38130c156b0c015676ed81309b501ac5158fedd2248888e9db8a31144c523084"
+    }
+  },
+  "rows": 9614,
+  "script_version": "tempo-l89-posthoc-three-expert-ceiling-v1",
+  "search_contract": {
+    "checkpoint_search": false,
+    "fusion_weight_search": false,
+    "seed_search": false,
+    "threshold_combination_search": false,
+    "threshold_rule": "one standard event-balanced macro-F1-maximizing threshold computed independently by metric_bundle for each point prediction; held fixed in bootstrap"
+  },
+  "status": "rejected_not_promotable",
+  "test_or_outer_or_sealed_or_holdout_read": false
+}
