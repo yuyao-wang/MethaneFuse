@@ -54,7 +54,6 @@ results/logs/
 # Local-only generated reports and experimental tryouts
 results/reports/generated/
 scripts/root_legacy/
-experiments_tryout/
 universal_models_fusion/
 
 universal_models/
