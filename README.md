@@ -13,7 +13,8 @@ MethaneFuse is built for real methane monitoring settings where satellite covera
   <a href="#data-and-checkpoints">Data & Checkpoints</a> •
   <a href="#method-overview">Method</a> •
   <a href="#main-results">Results</a> •
-  <a href="#methaneunion-dataset">Dataset</a>
+  <a href="#methaneunion-dataset">Dataset</a> •
+  <a href="#citation">Citation</a>
 </p>
 
 <p align="center">
@@ -207,6 +208,22 @@ MethaneUnion includes observations from:
 <p align="center">
   <img src="assets/methaneunion_pipeline.png" alt="MethaneUnion dataset pipeline" width="85%">
 </p>
+
+---
+
+## Citation
+
+The MethaneFuse paper has been accepted for publication at the 2026 IEEE International Conference on Data Mining (ICDM 2026). If you use MethaneFuse or MethaneUnion, please cite:
+
+```bibtex
+@inproceedings{wang2026methanefuse,
+  title     = {MethaneFuse: Learning from Multi-Sensor Satellite Observations for Methane Plume Detection},
+  author    = {Wang, Yuyao and Leung, Juliana Y. and Niu, Di},
+  booktitle = {2026 IEEE International Conference on Data Mining (ICDM)},
+  year      = {2026},
+  note      = {Accepted for publication}
+}
+```
 
 ---
 
