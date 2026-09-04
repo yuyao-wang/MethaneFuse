@@ -10,7 +10,6 @@ MethaneFuse is built for real methane monitoring settings where satellite covera
   <a href="#quick-start">Quick Start</a> •
   <a href="#repository-structure">Repository Structure</a> •
   <a href="#training-and-evaluation">Training & Evaluation</a> •
-  <a href="#data-and-checkpoints">Data & Checkpoints</a> •
   <a href="#method-overview">Method</a> •
   <a href="#main-results">Results</a> •
   <a href="#methaneunion-dataset">Dataset</a> •
@@ -21,7 +20,6 @@ MethaneFuse is built for real methane monitoring settings where satellite covera
   <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/PyTorch-Deep%20Learning-ee4c2c?logo=pytorch&logoColor=white" alt="PyTorch">
   <img src="https://img.shields.io/badge/Dataset-MethaneUnion-0f766e" alt="Dataset">
-  <img src="https://img.shields.io/badge/Checkpoints-Released-7c3aed" alt="Checkpoints">
   <img src="https://img.shields.io/badge/License-Apache--2.0-lightgrey" alt="License">
 </p>
 
@@ -48,12 +46,6 @@ mkdir -p data/MethaneUnion
 huggingface-cli download yuyao42/MethaneUnion \
   --repo-type dataset \
   --local-dir data/MethaneUnion
-
-# 4. Download released MethaneFuse checkpoints.
-mkdir -p checkpoints
-huggingface-cli download yuyao42/MethaneFuse-checkpoints \
-  --repo-type model \
-  --local-dir checkpoints
 ```
 
 Run a 480 m classification evaluation:
@@ -154,13 +146,12 @@ python scripts/eval/evaluate_segmentation.py \
 
 ---
 
-## Data and Checkpoints
+## Data and Benchmark
 
 | Resource                           | Link                                                   |
 | ---------------------------------- | ------------------------------------------------------ |
 | MethaneUnion dataset               | https://huggingface.co/datasets/yuyao42/MethaneUnion   |
 | MethaneUnion construction pipeline | https://github.com/yuyao-wang/MethaneUnion             |
-| MethaneFuse checkpoints            | https://huggingface.co/yuyao42/MethaneFuse-checkpoints |
 
 ---
 
